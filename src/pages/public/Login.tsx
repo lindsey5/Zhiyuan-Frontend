@@ -49,10 +49,6 @@ const LoginPage: React.FC = () => {
                         <TaperedLine direction="left" className="w-32" />                    
                     </div>
                 </div>
-                
-                <p className="font-secondary text-primary text-[10px] tracking-[0.4em] uppercase mt-4 opacity-70">
-                    Admin Panel Access
-                </p>
             </header>
 
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xs space-y-4">
@@ -88,7 +84,7 @@ const LoginPage: React.FC = () => {
             <div className="text-center mt-12">
                 <TaperedLine direction="center" className="w-100" />
                 <h3 className='font-secondary font-extralight text-yellow-500 text-[12px] tracking-[0.1rem] uppercase opacity-30 mt-10'>
-                    Restricted Access Admin Only
+                    Restricted Access Only
                 </h3>
             </div>
         </div>

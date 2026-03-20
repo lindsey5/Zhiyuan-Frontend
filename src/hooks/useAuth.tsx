@@ -11,8 +11,8 @@ export const useAuth = () => {
   const login = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      console.log(data); //print the response temporarily 
-      setAuth(data.user, data.token, data.permissions) //update this base on the response of the backend
+      console.log(data)
+      setAuth(data.user, data.token, data.user.role?.permissions || [])
       navigate("dashboard") //change the path accordingly
     },
     onError: (error) => {

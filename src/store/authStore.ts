@@ -20,7 +20,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       user,
       token,
       permissions,
-      errorMessage: null, // ✅ clear error on success
+      errorMessage: null,
     });
   },
 
