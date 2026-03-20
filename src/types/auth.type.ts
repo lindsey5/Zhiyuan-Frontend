@@ -2,21 +2,22 @@ import type { User } from './user.type';
 
 export interface AuthState {
   user: User | null
-  permissions: { action: string }[] | null
   accessToken: string | null
   refreshToken: string | null
-  errorMessage: string | null;
+  errorMessage: string | null
 
   setErrorMessage: (message: string) => void;
-  setAuth: (user: User, accessToken: string, refreshToken: string, permissions: { action: string }[]) => void
+  setAuth: (accessToken: string, refreshToken: string) => void
+  setUser: (user : User) => void
   logout: () => void
 }
 
 export interface AuthResponse { 
   user: User
-  accessToken: string
-  refreshToken: string
-  permissions: { action: string }[]
+  token: {
+    accessToken: string
+    refreshToken: string
+  }
 }
 
 
