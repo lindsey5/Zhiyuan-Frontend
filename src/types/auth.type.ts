@@ -4,14 +4,9 @@ export interface AuthState {
   user: User | null
   permissions: string[] | null
   token: string | null
-
-  email: string; 
-  password: string;
-  
-  errorMessage: string;
+  errorMessage: string | null;
 
   setErrorMessage: (message: string) => void;
-  setCredentials: (email: string , password: string) => void
   setAuth: (user: User, token: string, permissions: string[]) => void
   logout: () => void
 }
