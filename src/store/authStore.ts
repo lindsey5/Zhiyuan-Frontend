@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import type { AuthState } from "../types/auth.type";
 
 export const useAuthStore = create<AuthState>()(
@@ -37,7 +37,6 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      storage: createJSONStorage(() => localStorage), 
     }
   )
 );
