@@ -11,7 +11,6 @@ export const useAuth = () => {
   const login = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      console.log(data)
       setAuth(data.user, data.accessToken, data.refreshToken, data.user.role?.permissions || [])
       navigate("dashboard") //change the path accordingly
     },
