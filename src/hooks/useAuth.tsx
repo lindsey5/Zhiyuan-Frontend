@@ -12,7 +12,7 @@ export const useAuth = () => {
     mutationFn: authService.login,
     onSuccess: (data) => {
       console.log(data)
-      setAuth(data.user, data.token, data.user.role?.permissions || [])
+      setAuth(data.user, data.accessToken, data.refreshToken, data.user.role?.permissions || [])
       navigate("dashboard") //change the path accordingly
     },
     onError: (error) => {

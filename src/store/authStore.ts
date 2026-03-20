@@ -4,21 +4,23 @@ import type { AuthState } from "../types/auth.type";
 export const useAuthStore = create<AuthState>((set) => ({
   user: JSON.parse(localStorage.getItem("user") || "null"),
   permissions: JSON.parse(localStorage.getItem("permissions") || "null"),
-  token: localStorage.getItem("token"),
+  accessToken: localStorage.getItem("accessToken"),
+  refreshToken: localStorage.getItem("refreshToken"),
   errorMessage: null,
 
   setErrorMessage: (message) => {
     set({ errorMessage: message });
   },
 
-  setAuth: (user, token, permissions) => {
+  setAuth: (user, accessToken, refreshToken, permissions) => {
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("permissions", JSON.stringify(permissions));
 
     set({
       user,
-      token,
+      accessToken,
       permissions,
       errorMessage: null,
     });
@@ -26,12 +28,14 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem("permissions");
 
     set({
       user: null,
-      token: null,
+      accessToken: null,
+      refreshToken: null,
       permissions: null,
       errorMessage: null,
     });
