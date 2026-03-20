@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
             
             <div className="text-center mt-12">
                 <TaperedLine direction="center" className="w-100" />
-                <h3 className='font-secondary font-extralight text-yellow-500 text-[12px] tracking-[0.1rem] uppercase opacity-30 mt-10'>
+                <h3 className='font-secondary font-extralight text-yellow-600 text-[12px] tracking-[0.1rem] uppercase mt-10'>
                     Restricted Access Only
                 </h3>
             </div>

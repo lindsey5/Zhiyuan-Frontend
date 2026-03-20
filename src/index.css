@@ -46,9 +46,4 @@
     --separator: #d4af37;
   }
 
-  body {
-    /* Use the theme keys we just defined */
-    @apply bg-main text-primary transition-all duration-500 ease-in-out font-secondary;
-    background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
-  }
 }
