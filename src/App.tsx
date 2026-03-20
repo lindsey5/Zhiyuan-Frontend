@@ -1,13 +1,14 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/public/Login';
+import { useEffect } from 'react';
+import AppRouter from './routes/AppRouter';
+import { useThemeStore } from './store/themeStore';
+
 function App() {
+  const initTheme = useThemeStore((state) => state.initTheme);
+
+  useEffect(() => initTheme(), []);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<LoginPage />} index/>
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <AppRouter />
   );
 }
 

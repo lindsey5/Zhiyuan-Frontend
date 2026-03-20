@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap');
 @import "tailwindcss";
 
 @theme {
   /* Mapping Colors */
   --color-main: var(--bg-main);
+  --color-panel: var(--bg-panel);
   --color-input-ui: var(--bg-input);
   --color-toggle: var(--bg-toggle);
   --color-toggle-inner: var(--bg-toggle-inner);
@@ -10,27 +13,40 @@
   --color-separator: var(--separator);
   --color-gold: var(--accent-gold);
   
-  /* Mapping Text Colors specifically */
+  /* Mapping Text Colors */
   --color-primary: var(--text-primary);
   --color-muted: var(--text-muted);
 
-  /* Mapping Fonts */
-  --font-primary: "League Spartan", sans-serif;
-  --font-secondary: "Glacial Indifference", sans-serif;
+  /* Fonts */
+  --font-sans: "League Spartan", sans-serif;
+  --font-serif: "Glacial Indifference", sans-serif;
+
+  /* Effects */
+  --shadow-panel: var(--shadow-panel);
+  --border-panel: var(--border-panel);
+  --toggle-border: var(--toggle-border);
 }
 
 @layer base {
   :root {
-    --bg-main: #f4e8d9;
-    --bg-input: #bda389;
+    --bg-main: #f0d7b7;
+    --bg-input: #d1c1b2;
     --bg-toggle: #e5d5c5;
     --bg-toggle-inner: #d4bfa7;
+
+    --bg-panel: #f4e8d9; 
+
     --text-primary: #4a3728;
-    --text-muted: #8c7662;
+    --text-muted: #030303;
+
     --border-ui: #dccab8;
     --accent-gold: #a67c52;
     --toggle-thumb: #ffffff;
+    --toggle-border: #c4c0be;
     --separator: #a67c52;
+
+    --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --border-panel: #c4c0be;
   }
 
   .dark {
@@ -38,12 +54,23 @@
     --bg-input: #1a1a1a;
     --bg-toggle: #2a2624;
     --bg-toggle-inner: #000000;
+
+    --bg-panel: #313131;
+
     --text-primary: #e0e0e0;
     --text-muted: #888888;
+
     --border-ui: #333333;
     --accent-gold: #d4af37;
     --toggle-thumb: #888888;
+    --toggle-border: #b39842;
     --separator: #d4af37;
-  }
 
+    --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --border-panel: #535353;
+  }
+}
+
+body {
+   @apply bg-main text-primary transition-all duration-500 ease-in-out font-serif;
 }

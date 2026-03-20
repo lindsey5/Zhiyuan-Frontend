@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useThemeStore } from '../../store/themeStore';
 import { loginSchema, type LoginFormData } from '../../schemas/authSchema';
 import { useAuth } from '../../hooks/useAuth';
-import ToggleButton from '../../components/ToggleButton';
-import TaperedLine from '../../components/Lines';
+import ToggleButton from '../../components/ui/ToggleButton';
+import TaperedLine from '../../components/ui/Lines';
 import { useAuthStore } from '../../store/authStore';
 
 const LoginPage: React.FC = () => {
@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
                     className="w-full h-full object-contain transition-opacity duration-500" 
                 />
                 </div>
-                <div className="font-primary text-gold text-4xl uppercase leading-tight text-center tracking-tighter">
+                <div className="font-sans text-gold text-4xl uppercase leading-tight text-center tracking-tighter">
                     <h1 
                         className="bg-gradient-to-r from-[#b8860b] to-[#ffd700] text-transparent bg-clip-text"
                     >
@@ -52,15 +52,15 @@ const LoginPage: React.FC = () => {
             </header>
 
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xs space-y-4">
-                {errorMessage && <p className="text-red-500 text-[10px] font-secondary uppercase text-center">{errorMessage}</p>}
+                {errorMessage && <p className="text-red-500 text-[10px] font-serif uppercase text-center">{errorMessage}</p>}
 
                 <div className="space-y-1">
                     <input 
                         {...register("email")}
                         placeholder="Email" 
-                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-secondary text-primary outline-none focus:border-gold transition-all"
+                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                     />
-                    {errors.email && <p className="text-red-500 text-[10px] font-secondary uppercase">{errors.email.message}</p>}
+                    {errors.email && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-1">
@@ -68,14 +68,14 @@ const LoginPage: React.FC = () => {
                         {...register("password")}
                         type="password"
                         placeholder="Password" 
-                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-secondary text-primary outline-none focus:border-gold transition-all"
+                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                     />
-                    {errors.password && <p className="text-red-500 text-[10px] font-secondary uppercase">{errors.password.message}</p>}
+                    {errors.password && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.password.message}</p>}
                 </div>
 
                 <button 
                     type="submit" 
-                    className="w-full py-3 bg-gradient-to-b from-[#c59d5f] to-[#a67c52] text-white font-primary font-bold tracking-[0.2em] rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-2xl uppercase"
+                    className="w-full py-3 bg-gradient-to-b from-[#c59d5f] to-[#a67c52] text-white font-sans font-bold tracking-[0.2em] rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-2xl uppercase"
                 >
                     Login
                 </button>
@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
             
             <div className="text-center mt-12">
                 <TaperedLine direction="center" className="w-100" />
-                <h3 className='font-secondary font-extralight text-yellow-500 text-[12px] tracking-[0.1rem] uppercase opacity-30 mt-10'>
+                <h3 className='font-serif font-extralight text-yellow-500 text-[12px] tracking-[0.1rem] uppercase opacity-30 mt-10'>
                     Restricted Access Only
                 </h3>
             </div>
