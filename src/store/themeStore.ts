@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface ThemeState {
   isDark: boolean;
@@ -9,23 +9,32 @@ interface ThemeState {
 
 export const useThemeStore = create<ThemeState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isDark: false,
 
-      toggleTheme: () => set((state) => {
-        const nextMode = !state.isDark;
-        if (nextMode) document.documentElement.classList.add('dark');
-        else document.documentElement.classList.remove('dark');
-        return { isDark: nextMode };
-      }),
+      toggleTheme: () => {
+        const next = !get().isDark;
+        set({ isDark: next });
+        applyTheme(next);
+      },
 
       initTheme: () => {
-        const storage = localStorage.getItem('theme-storage');
-        const isDark = storage ? JSON.parse(storage).state.isDark : true;
-        if (isDark) document.documentElement.classList.add('dark');
-        else document.documentElement.classList.remove('dark');
-      }
+        const isDark = get().isDark;
+        applyTheme(isDark);
+      },
     }),
-    { name: 'theme-storage' }
+    {
+      name: "theme-storage",
+    }
   )
 );
+
+function applyTheme(isDark: boolean) {
+  if (typeof document === "undefined") return;
+
+  if (isDark) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}
