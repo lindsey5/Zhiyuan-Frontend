@@ -1,7 +1,7 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import { PERMISSIONS } from "../config/permission";
 import { useAuthStore } from "../lib/store/authStore";
-import type { GetRolesResponse, OwnPermissionResponse, Role } from "../types/role.type";
+import type { GetRolesResponse, GetRoleResponse, Role } from "../types/role.type";
 
 export interface RoleCreateDTO {
     name: string,
@@ -10,10 +10,10 @@ export interface RoleCreateDTO {
 }
 
 export const roleService = {
-  getOwnPermissions: (): Promise<OwnPermissionResponse> => {
+  getOwnRole: (): Promise<GetRoleResponse> => {
     const { accessToken } = useAuthStore.getState();
 
-    return apiAxios<OwnPermissionResponse>("roles/permissions/me", {
+    return apiAxios<GetRoleResponse>("roles/me", {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },

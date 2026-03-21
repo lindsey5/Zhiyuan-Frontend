@@ -7,8 +7,8 @@ import { useRole } from "../../hooks/useRole"
 import { Lock } from "lucide-react";
 
 export default function Dashboard() {
-    const { getOwnPermissions } = useRole();
-    const permissions = getOwnPermissions().data?.permissions || [];
+    const { getOwnRole } = useRole();
+    const permissions = getOwnRole().data?.permissions || [];
     const { hasPermissions } = usePermissions();
 
     const isAuthorized = hasPermissions(
@@ -17,8 +17,8 @@ export default function Dashboard() {
     );
 
     return (
-        <div className="w-full p-10">
-        <div className={isAuthorized ? "" : "blur-md pointer-events-none select-none"}>
+        <div className="relative w-full p-10">
+        <div className={isAuthorized && permissions.length > 0 ? "" : "blur-md pointer-events-none select-none"}>
             <div className="flex flex-col space-y-5">
                 <Card>
                     <h1 className="font-sans text-gold font-bold text-2xl">

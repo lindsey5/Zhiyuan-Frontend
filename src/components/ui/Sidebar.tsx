@@ -7,9 +7,10 @@ import {
     FileText,
     Eye,
     Plus,
-    Menu,
     LogOut,
     Shield,
+    ChevronRight,
+    ChevronLeft,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -52,13 +53,13 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 onClick={() => setCollapsed(!collapsed)}
                 className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md"
             >
-            <Menu size={18} />
+                {!collapsed ? <ChevronLeft /> : <ChevronRight />}
             </button>
         </div>
 
         <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-gold text-black flex items-center justify-center font-semibold">
+            <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
                 {user?.firstname.charAt(0)}{user?.lastname?.charAt(0)}
             </div>
 
@@ -68,8 +69,8 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                     <span className="text-sm font-medium">
                         {user?.firstname} {user?.lastname}
                     </span>
-                    <span className="text-xs text-muted capitalize">
-                        {user?.role}
+                    <span className="text-xs text-gold capitalize">
+                        {user?.role || "No assigned role"}
                     </span>
                 </div>
             )}

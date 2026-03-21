@@ -36,7 +36,6 @@ axiosClient.interceptors.response.use(
                 return Promise.reject(err);
             }
         }
-
         const message = error.response?.data?.message || error.response?.data?.error || error.message;
         return Promise.reject(new Error(message));
     }

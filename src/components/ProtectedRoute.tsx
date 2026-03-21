@@ -1,5 +1,5 @@
-import { Navigate, useNavigate } from 'react-router-dom';
-import { type ReactNode, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+import { type ReactNode } from 'react';
 import usePermissions from '../hooks/usePermissions';
 import { useRole } from '../hooks/useRole';
 
@@ -16,21 +16,12 @@ export const ProtectedRoute = ({
     requiredPermissions = [],
     redirectTo = '/',
 }: ProtectedRouteProps) => {
-
-    const navigate = useNavigate();
     const {
         isAuthenticated,
         hasPermissions
     } = usePermissions();
-    const { getOwnPermissions } = useRole();
-    const permissions = getOwnPermissions().data?.permissions || []
-
-    // Watch for authentication changes and redirect immediately if user becomes unauthenticated
-    useEffect(() => {
-        if (requireAuthentication && !isAuthenticated()) {
-        navigate(redirectTo, { replace: true });
-        }
-    }, [isAuthenticated, requireAuthentication, navigate, redirectTo]);
+    const { getOwnRole } = useRole();
+    const permissions = getOwnRole().data?.permissions || []
 
     // Check authentication if required
     if (requireAuthentication && !isAuthenticated()) {

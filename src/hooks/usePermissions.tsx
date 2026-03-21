@@ -5,6 +5,9 @@ export default function usePermissions () {
 
     return {
         isAuthenticated,
-        hasPermissions: (requiredPermissions : string[], permissions : string[]) => requiredPermissions.every(permission => permissions.includes(permission))
+        hasPermissions: (requiredPermissions : string[], permissions : string[]) => {
+            if(permissions.length === 0) return false;
+            return requiredPermissions.every(permission => permissions.includes(permission))
+        }
     }
 }

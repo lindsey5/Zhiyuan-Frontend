@@ -9,11 +9,11 @@ import GoldButton from "../../components/ui/GoldButton";
 import TextField from "../../components/ui/TextField";
 import { promiseToast } from "../../utils/sileo";
 import { type UserResponse } from "../../types/user.type";
+import AccountPermissions from "../../components/settings/AccountPermissions";
 
 export default function AccountSettings() {
     const { user } = useAuthStore();
     const { updateOwn } = useUser();
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({
         resolver: zodResolver(UserSchema),
     });
@@ -24,7 +24,7 @@ export default function AccountSettings() {
             lastname: user.lastname,
             email: user.email
         })
-    }, [user])
+    }, [])
 
     const onSubmit: SubmitHandler<UserFormData> = (data) => promiseToast<UserResponse>(updateOwn.mutateAsync(data))
 
@@ -43,6 +43,10 @@ export default function AccountSettings() {
                 <h2 className="font-sans text-lg text-gold mb-4 font-semibold">
                     Profile Information
                 </h2>
+
+                <div className="">
+        
+                </div>
 
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
@@ -100,6 +104,7 @@ export default function AccountSettings() {
                     </div>
                 </form>
             </Card>
+            <AccountPermissions />
         </div>
     );
 }

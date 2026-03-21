@@ -1,7 +1,7 @@
 export interface Role {
-    id: number;
-    name: string; 
-    description: string;
+    id: number
+    name: string
+    description: string
     permissions: Permission[]
 }
 
@@ -11,8 +11,9 @@ export interface Permission {
     role_id: number;
 }
 
-export interface OwnPermissionResponse {
+export interface GetRoleResponse {
     success: boolean
+    role: Role
     permissions: string[]
 }
 
