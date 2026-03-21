@@ -24,6 +24,7 @@
   /* Effects */
   --shadow-panel: var(--shadow-panel);
   --border-panel: var(--border-panel);
+  --border-ui: var(--border-ui);
   --toggle-border: var(--toggle-border);
 }
 
@@ -60,7 +61,7 @@
     --text-primary: #e0e0e0;
     --text-muted: #888888;
 
-    --border-ui: #333333;
+    --border-ui: #707070;
     --accent-gold: #d4af37;
     --toggle-thumb: #888888;
     --toggle-border: #b39842;

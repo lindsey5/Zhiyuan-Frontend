@@ -3,9 +3,9 @@ import * as z from 'zod';
 export const loginSchema = z.object({
   email: z
     .string()
-    .email("Invalid email address")
     .min(1, "Email is required")
-    .min(3, "Email must be at least 3 characters"),
+    .min(3, "Email must be at least 3 characters")
+    .email("Invalid email address"),
   password: z
     .string()
     .min(1, "Password is required")

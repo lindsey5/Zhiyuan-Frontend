@@ -1,4 +1,4 @@
-import type {  User } from './user.type';
+import type { User } from './user.type';
 
 export interface AuthState {
   user: User | null
@@ -14,6 +14,7 @@ export interface AuthState {
 }
 
 export interface AuthResponse { 
+  success: boolean
   user: User
   token: {
     accessToken: string

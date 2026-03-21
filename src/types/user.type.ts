@@ -4,16 +4,12 @@ export interface User {
   lastname: string;
   email: string;
   role_id: string;
+  role: string;
 }
 
 export interface UserResponse {
-  user: {
-    id: number;
-    firstname: string;
-    lastname: string;
-    email: string;
-    role_id: string;
-  }
+  success: boolean,
+  user: User
 }
 
 export interface UpdateUserPayload {
@@ -21,8 +17,3 @@ export interface UpdateUserPayload {
   lastname: string;
   email: string
 }
-
-/*
-*  THIS TYPES SHOULD BE UPDATED ACCORDING TO THE 
-*  USER TABLE STRUCTURE
-*/

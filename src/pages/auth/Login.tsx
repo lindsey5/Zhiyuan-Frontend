@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
                     <input 
                         {...register("email")}
                         placeholder="Email" 
-                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                        className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                     />
                     {errors.email && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.email.message}</p>}
                 </div>
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
                         {...register("password")}
                         type="password"
                         placeholder="Password" 
-                        className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                        className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                     />
                     {errors.password && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.password.message}</p>}
                 </div>

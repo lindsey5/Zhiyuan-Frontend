@@ -25,6 +25,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
     const { logout } = useAuthStore();
     const location = useLocation();
     const pathname = location.pathname;
+    const { user } = useAuthStore();
 
     return (
         <aside
@@ -48,11 +49,30 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
             )}
 
             <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md"
+                onClick={() => setCollapsed(!collapsed)}
+                className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md"
             >
             <Menu size={18} />
             </button>
+        </div>
+
+        <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
+            {/* Avatar */}
+            <div className="w-10 h-10 rounded-full bg-gold text-black flex items-center justify-center font-semibold">
+                {user?.firstname.charAt(0)}{user?.lastname?.charAt(0)}
+            </div>
+
+            {/* User Info */}
+            {!collapsed && (
+                <div className="flex flex-col">
+                    <span className="text-sm font-medium">
+                        {user?.firstname} {user?.lastname}
+                    </span>
+                    <span className="text-xs text-muted capitalize">
+                        {user?.role}
+                    </span>
+                </div>
+            )}
         </div>
 
         {/* Menu */}
@@ -110,7 +130,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 onClick={logout}
             />
         </nav>
-        {!collapsed && <ToggleButton className="absolute bottom-10 left-1/2 -translate-x-1/2"/>}
+        {!collapsed && <ToggleButton className="absolute bottom-5 left-1/2 -translate-x-1/2"/>}
         </aside>
     );
 }
