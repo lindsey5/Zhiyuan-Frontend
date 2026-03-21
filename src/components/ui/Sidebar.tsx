@@ -1,7 +1,6 @@
 import {
     LayoutDashboard,
     Package,
-    Boxes,
     ClipboardList,
     Settings,
     UserCog,
