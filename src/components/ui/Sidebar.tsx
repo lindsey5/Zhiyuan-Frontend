@@ -30,7 +30,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
     return (
         <aside
             className={cn(
-                "relative h-screen bg-panel fixed left-0 y-0 border-r border-[var(--border-panel)] shadow-panel flex flex-col transition-all duration-300",
+                "z-2 relative h-screen bg-panel fixed left-0 y-0 border-r border-[var(--border-panel)] shadow-panel flex flex-col transition-all duration-300",
                 collapsed ? "w-20" : "w-64"
             )}
         >
