@@ -5,9 +5,10 @@ import { UserSchema, type UserFormData } from "../../schemas/userSchema";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useUser } from "../../hooks/useUser";
 import { useEffect } from "react";
-import { sileo } from "sileo";
 import GoldButton from "../../components/ui/GoldButton";
 import TextField from "../../components/ui/TextField";
+import { promiseToast } from "../../utils/sileo";
+import { type UserResponse } from "../../types/user.type";
 
 export default function AccountSettings() {
     const { user } = useAuthStore();
@@ -25,15 +26,7 @@ export default function AccountSettings() {
         })
     }, [user])
 
-    const onSubmit: SubmitHandler<UserFormData> = (data) => {
-        console.log(data)
-        sileo.promise(updateOwn.mutateAsync(data), {
-            position: "top-center",
-            loading: { title: "Loading..." },
-            success: { title: "Sucessfully Updated." },
-            error: (err : any) =>  ({ title:  err.message }),
-        });
-    }
+    const onSubmit: SubmitHandler<UserFormData> = (data) => promiseToast<UserResponse>(updateOwn.mutateAsync(data))
 
     return (
         <div className="w-full p-10 space-y-6">
