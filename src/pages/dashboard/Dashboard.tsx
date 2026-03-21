@@ -5,7 +5,7 @@ import ToggleButton from "../../components/ui/ToggleButton"
 
 export default function Dashboard () {
     return (
-        <div className="w-full flex flex-col space-y-5 bg-main p-10 transition-all duration-500">
+        <div className="w-full flex flex-col space-y-5 p-10">
             <Card>
                 <h1 className="font-sans text-gold font-bold text-2xl">Dashboard</h1>
             </Card>

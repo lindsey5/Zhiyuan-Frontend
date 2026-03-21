@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { authService } from "../service/authService"
-import { useAuthStore } from "../store/authStore"
+import { useAuthStore } from "../lib/store/authStore"
 import { useNavigate } from "react-router-dom"
 
 export const useAuth = () => {

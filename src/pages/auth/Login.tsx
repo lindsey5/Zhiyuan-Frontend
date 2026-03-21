@@ -1,12 +1,12 @@
 import React from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useThemeStore } from '../../store/themeStore';
+import { useThemeStore } from '../../lib/store/themeStore';
 import { loginSchema, type LoginFormData } from '../../schemas/authSchema';
 import { useAuth } from '../../hooks/useAuth';
 import ToggleButton from '../../components/ui/ToggleButton';
 import TaperedLine from '../../components/ui/Lines';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../lib/store/authStore';
 
 const LoginPage: React.FC = () => {
     const { isDark } = useThemeStore();

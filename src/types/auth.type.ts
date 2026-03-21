@@ -9,6 +9,7 @@ export interface AuthState {
   setErrorMessage: (message: string) => void;
   setAuth: (accessToken: string, refreshToken: string) => void
   setUser: (user : User) => void
+  isAuthenticated: () => boolean
   logout: () => void
 }
 

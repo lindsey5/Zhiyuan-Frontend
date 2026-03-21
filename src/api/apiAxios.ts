@@ -22,12 +22,14 @@ export async function apiAxios<T>(
 ): Promise<T> {
   const { method = HttpMethod.GET, data, params } = options || {};
 
-  const res = await axiosClient.request<T>({
+  let res = await axiosClient.request<T>({
     url: endpoint,
     method,
     data,
     params,
   });
+
+  
 
   return res.data;
 }

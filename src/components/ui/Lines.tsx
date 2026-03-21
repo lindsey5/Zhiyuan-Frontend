@@ -1,5 +1,5 @@
 import React from 'react';
-import { useThemeStore } from '../../store/themeStore';
+import { useThemeStore } from '../../lib/store/themeStore';
 
 interface TaperedLineProps {
   direction?: 'center' | 'left' | 'right';

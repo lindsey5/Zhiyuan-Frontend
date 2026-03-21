@@ -11,7 +11,7 @@ import {
 
 import { Line } from "react-chartjs-2";
 import Card from "../ui/Card";
-import { useThemeStore } from "../../store/themeStore";
+import { useThemeStore } from "../../lib/store/themeStore";
 import { useEffect, useState } from "react";
 
 ChartJS.register(

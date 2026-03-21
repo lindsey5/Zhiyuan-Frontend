@@ -1,4 +1,4 @@
-import { useThemeStore } from "../../store/themeStore";
+import { useThemeStore } from "../../lib/store/themeStore";
 
 const ToggleButton = () => {
     const { isDark, toggleTheme } = useThemeStore();

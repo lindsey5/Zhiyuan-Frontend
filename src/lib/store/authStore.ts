@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AuthState } from "../types/auth.type";
-import type { User } from "../types/user.type";
+import type { AuthState } from "../../types/auth.type";
+import type { User } from "../../types/user.type";
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
@@ -22,6 +22,10 @@ export const useAuthStore = create<AuthState>()(
       },
 
       setUser: (user : User) => set({ user }),
+      isAuthenticated: () => {
+        const { user, accessToken } = get();
+        return !!(user && accessToken);
+      },
 
       logout: () => {
         set({

@@ -19,6 +19,12 @@ export const authService = {
       method: HttpMethod.POST,
     }),
 
+  refreshAccessToken: (refreshToken : string): Promise<AuthResponse> => 
+    apiAxios<AuthResponse>("auth/refreshToken", {
+      method: HttpMethod.POST,
+      data: { refreshToken }
+    }),
+
   getUser: (): Promise<User> =>
     apiAxios<User>("user"),
 };

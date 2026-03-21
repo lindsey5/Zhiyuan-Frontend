@@ -9,14 +9,19 @@ import {
     Eye,
     Plus,
     Menu,
+    LogOut,
 } from "lucide-react";
-import { useThemeStore } from "../../store/themeStore";
+import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
 import SidebarDropdown from "./SidebarDropdown";
 import { cn } from "../../utils/utils";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boolean, setCollapsed: React.Dispatch<React.SetStateAction<boolean>>}) {
     const isDark = useThemeStore().isDark;
+    const navigate = useNavigate();
+    const { logout } = useAuthStore();
 
     return (
         <aside
@@ -54,15 +59,17 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 icon={<LayoutDashboard size={18} />}
                 label="Dashboard"
                 collapsed={collapsed}
+                onClick={() => navigate('/dashboard')}
             />
 
             <SidebarDropdown
                 title="Product Management"
                 icon={<Package size={18} />}
                 collapsed={collapsed}
+                navigate={navigate}
                 items={[
-                    { label: "View Products", icon: <Eye size={14} /> },
-                    { label: "Add Product", icon: <Plus size={14} /> },
+                    { label: "View Products", icon: <Eye size={14} />, path: '/products' },
+                    { label: "Add Product", icon: <Plus size={14} />, path: '/products/add-product' },
                 ]}
             />
 
@@ -70,22 +77,31 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 icon={<Boxes size={18} />}
                 label="Stock Status"
                 collapsed={collapsed}
+                onClick={() => navigate('/dashboard/stock-status')}
             />
 
             <SidebarItem
-            icon={<ClipboardList size={18} />}
-            label="Orders"
-            collapsed={collapsed}
+                icon={<ClipboardList size={18} />}
+                label="Orders"
+                collapsed={collapsed}
+                onClick={() => navigate('/dashboard/orders')}
             />
 
             <SidebarDropdown
                 title="Settings"
                 icon={<Settings size={18} />}
                 collapsed={collapsed}
+                navigate={navigate}
                 items={[
-                    { label: "Account Settings", icon: <UserCog size={14} /> },
-                    { label: "System Logs", icon: <FileText size={14} /> },
+                    { label: "Account Settings", icon: <UserCog size={14} />, path: '/settings/account'},
+                    { label: "System Logs", icon: <FileText size={14} />, path: '/settings/system-logs'},
                 ]}
+            />
+            <SidebarItem
+                icon={<LogOut size={18} />}
+                label="Log out"
+                collapsed={collapsed}
+                onClick={logout}
             />
 
         </nav>
