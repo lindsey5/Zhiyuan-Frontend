@@ -1,4 +1,4 @@
-import { apiAxios, HttpMethod } from "../api/apiAxios";
+import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import { PERMISSIONS } from "../config/permission";
 import { useAuthStore } from "../lib/store/authStore";
 import type { OwnPermission, Role } from "../types/role.type";

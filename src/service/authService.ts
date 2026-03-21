@@ -1,5 +1,5 @@
 import type { AuthResponse } from "../types/auth.type";
-import { apiAxios, HttpMethod } from "../api/apiAxios";
+import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 
 export interface LoginPayload {
   email: string;
