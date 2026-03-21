@@ -12,6 +12,7 @@
   --color-toggle-thumb: var(--toggle-thumb);
   --color-separator: var(--separator);
   --color-gold: var(--accent-gold);
+  --color-avatar: var(--text-avatar);
   
   /* Mapping Text Colors */
   --color-primary: var(--text-primary);
@@ -34,11 +35,11 @@
     --bg-input: #e5d5c5;
     --bg-toggle: #e5d5c5;
     --bg-toggle-inner: #d4bfa7;
-
     --bg-panel: #fcd8aa; 
 
     --text-primary: #4a3728;
     --text-muted: #030303;
+    --text-avatar: #fff;
 
     --border-ui: #6b6b6b;
     --accent-gold: #c2864a;
@@ -55,11 +56,11 @@
     --bg-input: #3d3d3d;
     --bg-toggle: #2a2624;
     --bg-toggle-inner: #000000;
-
     --bg-panel: #313131;
 
     --text-primary: #e0e0e0;
     --text-muted: #888888;
+    --text-avatar: #313131;
 
     --border-ui: #707070;
     --accent-gold: #d4af37;

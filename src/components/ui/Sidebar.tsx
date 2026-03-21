@@ -59,7 +59,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
 
         <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
+            <div className="text-avatar w-10 h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
                 {user?.firstname.charAt(0)}{user?.lastname?.charAt(0)}
             </div>
 
@@ -80,7 +80,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
         <nav className="flex-1 p-4 flex flex-col gap-2">
 
             <SidebarItem
-                icon={<LayoutDashboard size={18} />}
+                icon={<LayoutDashboard size={24} />}
                 label="Dashboard"
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard')}
@@ -89,17 +89,17 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
 
             <SidebarDropdown
                 title="Product Management"
-                icon={<Package size={18} />}
+                icon={<Package size={24} />}
                 collapsed={collapsed}
                 navigate={navigate}
                 items={[
-                    { label: "View Products", icon: <Eye size={14} />, path: '/dashboard/products' },
-                    { label: "Add Product", icon: <Plus size={14} />, path: '/dashboard/products/add-product' },
+                    { label: "View Products", icon: <Eye size={20} />, path: '/dashboard/products' },
+                    { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/products/add-product' },
                 ]}
             />
 
             <SidebarItem
-                icon={<Shield size={18} />}
+                icon={<Shield size={24} />}
                 label="Role Management"
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/roles')}
@@ -107,7 +107,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
             />
 
             <SidebarItem
-                icon={<ClipboardList size={18} />}
+                icon={<ClipboardList size={24} />}
                 label="Orders"
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/orders')}
@@ -116,16 +116,16 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
 
             <SidebarDropdown
                 title="Settings"
-                icon={<Settings size={18} />}
+                icon={<Settings size={24} />}
                 collapsed={collapsed}
                 navigate={navigate}
                 items={[
-                    { label: "Account Settings", icon: <UserCog size={14} />, path: '/dashboard/account'},
-                    { label: "System Logs", icon: <FileText size={14} />, path: '/dashboard/system-logs'},
+                    { label: "Account Settings", icon: <UserCog size={20} />, path: '/dashboard/account'},
+                    { label: "System Logs", icon: <FileText size={20} />, path: '/dashboard/system-logs'},
                 ]}
             />
             <SidebarItem
-                icon={<LogOut size={18} />}
+                icon={<LogOut size={24} />}
                 label="Log out"
                 collapsed={collapsed}
                 onClick={logout}
