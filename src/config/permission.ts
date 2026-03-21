@@ -1,5 +1,7 @@
 
 export const PERMISSIONS = {
+    DASHBOARD_VIEW: 'dashboard:view',
+    
     // User management
     USER_CREATE: 'user:create',
     USER_READ: 'user:read',

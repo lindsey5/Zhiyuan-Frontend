@@ -10,23 +10,27 @@ import {
     Plus,
     Menu,
     LogOut,
+    Shield,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
 import SidebarDropdown from "./SidebarDropdown";
 import { cn } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
+import ToggleButton from "./ToggleButton";
 
 export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boolean, setCollapsed: React.Dispatch<React.SetStateAction<boolean>>}) {
     const isDark = useThemeStore().isDark;
     const navigate = useNavigate();
     const { logout } = useAuthStore();
+    const location = useLocation();
+    const pathname = location.pathname;
 
     return (
         <aside
             className={cn(
-                "h-screen bg-panel fixed left-0 y-0 border-r border-[var(--border-panel)] shadow-panel flex flex-col transition-all duration-300",
+                "relative h-screen bg-panel fixed left-0 y-0 border-r border-[var(--border-panel)] shadow-panel flex flex-col transition-all duration-300",
                 collapsed ? "w-20" : "w-64"
             )}
         >
@@ -60,6 +64,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 label="Dashboard"
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard')}
+                isActive={pathname === '/dashboard'}
             />
 
             <SidebarDropdown
@@ -68,16 +73,17 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 navigate={navigate}
                 items={[
-                    { label: "View Products", icon: <Eye size={14} />, path: '/products' },
-                    { label: "Add Product", icon: <Plus size={14} />, path: '/products/add-product' },
+                    { label: "View Products", icon: <Eye size={14} />, path: '/dashboard/products' },
+                    { label: "Add Product", icon: <Plus size={14} />, path: '/dashboard/products/add-product' },
                 ]}
             />
 
             <SidebarItem
-                icon={<Boxes size={18} />}
-                label="Stock Status"
+                icon={<Shield size={18} />}
+                label="Role Management"
                 collapsed={collapsed}
-                onClick={() => navigate('/dashboard/stock-status')}
+                onClick={() => navigate('/dashboard/roles')}
+                isActive={pathname === '/dashboard/roles'}
             />
 
             <SidebarItem
@@ -85,6 +91,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 label="Orders"
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/orders')}
+                isActive={pathname === '/dashboard/orders'}
             />
 
             <SidebarDropdown
@@ -103,8 +110,8 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={logout}
             />
-
         </nav>
+        {!collapsed && <ToggleButton className="absolute bottom-10 left-1/2 -translate-x-1/2"/>}
         </aside>
     );
 }

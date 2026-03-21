@@ -12,7 +12,9 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <ProtectedRoute requireAuthentication>
+            <ProtectedRoute 
+                requireAuthentication 
+            >
                 <DashboardLayout />
             </ProtectedRoute>
         ),

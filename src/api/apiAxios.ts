@@ -6,7 +6,7 @@ export const HttpMethod = {
   PUT: 'PUT',
   PATCH: 'PATCH',
   DELETE: 'DELETE',
-} as const;
+};
 
 export type HttpMethod = typeof HttpMethod[keyof typeof HttpMethod];
 
@@ -14,22 +14,22 @@ interface ApiOptions {
   method?: HttpMethod;
   data?: any;
   params?: Record<string, any>;
+  headers?: Record<string, string>;
 }
 
 export async function apiAxios<T>(
   endpoint: string,
   options?: ApiOptions
 ): Promise<T> {
-  const { method = HttpMethod.GET, data, params } = options || {};
+  const { method = HttpMethod.GET, data, params, headers } = options || {};
 
-  let res = await axiosClient.request<T>({
+  const res = await axiosClient.request<T>({
     url: endpoint,
     method,
     data,
     params,
+    headers
   });
-
-  
 
   return res.data;
 }

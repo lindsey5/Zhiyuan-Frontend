@@ -4,6 +4,7 @@ export default function usePermissions () {
     const { isAuthenticated } = useAuthStore();
 
     return {
-        isAuthenticated
+        isAuthenticated,
+        hasPermissions: (requiredPermissions : string[], permissions : string[]) => requiredPermissions.every(permission => permissions.includes(permission))
     }
 }

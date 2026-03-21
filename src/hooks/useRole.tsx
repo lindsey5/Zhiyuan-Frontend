@@ -4,7 +4,7 @@ import { roleService } from "../service/roleService"
 
 export const useRole = () => {
 
-    const getOwnPermission = () => {
+    const getOwnPermissions = () => {
         return useQuery<OwnPermission, Error>({
             queryKey: ['permissions'],
             queryFn: roleService.getOwnPermissions
@@ -12,7 +12,7 @@ export const useRole = () => {
     }
 
     return {
-        getOwnPermission
+        getOwnPermissions
     }
 
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { type NavigateFunction } from "react-router-dom";
+import { type NavigateFunction, useLocation } from "react-router-dom";
 
 export default function SidebarDropdown({
     title,
@@ -16,6 +16,7 @@ export default function SidebarDropdown({
     navigate: NavigateFunction
 }) {
     const [open, setOpen] = useState(true);
+    const location = useLocation();
 
     return (
         <div className="flex flex-col">
@@ -45,16 +46,26 @@ export default function SidebarDropdown({
             {/* Dropdown */}
             {!collapsed && open && (
                 <div className="flex flex-col mt-1 ml-6 border-l border-[var(--border-panel)] pl-3 gap-1">
-                {items.map((item, i) => (
-                    <button
-                        key={i}
-                        className="flex items-center gap-2 text-sm text-muted px-2 py-1 rounded cursor-pointer hover:text-gold hover:bg-[rgba(166,124,82,0.1)] transition"
-                        onClick={() => navigate(item.path)}
-                    >
-                    {item.icon}
-                    <span>{item.label}</span>
-                    </button>
-                ))}
+                {items.map((item, i) => {
+                    const isActive = location.pathname === item.path;
+
+                    return (
+                        <button
+                            key={i}
+                            className={`flex items-center gap-2 text-sm px-2 py-1 rounded cursor-pointer transition
+                                ${
+                                    isActive
+                                        ? "text-gold bg-[rgba(166,124,82,0.2)]"
+                                        : "text-muted hover:text-gold hover:bg-[rgba(166,124,82,0.1)]"
+                                }
+                            `}
+                            onClick={() => navigate(item.path)}
+                        >
+                            {item.icon}
+                            <span>{item.label}</span>
+                        </button>
+                    );
+                })}
                 </div>
             )}
         </div>

@@ -1,10 +1,10 @@
 import { useThemeStore } from "../../lib/store/themeStore";
 
-const ToggleButton = () => {
+const ToggleButton = ({ className } : { className?: string }) => {
     const { isDark, toggleTheme } = useThemeStore();
     
     return (
-        <div className="absolute top-8 right-8">
+        <div className={className}>
             <button
                 onClick={toggleTheme}
                 className="border border-[var(--toggle-border)] flex items-center gap-3 px-3 py-2 rounded-full bg-toggle shadow-xl transition-all hover:scale-105"

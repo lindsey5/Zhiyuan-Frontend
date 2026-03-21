@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
             className="relative flex flex-col items-center justify-center min-h-screen p-6 transition-all duration-500 bg-main bg-cover bg-center"
             style={{ backgroundImage: `url(${isDark ? '/dark-bg.jpg' : '/light-bg.jpg'})` }}
         >
-            <ToggleButton />
+            <ToggleButton className="absolute top-8 right-8"/>
 
             <header className="flex flex-col items-center mb-10 text-center leading-0.1">
                 <div className="w-56 h-56">
