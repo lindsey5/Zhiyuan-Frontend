@@ -52,7 +52,7 @@ export default function AccountPermissions() {
 
             {/* PERMISSIONS HEADER */}
             <div>
-                <h3 className="text-lg font-semibold text-gold border-b border-[var(--border-ui)] pb-2">
+                <h3 className="text-lg font-semibold text-gold border-b border-[var(--border-panel)] pb-2">
                     Permissions
                 </h3>
             </div>

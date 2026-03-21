@@ -1,13 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { PERMISSIONS } from "../config/permission";
-import { useAuthStore } from "../lib/store/authStore";
-import type { GetRolesResponse, GetRoleResponse, Role } from "../types/role.type";
-
-export interface RoleCreateDTO {
-    name: string,
-    description: string,
-    permissions: typeof PERMISSIONS[keyof typeof PERMISSIONS]
-}
+import type { GetRolesResponse, GetRoleResponse, Role, RoleCreateDTO } from "../types/role.type";
 
 export const roleService = {
   getOwnRole: (accessToken : string): Promise<GetRoleResponse> => {

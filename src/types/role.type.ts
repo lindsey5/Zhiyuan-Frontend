@@ -1,3 +1,5 @@
+import type { PERMISSIONS } from "../config/permission";
+
 export interface Role {
     id: number
     name: string
@@ -26,4 +28,10 @@ export interface CreateRoleResponse {
     success: boolean
     role: Role
     permissions: Permission[]
+}
+
+export interface RoleCreateDTO {
+    name: string,
+    description: string,
+    permissions: typeof PERMISSIONS[keyof typeof PERMISSIONS]
 }
