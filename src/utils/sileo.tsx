@@ -23,7 +23,7 @@ export const errorToast = (title : string, position: SileoPosition = "top-center
         },
     });
 }
-export const promiseToast = <T,>(
+export const promiseToast = <T extends { message?: string}>(
     promise: Promise<T>,
     position: SileoPosition = "top-center",
     successTitle?: string,
@@ -31,7 +31,7 @@ export const promiseToast = <T,>(
     return sileo.promise(promise, {
         position: position,
         loading: { title: "Loading..." },
-        success: (data: any) => ({
+        success: (data: T) => ({
             title: data?.message || successTitle || "Success",
         }),
         error: (err: any) => ({
