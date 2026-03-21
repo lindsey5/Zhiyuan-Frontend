@@ -10,9 +10,7 @@ export interface RoleCreateDTO {
 }
 
 export const roleService = {
-  getOwnRole: (): Promise<GetRoleResponse> => {
-    const { accessToken } = useAuthStore.getState();
-
+  getOwnRole: (accessToken : string): Promise<GetRoleResponse> => {
     return apiAxios<GetRoleResponse>("roles/me", {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -21,8 +19,7 @@ export const roleService = {
     })
   },
 
-  getRoles: (): Promise<GetRolesResponse> => {
-    const { accessToken } = useAuthStore.getState();
+  getRoles: (accessToken : string): Promise<GetRolesResponse> => {
 
     return apiAxios<GetRolesResponse>("roles", {
       headers: {
@@ -32,8 +29,7 @@ export const roleService = {
     })
   },
   
-  createRole: (data : RoleCreateDTO): Promise<Role> => {
-    const { accessToken } = useAuthStore.getState();
+  createRole: (data : RoleCreateDTO, accessToken : string): Promise<Role> => {
 
     return apiAxios<Role>("roles", {
       headers: {

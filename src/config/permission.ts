@@ -25,5 +25,34 @@ export const PERMISSIONS = {
     ORDER_READ_ALL: 'order:read:all',
     ORDER_READ: 'order:read',
     ORDER_UPDATE: 'order:updated'
-
 }
+
+export const PERMISSION_DESCRIPTIONS = {
+    Dashboard: {
+        DASHBOARD_VIEW: "Allows access to the dashboard",
+    },
+    "User Management": {
+        USER_CREATE: "Create new users",
+        USER_READ: "View user details",
+        USER_READ_ALL: "View all users",
+        USER_UPDATE: "Update user information",
+        USER_DELETE: "Delete users",
+    },
+    "Role Management": {
+        ROLE_CREATE: "Create roles",
+        ROLE_READ: "View role details",
+        ROLE_READ_ALL: "View all roles",
+        ROLE_UPDATE: "Update roles",
+        ROLE_DELETE: "Delete roles",
+    },
+    "Product Management": {
+        PRODUCT_CREATE: "Create products",
+        PRODUCT_UPDATE: "Update products",
+        PRODUCT_DELETE: "Delete products",
+    },
+    "Order Management": {
+        ORDER_READ_ALL: "View all orders",
+        ORDER_READ: "View specific order",
+        ORDER_UPDATE: "Update order status",
+    },
+};
