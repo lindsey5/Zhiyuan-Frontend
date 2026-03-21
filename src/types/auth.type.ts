@@ -1,4 +1,4 @@
-import type {  User, UserResponse } from './user.type';
+import type {  User } from './user.type';
 
 export interface AuthState {
   user: User | null
