@@ -60,7 +60,7 @@ export default function AccountSettings() {
                                 disabled={updateOwn.isPending}
                                 {...register("firstname")}
                                 placeholder="Firstname" 
-                                className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                                className="w-full p-3 bg-input-ui border border-[var(--border-panel)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
                             {errors.firstname && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.firstname.message}</p>}
                         </div>
@@ -71,7 +71,7 @@ export default function AccountSettings() {
                                 disabled={updateOwn.isPending}
                                 {...register("lastname")}
                                 placeholder="Lastname" 
-                                className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                                className="w-full p-3 bg-input-ui border border-[var(--border-panel)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
                             {errors.lastname && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.lastname.message}</p>}
                         </div>
@@ -82,7 +82,7 @@ export default function AccountSettings() {
                                 disabled={updateOwn.isPending}
                                 {...register("email")}
                                 placeholder="Email" 
-                                className="w-full p-3 bg-input-ui border border-ui rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                                className="w-full p-3 bg-input-ui border border-[var(--border-panel)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
                             {errors.email && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.email.message}</p>}
                         </div>

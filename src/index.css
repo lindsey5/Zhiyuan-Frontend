@@ -34,7 +34,7 @@
     --bg-toggle: #e5d5c5;
     --bg-toggle-inner: #d4bfa7;
 
-    --bg-panel: #ecd2b0; 
+    --bg-panel: #eccea7; 
 
     --text-primary: #4a3728;
     --text-muted: #030303;
@@ -51,7 +51,7 @@
 
   .dark {
     --bg-main: #121212;
-    --bg-input: #1a1a1a;
+    --bg-input: #3d3d3d;
     --bg-toggle: #2a2624;
     --bg-toggle-inner: #000000;
 
@@ -67,7 +67,7 @@
     --separator: #d4af37;
 
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
-    --border-panel: #535353;
+    --border-panel: #646464;
   }
 }
 
