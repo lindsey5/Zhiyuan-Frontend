@@ -1,4 +1,4 @@
-import { sileo, type SileoOptions, type SileoPosition } from "sileo";
+import { sileo, type SileoPosition } from "sileo";
 
 export const successToast = (title : string, position: SileoPosition = "top-center") => {
     sileo.success({
