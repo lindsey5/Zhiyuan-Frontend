@@ -25,10 +25,11 @@ export const errorToast = (title : string, position: SileoPosition = "top-center
 }
 export const promiseToast = <T,>(
     promise: Promise<T>,
-    successTitle?: string
+    position: SileoPosition = "top-center",
+    successTitle?: string,
 ) => {
     return sileo.promise(promise, {
-        position: "top-center",
+        position: position,
         loading: { title: "Loading..." },
         success: (data: any) => ({
             title: data?.message || successTitle || "Success",
