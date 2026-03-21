@@ -31,7 +31,7 @@
 @layer base {
   :root {
     --bg-main: #f0d7b7;
-    --bg-input: #d1c1b2;
+    --bg-input: #e5d5c5;
     --bg-toggle: #e5d5c5;
     --bg-toggle-inner: #d4bfa7;
 
@@ -40,7 +40,7 @@
     --text-primary: #4a3728;
     --text-muted: #030303;
 
-    --border-ui: #dccab8;
+    --border-ui: #eeb479;
     --accent-gold: #a67c52;
     --toggle-thumb: #ffffff;
     --toggle-border: #c4c0be;

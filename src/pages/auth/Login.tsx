@@ -8,6 +8,7 @@ import ToggleButton from '../../components/ui/ToggleButton';
 import TaperedLine from '../../components/ui/Lines';
 import { useAuthStore } from '../../lib/store/authStore';
 import { Navigate } from 'react-router-dom';
+import TextField from '../../components/ui/TextField';
 
 const LoginPage: React.FC = () => {
     const { isDark } = useThemeStore();
@@ -58,22 +59,20 @@ const LoginPage: React.FC = () => {
                 {errorMessage && <p className="text-red-500 text-[10px] font-serif uppercase text-center">{errorMessage}</p>}
 
                 <div className="space-y-1">
-                    <input 
-                        {...register("email")}
-                        placeholder="Email" 
-                        className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                    <TextField
+                        placeholder="Email"
+                        registration={register("email")}
+                        error={errors.email?.message}
                     />
-                    {errors.email && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-1">
-                    <input 
-                        {...register("password")}
+                    <TextField
                         type="password"
-                        placeholder="Password" 
-                        className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
+                        placeholder="Password"
+                        registration={register("password")}
+                        error={errors.password?.message}
                     />
-                    {errors.password && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.password.message}</p>}
                 </div>
 
                 <button 

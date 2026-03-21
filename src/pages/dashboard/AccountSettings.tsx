@@ -7,6 +7,7 @@ import { useUser } from "../../hooks/useUser";
 import { useEffect } from "react";
 import { sileo } from "sileo";
 import GoldButton from "../../components/ui/GoldButton";
+import TextField from "../../components/ui/TextField";
 
 export default function AccountSettings() {
     const { user } = useAuthStore();
@@ -55,36 +56,34 @@ export default function AccountSettings() {
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                            <span className="font-sans">Firstname</span>
-                            <input 
+                            <TextField
+                                label="Firstname"
+                                placeholder="e.g. John"
+                                registration={register("firstname")}
+                                error={errors.firstname?.message}
                                 disabled={updateOwn.isPending}
-                                {...register("firstname")}
-                                placeholder="Firstname" 
-                                className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
-                            {errors.firstname && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.firstname.message}</p>}
                         </div>
 
                         <div className="space-y-1">
-                            <span className="font-sans">Lastname</span>
-                            <input 
+                            <TextField
+                                label="Lastname"
+                                placeholder="e.g. Doe"
+                                registration={register("lastname")}
+                                error={errors.lastname?.message}
                                 disabled={updateOwn.isPending}
-                                {...register("lastname")}
-                                placeholder="Lastname" 
-                                className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
-                            {errors.lastname && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.lastname.message}</p>}
                         </div>
 
                         <div className="space-y-1">
-                            <span className="font-sans">Email</span>
-                            <input 
+                            <TextField
+                                label="Email"
+                                type="email"
+                                placeholder="name@example.com"
+                                registration={register("email")}
+                                error={errors.email?.message}
                                 disabled={updateOwn.isPending}
-                                {...register("email")}
-                                placeholder="Email" 
-                                className="w-full p-3 bg-input-ui border border-[var(--border-ui)] rounded-sm font-sans text-primary outline-none focus:border-gold transition-all"
                             />
-                            {errors.email && <p className="text-red-500 text-[10px] font-serif uppercase">{errors.email.message}</p>}
                         </div>
                     </div>
                     <div className="flex justify-end gap-3 mt-5">
