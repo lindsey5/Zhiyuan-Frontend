@@ -1,9 +1,25 @@
 
 export interface User {
-  first_name: string;
-  last_name: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  role: string;
+  role_id: string;
+}
+
+export interface UserResponse {
+  user: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    email: string;
+    role_id: string;
+  }
+}
+
+export interface UpdateUserPayload {
+  firstname: string;
+  lastname: string;
+  email: string
 }
 
 /*

@@ -17,8 +17,8 @@ export default function Dashboard() {
     );
 
     return (
-        <div className="relative w-full p-10">
-        <div className={isAuthorized ? "" : "blur-xl pointer-events-none select-none"}>
+        <div className="w-full p-10">
+        <div className={isAuthorized ? "" : "blur-md pointer-events-none select-none"}>
             <div className="flex flex-col space-y-5">
                 <Card>
                     <h1 className="font-sans text-gold font-bold text-2xl">

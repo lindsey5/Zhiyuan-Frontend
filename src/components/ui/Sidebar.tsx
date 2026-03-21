@@ -99,8 +99,8 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 navigate={navigate}
                 items={[
-                    { label: "Account Settings", icon: <UserCog size={14} />, path: '/settings/account'},
-                    { label: "System Logs", icon: <FileText size={14} />, path: '/settings/system-logs'},
+                    { label: "Account Settings", icon: <UserCog size={14} />, path: '/dashboard/account'},
+                    { label: "System Logs", icon: <FileText size={14} />, path: '/dashboard/system-logs'},
                 ]}
             />
             <SidebarItem

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import AppRouter from './routes/AppRouter';
 import { useThemeStore } from './lib/store/themeStore';
+import { Toaster } from "sileo";
 
 function App() {
   const initTheme = useThemeStore((state) => state.initTheme);
@@ -8,7 +9,10 @@ function App() {
   useEffect(() => initTheme(), []);
 
   return (
-    <AppRouter />
+    <>
+      <Toaster position="top-right" />
+      <AppRouter />
+    </>
   );
 }
 

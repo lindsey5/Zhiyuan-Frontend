@@ -7,12 +7,13 @@ import { useAuth } from '../../hooks/useAuth';
 import ToggleButton from '../../components/ui/ToggleButton';
 import TaperedLine from '../../components/ui/Lines';
 import { useAuthStore } from '../../lib/store/authStore';
+import { Navigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
     const { isDark } = useThemeStore();
 
     const { login } = useAuth();
-    const { errorMessage } = useAuthStore();
+    const { errorMessage, isAuthenticated } = useAuthStore();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -21,6 +22,8 @@ const LoginPage: React.FC = () => {
     const onSubmit: SubmitHandler<LoginFormData> = (data) => {
         login.mutate(data);
     };
+
+    if(isAuthenticated()) return <Navigate to="/dashboard" />
 
     return (
         <div 

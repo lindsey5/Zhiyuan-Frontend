@@ -1,4 +1,3 @@
-import type { User } from "../types/user.type";
 import type { AuthResponse } from "../types/auth.type";
 import { apiAxios, HttpMethod } from "../api/apiAxios";
 
@@ -24,7 +23,4 @@ export const authService = {
       method: HttpMethod.POST,
       data: { refreshToken }
     }),
-
-  getUser: (): Promise<User> =>
-    apiAxios<User>("user"),
 };
