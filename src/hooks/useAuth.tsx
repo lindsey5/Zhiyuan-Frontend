@@ -4,7 +4,7 @@ import { useAuthStore } from "../lib/store/authStore"
 import { useNavigate } from "react-router-dom"
 
 export const useAuth = () => {
-  const { setAuth, setUser,  logout, setErrorMessage } = useAuthStore(); 
+  const { setAuth, setUser,  logout } = useAuthStore(); 
   const navigate = useNavigate()
 
   const login = useMutation({
@@ -14,9 +14,6 @@ export const useAuth = () => {
       setUser(data.user)
       navigate("dashboard")
     },
-    onError: (error) => {
-      setErrorMessage(error.message); //the backend should return json({ message: 'Invalid Credential' })
-    }
   })
 
   const logoutMutate = useMutation({

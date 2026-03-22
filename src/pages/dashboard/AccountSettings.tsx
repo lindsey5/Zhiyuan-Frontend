@@ -8,11 +8,10 @@ import { useEffect } from "react";
 import GoldButton from "../../components/ui/GoldButton";
 import TextField from "../../components/ui/TextField";
 import { promiseToast } from "../../utils/sileo";
-import { type UserResponse } from "../../types/user.type";
 import AccountPermissions from "../../components/settings/AccountPermissions";
 
 export default function AccountSettings() {
-    const { user } = useAuthStore();
+    const { user, accessToken } = useAuthStore();
     const { updateOwn } = useUser();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({
         resolver: zodResolver(UserSchema),
@@ -26,7 +25,10 @@ export default function AccountSettings() {
         })
     }, [])
 
-    const onSubmit: SubmitHandler<UserFormData> = (data) => promiseToast<UserResponse>(updateOwn.mutateAsync(data))
+    const onSubmit: SubmitHandler<UserFormData> = (data) => promiseToast(updateOwn.mutateAsync({ 
+        payload: data, 
+        accessToken: accessToken || ""
+    }))
 
     return (
         <div className="w-full p-10 space-y-6">

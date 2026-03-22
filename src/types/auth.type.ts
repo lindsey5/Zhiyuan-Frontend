@@ -4,9 +4,7 @@ export interface AuthState {
   user: User | null
   accessToken: string | null
   refreshToken: string | null
-  errorMessage: string | null
 
-  setErrorMessage: (message: string) => void;
   setAuth: (accessToken: string, refreshToken: string) => void
   setUser: (user : User) => void
   isAuthenticated: () => boolean

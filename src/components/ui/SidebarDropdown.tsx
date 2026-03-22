@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { type NavigateFunction, useLocation } from "react-router-dom";
 
@@ -8,23 +8,33 @@ export default function SidebarDropdown({
     items,
     collapsed,
     navigate,
+    setCollapsed,
 }: {
     title: string;
     icon: React.ReactNode;
-    items: { label: string; icon?: React.ReactNode, path: string }[];
+    items: { label: string; icon?: React.ReactNode; path: string }[];
     collapsed: boolean;
-    navigate: NavigateFunction
+    navigate: NavigateFunction;
+    setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const location = useLocation();
+
+    const openDropdown = () => {
+        if(collapsed) {
+            setCollapsed(false)
+            setOpen(true)
+        }
+        else setOpen(prev => !prev)
+    }
 
     return (
         <div className="flex flex-col">
 
             {/* Trigger */}
             <div
-                onClick={() => setOpen(!open)}
-                className="flex items-center justify-between px-3 py-2 rounded-md cursor-pointer hover:bg-[rgba(166,124,82,0.1)] transition"
+                onClick={openDropdown}
+                className="relative group flex items-center justify-between px-3 py-2 rounded-md cursor-pointer hover:bg-[rgba(166,124,82,0.1)] transition"
             >
                 <div className="flex items-center gap-3">
                     <span className="text-gold">{icon}</span>
@@ -34,6 +44,7 @@ export default function SidebarDropdown({
                     )}
                 </div>
 
+                {/* Arrow */}
                 {!collapsed && (
                     open ? (
                         <ChevronDown size={16} className="text-gold transition-transform duration-300" />
@@ -41,9 +52,16 @@ export default function SidebarDropdown({
                         <ChevronRight size={16} className="text-gold transition-transform duration-300" />
                     )
                 )}
+
+                {/* Tooltip (collapsed only) */}
+                {collapsed && (
+                    <span className="absolute left-full ml-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
+                        {title}
+                    </span>
+                )}
             </div>
 
-            {/* Dropdown with animation */}
+            {/* Dropdown */}
             {!collapsed && (
                 <div
                     className={`flex flex-col ml-6 border-l border-[var(--border-panel)] pl-3 gap-1 overflow-hidden transition-all duration-300 ease-in-out
@@ -56,6 +74,7 @@ export default function SidebarDropdown({
                         return (
                             <button
                                 key={i}
+                                onClick={() => navigate(item.path)}
                                 className={`flex items-center gap-2 text-sm px-2 py-1 rounded cursor-pointer transition
                                     ${
                                         isActive
@@ -63,10 +82,12 @@ export default function SidebarDropdown({
                                             : "text-muted hover:text-gold hover:bg-[rgba(166,124,82,0.1)]"
                                     }
                                 `}
-                                onClick={() => navigate(item.path)}
                             >
                                 {item.icon}
-                                <span>{item.label}</span>
+
+                                {!collapsed && (
+                                    <span>{item.label}</span>
+                                )}
                             </button>
                         );
                     })}

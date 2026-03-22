@@ -13,7 +13,7 @@ export default function SidebarItem({
 }) {
     return (
         <button 
-            className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition
+            className={`group flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition
                 ${
                     isActive
                         ? "bg-[rgba(166,124,82,0.35)] text-gold"
@@ -26,6 +26,11 @@ export default function SidebarItem({
 
             {!collapsed && (
                 <span className="text-md font-sans">
+                    {label}
+                </span>
+            )}
+            {collapsed && (
+                <span className="absolute left-full ml-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
                     {label}
                 </span>
             )}

@@ -23,7 +23,6 @@ export const ProtectedRoute = ({
     const { getOwnRole } = useRole();
     const permissions = getOwnRole().data?.permissions || []
 
-    // Check authentication if required
     if (requireAuthentication && !isAuthenticated()) {
         return <Navigate to={redirectTo} replace />;
     }

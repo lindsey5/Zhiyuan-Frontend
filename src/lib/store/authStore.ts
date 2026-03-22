@@ -9,15 +9,12 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       refreshToken: null,
-      errorMessage: null,
 
-      setErrorMessage: (message) => set({ errorMessage: message }),
 
       setAuth: (accessToken: string, refreshToken : string) => {
         set({
           accessToken,
           refreshToken,
-          errorMessage: null,
         });
       },
 
@@ -33,7 +30,6 @@ export const useAuthStore = create<AuthState>()(
           user: null,
           accessToken: null,
           refreshToken: null,
-          errorMessage: null,
         });
       },
     }),

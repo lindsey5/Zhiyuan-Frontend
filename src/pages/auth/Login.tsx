@@ -14,7 +14,8 @@ const LoginPage: React.FC = () => {
     const { isDark } = useThemeStore();
 
     const { login } = useAuth();
-    const { errorMessage, isAuthenticated } = useAuthStore();
+    const errorMessage =login.isError && login.error.message;
+    const { isAuthenticated } = useAuthStore();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),

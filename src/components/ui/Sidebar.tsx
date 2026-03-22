@@ -96,6 +96,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                     { label: "View Products", icon: <Eye size={20} />, path: '/dashboard/products' },
                     { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/products/add-product' },
                 ]}
+                setCollapsed={setCollapsed}
             />
 
             <SidebarItem
@@ -123,6 +124,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                     { label: "Account Settings", icon: <UserCog size={20} />, path: '/dashboard/account'},
                     { label: "System Logs", icon: <FileText size={20} />, path: '/dashboard/system-logs'},
                 ]}
+                setCollapsed={setCollapsed}
             />
             <SidebarItem
                 icon={<LogOut size={24} />}
