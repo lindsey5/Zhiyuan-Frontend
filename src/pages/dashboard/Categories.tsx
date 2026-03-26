@@ -35,13 +35,14 @@ export default function Categories () {
         header: "Created At",
         cell: ({ row }) =>
         formatDate(row.original.createdAt),
+        meta: { align: 'center' },
     },
     ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE], permissions)
         ? [
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Category> }) => (
-                    <div className="flex gap-3 text-sm">
+                    <div className="flex gap-3 text-sm justify-center">
                         {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
                             <Button
                                 label="Edit"
@@ -60,6 +61,7 @@ export default function Categories () {
                         )}
                     </div>
                 ),
+                meta: { align: 'center' },
             },
         ]
         : []),

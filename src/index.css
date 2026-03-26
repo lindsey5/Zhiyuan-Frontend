@@ -97,6 +97,40 @@
     opacity: 70%;
   }
 }
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror h1 {
+  @apply text-3xl font-bold my-2;
+}
+
+.ProseMirror h2 {
+  @apply text-2xl font-semibold my-2;
+}
+
+.ProseMirror h3 {
+  @apply text-xl font-semibold my-2;
+}
+
+.ProseMirror p {
+  @apply text-base my-1;
+}
+
+/* Bullet List */
+.ProseMirror ul {
+  @apply list-disc list-outside ml-5 my-1; /* changed to list-outside */
+}
+
+/* Numbered List */
+.ProseMirror ol {
+  @apply list-decimal list-outside ml-5 my-1; /* changed to list-outside */
+}
+
+/* List items spacing */
+.ProseMirror li {
+  @apply my-1;
+}
 
 body {
    @apply bg-main text-primary transition-all duration-500 ease-in-out font-serif;

@@ -7,20 +7,20 @@ type TableRowProps<T> = {
 const TableRow = <T,>({ row }: TableRowProps<T>) => {
     return (
         <tr>
-            {row.getVisibleCells().map(cell => (
-                <td
-                    key={cell.id}
-                    className="py-5 px-3 border-b border-[var(--border-panel)]"
-                >
-                    {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                    )}
-                </td>
-            ))}
+        {row.getVisibleCells().map(cell => {
+            const align = (cell.column.columnDef.meta as any)?.align || 'left';
+            return (
+            <td
+                key={cell.id}
+                className={`py-5 px-3 border-b border-[var(--border-panel)] text-${align}`}
+            >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </td>
+            );
+        })}
         </tr>
-    )
-}
+    );
+};
 
 const TableRows = <T, > ({ table } : { table : Table<T>}) => {
     return (
@@ -30,24 +30,27 @@ const TableRows = <T, > ({ table } : { table : Table<T>}) => {
     )
 }
 
-const TableColumns = <T, > ({ table } : { table : Table<T>}) => {
+const TableColumns = <T,>({ table }: { table: Table<T> }) => {
     return (
         <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                        <th key={header.id} className="text-left text-gold border-b p-5 font-bold sticky top-0 bg-panel">
-                            {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                            )}
-                        </th>
-                    ))}
-                </tr>
-            ))}
+        {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+                const align = (header.column.columnDef.meta as any)?.align || 'left';
+                return (
+                <th
+                    key={header.id}
+                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel text-${align}`}
+                >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+                );
+            })}
+            </tr>
+        ))}
         </thead>
-    )
-}
+    );
+};
 
 const CustomizedTable = <T,> ({ table } : { table : Table<T>}) => {
     return (

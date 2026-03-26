@@ -40,16 +40,20 @@ export default function Products () {
                     <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
                     <span className="text-sm">{row.original.product_name}</span>
                 </div>
-            )
+            ),
+            meta: { align: 'left' },
         },
         {
             header: "Category",
             accessorKey: "category",
-            cell: info => <span className="text-sm">{info.getValue() as string}</span>
+            
+            cell: info => <span className="text-sm">{info.getValue() as string}</span>,
+            meta: { align: 'center' },
         },
         {
             header: "Variants",
-            cell: ({ row }) => row.original.variants?.length || 0
+            cell: ({ row }) => row.original.variants?.length || 0,
+            meta: { align: 'center' },
         },
         {
             header: "Stock",
@@ -57,15 +61,17 @@ export default function Products () {
                 const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
                 return <span className="text-sm">{total}</span>;
             },
+            meta: { align: 'center' },
         },
         {
             header: "Created At",
-            cell: ({ row }) => formatDate(row.original.createdAt)
+            cell: ({ row }) => formatDate(row.original.createdAt),
+            meta: { align: 'center' },
         },
         {
             header: "Action",
             cell: ({ row }) => (
-                <div className="flex gap-3 text-sm">
+                <div className="flex gap-3 text-sm justify-center">
                     <button>
                         Edit
                     </button>
@@ -74,6 +80,7 @@ export default function Products () {
                     </button>
                 </div>
             ),
+            meta: { align: 'right' },
         },
     ];
 

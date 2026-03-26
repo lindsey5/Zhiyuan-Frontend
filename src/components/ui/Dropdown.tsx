@@ -12,13 +12,15 @@ type DropdownProps = {
     options: Option[]
     value: string
     onChange: (value: string) => void
+    error?: string
 }
 
 export default function Dropdown({
     title,
     options,
     value,
-    onChange
+    onChange,
+    error
 }: DropdownProps) {
     const [open, setOpen] = useState(false)
 
@@ -36,8 +38,12 @@ export default function Dropdown({
             <div className="relative">
                 {/* Button */}
                 <button
+                    type="button"
                     onClick={() => setOpen(prev => !prev)}
-                    className="w-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-sm text-primary"
+                    className={cn(
+                        "w-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-sm text-primary",
+                        error && "border-red-500"
+                    )}
                 >
                     <span>{selected?.label || "Select"}</span>
                     <ChevronDown size={16} />
@@ -64,6 +70,7 @@ export default function Dropdown({
                     </div>
                 )}
             </div>
+            <span className="text-red-500 text-xs">{error}</span>
         </div>
     )
 }

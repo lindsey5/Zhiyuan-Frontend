@@ -17,18 +17,20 @@ interface ApiOptions {
   headers?: Record<string, string>;
 }
 
-export async function apiAxios<T>(
-  endpoint: string,
-  options?: ApiOptions
-): Promise<T> {
+export async function apiAxios<T>(endpoint: string, options?: ApiOptions): Promise<T> {
   const { method = HttpMethod.GET, data, params, headers } = options || {};
+
+  const isFormData = data instanceof FormData;
 
   const res = await axiosClient.request<T>({
     url: endpoint,
     method,
     data,
     params,
-    headers
+    headers: {
+      ...(headers || {}),
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    },
   });
 
   return res.data;

@@ -95,7 +95,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 navigate={navigate}
                 items={[
                     { label: "View Products", icon: <Eye size={20} />, path: '/dashboard/products' },
-                    { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/products/add-product' },
+                    { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/add-product' },
                     { label: "Categories", icon: <Tags size={20} />, path: '/dashboard/categories' },
                 ]}
                 setCollapsed={setCollapsed}

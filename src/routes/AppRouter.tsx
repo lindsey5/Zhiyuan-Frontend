@@ -7,6 +7,7 @@ import AccountSettings from "../pages/dashboard/AccountSettings";
 import Products from "../pages/dashboard/Products";
 import Categories from "../pages/dashboard/Categories";
 import { PERMISSIONS } from "../config/permission";
+import AddProduct from "../pages/dashboard/AddProduct";
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,16 @@ const router = createBrowserRouter([
                         ]}
                     >
                         <Categories />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'add-product',
+                Component: () => (
+                    <ProtectedRoute
+                        requiredPermissions={[PERMISSIONS.PRODUCT_CREATE]}
+                    >
+                        <AddProduct />
                     </ProtectedRoute>
                 )
             }
