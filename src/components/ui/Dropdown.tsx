@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
+import { cn } from "../../utils/utils"
 
 type Option = {
     label: string
@@ -52,7 +53,10 @@ export default function Dropdown({
                                     onChange(option.value)
                                     setOpen(false)
                                 }}
-                                className="px-4 py-2 text-sm cursor-pointer transition hover:opacity-50"
+                                className={cn(
+                                    "px-4 py-2 text-sm cursor-pointer transition hover:opacity-50",
+                                    value === option.value && 'text-gold'
+                                )}
                             >
                                 {option.label}
                             </div>

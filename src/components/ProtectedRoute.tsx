@@ -7,7 +7,8 @@ import Unauthorized from './Unauthorized';
 type ProtectedRouteProps = {
     children: ReactNode;
     requireAuthentication?: boolean;
-    requiredPermissions?: string[]
+    requiredPermissions?: string[];
+    anyPermissions?: string[];
     redirectTo?: string;
 };
 
@@ -15,11 +16,13 @@ export const ProtectedRoute = ({
     children,
     requireAuthentication = true,
     requiredPermissions = [],
+    anyPermissions = [],
     redirectTo = '/',
 }: ProtectedRouteProps) => {
     const {
         isAuthenticated,
-        hasPermissions
+        hasPermissions,
+        hasAnyPermissions
     } = usePermissions();
     const { getOwnRole } = useRole();
     const permissions = getOwnRole().data?.permissions || []
@@ -33,6 +36,14 @@ export const ProtectedRoute = ({
 
         if (!hasRequiredPermissions) {
             return <Unauthorized>{children}</Unauthorized>
+        }
+    }
+
+    if (anyPermissions.length > 0) {
+        const hasAnyPermission = hasAnyPermissions(anyPermissions, permissions);
+
+        if (!hasAnyPermission) {
+            return <Unauthorized>{children}</Unauthorized>;
         }
     }
 

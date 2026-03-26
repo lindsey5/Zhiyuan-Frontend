@@ -8,6 +8,10 @@ export default function usePermissions () {
         hasPermissions: (requiredPermissions : string[], permissions : string[]) => {
             if(permissions.length === 0) return false;
             return requiredPermissions.every(permission => permissions.includes(permission))
+        },
+        hasAnyPermissions: (anyPermissions: string[], permissions: string[]) => {
+        if (permissions.length === 0) return false;
+        return anyPermissions.some(permission => permissions.includes(permission));
         }
     }
 }

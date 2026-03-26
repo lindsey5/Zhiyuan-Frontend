@@ -24,7 +24,12 @@ export const PERMISSIONS = {
     // Order management
     ORDER_READ_ALL: 'order:read:all',
     ORDER_READ: 'order:read',
-    ORDER_UPDATE: 'order:updated'
+    ORDER_UPDATE: 'order:updated',
+
+    //Category management
+    CATEGORY_CREATE: 'category:create',
+    CATEGORY_UPDATE: 'category:update',
+    CATEGORY_DELETE: 'category:delete'
 }
 
 export const PERMISSION_DESCRIPTIONS = {
@@ -55,4 +60,9 @@ export const PERMISSION_DESCRIPTIONS = {
         ORDER_READ: "View specific order",
         ORDER_UPDATE: "Update order status",
     },
+    "Category Management" : {
+        CATEGORY_CREATE: "Create categories",
+        CATEGORY_UPDATE: "Update categories",
+        CATEGORY_DELETE: "Delete categories",
+    }
 };

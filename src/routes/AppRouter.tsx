@@ -39,11 +39,30 @@ const router = createBrowserRouter([
             },
             {
                 path: 'products',
-                Component: () => <Products />
+                Component: () => (
+                    <ProtectedRoute
+                        anyPermissions={[
+                            PERMISSIONS.PRODUCT_DELETE,
+                            PERMISSIONS.PRODUCT_UPDATE
+                        ]}
+                    >
+                        <Products />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: 'categories',
-                Component: () => <Categories />
+                Component: () => (
+                    <ProtectedRoute
+                        anyPermissions={[
+                            PERMISSIONS.CATEGORY_CREATE,
+                            PERMISSIONS.CATEGORY_DELETE,
+                            PERMISSIONS.CATEGORY_UPDATE
+                        ]}
+                    >
+                        <Categories />
+                    </ProtectedRoute>
+                )
             }
         ]
     },

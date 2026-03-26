@@ -51,7 +51,7 @@ const TableColumns = <T, > ({ table } : { table : Table<T>}) => {
 
 const CustomizedTable = <T,> ({ table } : { table : Table<T>}) => {
     return (
-        <div className="min-h-0 flex-grow overflow-y-auto">
+        <div className="min-h-0 flex-grow overflow-auto">
             <table className="w-full text-sm">
                 <TableColumns table={table}/>
                 <TableRows table={table}/>

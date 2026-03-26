@@ -7,14 +7,17 @@ import { useCategory } from "../../hooks/useCategory"
 import Button from "../ui/Button"
 import { X } from "lucide-react"
 import { promiseToast } from "../../utils/sileo"
+import type { Category } from "../../types/category"
+import { useEffect } from "react"
+import GoldButton from "../ui/GoldButton"
 
 type CategoryModalProps = {
     open: boolean
     onClose: () => void
-    category_id?: number
+    category?: Category
 }
 
-export default function CategoryModal({ open, onClose, category_id }: CategoryModalProps) {
+export default function CategoryModal({ open, onClose, category }: CategoryModalProps) {
     const { createCategory, updateCategory } = useCategory();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CategoryFormData>({
         resolver: zodResolver(categorySchema),
@@ -22,13 +25,17 @@ export default function CategoryModal({ open, onClose, category_id }: CategoryMo
 
     const close = () => {
         onClose();
-        reset();
+        reset({ name: undefined });
     }
 
     const onSubmit : SubmitHandler<CategoryFormData> = async (data) => {
-        const callBack = category_id ? updateCategory.mutateAsync({ id: category_id, data }) : createCategory.mutateAsync(data);
+        const callBack = category ? updateCategory.mutateAsync({ id: category.id, data }) : createCategory.mutateAsync(data);
         promiseToast(callBack)
     }
+
+    useEffect(() => {
+        if(category) reset({ name: category.name })
+    }, [category])
 
     if (!open) return null
 
@@ -36,7 +43,7 @@ export default function CategoryModal({ open, onClose, category_id }: CategoryMo
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-5">
             <Card className="w-full max-w-md">
                 <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-lg font-semibold font-sans">Add Category</h2>
+                    <h2 className="text-lg font-semibold font-sans">{category ? 'Edit' : 'Add'} Category</h2>
                     <Button 
                         className="border-none p-0"
                         icon={<X size={20}/>}
@@ -55,11 +62,10 @@ export default function CategoryModal({ open, onClose, category_id }: CategoryMo
                     />
 
                     <div className="flex justify-end gap-3 pt-3">
-                        <Button 
-                            className="bg-gold"
+                        <GoldButton
+                            className="text-sm"
                             disabled={createCategory.isPending || updateCategory.isPending}
-                            label={category_id ? 'Save changes' : 'Create'}
-                        />
+                        >{category ? 'Save changes' : 'Create'}</GoldButton>
                     </div>
                 </form>
             </Card>

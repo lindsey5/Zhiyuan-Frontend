@@ -1,4 +1,4 @@
-import { getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
+import { getCoreRowModel, useReactTable, type ColumnDef, type Row } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
@@ -8,36 +8,61 @@ import { formatDate } from "../../utils/utils";
 import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import CategoriesControls from "../../components/categories/CategoriesControls";
+import Button from "../../components/ui/Button";
+import { useRole } from "../../hooks/useRole";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 export default function Categories () {
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const { getOwnRole } = useRole();
+    const { data : role } = getOwnRole();
+    const permissions =  role?.permissions || [];
+    const { hasPermissions, hasAnyPermissions } = usePermissions();
+    const debouncedSearch = useDebounce(search, 200);
     const { getCategories } = useCategory();
     const { data } = getCategories({ search: debouncedSearch });
+    const [category, setCategory] = useState<Category>();
+    const [showModal, setShowModal] = useState(false);
 
     const columns: ColumnDef<Category>[] = [
-        {
-            header: "Category",
-            accessorKey: "Category Name",
-            cell: ({ row }) => row.original.name
-        },
-        {
-            header: "Created At",
-            cell: ({ row }) => formatDate(row.original.createdAt)
-        },
-        {
-            header: "Action",
-            cell: ({ row }) => (
-                <div className="flex gap-3 text-sm">
-                    <button>
-                        Edit
-                    </button>
-                    <button>
-                        Delete
-                    </button>
-                </div>
-            ),
-        },
+    {
+        header: "Category",
+        accessorKey: "name",
+        cell: ({ row }) => row.original.name,
+    },
+    {
+        header: "Created At",
+        cell: ({ row }) =>
+        formatDate(row.original.createdAt),
+    },
+    ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE], permissions)
+        ? [
+            {
+                header: "Action",
+                cell: ({ row }: { row: Row<Category> }) => (
+                    <div className="flex gap-3 text-sm">
+                        {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
+                            <Button
+                                label="Edit"
+                                onClick={() => {
+                                    setCategory(row.original);
+                                    setShowModal(true);
+                                }}
+                            />
+                        )}
+
+                        {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
+                            <Button
+                                label="Delete"
+                                className="bg-red-600 text-white"
+                            />
+                        )}
+                    </div>
+                ),
+            },
+        ]
+        : []),
     ];
 
     const table = useReactTable({
@@ -49,8 +74,15 @@ export default function Categories () {
 
     return (
         <PageContainer className="h-screen" title="Categories">
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5">
-                <CategoriesControls setSearch={setSearch}/>
+            <Card className="flex flex-col flex-1 min-h-0 space-y-5">
+                <CategoriesControls 
+                    setSearch={setSearch} 
+                    category={category}
+                    setCategory={setCategory}
+                    setShowModal={setShowModal}
+                    showModal={showModal}
+                    permissions={permissions}
+                />
                 <CustomizedTable table={table}/>
             </Card>
         </PageContainer>
