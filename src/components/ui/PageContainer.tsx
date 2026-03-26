@@ -1,0 +1,26 @@
+import { cn } from "../../utils/utils";
+import Card from "./Card";
+
+interface PageContainerProps { 
+    title : string
+    children : React.ReactNode
+    className?: string
+}
+
+export default function PageContainer ({ 
+    title, 
+    className, 
+    children 
+} : PageContainerProps) {
+    return (
+         <div className={cn(
+            "w-full p-6 flex flex-col space-y-6 relative",
+            className
+         )}>
+            <Card>
+                <h1 className="font-sans text-gold font-bold text-2xl">{title}</h1>
+            </Card>
+            {children}
+        </div>
+    )
+}

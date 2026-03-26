@@ -13,6 +13,7 @@
   --color-separator: var(--separator);
   --color-gold: var(--accent-gold);
   --color-avatar: var(--text-avatar);
+  --color-hover: var(--bg-hover);
   
   /* Mapping Text Colors */
   --color-primary: var(--text-primary);
@@ -32,16 +33,18 @@
 @layer base {
   :root {
     --bg-main: #f0d7b7;
-    --bg-input: #e5d5c5;
+    --bg-input: #ffffff;
     --bg-toggle: #e5d5c5;
     --bg-toggle-inner: #d4bfa7;
-    --bg-panel: #eed3b0; 
+    --bg-panel: #ffffff; 
+    --bg-table-row: #eed3b0;
+    --bg-hover: #f1cfac;
 
     --text-primary: #4a3728;
     --text-muted: #8c7662;
     --text-avatar: #fff;
 
-    --border-ui: #6b6b6b;
+    --border-ui: #a0a0a0;
     --accent-gold: #c2864a;
     --toggle-thumb: #ffffff;
     --toggle-border: #c4c0be;
@@ -53,10 +56,12 @@
 
   .dark {
     --bg-main: #121212;
-    --bg-input: #3d3d3d;
+    --bg-input: #313131;
     --bg-toggle: #2a2624;
     --bg-toggle-inner: #000000;
     --bg-panel: #313131;
+    --bg-table-row: #1f1f1f;
+    --bg-hover: #53535366;
 
     --text-primary: #e0e0e0;
     --text-muted: #888888;
@@ -70,6 +75,24 @@
 
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
     --border-panel: #646464;
+  }
+}
+
+@layer base {
+  table tbody tr:nth-child(even) {
+    background-color: var(--bg-table-row);
+  }
+
+  table tbody tr:nth-child(odd) {
+    background-color: color-mix(in srgb, var(--bg-table-row) 40%, transparent);
+  }
+
+  table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  table tbody tr:hover {
+    opacity: 70%;
   }
 }
 

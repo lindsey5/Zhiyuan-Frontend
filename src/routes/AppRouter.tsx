@@ -4,6 +4,9 @@ import LoginPage from "../pages/auth/Login";
 import DashboardLayout from "../pages/DashboardLayout";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import AccountSettings from "../pages/dashboard/AccountSettings";
+import Products from "../pages/dashboard/Products";
+import Categories from "../pages/dashboard/Categories";
+import { PERMISSIONS } from "../config/permission";
 
 const router = createBrowserRouter([
     {
@@ -22,11 +25,25 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: () => <Dashboard />,
+                Component: () => (
+                    <ProtectedRoute 
+                        requiredPermissions={[PERMISSIONS.DASHBOARD_VIEW]}
+                    >
+                        <Dashboard />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: 'account',
                 Component: () => <AccountSettings />,
+            },
+            {
+                path: 'products',
+                Component: () => <Products />
+            },
+            {
+                path: 'categories',
+                Component: () => <Categories />
             }
         ]
     },

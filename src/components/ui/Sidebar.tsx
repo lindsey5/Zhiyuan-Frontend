@@ -11,6 +11,7 @@ import {
     Shield,
     ChevronRight,
     ChevronLeft,
+    Tags,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -95,16 +96,9 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 items={[
                     { label: "View Products", icon: <Eye size={20} />, path: '/dashboard/products' },
                     { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/products/add-product' },
+                    { label: "Categories", icon: <Tags size={20} />, path: '/dashboard/categories' },
                 ]}
                 setCollapsed={setCollapsed}
-            />
-
-            <SidebarItem
-                icon={<Shield size={24} />}
-                label="Role Management"
-                collapsed={collapsed}
-                onClick={() => navigate('/dashboard/roles')}
-                isActive={pathname === '/dashboard/roles'}
             />
 
             <SidebarItem
@@ -113,6 +107,14 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/orders')}
                 isActive={pathname === '/dashboard/orders'}
+            />
+            
+            <SidebarItem
+                icon={<Shield size={24} />}
+                label="Role Management"
+                collapsed={collapsed}
+                onClick={() => navigate('/dashboard/roles')}
+                isActive={pathname === '/dashboard/roles'}
             />
 
             <SidebarDropdown

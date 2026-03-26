@@ -1,3 +1,6 @@
+import { Search } from "lucide-react";
+import type { InputHTMLAttributes } from "react";
+
 type InputProps = {
     label?: string;
     type?: string;
@@ -44,4 +47,21 @@ export default function TextField({
             )}
         </div>
     );
+}
+
+type SearchFieldProps = InputHTMLAttributes<HTMLInputElement>
+
+export function SearchField(props: SearchFieldProps) {
+    return (
+        <div className="relative">
+            <Search 
+                className="absolute left-3 top-3"
+                size={20}
+            />
+            <input
+                {...props}
+                className="w-full p-3 pl-10 bg-input-ui border border-[var(--border-ui)] rounded-lg focus:border-gold font-sans text-primary outline-none transition-all"
+            />
+        </div>
+    )
 }

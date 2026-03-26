@@ -9,8 +9,11 @@ export interface User {
 
 export interface UserResponse {
   success: boolean,
-  message?: string,
   user: User
+}
+
+export interface UpdateUserResponse extends UserResponse{
+  message: string;
 }
 
 export interface UpdateUserPayload {

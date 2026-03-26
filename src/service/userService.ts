@@ -1,9 +1,9 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios"
-import type { UpdateUserPayload, UserResponse } from "../types/user.type"
+import type { UpdateUserPayload, UpdateUserResponse, UserResponse } from "../types/user.type"
 
 export const userService = {
-    updateOwnAccount: (data: UpdateUserPayload, accessToken: string): Promise<UserResponse> => {
-        return apiAxios<UserResponse>("users/me", {
+    updateOwnAccount: (data: UpdateUserPayload, accessToken: string) => {
+        return apiAxios<UpdateUserResponse>("users/me", {
             method: HttpMethod.PUT,
             data,
             headers: {
@@ -11,7 +11,7 @@ export const userService = {
             }
         })
     },
-    getUser: (accessToken : string): Promise<UserResponse> => {
+    getUser: (accessToken : string) => {
         return apiAxios<UserResponse>("user", {
             method: HttpMethod.GET,
             headers: {

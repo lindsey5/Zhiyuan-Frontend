@@ -6,7 +6,7 @@ import {
   LinearScale,
   Tooltip,
   Legend,
-  Filler, // 🔥 REQUIRED for fill
+  Filler,
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";

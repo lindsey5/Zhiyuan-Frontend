@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { type ReactNode } from 'react';
 import usePermissions from '../hooks/usePermissions';
 import { useRole } from '../hooks/useRole';
+import Unauthorized from './Unauthorized';
 
 type ProtectedRouteProps = {
     children: ReactNode;
@@ -29,9 +30,9 @@ export const ProtectedRoute = ({
 
     if (permissions.length > 0) {
         const hasRequiredPermissions = hasPermissions(requiredPermissions, permissions);
-        
+
         if (!hasRequiredPermissions) {
-            return <Navigate to="/unauthorized" replace />;
+            return <Unauthorized>{children}</Unauthorized>
         }
     }
 
