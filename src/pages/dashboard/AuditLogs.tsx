@@ -1,7 +1,7 @@
 import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import CustomizedTable from "../../components/ui/Table";
+import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import type { AuditLog } from "../../types/audit.type";
 import { formatDate } from "../../utils/utils";
 import { useState } from "react";
@@ -27,7 +27,7 @@ export default function AuditLogs () {
     const [order, setOrder] = useState<"ASC" | "DESC">("DESC");
 
     const { getAuditLogs } = useAudit();
-    const { data } = getAuditLogs({
+    const { data, isLoading } = getAuditLogs({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         search: debouncedSearch,
@@ -119,10 +119,15 @@ export default function AuditLogs () {
                     order={order}
                     setOrder={setOrder}
                 />;
-                <CustomizedTable 
-                    table={table}
-                    showPagination
-                />
+                {isLoading ? 
+                    <TableSkeleton columns={columns.length}/> 
+                    : 
+                    <CustomizedTable 
+                        table={table} 
+                        showPagination
+                        noDataMessage="No Audit Logs Found"
+                    />
+                }
             </Card>
         </PageContainer>
     )

@@ -1,7 +1,7 @@
 import { getCoreRowModel, useReactTable, type ColumnDef, type Row } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import CustomizedTable from "../../components/ui/Table";
+import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { useCategory } from "../../hooks/useCategory";
 import type { Category } from "../../types/category";
 import { formatDate } from "../../utils/utils";
@@ -21,7 +21,7 @@ export default function Categories () {
     const { hasPermissions, hasAnyPermissions } = usePermissions();
     const debouncedSearch = useDebounce(search, 200);
     const { getCategories } = useCategory();
-    const { data } = getCategories({ search: debouncedSearch });
+    const { data, isLoading } = getCategories({ search: debouncedSearch });
     const [category, setCategory] = useState<Category>();
     const [showModal, setShowModal] = useState(false);
 
@@ -85,7 +85,15 @@ export default function Categories () {
                     showModal={showModal}
                     permissions={permissions}
                 />
-                <CustomizedTable table={table} showPagination={false} />
+                {isLoading ? 
+                    <TableSkeleton columns={columns.length}/> 
+                    : 
+                    <CustomizedTable 
+                        table={table} 
+                        showPagination={false} 
+                        noDataMessage="No Categories Found"
+                    />
+                }
             </Card>
         </PageContainer>
     )

@@ -53,18 +53,82 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
     );
 };
 
-const CustomizedTable = <T,>({ table, showPagination }: { table: Table<T>, showPagination: boolean }) => {
+import React from "react";
+
+type TableSkeletonProps = {
+  columns: number;
+  rows?: number;
+};
+
+export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
+    return (
+        <div className="min-h-0 flex-grow flex flex-col pb-5 px-5 animate-pulse">
+            <div className="overflow-auto flex-grow">
+                <table className="w-full text-sm border-collapse">
+                    {/* Table Head */}
+                    <thead>
+                        <tr>
+                        {Array.from({ length: columns }).map((_, idx) => (
+                            <th
+                                key={idx}
+                                className="h-6 pb-5 border-b border-[var(--border-panel)]"
+                            >
+                            <div
+                                className="h-4 rounded w-3/4 mx-auto"
+                                style={{ backgroundColor: 'var(--color-input-ui)' }}
+                            ></div>
+                            </th>
+                        ))}
+                        </tr>
+                    </thead>
+
+                    {/* Table Body */}
+                    <tbody>
+                        {Array.from({ length: rows }).map((_, rowIdx) => (
+                        <tr key={rowIdx} className="transition-colors duration-200">
+                            {Array.from({ length: columns }).map((_, colIdx) => (
+                            <td
+                                key={colIdx}
+                                className="py-5 px-3 border-b border-[var(--border-panel)]"
+                                style={{
+                                backgroundColor:
+                                    rowIdx % 2 === 0
+                                    ? 'var(--bg-table-row-even)'
+                                    : 'var(--bg-table-row-odd)',
+                                }}
+                            >
+                                <div
+                                className="h-4 rounded w-full"
+                                style={{ backgroundColor: 'var(--bg-hover)' }}
+                                ></div>
+                            </td>
+                            ))}
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+const CustomizedTable = <T,>({ table, showPagination, noDataMessage = "No Data Available" }: { table: Table<T>, showPagination: boolean, noDataMessage: string}) => {
+    const rows = table.getRowModel().rows;
+
     return (
         <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
-            <div className="overflow-auto flex-grow">
-                    <table className="w-full text-sm o">
+            <div className="overflow-auto flex-grow relative">
+                <table className="w-full text-sm o">
                     <TableColumns table={table} />
                     <TableRows table={table} />
                 </table>
+                {rows.length === 0 && <div className="absolute top-1/2 left-1/2 transform -translate-1/2 text-muted font-bold">
+                    {noDataMessage}
+                </div>}
             </div>
-            {showPagination && <PaginationControls table={table} />}
+            {showPagination && rows.length > 0 && <PaginationControls table={table} />}
         </div>
     );
-    };
+};
 
 export default CustomizedTable;

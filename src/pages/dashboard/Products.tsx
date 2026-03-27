@@ -10,7 +10,7 @@ import {
   type Row,
 } from "@tanstack/react-table";
 import type { Product } from "../../types/product";
-import CustomizedTable from "../../components/ui/Table";
+import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
 import ProductsTableControls from "../../components/products/ProductsTableControls";
@@ -36,7 +36,7 @@ export default function Products () {
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
     
     const { getProducts } = useProduct();
-    const { data } = getProducts({ 
+    const { data, isLoading } = getProducts({ 
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
@@ -129,10 +129,13 @@ export default function Products () {
                     category={category}
                     setCategory={setCategory}
                 />
-                <CustomizedTable 
-                    table={table}
-                    showPagination
-                />
+                {isLoading ? <TableSkeleton columns={columns.length} /> : (
+                    <CustomizedTable 
+                        table={table}
+                        showPagination
+                        noDataMessage="No Products Found"
+                    />
+                )}
             </Card>
         </PageContainer>
     )
