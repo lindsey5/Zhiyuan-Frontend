@@ -1,7 +1,7 @@
 import PageContainer from "../../components/ui/PageContainer";
 import Card from "../../components/ui/Card";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler, type UseFormClearErrors, type UseFormSetError } from "react-hook-form";
 import { createProductSchema, type CreateProductFormData } from "../../schemas/productSchema";
 import TextField from "../../components/ui/TextField";
 import RichTextEditor from "../../components/ui/RichTextEditor";
@@ -11,13 +11,89 @@ import AddProductThumbnail from "../../components/add-product/AddProductThumbnai
 import Button from "../../components/ui/Button";
 import AddProductVariant from "../../components/add-product/AddProductVariants";
 import GoldButton from "../../components/ui/GoldButton";
+import { useProduct } from "../../hooks/useProduct";
+import { promiseToast } from "../../utils/sileo";
+import { useAuthStore } from "../../lib/store/authStore";
+import { productService } from "../../service/productService";
+
+const checkIfProductNameExist = async (
+    setError : UseFormSetError<CreateProductFormData>, 
+    clearErrors : UseFormClearErrors<CreateProductFormData>, 
+    data: CreateProductFormData,
+    accessToken: string
+) => {
+    try{
+        clearErrors("product_name");
+
+        const response = await productService.searchProduct({
+            params: { product_name: data.product_name },
+            accessToken: accessToken || ""
+        });
+
+        if (response.success) {
+            setError("product_name", {
+                type: "manual",
+                message: "Product name already exists",
+            });
+            return true;
+        }
+    }catch(err){
+        return false;
+    }
+}
+
+export const checkIfVariantFieldExist = async (
+    setError: UseFormSetError<CreateProductFormData>,
+    clearErrors: UseFormClearErrors<CreateProductFormData>,
+    field: "sku" | "variant_name",
+    error: string,
+    variants: CreateProductFormData['variants'],
+    accessToken: string
+) => {
+    try{
+        for (const [index, variant] of variants.entries()) {
+            clearErrors(`variants.${index}.${field}`);
+
+            const response = await productService.searchVariant({
+                params: { [field]: variant[field] },
+                accessToken,
+            });
+
+            if (response.success) {
+                console.log('haha')
+                setError(`variants.${index}.${field}`, {
+                    type: "manual",
+                    message: error,
+                });
+
+                return true
+            }
+        }
+        return false;
+    }catch(err){
+        return false
+    }
+};
+
+
 
 export default function AddProduct () {
+    const accessToken = useAuthStore(state => state.accessToken);
     const { getCategories } = useCategory();
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
-    const { register, handleSubmit, reset, watch, setValue, formState: { errors } } = useForm<CreateProductFormData>({
-        resolver: zodResolver(createProductSchema) as Resolver<CreateProductFormData>,
+    const { createProduct } = useProduct();
+    const { 
+        register, 
+        handleSubmit, 
+        reset, 
+        watch, 
+        setValue, 
+        formState: { errors },
+        setError,
+        clearErrors
+    } = useForm<CreateProductFormData>({
+        resolver: zodResolver(createProductSchema),
         defaultValues: {
             product_name: "",
             description: "",
@@ -26,7 +102,32 @@ export default function AddProduct () {
         }
     });
 
-    const onSubmit: SubmitHandler<CreateProductFormData> = (data) => {
+    const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
+        const isProductNameExist = await checkIfProductNameExist(
+            setError,
+            clearErrors,
+            data,
+            accessToken || ""
+        )
+
+        const isSkuExist = await checkIfVariantFieldExist(
+            setError,
+            clearErrors,
+            "sku",
+            "SKU already exists",
+            data.variants,
+            accessToken || ""
+        )
+        const isVariantNameExist = await checkIfVariantFieldExist(
+            setError,
+            clearErrors,
+            "variant_name",
+            "Variant name already exists",
+            data.variants,
+            accessToken || ""
+        )
+        if(isProductNameExist || isSkuExist || isVariantNameExist) return;
+
         const formData = new FormData();
         const variant_images  = data.variants.map(variant => variant.image);
         const variants = data.variants.map(variant => {
@@ -41,6 +142,9 @@ export default function AddProduct () {
         variant_images.forEach((file) => {
             formData.append("variant_images", file);
         });
+        const callBack = createProduct.mutateAsync({ formData, accessToken: accessToken || "" });
+        promiseToast(callBack);
+
     }
 
     const removeVariant = (index: number) => {
@@ -54,6 +158,9 @@ export default function AddProduct () {
 
     const addVariant = () => {
         reset({
+            thumbnail: watch('thumbnail'),
+            description: watch('description') || "",
+            category: watch('category') || "",
             variants : [
                 ...(watch("variants") || []),
                 { price: 0, sku: "", stock: 0, variant_name: "", image: undefined }
@@ -133,8 +240,13 @@ export default function AddProduct () {
                             type="button"
                             label="Reset"
                             onClick={resetAll}
+                            disabled={createProduct.isPending}
                         />
-                        <GoldButton type="submit" className="flex-1">Save</GoldButton>
+                        <GoldButton 
+                            type="submit" 
+                            className="flex-1"
+                            disabled={createProduct.isPending}
+                        >Save</GoldButton>
                     </div>
                 </Card>
             </form>

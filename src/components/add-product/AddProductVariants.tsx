@@ -32,7 +32,7 @@ export default function AddProductVariant ({ errors, register, index, setValue, 
     
     return (
         <div className="w-full pb-5 border-b border-[var(--border-panel)] my-5 space-y-5">
-            <div className="flex flex-col items-center w-50 h-50 space-y-5">
+            <div className="flex flex-col items-center w-50 h-50 space-y-3">
                 <div className="w-full flex items-center justify-center overflow-hidden rounded">
                     {imageSrc ? 
                         <img
@@ -46,17 +46,17 @@ export default function AddProductVariant ({ errors, register, index, setValue, 
                 <input
                     type="file"
                     accept="image/*"
-                    id="thumbnail"
+                    id={`variant-${index}`}
                     className="hidden"
                     onChange={handleFileChange}
                 />
-
-                <label htmlFor="thumbnail" className="cursor-pointer">
+                <label htmlFor={`variant-${index}`} className="cursor-pointer">
                     <span className="border border-[var(--border-panel)] text-sm inline-flex items-center gap-2 px-4 py-2 rounded">
                         <Upload size={16} />
                         Upload Image
                     </span>
                 </label>
+                <span className="text-xs text-red-500">{errors.variants ? errors.variants[index]?.image?.message : ""}</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-5">
                 <TextField 

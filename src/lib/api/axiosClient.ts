@@ -11,7 +11,7 @@ axiosClient.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        const status = error.response.status;
+        const status = error.response?.status;
         const { refreshToken, setAuth, logout, setUser } = useAuthStore.getState();
 
         if (status === 401 && !originalRequest._retry && refreshToken) {

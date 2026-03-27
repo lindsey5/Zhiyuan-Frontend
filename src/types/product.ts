@@ -1,3 +1,4 @@
+
 export interface Product {
     id: number;
     product_name: string;
@@ -49,9 +50,19 @@ export interface CreateVariant {
 export interface CreateProductPayload {
     product_name: string;
     description: string;
-    thumbnail_public_id: string;
     thumbnail: File;
     category: string;
     createdAt?: Date;
     variants: CreateVariant[];
+}
+
+export interface CreateProductResponse {
+    success: boolean;
+    message?: string;
+    product: Product
+}
+
+export interface SearchProductResponse {
+    success: boolean;
+    product: Product
 }

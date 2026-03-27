@@ -10,7 +10,9 @@ export const useUser = () => {
         mutationFn: ({ payload, accessToken } : { 
             payload: UpdateUserPayload, 
             accessToken: string
-        }) => userService.updateOwnAccount(payload, accessToken),
+        }) => {
+            return userService.updateOwnAccount(payload, accessToken)
+        },
         onSuccess: (data) => {
             setUser(data.user)
         },

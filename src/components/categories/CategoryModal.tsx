@@ -10,6 +10,7 @@ import { promiseToast } from "../../utils/sileo"
 import type { Category } from "../../types/category"
 import { useEffect } from "react"
 import GoldButton from "../ui/GoldButton"
+import { useAuthStore } from "../../lib/store/authStore"
 
 type CategoryModalProps = {
     open: boolean
@@ -18,6 +19,7 @@ type CategoryModalProps = {
 }
 
 export default function CategoryModal({ open, onClose, category }: CategoryModalProps) {
+    const { accessToken } = useAuthStore();
     const { createCategory, updateCategory } = useCategory();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CategoryFormData>({
         resolver: zodResolver(categorySchema),
@@ -29,7 +31,7 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
     }
 
     const onSubmit : SubmitHandler<CategoryFormData> = async (data) => {
-        const callBack = category ? updateCategory.mutateAsync({ id: category.id, data }) : createCategory.mutateAsync(data);
+        const callBack = category ? updateCategory.mutateAsync({ id: category.id, data, accessToken: accessToken || ""}) : createCategory.mutateAsync({ data, accessToken: accessToken || ""});
         promiseToast(callBack)
     }
 
@@ -63,6 +65,7 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
 
                     <div className="flex justify-end gap-3 pt-3">
                         <GoldButton
+                            type="submit"
                             className="text-sm"
                             disabled={createCategory.isPending || updateCategory.isPending}
                         >{category ? 'Save changes' : 'Create'}</GoldButton>

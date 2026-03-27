@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { productService } from "../service/productService"
 import type { GetProductsParams, GetProductsResponse } from "../types/product"
 
@@ -12,8 +12,19 @@ export const useProduct = () => {
         })
     }
 
+    const createProduct = useMutation({
+        mutationFn: ({ formData, accessToken} : { formData : FormData, accessToken : string}) =>  {
+            return productService.createProduct(formData, accessToken)
+        },
+        onSuccess: () => {
+            window.location.reload();
+        },
+        onError: (err) => console.log(err)
+    })
+
     return {
-        getProducts
+        getProducts,
+        createProduct,
     }
 
 }

@@ -9,7 +9,9 @@ export const useRole = () => {
     const getOwnRole = () => {
         return useQuery<GetRoleResponse, Error>({
             queryKey: ['permissions'],
-            queryFn: async () => roleService.getOwnRole(accessToken || "")
+            queryFn: async () => {
+                return roleService.getOwnRole(accessToken || "")
+            }
         })
     }
 
