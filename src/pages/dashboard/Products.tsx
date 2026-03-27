@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "../../components/ui/Card";
 import { useProduct } from "../../hooks/useProduct"
 import { useDebounce } from "../../hooks/useDebounce";
@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Products () {
     const navigate = useNavigate();
-    
+
     const { getOwnRole } = useRole();
     const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
