@@ -3,6 +3,7 @@ import { SearchField } from "../ui/TextField";
 import { Filter } from "lucide-react";
 import Dropdown, { RoleDropdown } from "../ui/Dropdown";
 import { cn } from "../../utils/utils";
+import DateInput from "../ui/DateInput";
 
 interface AuditLogsControlsProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -52,23 +53,15 @@ export default function AuditLogsControls({
             )}>
                 <h1 className="font-bold text-lg">Filter</h1>
                 <div className="flex flex-wrap gap-5 mt-4">
-                    <div className="flex flex-col gap-1">
-                        <label className="text-xs text-muted">Start Date</label>
-                        <input
-                            type="date"
-                            className="text-sm border border-[var(--border-ui)] bg-panel text-primary px-3 py-2 rounded-md"
-                            onChange={(e) => setStartDate(e.target.value)}
-                        />
-                    </div>
+                    <DateInput 
+                        label="Start Date"
+                        onChange={(value) => setStartDate(value)}
+                    />
 
-                    <div className="flex flex-col gap-1">
-                        <label className="text-xs text-muted">End Date</label>
-                        <input
-                            type="date"
-                            className="text-sm border border-[var(--border-ui)] bg-panel text-primary px-3 py-2 rounded-md"
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </div>
+                    <DateInput 
+                        label="End Date"
+                        onChange={(value) => setEndDate(value)}
+                    />
 
                     <Dropdown 
                         title="Severity"

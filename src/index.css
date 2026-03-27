@@ -98,8 +98,50 @@
 
   table tbody tr:hover {
     opacity: 70%;
+  } 
+}
+
+@layer base {
+  /* WebKit Browsers */
+  body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--bg-main);
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: var(--accent-gold);
+    border-radius: 5px;
+    border: 2px solid var(--bg-main);
+  }
+
+  body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-gold);
+  }
+
+  /* Firefox */
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-gold) var(--bg-main);
+  }
+
+  .dark body::-webkit-scrollbar-track {
+    background: var(--bg-main);
+  }
+
+  .dark body::-webkit-scrollbar-thumb {
+    background-color: var(--accent-gold);
+    border: 2px solid var(--bg-main);
+  }
+
+  .dark body {
+    scrollbar-color: var(--accent-gold) var(--bg-main);
   }
 }
+
 .ProseMirror {
   outline: none;
 }

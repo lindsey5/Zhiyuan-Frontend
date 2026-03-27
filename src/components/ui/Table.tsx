@@ -41,7 +41,7 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
                 return (
                 <th
                     key={header.id}
-                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel text-${align}`}
+                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel text-${align} z-1`}
                 >
                     {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
@@ -52,8 +52,6 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
         </thead>
     );
 };
-
-import React from "react";
 
 type TableSkeletonProps = {
   columns: number;
