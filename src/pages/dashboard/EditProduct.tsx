@@ -2,26 +2,31 @@ import PageContainer from "../../components/ui/PageContainer";
 import Card from "../../components/ui/Card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler, } from "react-hook-form";
-import { createProductSchema, type CreateProductFormData } from "../../schemas/productSchema";
+import { editProductSchema, type EditProductFormData } from "../../schemas/productSchema";
 import TextField from "../../components/ui/TextField";
 import RichTextEditor from "../../components/ui/RichTextEditor";
 import Dropdown from "../../components/ui/Dropdown";
 import { useCategory } from "../../hooks/useCategory";
-import AddProductThumbnail from "../../components/add-product/AddProductThumbnail";
 import Button from "../../components/ui/Button";
-import AddProductVariant from "../../components/add-product/AddProductVariant";
 import GoldButton from "../../components/ui/GoldButton";
 import { useProduct } from "../../hooks/useProduct";
-import { promiseToast } from "../../utils/sileo";
 import { useAuthStore } from "../../lib/store/authStore";
 import { checkIfProductNameExist, checkIfVariantFieldExist } from "../../utils/validation";
+import EditProductThumbnail from "../../components/edit-product/EditProductThumbnail";
+import EditProductVariant from "../../components/edit-product/EditProductVariant";
+import { useParams } from "react-router-dom";
+import { promiseToast } from "../../utils/sileo";
+import { useEffect } from "react";
 
-export default function AddProduct () {
+export default function EditProduct () {
+    const params = useParams();
+    const id = params.id;
     const accessToken = useAuthStore(state => state.accessToken);
     const { getCategories } = useCategory();
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
-    const { createProduct } = useProduct();
+    const { updateProduct, getProductById } = useProduct();
+    const { data : product } = getProductById(Number(id));
     const { 
         register, 
         handleSubmit, 
@@ -31,22 +36,23 @@ export default function AddProduct () {
         formState: { errors },
         setError,
         clearErrors
-    } = useForm<CreateProductFormData>({
-        resolver: zodResolver(createProductSchema),
-        defaultValues: {
-            product_name: "",
-            description: "",
-            category: "",
-            variants: []
-        }
+    } = useForm<EditProductFormData>({
+        resolver: zodResolver(editProductSchema)
     });
 
-    const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
+    useEffect(() => {
+        reset(product?.product)
+    }, [product])
+
+    if(!id) return null;
+
+    const onSubmit: SubmitHandler<EditProductFormData> = async (data) => {
         const isProductNameExist = await checkIfProductNameExist(
             setError,
             clearErrors,
             data,
-            accessToken || ""
+            accessToken || "",
+            Number(id)
         )
 
         const isSkuExist = await checkIfVariantFieldExist(
@@ -55,7 +61,8 @@ export default function AddProduct () {
             "sku",
             "SKU already exists",
             data.variants,
-            accessToken || ""
+            accessToken || "",
+            true
         )
         const isVariantNameExist = await checkIfVariantFieldExist(
             setError,
@@ -63,26 +70,13 @@ export default function AddProduct () {
             "variant_name",
             "Variant name already exists",
             data.variants,
-            accessToken || ""
+            accessToken || "",
+            true
         )
         if(isProductNameExist || isSkuExist || isVariantNameExist) return;
 
-        const formData = new FormData();
-        const variant_images  = data.variants.map(variant => variant.image);
-        const variants = data.variants.map(variant => {
-            const { image, ...rest } = variant;
-            return rest;
-        })
-        formData.append("product_name", data.product_name);
-        formData.append("description", data.description);
-        formData.append("category", data.category);
-        formData.append("thumbnail", data.thumbnail);
-        formData.append("variants", JSON.stringify(variants));
-        variant_images.forEach((file) => {
-            formData.append("variant_images", file);
-        });
-        const callBack = createProduct.mutateAsync({ formData, accessToken: accessToken || "" });
-        promiseToast(callBack);
+        const callBack = updateProduct.mutateAsync({ data, id: Number(id)})
+        promiseToast(callBack)
 
     }
 
@@ -97,12 +91,14 @@ export default function AddProduct () {
 
     const addVariant = () => {
         reset({
-            thumbnail: watch('thumbnail'),
+            id: watch('id'),
+            thumbnail_url: watch('thumbnail_url'),
             description: watch('description') || "",
             category: watch('category') || "",
+            createdAt: watch('createdAt'),
             variants : [
                 ...(watch("variants") || []),
-                { price: 0, sku: "", stock: 0, variant_name: "", image: undefined }
+                { price: 0, sku: "", stock: 0, variant_name: "", image_url: undefined }
             ]
         })
         setTimeout(() => {
@@ -120,15 +116,14 @@ export default function AddProduct () {
 
         reset();
     }
-
     return (
-        <PageContainer title="Add Product">
+        <PageContainer title="Edit Product">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 relative items-start">
-                <AddProductThumbnail 
+                <EditProductThumbnail
                     reset={reset}
                     setValue={setValue}
                     watch={watch}
-                    error={errors.thumbnail?.message}
+                    error={errors.thumbnail_url?.message}
                 />
                 <Card className="w-full lg:w-auto lg:flex-1 flex flex-col space-y-5">
                     <h1 className="font-bold text-lg">Product Details</h1>
@@ -141,8 +136,8 @@ export default function AddProduct () {
                     />
                     <div>
                         <RichTextEditor 
-                            label="Description"
                             value={watch('description')}
+                            label="Description"
                             onChange={(value) => setValue('description', value)}
                             error={errors.description?.message}
                         />
@@ -160,11 +155,13 @@ export default function AddProduct () {
                     {errors.variants?.message && <span className="text-xs text-red-500">{errors.variants.message}</span>}
                     <div className="border border-[var(--border-panel)]"/>
                     {watch('variants')?.map((_, index) => (
-                        <AddProductVariant 
+                        <EditProductVariant 
+                            key={index}
                             errors={errors}
                             index={index}
                             register={register}
                             setValue={setValue}
+                            watch={watch}
                             removeVariant={removeVariant}
                         />
                     ))}
@@ -180,13 +177,13 @@ export default function AddProduct () {
                             type="button"
                             label="Reset"
                             onClick={resetAll}
-                            disabled={createProduct.isPending}
+                            disabled={updateProduct.isPending}
                         />
                         <GoldButton 
                             type="submit" 
                             className="flex-1"
-                            disabled={createProduct.isPending}
-                        >Save</GoldButton>
+                            disabled={updateProduct.isPending}
+                        >Save Changes</GoldButton>
                     </div>
                 </Card>
             </form>

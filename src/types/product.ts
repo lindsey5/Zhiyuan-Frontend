@@ -6,7 +6,7 @@ export interface Product {
     thumbnail_public_id: string;
     thumbnail_url: string;
     category: string;
-    createdAt?: Date;
+    createdAt: string;
     variants: Variant[];
 }
 
@@ -47,15 +47,6 @@ export interface CreateVariant {
     image: File;
 }
 
-export interface CreateProductPayload {
-    product_name: string;
-    description: string;
-    thumbnail: File;
-    category: string;
-    createdAt?: Date;
-    variants: CreateVariant[];
-}
-
 export interface CreateProductResponse {
     success: boolean;
     message?: string;
@@ -65,4 +56,37 @@ export interface CreateProductResponse {
 export interface SearchProductResponse {
     success: boolean;
     product: Product
+}
+
+export interface GetProductResponse {
+    success: boolean;
+    product: Product
+}
+
+export interface UpdateProductPayload {
+    id: number;
+    product_name: string;
+    description: string;
+    thumbnail_public_id?: string;
+    thumbnail_url: string;
+    category: string;
+    createdAt: string;
+    variants: UpdateVariantPayload[];
+}
+
+export interface UpdateVariantPayload {
+    id?: number;
+    product_id?: number;
+    variant_name: string;
+    stock: number;
+    price: number;
+    image_public_id?: string;
+    image_url: string;
+    sku: string;
+}
+
+export interface UpdateProductResponse {
+    success: boolean;
+    product: Product;
+    message?: string;
 }

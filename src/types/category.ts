@@ -2,7 +2,7 @@
 export interface Category {
     id: number;
     name: string;
-    createdAt: Date;
+    createdAt?: Date;
 }
 
 export interface GetCategoryResponse {

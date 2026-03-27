@@ -8,6 +8,7 @@ import Products from "../pages/dashboard/Products";
 import Categories from "../pages/dashboard/Categories";
 import { PERMISSIONS } from "../config/permission";
 import AddProduct from "../pages/dashboard/AddProduct";
+import EditProduct from "../pages/dashboard/EditProduct";
 
 const router = createBrowserRouter([
     {
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
                         requiredPermissions={[PERMISSIONS.PRODUCT_CREATE]}
                     >
                         <AddProduct />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'edit-product/:id',
+                Component: () => (
+                    <ProtectedRoute requiredPermissions={[PERMISSIONS.CATEGORY_UPDATE]}>
+                        <EditProduct />
                     </ProtectedRoute>
                 )
             }

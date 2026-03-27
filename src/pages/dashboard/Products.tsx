@@ -7,6 +7,7 @@ import {
   getCoreRowModel,
   type ColumnDef,
   type PaginationState,
+  type Row,
 } from "@tanstack/react-table";
 import type { Product } from "../../types/product";
 import CustomizedTable from "../../components/ui/Table";
@@ -14,8 +15,18 @@ import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
 import ProductsTableControls from "../../components/products/ProductsTableControls";
 import PageContainer from "../../components/ui/PageContainer";
+import { useRole } from "../../hooks/useRole";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
+import Button from "../../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function Products () {
+    const navigate = useNavigate();
+    const { getOwnRole } = useRole();
+    const { data : role } = getOwnRole();
+    const permissions =  role?.permissions || [];
+    const { hasPermissions, hasAnyPermissions } = usePermissions();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
@@ -36,7 +47,7 @@ export default function Products () {
             header: "Product",
             accessorKey: "product_name",
             cell: ({ row }) => (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 justify-start">
                     <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
                     <span className="text-sm">{row.original.product_name}</span>
                 </div>
@@ -68,20 +79,31 @@ export default function Products () {
             cell: ({ row }) => formatDate(row.original.createdAt),
             meta: { align: 'center' },
         },
-        {
-            header: "Action",
-            cell: ({ row }) => (
-                <div className="flex gap-3 text-sm justify-center">
-                    <button>
-                        Edit
-                    </button>
-                    <button>
-                        Delete
-                    </button>
-                </div>
-            ),
-            meta: { align: 'right' },
-        },
+        ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)
+            ? [
+                {
+                    header: "Action",
+                    cell: ({ row }: { row: Row<Product> }) => (
+                        <div className="flex gap-3 text-sm justify-center">
+                            {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
+                                <Button
+                                    label="Edit"
+                                    onClick={() => navigate(`/dashboard/edit-product/${row.original.id}`)}
+                                />
+                            )}
+    
+                            {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
+                                <Button
+                                    label="Delete"
+                                    className="bg-red-600 text-white"
+                                />
+                            )}
+                        </div>
+                    ),
+                    meta: { align: 'center' },
+                },
+            ]
+        : []),
     ];
 
     const table = useReactTable({

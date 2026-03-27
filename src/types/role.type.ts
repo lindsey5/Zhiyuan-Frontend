@@ -5,6 +5,7 @@ export interface Role {
     name: string
     description: string
     permissions: Permission[]
+    createdAt: Date;
 }
 
 export interface Permission {
