@@ -41,7 +41,7 @@ export default function ProductsTableControls ({
 } : ProductsTableControlsProps) {
 
     return (
-        <div className="p-5 flex items-center justify-between flex-wrap gap-5">
+        <div className="px-5 flex items-center justify-between flex-wrap gap-5">
             <div className="w-full lg:max-w-100">
                 <SearchField 
                     onChange={(e) => setSearch(e.target.value)}

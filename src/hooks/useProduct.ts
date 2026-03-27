@@ -23,8 +23,8 @@ export const useProduct = () => {
         mutationFn: ({ formData, accessToken} : { formData : FormData, accessToken : string}) =>  {
             return productService.createProduct(formData, accessToken)
         },
-        onSuccess: () => {
-            window.location.reload();
+        onSuccess: (data) => {
+            window.location.href = `/dashboard/edit-product/${data.product.id}`;
         },
         onError: (err) => console.log(err)
     })

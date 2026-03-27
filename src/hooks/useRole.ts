@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { GetRoleResponse } from "../types/role.type"
+import type { GetRoleResponse, GetRolesResponse } from "../types/role.type"
 import { roleService } from "../service/roleService"
 import { useAuthStore } from "../lib/store/authStore"
 
@@ -15,8 +15,18 @@ export const useRole = () => {
         })
     }
 
+    const getRoles = () => {
+        return useQuery<GetRolesResponse, Error>({
+            queryKey: ['role'],
+            queryFn: async () => {
+                return roleService.getRoles(accessToken || "")
+            }
+        })
+    }
+
     return {
-        getOwnRole
+        getOwnRole,
+        getRoles
     }
 
 }

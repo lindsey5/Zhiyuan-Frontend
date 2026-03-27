@@ -57,15 +57,8 @@ export default function AddProduct () {
             data.variants,
             accessToken || ""
         )
-        const isVariantNameExist = await checkIfVariantFieldExist(
-            setError,
-            clearErrors,
-            "variant_name",
-            "Variant name already exists",
-            data.variants,
-            accessToken || ""
-        )
-        if(isProductNameExist || isSkuExist || isVariantNameExist) return;
+
+        if(isProductNameExist || isSkuExist) return;
 
         const formData = new FormData();
         const variant_images  = data.variants.map(variant => variant.image);

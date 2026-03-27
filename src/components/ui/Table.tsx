@@ -1,4 +1,5 @@
 import { flexRender, type Row, type Table } from "@tanstack/react-table"
+import { PaginationControls } from "./Pagination";
 
 type TableRowProps<T> = {
     row: Row<T>
@@ -52,15 +53,18 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
     );
 };
 
-const CustomizedTable = <T,> ({ table } : { table : Table<T>}) => {
+const CustomizedTable = <T,>({ table, showPagination }: { table: Table<T>, showPagination: boolean }) => {
     return (
-        <div className="min-h-0 flex-grow overflow-auto">
-            <table className="w-full text-sm">
-                <TableColumns table={table}/>
-                <TableRows table={table}/>
-            </table>
+        <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
+            <div className="overflow-auto flex-grow">
+                    <table className="w-full text-sm o">
+                    <TableColumns table={table} />
+                    <TableRows table={table} />
+                </table>
+            </div>
+            {showPagination && <PaginationControls table={table} />}
         </div>
-    )
-}
+    );
+    };
 
-export default CustomizedTable
+export default CustomizedTable;

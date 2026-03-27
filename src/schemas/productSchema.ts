@@ -26,7 +26,7 @@ export const createProductSchema = z.object({
 
     description: z.string()
         .min(5, "Description must be at least 5 characters")
-        .max(100, "Description must not exceed 100 characters"),
+        .max(1000, "Description must not exceed 1000 characters"),
 
     thumbnail: z.instanceof(File, { message: "Thumbnail is required" }),
     category: z.string().min(1, "Category is required."),
@@ -97,7 +97,7 @@ export const editProductSchema = z.object({
 
     description: z.string()
         .min(5, "Description must be at least 5 characters")
-        .max(100, "Description must not exceed 100 characters"),
+        .max(1000, "Description must not exceed 1000 characters"),
 
     thumbnail_url: z.string().min(1, 'Thumbnail is required'),
     thumbnail_public_id: z.string().optional(),

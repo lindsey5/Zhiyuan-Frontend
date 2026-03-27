@@ -64,16 +64,8 @@ export default function EditProduct () {
             accessToken || "",
             true
         )
-        const isVariantNameExist = await checkIfVariantFieldExist(
-            setError,
-            clearErrors,
-            "variant_name",
-            "Variant name already exists",
-            data.variants,
-            accessToken || "",
-            true
-        )
-        if(isProductNameExist || isSkuExist || isVariantNameExist) return;
+
+        if(isProductNameExist || isSkuExist) return;
 
         const callBack = updateProduct.mutateAsync({ data, id: Number(id)})
         promiseToast(callBack)

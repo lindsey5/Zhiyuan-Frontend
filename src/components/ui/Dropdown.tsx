@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { cn } from "../../utils/utils"
+import { useRole } from "../../hooks/useRole"
 
 type Option = {
     label: string
@@ -51,7 +52,7 @@ export default function Dropdown({
 
                 {/* Dropdown */}
                 {open && (
-                    <div className="absolute mt-2 w-full bg-panel border border-[var(--border-ui)] rounded-sm z-10">
+                    <div className="max-h-50 overflow-y-auto absolute mt-2 w-full bg-panel border border-[var(--border-ui)] rounded-sm z-10">
                         {options.map(option => (
                             <div
                                 key={option.value}
@@ -72,5 +73,29 @@ export default function Dropdown({
             </div>
             <span className="text-red-500 text-xs">{error}</span>
         </div>
+    )
+}
+
+type RoleDropdownProps = {
+    value: string
+    onChange: (value: string) => void
+}
+
+export function RoleDropdown ({value, onChange,}: RoleDropdownProps) {
+    const { getRoles } = useRole();
+    const { data } = getRoles();
+
+    const options = [
+        { label: 'All', value: '' },
+        ...(data?.roles.map(role => ({ label: role.name, value: role.name })) || [])
+    ];
+
+    return (
+        <Dropdown 
+            title="Role"
+            options={options}
+            value={value}
+            onChange={onChange}
+        />
     )
 }

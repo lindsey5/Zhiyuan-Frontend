@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../../components/ui/Card";
 import { useProduct } from "../../hooks/useProduct"
 import { useDebounce } from "../../hooks/useDebounce";
@@ -23,18 +23,21 @@ import { useNavigate } from "react-router-dom";
 
 export default function Products () {
     const navigate = useNavigate();
+    
     const { getOwnRole } = useRole();
     const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
+
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
+    
     const { getProducts } = useProduct();
     const { data } = getProducts({ 
-        page: 1, 
+        page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
         sortBy: sorting.sortBy,
@@ -109,7 +112,7 @@ export default function Products () {
     const table = useReactTable({
         data: data?.products ?? [],
         columns,
-        pageCount: Math.ceil((data?.total ?? 0) / pagination.pageSize),
+        pageCount: data?.totalPages || 0,
         state: { pagination },
         onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
@@ -118,7 +121,7 @@ export default function Products () {
 
     return (
         <PageContainer className="h-screen" title="Products">
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5">
+            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <ProductsTableControls 
                     setSearch={setSearch}
                     setSorting={setSorting}
@@ -126,7 +129,10 @@ export default function Products () {
                     category={category}
                     setCategory={setCategory}
                 />
-                <CustomizedTable table={table}/>
+                <CustomizedTable 
+                    table={table}
+                    showPagination
+                />
             </Card>
         </PageContainer>
     )

@@ -130,7 +130,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 navigate={navigate}
                 items={[
                     { label: "Account Settings", icon: <UserCog size={20} />, path: '/dashboard/account'},
-                    { label: "System Logs", icon: <FileText size={20} />, path: '/dashboard/system-logs'},
+                    { label: "Audit Logs", icon: <FileText size={20} />, path: '/dashboard/audit-logs'},
                 ]}
                 setCollapsed={setCollapsed}
             />

@@ -9,6 +9,7 @@ export default defineConfig({
     global: 'window'
   },
   server: {
+    allowedHosts: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',

@@ -9,6 +9,7 @@ import Categories from "../pages/dashboard/Categories";
 import { PERMISSIONS } from "../config/permission";
 import AddProduct from "../pages/dashboard/AddProduct";
 import EditProduct from "../pages/dashboard/EditProduct";
+import AuditLogs from "../pages/dashboard/AuditLogs";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,14 @@ const router = createBrowserRouter([
                 Component: () => (
                     <ProtectedRoute requiredPermissions={[PERMISSIONS.CATEGORY_UPDATE]}>
                         <EditProduct />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'audit-logs',
+                Component: () => (
+                    <ProtectedRoute requiredPermissions={[PERMISSIONS.AUDIT_VIEW_ALL]}>
+                        <AuditLogs />
                     </ProtectedRoute>
                 )
             }

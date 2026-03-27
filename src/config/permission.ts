@@ -1,6 +1,7 @@
 
 export const PERMISSIONS = {
     DASHBOARD_VIEW: 'dashboard:view',
+    AUDIT_VIEW_ALL: 'audit:view:all',
 
     // User management
     USER_CREATE: 'user:create',
@@ -35,6 +36,9 @@ export const PERMISSIONS = {
 export const PERMISSION_DESCRIPTIONS = {
     Dashboard: {
         DASHBOARD_VIEW: "Allows access to the dashboard",
+    },
+    Audit: {
+        AUDIT_VIEW_ALL: 'View all audit logs',
     },
     "User Management": {
         USER_CREATE: "Create new users",

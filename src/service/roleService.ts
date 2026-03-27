@@ -12,7 +12,6 @@ export const roleService = {
   },
 
   getRoles: (accessToken : string): Promise<GetRolesResponse> => {
-
     return apiAxios<GetRolesResponse>("roles", {
       headers: {
         Authorization: `Bearer ${accessToken}`

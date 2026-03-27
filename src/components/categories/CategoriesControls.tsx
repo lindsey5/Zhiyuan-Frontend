@@ -30,7 +30,7 @@ export default function CategoriesControls ({
     }
 
     return (
-        <div className="flex items-center justify-between flex-wrap gap-5">
+        <div className="flex items-center justify-between flex-wrap gap-5 px-5">
             <CategoryModal 
                 onClose={onClose}
                 open={showModal}
