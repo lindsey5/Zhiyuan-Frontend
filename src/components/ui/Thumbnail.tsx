@@ -22,7 +22,7 @@ export default function Thumbnail ({ thumbnailSrc, remove, handleFileChange, err
                         alt="Thumbnail"
                         className="object-contain w-full h-full"
                     /> : 
-                    <Image className="w-full h-full" strokeWidth={1}/>
+                    <Image className="w-full h-full" strokeWidth={0.7}/>
                 }
             </div>
 
