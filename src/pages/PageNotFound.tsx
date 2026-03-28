@@ -7,23 +7,22 @@ export default function PageNotFound() {
     const { isDark } = useThemeStore();    
 
     return (
-        <div 
+        <div
             style={{ backgroundImage: `url(${isDark ? '/dark-bg.jpg' : '/light-bg.jpg'})` }}
             className="w-full h-screen flex flex-col items-center justify-center bg-cover bg-center relative overflow-hidden"
         >
-
-            <Card className="z-10 p-12 flex flex-col items-center gap-6 shadow-2xl max-w-sm text-center">
-                <XCircle size={80} className="text-gold" />
-                <h1 className="text-5xl font-bold text-primary">404</h1>
-                <h2 className="text-2xl font-semibold text-primary">Oops! Page Not Found</h2>
-                <p className="text-muted">
-                The page you are looking for might have been removed or does not exist.
+            <Card className="flex flex-col items-center gap-4 max-w-xs text-center p-10">
+                <XCircle size={60} className="text-gold" />
+                <h1 className="text-4xl font-bold text-primary">404</h1>
+                <h2 className="text-xl font-medium text-primary">Page Not Found</h2>
+                <p className="text-muted text-sm">
+                    The page you are looking for might have been removed or does not exist.
                 </p>
                 <a
                     href="/"
-                    className="text-sm mt-4 px-6 py-3 bg-gold text-white rounded-lg font-semibold shadow-lg hover:opacity-90 transition"
+                    className="mt-4 px-5 py-2 bg-gold text-white rounded-md font-medium hover:bg-opacity-90 transition"
                 >
-                Back to Home
+                    Back to Home
                 </a>
             </Card>
         </div>
