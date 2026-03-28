@@ -84,7 +84,7 @@ export default function Variants () {
             ? [
                 {
                     header: "Action",
-                    cell: ({ row }: { row: Row<VariantWithProduct> }) => (
+                    cell: () => (
                         <div className="flex gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
