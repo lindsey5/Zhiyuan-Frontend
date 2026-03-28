@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { productService } from "../service/productService"
 import type { GetProductResponse, GetProductsParams, GetProductsResponse, UpdateProductPayload } from "../types/product"
-import { successToast } from "../utils/sileo"
 
 export const useProduct = () => {
 
