@@ -30,7 +30,7 @@ export default function SidebarItem({
                 </span>
             )}
             {collapsed && (
-                <span className="absolute left-full ml-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
+                <span className="pointer-events-none select-none absolute left-full ml-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
                     {label}
                 </span>
             )}

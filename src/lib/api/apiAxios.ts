@@ -22,19 +22,15 @@ export async function apiAxios<T>(endpoint: string, options?: ApiOptions): Promi
 
   const isFormData = data instanceof FormData;
 
-  try{
-    const res = await axiosClient.request<T>({
-      url: endpoint,
-      method,
-      data,
-      params,
-      headers: {
-        ...(headers || {}),
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      },
-    });
-    return res.data;
-  }catch(err : any){
-    return err
-  }
+  const res = await axiosClient.request<T>({
+    url: endpoint,
+    method,
+    data,
+    params,
+    headers: {
+      ...(headers || {}),
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    },
+  });
+  return res.data;
 }

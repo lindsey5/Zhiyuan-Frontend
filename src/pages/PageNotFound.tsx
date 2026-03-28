@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../components/ui/Card";
 import { XCircle } from "lucide-react";
 import { useThemeStore } from "../lib/store/themeStore";

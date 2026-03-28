@@ -10,10 +10,10 @@ import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
 
 const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
-    LOW: "bg-green-700",
-    MEDIUM: "bg-yellow-700",
-    HIGH: "bg-orange-700",
-    CRITICAL: "bg-red-700",
+    LOW: "bg-green-500",
+    MEDIUM: "bg-yellow-500",
+    HIGH: "bg-orange-500",
+    CRITICAL: "bg-red-500",
 };
 
 export default function AuditLogs () {
