@@ -16,7 +16,9 @@ const createVariantSchema = z.object({
         .min(3, "SKU must be at least 3 characters")
         .max(100, "SKU must not exceed 100 characters"),
 
-    image: z.instanceof(File, { message: "Image is required" })
+    image: z
+        .instanceof(File, { message: "Image is required" })
+        .refine((file) => file !== undefined, { message: "Image is required" })
 });
 
 export const createProductSchema = z.object({
@@ -28,7 +30,9 @@ export const createProductSchema = z.object({
         .min(5, "Description must be at least 5 characters")
         .max(1000, "Description must not exceed 1000 characters"),
 
-    thumbnail: z.instanceof(File, { message: "Thumbnail is required" }),
+    thumbnail: z
+        .instanceof(File, { message: "Thumbnail is required" })
+        .refine((file) => file !== undefined, { message: "Thumbnail is required" }),
     category: z.string().min(1, "Category is required."),
 
     variants: z.array(createVariantSchema).min(1, "At least one variant is required"),

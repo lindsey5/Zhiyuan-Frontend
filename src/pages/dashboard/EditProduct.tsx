@@ -67,7 +67,11 @@ export default function EditProduct () {
 
         if(isProductNameExist || isSkuExist) return;
 
-        const callBack = updateProduct.mutateAsync({ data, id: Number(id)})
+        const callBack = updateProduct.mutateAsync({ 
+            data, 
+            id: Number(id), 
+            accessToken: accessToken || ""
+        })
         promiseToast(callBack)
 
     }
@@ -112,7 +116,6 @@ export default function EditProduct () {
                 />
                 <Card className="w-full lg:w-auto lg:flex-1 flex flex-col space-y-5">
                     <h1 className="font-bold text-lg">Product Details</h1>
-                    <div className="border border-[var(--border-panel)]"/>
                     <TextField 
                         label="Product Name"
                         placeholder="Enter product name"
@@ -136,9 +139,9 @@ export default function EditProduct () {
                             error={errors.category?.message}
                         />
                     </div>
-                    <h1 className="font-bold text-lg mt-10">Variants</h1>
+                    <div className="border border-[var(--border-panel)] mt-10"/>
+                    <h1 className="font-bold text-lg">Variants</h1>
                     {errors.variants?.message && <span className="text-xs text-red-500">{errors.variants.message}</span>}
-                    <div className="border border-[var(--border-panel)]"/>
                     {watch('variants')?.map((_, index) => (
                         <EditProductVariant 
                             key={index}

@@ -12,6 +12,7 @@ import {
     ChevronRight,
     ChevronLeft,
     Tags,
+    Layers,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -102,6 +103,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 items={[
                     { label: "View Products", icon: <Eye size={20} />, path: '/dashboard/products' },
                     { label: "Add Product", icon: <Plus size={20} />, path: '/dashboard/add-product' },
+                    { label: "Variants", icon: <Layers size={20}/>, path: '/dashboard/variants'},
                     { label: "Categories", icon: <Tags size={20} />, path: '/dashboard/categories' },
                 ]}
                 setCollapsed={setCollapsed}

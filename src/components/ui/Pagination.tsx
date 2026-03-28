@@ -28,7 +28,7 @@ export const PaginationControls = <T,>({ table }: PaginationControlsProps<T>) =>
     };
 
     return (
-        <div className="flex items-center justify-end gap-1 mt-4 lg:text-sm xxl:text-md text-primary flex-wrap">
+        <div className="flex items-center justify-end gap-1 mt-10 lg:text-sm xxl:text-md text-primary flex-wrap">
             {/* First & Prev */}
             <button
                 onClick={() => table.setPageIndex(0)}

@@ -10,10 +10,10 @@ import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
 
 const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
-    LOW: "bg-green-500",
-    MEDIUM: "bg-yellow-500",
-    HIGH: "bg-orange-500",
-    CRITICAL: "bg-red-500",
+    LOW: "bg-green-700",
+    MEDIUM: "bg-yellow-700",
+    HIGH: "bg-orange-700",
+    CRITICAL: "bg-red-700",
 };
 
 export default function AuditLogs () {
@@ -79,7 +79,7 @@ export default function AuditLogs () {
             header: "Severity",
             accessorKey: "severity",
             cell: ({ row }) => (
-                <div className="bg-chip rounded-full px-3 py-1 flex items-center gap-2">
+                <div className="bg-chip rounded-full px-3 py-1 flex items-center justify-center gap-2">
                     <span
                         className={`w-2.5 h-2.5 rounded-full ${severityColor[row.original.severity]}`}
                     />

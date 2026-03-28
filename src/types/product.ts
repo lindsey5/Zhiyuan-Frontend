@@ -1,3 +1,5 @@
+import type { PaginationResponse } from "./pagination";
+import type { Variant } from "./variant";
 
 export interface Product {
     id: number;
@@ -10,23 +12,7 @@ export interface Product {
     variants: Variant[];
 }
 
-export interface Variant {
-    id: number;
-    product_id: number;
-    variant_name: string;
-    stock: number;
-    price: number;
-    image_public_id: string;
-    image_url: string;
-    sku: string;
-}
-
-export interface GetProductsResponse {
-    success: boolean;
-    page: number;
-    limit: number;
-    totalPages: number;
-    total: number;
+export interface GetProductsResponse extends PaginationResponse {
     products: Product[]
 }
 
@@ -89,4 +75,9 @@ export interface UpdateProductResponse {
     success: boolean;
     product: Product;
     message?: string;
+}
+
+export interface DeleteProductResponse {
+    success: boolean;
+    message: string;
 }

@@ -6,7 +6,8 @@ export const useCategory = () => {
     const getCategories = (params : GetCategoryParams) => {
         return useQuery<GetCategoryResponse, Error>({
             queryKey: ['categories', params],
-            queryFn: () => categoryService.getCategories(params)
+            queryFn: () => categoryService.getCategories(params),
+            placeholderData: (prev) => prev
         })
     }
 

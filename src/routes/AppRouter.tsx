@@ -10,6 +10,8 @@ import { PERMISSIONS } from "../config/permission";
 import AddProduct from "../pages/dashboard/AddProduct";
 import EditProduct from "../pages/dashboard/EditProduct";
 import AuditLogs from "../pages/dashboard/AuditLogs";
+import Variants from "../pages/dashboard/Variants";
+import PageNotFound from "../pages/PageNotFound";
 
 const router = createBrowserRouter([
     {
@@ -46,10 +48,25 @@ const router = createBrowserRouter([
                     <ProtectedRoute
                         anyPermissions={[
                             PERMISSIONS.PRODUCT_DELETE,
-                            PERMISSIONS.PRODUCT_UPDATE
+                            PERMISSIONS.PRODUCT_UPDATE,
+                            PERMISSIONS.PRODUCT_READ_ALL
                         ]}
                     >
                         <Products />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'variants',
+                Component: () => (
+                    <ProtectedRoute
+                        anyPermissions={[
+                            PERMISSIONS.PRODUCT_DELETE,
+                            PERMISSIONS.PRODUCT_UPDATE,
+                            PERMISSIONS.PRODUCT_READ_ALL
+                        ]}
+                    >
+                        <Variants />
                     </ProtectedRoute>
                 )
             },
@@ -60,7 +77,8 @@ const router = createBrowserRouter([
                         anyPermissions={[
                             PERMISSIONS.CATEGORY_CREATE,
                             PERMISSIONS.CATEGORY_DELETE,
-                            PERMISSIONS.CATEGORY_UPDATE
+                            PERMISSIONS.CATEGORY_UPDATE,
+                            PERMISSIONS.CATEGORY_READ_ALL,
                         ]}
                     >
                         <Categories />
@@ -95,6 +113,10 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: '*',
+        Component: () => <PageNotFound />
+    }
 ]);
 
 export default function AppRouter() {

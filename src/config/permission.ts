@@ -18,6 +18,7 @@ export const PERMISSIONS = {
     ROLE_DELETE: 'role:delete',
 
     // Product management
+    PRODUCT_READ_ALL: 'product:read:all',
     PRODUCT_CREATE: 'product:create',
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
@@ -28,6 +29,7 @@ export const PERMISSIONS = {
     ORDER_UPDATE: 'order:updated',
 
     //Category management
+    CATEGORY_READ_ALL: 'category:read:all',
     CATEGORY_CREATE: 'category:create',
     CATEGORY_UPDATE: 'category:update',
     CATEGORY_DELETE: 'category:delete'
@@ -55,9 +57,10 @@ export const PERMISSION_DESCRIPTIONS = {
         ROLE_DELETE: "Delete roles",
     },
     "Product Management": {
-        PRODUCT_CREATE: "Create products",
-        PRODUCT_UPDATE: "Update products",
-        PRODUCT_DELETE: "Delete products",
+        PRODUCT_READ_ALL: "View all products including variants",
+        PRODUCT_CREATE: "Create products including variants",
+        PRODUCT_UPDATE: "Update products including variants",
+        PRODUCT_DELETE: "Delete products including variants",
     },
     "Order Management": {
         ORDER_READ_ALL: "View all orders",
@@ -65,6 +68,7 @@ export const PERMISSION_DESCRIPTIONS = {
         ORDER_UPDATE: "Update order status",
     },
     "Category Management" : {
+        CATEGORY_READ_ALL: "View all categories",
         CATEGORY_CREATE: "Create categories",
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",

@@ -4,7 +4,7 @@ import { Lock } from "lucide-react";
 export default function Unauthorized ({ children } : { children : React.ReactNode }) {
 
     return (
-        <div className='relative w-full'>
+        <div className='relative w-full h-screen'>
             <div className="z-1 absolute inset-0 flex items-center justify-center">
                 <Card className="p-10 flex flex-col items-center gap-4 shadow-xl">
                     <Lock size={60} className="text-gold" />

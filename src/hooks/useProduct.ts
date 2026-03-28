@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { productService } from "../service/productService"
 import type { GetProductResponse, GetProductsParams, GetProductsResponse, UpdateProductPayload } from "../types/product"
+import { successToast } from "../utils/sileo"
 
 export const useProduct = () => {
 
@@ -19,19 +20,25 @@ export const useProduct = () => {
         })
     }
 
+    const deleteProduct = useMutation({
+        mutationFn: ({ id, accessToken } : { id: number, accessToken: string}) => {
+            return productService.deleteProduct(id, accessToken);
+        }
+    })
+
     const createProduct = useMutation({
         mutationFn: ({ formData, accessToken} : { formData : FormData, accessToken : string}) =>  {
             return productService.createProduct(formData, accessToken)
         },
-        onSuccess: (data) => {
-            window.location.href = `/dashboard/edit-product/${data.product.id}`;
+        onSuccess: () => {
+            window.location.href = `/dashboard/products`;
         },
         onError: (err) => console.log(err)
     })
 
     const updateProduct = useMutation({
-        mutationFn: ({ id, data } : { id : number, data : UpdateProductPayload }) => {
-            return productService.updateProduct(id, data);
+        mutationFn: ({ id, data, accessToken } : { id : number, data : UpdateProductPayload, accessToken : string }) => {
+            return productService.updateProduct(id, data, accessToken);
         },
         onSuccess: () => window.location.reload(),
         onError: (err) => console.log(err)
@@ -41,7 +48,8 @@ export const useProduct = () => {
         getProducts,
         createProduct,
         updateProduct,
-        getProductById
+        getProductById,
+        deleteProduct
     }
 
 }

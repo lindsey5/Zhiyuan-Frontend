@@ -24,7 +24,7 @@ export default function EditProductThumbnail ({ setValue, reset, watch, error } 
     };
 
     const handleRemove = () => {
-        reset({ ...watch(), thumbnail_url: undefined });
+        reset({ ...watch(), thumbnail_url: "" });
     };
 
     return (
