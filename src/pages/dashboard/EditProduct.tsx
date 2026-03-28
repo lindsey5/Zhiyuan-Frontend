@@ -101,13 +101,6 @@ export default function EditProduct () {
         }, 50);
     }
 
-    const resetAll = () => {
-        const isConfirmed = window.confirm("Are you sure you want to reset?");
-
-        if (!isConfirmed) return;
-
-        reset();
-    }
     return (
         <PageContainer title="Edit Product">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 relative items-start">
@@ -164,13 +157,6 @@ export default function EditProduct () {
                         onClick={addVariant}
                     />
                     <div className="flex gap-10 w-full pt-10">
-                        <Button 
-                            className="flex-1"
-                            type="button"
-                            label="Reset"
-                            onClick={resetAll}
-                            disabled={updateProduct.isPending}
-                        />
                         <GoldButton 
                             type="submit" 
                             className="flex-1"
