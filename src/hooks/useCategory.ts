@@ -29,9 +29,19 @@ export const useCategory = () => {
         }
     })
 
+    const deleteCategory = useMutation({
+        mutationFn: ({ id, accessToken } : { id: number, accessToken : string}) => {
+            return categoryService.deleteCategory(id, accessToken)
+        },
+        onSuccess: () => {
+            window.location.reload();
+        }
+     })
+
     return {
         getCategories,
         createCategory,
-        updateCategory
+        updateCategory,
+        deleteCategory
     }
 }

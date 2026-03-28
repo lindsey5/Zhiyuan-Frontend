@@ -76,8 +76,3 @@ export interface UpdateProductResponse {
     product: Product;
     message?: string;
 }
-
-export interface DeleteProductResponse {
-    success: boolean;
-    message: string;
-}

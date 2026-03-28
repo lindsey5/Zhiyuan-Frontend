@@ -12,18 +12,31 @@ import Button from "../../components/ui/Button";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
+import { promiseToast } from "../../utils/sileo";
+import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Categories () {
-    const [search, setSearch] = useState("");
+    const { accessToken } = useAuthStore();
+
     const { getOwnRole } = useRole();
     const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
-    const debouncedSearch = useDebounce(search, 200);
-    const { getCategories } = useCategory();
-    const { data, isLoading } = getCategories({ search: debouncedSearch });
+
     const [category, setCategory] = useState<Category>();
     const [showModal, setShowModal] = useState(false);
+    const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 200);
+
+    const { getCategories, deleteCategory } = useCategory();
+    const { data, isLoading } = getCategories({ search: debouncedSearch });
+
+    const deleteExistingCategory = (id: number) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this category?");
+        if (!isConfirmed) return;
+
+        promiseToast(deleteCategory.mutateAsync({ id, accessToken: accessToken || "" }), "top-center", "Category succesfully deleted.")
+    };
 
     const columns: ColumnDef<Category>[] = [
     {
@@ -57,6 +70,7 @@ export default function Categories () {
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white"
+                                onClick={() => deleteExistingCategory(row.original.id)}
                             />
                         )}
                     </div>
