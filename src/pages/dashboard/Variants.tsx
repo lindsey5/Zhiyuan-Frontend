@@ -6,7 +6,6 @@ import {
   getCoreRowModel,
   type ColumnDef,
   type PaginationState,
-  type Row,
 } from "@tanstack/react-table";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
