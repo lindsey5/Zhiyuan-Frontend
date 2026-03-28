@@ -47,8 +47,7 @@ export default function AuditLogs () {
         },
         {
             header: "User",
-            accessorKey: "category",
-            cell: ({ row}) => {
+            cell: ({ row }) => {
                 const fullname = `${row.original.user.firstname} ${row.original.user.lastname}`;
                 const email = row.original.user.email;
 
