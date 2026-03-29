@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { getPermissionKey, PERMISSION_DESCRIPTIONS, PERMISSIONS } from "../../config/permission";
+import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../config/permission";
 import { useRole } from "../../hooks/useRole";
 import Card from "../ui/Card";
 import Chip from "../ui/Chip";
