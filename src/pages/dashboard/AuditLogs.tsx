@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useAudit } from "../../hooks/useAudit";
 import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useAuthStore } from "../../lib/store/authStore";
 
 const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
     LOW: "bg-green-500",
@@ -17,26 +18,34 @@ const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
 };
 
 export default function AuditLogs () {
+    const { accessToken } = useAuthStore();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
+
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 300);
+
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    
     const [role, setRole] = useState("");
     const [severity, setSeverity] = useState("");
     const [order, setOrder] = useState<"ASC" | "DESC">("DESC");
 
     const { getAuditLogs } = useAudit();
-    const { data, isLoading } = getAuditLogs({
-        limit: pagination.pageSize,
-        page: pagination.pageIndex + 1,
-        search: debouncedSearch,
-        startDate: startDate ? formatDate(startDate) : undefined,
-        endDate: endDate ? formatDate(endDate) : undefined,
-        role: role,
-        severity: severity,
-        order: order
-    })
+
+    const { data, isLoading } = getAuditLogs(
+        {
+            limit: pagination.pageSize,
+            page: pagination.pageIndex + 1,
+            search: debouncedSearch,
+            startDate: startDate ? formatDate(startDate) : undefined,
+            endDate: endDate ? formatDate(endDate) : undefined,
+            role: role,
+            severity: severity,
+            order: order
+        },
+        accessToken || ""
+    )
 
     const columns: ColumnDef<AuditLog>[] = [
         {

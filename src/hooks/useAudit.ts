@@ -3,10 +3,10 @@ import { type GetAuditLogsResponse, type GetAuditParams } from "../types/audit.t
 import { auditService } from "../service/auditService"
 
 export const useAudit = () => {
-    const getAuditLogs = (params : GetAuditParams) => {
+    const getAuditLogs = (params : GetAuditParams, accessToken: string) => {
         return useQuery<GetAuditLogsResponse, Error>({
             queryKey: ['audit_logs', params],
-            queryFn: () => auditService.getAuditLogs(params),
+            queryFn: () => auditService.getAuditLogs({ params, accessToken }),
             placeholderData: (prev) => prev
         })
     }

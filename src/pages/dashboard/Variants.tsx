@@ -129,7 +129,7 @@ export default function Variants () {
                     <CustomizedTable 
                         table={table}
                         showPagination
-                        noDataMessage="No Products Found"
+                        noDataMessage="No Variants Found"
                     />
                 )}
             </Card>

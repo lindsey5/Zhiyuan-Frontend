@@ -21,7 +21,6 @@ import SidebarDropdown from "./SidebarDropdown";
 import { cn } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
-import ToggleButton from "./ToggleButton";
 
 export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boolean, setCollapsed: React.Dispatch<React.SetStateAction<boolean>>}) {
     const isDark = useThemeStore().isDark;
@@ -151,11 +150,6 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={logout}
             />
-            {!collapsed && (
-                <div className="w-full flex justify-center">
-                    <ToggleButton className=""/>
-                </div>
-            )}
         </nav>
         </aside>
     );
