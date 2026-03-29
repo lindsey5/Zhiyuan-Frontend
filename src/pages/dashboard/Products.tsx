@@ -131,7 +131,11 @@ export default function Products () {
     });
 
     return (
-        <PageContainer className="h-screen" title="Products">
+        <PageContainer 
+            className="h-screen" 
+            title="Products"
+            description="View and manage all products"
+        >
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <ProductsTableControls 
                     setSearch={setSearch}

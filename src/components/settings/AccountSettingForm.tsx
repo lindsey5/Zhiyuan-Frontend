@@ -57,7 +57,7 @@ export default function AccountSettingsForm () {
                     <Button 
                         label="Edit"
                         onClick={() => setEditMode(true)}
-                        className="text-gold text-md"
+                        className="text-gold text-md border-none"
                         icon={<Edit size={20} />}
                     />
                 )}

@@ -88,7 +88,11 @@ export default function Categories () {
 
 
     return (
-        <PageContainer className="h-screen" title="Categories">
+        <PageContainer 
+            className="h-screen" 
+            title="Categories"
+            description="Manage all product categories"
+        >
             <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-10">
                 <CategoriesControls 
                     setSearch={setSearch} 

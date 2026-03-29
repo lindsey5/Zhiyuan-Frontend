@@ -115,7 +115,10 @@ export default function AddProduct () {
     }
 
     return (
-        <PageContainer title="Add Product">
+        <PageContainer 
+            title="Add Product" 
+            description="Enter product details to add a new item"
+        >
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 relative items-start">
                 <AddProductThumbnail 
                     reset={reset}

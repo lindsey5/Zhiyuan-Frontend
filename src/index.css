@@ -41,7 +41,7 @@
     --bg-table-row-odd: #fff;
     --bg-table-row-even: #ecebeb;
     --bg-hover: #f1c9a1;
-    --bg-chip: #dbdbdb;
+    --bg-chip: #a67c5233;
 
     --text-primary: #4a3728;
     --text-muted: #8c7662;
@@ -66,7 +66,6 @@
     --bg-table-row-odd: #313131;
     --bg-table-row-even: #292929;
     --bg-hover: #53535366;
-    --bg-chip: #53535366;
 
     --text-primary: #e0e0e0;
     --text-muted: #888888;

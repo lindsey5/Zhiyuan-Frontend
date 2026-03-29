@@ -106,7 +106,10 @@ export default function EditProduct () {
     }
 
     return (
-        <PageContainer title="Edit Product">
+        <PageContainer 
+            title="Edit Product"
+            description="Update product details and information"
+        >
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 relative items-start">
                 <EditProductThumbnail
                     reset={reset}

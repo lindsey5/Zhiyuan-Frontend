@@ -26,7 +26,7 @@ const TableRow = <T,>({ row }: TableRowProps<T>) => {
 const TableRows = <T, > ({ table } : { table : Table<T>}) => {
     return (
         <tbody>
-            {table.getRowModel().rows.map((row) => <TableRow row={row}/>)}
+            {table.getRowModel().rows.map((row, i) => <TableRow key={i} row={row}/>)}
         </tbody>
     )
 }

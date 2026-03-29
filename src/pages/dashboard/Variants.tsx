@@ -116,7 +116,11 @@ export default function Variants () {
     });
 
     return (
-        <PageContainer className="h-screen" title="Variants">
+        <PageContainer 
+            className="h-screen" 
+            title="Variants"
+            description="View and manage all product variants"
+        >
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <VariantsTableControls
                     setSearch={setSearch}

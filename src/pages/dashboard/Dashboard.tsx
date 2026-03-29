@@ -5,7 +5,10 @@ import PageContainer from "../../components/ui/PageContainer"
 export default function Dashboard() {
 
     return (
-        <PageContainer title="Dashboard">
+        <PageContainer 
+            title="Dashboard"
+            description="Overview of your system metrics and activities."
+        >
             <Metrics />
 
             <DashboardChart

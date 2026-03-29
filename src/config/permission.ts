@@ -26,7 +26,7 @@ export const PERMISSIONS = {
     // Order management
     ORDER_READ_ALL: 'order:read:all',
     ORDER_READ: 'order:read',
-    ORDER_UPDATE: 'order:updated',
+    ORDER_UPDATE: 'order:update',
 
     //Category management
     CATEGORY_READ_ALL: 'category:read:all',
@@ -73,4 +73,10 @@ export const PERMISSION_DESCRIPTIONS = {
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",
     }
+};
+
+export const getPermissionKey = (value: string) => {
+    return Object.keys(PERMISSIONS).find(
+        key => PERMISSIONS[key as keyof typeof PERMISSIONS] === value
+    );
 };

@@ -20,9 +20,13 @@ export interface GetRoleResponse {
     permissions: string[]
 }
 
+export interface RoleWithUsersCount extends Role{
+    usersCount: number;
+}
+
 export interface GetRolesResponse {
     success: boolean
-    roles: Role[]
+    roles: RoleWithUsersCount[]
 }
 
 export interface CreateRoleResponse {

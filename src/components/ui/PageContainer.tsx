@@ -3,6 +3,7 @@ import Card from "./Card";
 
 interface PageContainerProps { 
     title : string
+    description: string
     children : React.ReactNode
     className?: string
 }
@@ -10,7 +11,8 @@ interface PageContainerProps {
 export default function PageContainer ({ 
     title, 
     className, 
-    children 
+    children,
+    description
 } : PageContainerProps) {
     
     return (
@@ -18,8 +20,9 @@ export default function PageContainer ({
             "w-full p-6 flex flex-col space-y-6 relative",
             className
          )}>
-            <Card className="flex items-center justify-between">
+            <Card className="space-y-2">
                 <h1 className="font-sans text-gold font-bold text-2xl">{title}</h1>
+                <p className="text-md text-[var(--border-ui)]">{description}</p>
             </Card>
             {children}
         </div>

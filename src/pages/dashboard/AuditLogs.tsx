@@ -9,6 +9,7 @@ import { useAudit } from "../../hooks/useAudit";
 import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useAuthStore } from "../../lib/store/authStore";
+import Chip from "../../components/ui/Chip";
 
 const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
     LOW: "bg-green-500",
@@ -70,7 +71,7 @@ export default function AuditLogs () {
         {
             header: "Role",
             accessorKey: "role",
-            cell: info => <div className="bg-chip text-primary px-3 py-1 rounded-full">{info.getValue() as string}</div>,
+            cell: info => <Chip className="font-semibold">{info.getValue() as string}</Chip>,
             meta: { align: 'center' },
         },
         {
@@ -87,12 +88,12 @@ export default function AuditLogs () {
             header: "Severity",
             accessorKey: "severity",
             cell: ({ row }) => (
-                <div className="bg-chip rounded-full px-3 py-1 flex items-center justify-center gap-2">
+                <Chip className="rounded-full px-3 py-1 flex items-center justify-center gap-2">
                     <span
                         className={`w-2.5 h-2.5 rounded-full ${severityColor[row.original.severity]}`}
                     />
                     <span className="font-semibold">{row.original.severity}</span>
-                </div>
+                </Chip>
             ),
             meta: { align: 'center' },
         },
@@ -114,7 +115,11 @@ export default function AuditLogs () {
     });
 
     return (
-        <PageContainer className="h-screen" title="Audit Logs">
+        <PageContainer 
+            className="h-screen" 
+            title="Audit Logs"
+            description="View all system activity and changes"
+        >
             <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
                 <AuditLogsControls
                     setSearch={setSearch}

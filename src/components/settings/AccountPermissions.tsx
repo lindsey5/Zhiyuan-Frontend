@@ -1,13 +1,8 @@
 import { useMemo } from "react";
-import { PERMISSION_DESCRIPTIONS, PERMISSIONS } from "../../config/permission";
+import { getPermissionKey, PERMISSION_DESCRIPTIONS, PERMISSIONS } from "../../config/permission";
 import { useRole } from "../../hooks/useRole";
 import Card from "../ui/Card";
-
-export const getPermissionKey = (value: string) => {
-    return Object.keys(PERMISSIONS).find(
-        key => PERMISSIONS[key as keyof typeof PERMISSIONS] === value
-    );
-};
+import Chip from "../ui/Chip";
 
 export default function AccountPermissions() {
     const { getOwnRole } = useRole();
@@ -73,13 +68,8 @@ export default function AccountPermissions() {
 
                                 {/* Permissions */}
                                 <div className="flex flex-wrap gap-2">
-                                    {perms.map((perm, i) => (
-                                        <span
-                                            key={i}
-                                            className="text-xs px-3 py-1 rounded-full bg-[rgba(166,124,82,0.2)] text-gold border border-[rgba(166,124,82,0.3)]"
-                                        >
-                                            {perm}
-                                        </span>
+                                    {perms.map((perm) => (
+                                        <Chip key={perm}>{perm}</Chip>
                                     ))}
                                 </div>
                             </Card>

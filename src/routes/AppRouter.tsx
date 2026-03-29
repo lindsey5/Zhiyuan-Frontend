@@ -12,6 +12,7 @@ import EditProduct from "../pages/dashboard/EditProduct";
 import AuditLogs from "../pages/dashboard/AuditLogs";
 import Variants from "../pages/dashboard/Variants";
 import PageNotFound from "../pages/PageNotFound";
+import Roles from "../pages/dashboard/Roles";
 
 const router = createBrowserRouter([
     {
@@ -100,6 +101,22 @@ const router = createBrowserRouter([
                 Component: () => (
                     <ProtectedRoute requiredPermissions={[PERMISSIONS.CATEGORY_UPDATE]}>
                         <EditProduct />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'roles',
+                Component: () => (
+                    <ProtectedRoute anyPermissions={
+                        [
+                            PERMISSIONS.ROLE_CREATE, 
+                            PERMISSIONS.ROLE_READ, 
+                            PERMISSIONS.ROLE_READ_ALL, 
+                            PERMISSIONS.ROLE_UPDATE, 
+                            PERMISSIONS.ROLE_DELETE
+                        ]
+                    }>
+                        <Roles />
                     </ProtectedRoute>
                 )
             },
