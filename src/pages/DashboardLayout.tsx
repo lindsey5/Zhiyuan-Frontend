@@ -10,7 +10,7 @@ export default function DashboardLayout () {
 
     return (
         <div 
-            className={cn("w-full min-h-screen transition-all duration-500 bg-main bg-cover bg-center", !collapsed ? 'pl-64' : 'pl-20')} 
+            className={cn("w-full min-h-screen transition-all duration-500 bg-main bg-cover bg-center relative", !collapsed ? 'lg:pl-64' : 'lg:pl-20')} 
             style={{ backgroundImage: `url(${isDark ? '/dark-bg.jpg' : '/light-bg.jpg'})` }}
         >
             <Sidebar 

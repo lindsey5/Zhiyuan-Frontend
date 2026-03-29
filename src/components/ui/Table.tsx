@@ -13,7 +13,7 @@ const TableRow = <T,>({ row }: TableRowProps<T>) => {
             return (
             <td
                 key={cell.id}
-                className={`py-5 px-3 border-b border-[var(--border-panel)] text-${align}`}
+                className={`py-3 lg:py-5 px-1 lg:px-3 border-b border-[var(--border-panel)] text-${align}`}
             >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>
@@ -116,7 +116,7 @@ const CustomizedTable = <T,>({ table, showPagination, noDataMessage = "No Data A
     return (
         <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
             <div className="overflow-auto flex-grow relative">
-                <table className="w-full text-sm o">
+                <table className="w-full text-xs lg:text-sm">
                     <TableColumns table={table} />
                     <TableRows table={table} />
                 </table>

@@ -13,6 +13,7 @@ import {
     ChevronLeft,
     Tags,
     Layers,
+    User,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -33,7 +34,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
     return (
         <aside
             className={cn(
-                "z-2 relative h-screen bg-panel fixed left-0 y-0 border-r border-[var(--border-panel)] shadow-panel flex flex-col transition-all duration-300",
+                "z-2 bg-panel hidden lg:flex flex-col lg:fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all duration-300",
                 collapsed ? "w-20" : "w-64"
             )}
         >
@@ -85,7 +86,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 p-4 flex flex-col gap-2">
+        <nav className="flex-1 p-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
 
             <SidebarItem
                 icon={<LayoutDashboard size={24} />}
@@ -125,6 +126,14 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 isActive={pathname === '/dashboard/roles'}
             />
 
+            <SidebarItem 
+                label="User Management"
+                icon={<User size={24} />}
+                collapsed={collapsed}
+                onClick={() => navigate('/dashboard/users')}
+                isActive={pathname === '/dashboard/users'}
+            />
+
             <SidebarDropdown
                 title="Settings"
                 icon={<Settings size={24} />}
@@ -142,8 +151,12 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={logout}
             />
+            {!collapsed && (
+                <div className="w-full flex justify-center">
+                    <ToggleButton className=""/>
+                </div>
+            )}
         </nav>
-        {!collapsed && <ToggleButton className="absolute bottom-5 left-1/2 -translate-x-1/2"/>}
         </aside>
     );
 }
