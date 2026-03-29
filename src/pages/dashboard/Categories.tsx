@@ -46,8 +46,7 @@ export default function Categories () {
     },
     {
         header: "Created At",
-        cell: ({ row }) =>
-        formatDate(row.original.createdAt),
+        cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
     ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE], permissions)

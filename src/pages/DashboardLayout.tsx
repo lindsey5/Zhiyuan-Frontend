@@ -3,6 +3,7 @@ import Sidebar from "../components/ui/Sidebar";
 import { useState } from "react";
 import { cn } from "../utils/utils";
 import { useThemeStore } from "../lib/store/themeStore";
+import ToggleButton from "../components/ui/ToggleButton";
 
 export default function DashboardLayout () {
     const [collapsed, setCollapsed] = useState(false);
@@ -17,6 +18,7 @@ export default function DashboardLayout () {
                 collapsed={collapsed} 
                 setCollapsed={setCollapsed}
             />
+            <ToggleButton className="fixed z-10 top-10 right-10" /> 
             <Outlet />
         </div>
     )

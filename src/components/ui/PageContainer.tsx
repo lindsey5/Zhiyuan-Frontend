@@ -1,6 +1,5 @@
 import { cn } from "../../utils/utils";
 import Card from "./Card";
-import ToggleButton from "./ToggleButton";
 
 interface PageContainerProps { 
     title : string
@@ -21,7 +20,6 @@ export default function PageContainer ({
          )}>
             <Card className="flex items-center justify-between">
                 <h1 className="font-sans text-gold font-bold text-2xl">{title}</h1>
-                <ToggleButton />
             </Card>
             {children}
         </div>
