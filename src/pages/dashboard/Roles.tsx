@@ -20,7 +20,7 @@ export default function Roles () {
                 </GoldButton>
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {data?.roles.map(role => (
+                {data?.roles?.map(role => (
                     <RoleCard role={role} navigateTo={navigate}/>
                 ))}
             </div>
