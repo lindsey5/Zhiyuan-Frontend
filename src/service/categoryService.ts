@@ -1,6 +1,6 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import type { CreateAndUpdateCategoryResponse, GetCategoryParams, GetCategoryResponse } from "../types/category";
-import type { DeleteResponse } from "../types/type";
+import type { ApiResponse } from "../types/type";
 
 export interface CreateCategoryPayload {
     name: string;
@@ -31,8 +31,8 @@ export const categoryService = {
             data
         }),
 
-    deleteCategory: (id: number, accessToken : string) : Promise<DeleteResponse> =>
-        apiAxios<DeleteResponse>(`categories/${id}`, {
+    deleteCategory: (id: number, accessToken : string) : Promise<ApiResponse> =>
+        apiAxios<ApiResponse>(`categories/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },

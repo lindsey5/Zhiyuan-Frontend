@@ -22,7 +22,7 @@ export default function PageContainer ({
          )}>
             <Card className="space-y-2">
                 <h1 className="font-sans text-gold font-bold text-2xl">{title}</h1>
-                <p className="text-md text-[var(--border-ui)]">{description}</p>
+                <p className="text-md text-gray">{description}</p>
             </Card>
             {children}
         </div>

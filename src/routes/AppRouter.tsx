@@ -13,6 +13,7 @@ import AuditLogs from "../pages/dashboard/AuditLogs";
 import Variants from "../pages/dashboard/Variants";
 import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
+import Role from "../pages/dashboard/Role";
 
 const router = createBrowserRouter([
     {
@@ -110,7 +111,6 @@ const router = createBrowserRouter([
                     <ProtectedRoute anyPermissions={
                         [
                             PERMISSIONS.ROLE_CREATE, 
-                            PERMISSIONS.ROLE_READ, 
                             PERMISSIONS.ROLE_READ_ALL, 
                             PERMISSIONS.ROLE_UPDATE, 
                             PERMISSIONS.ROLE_DELETE
@@ -125,6 +125,22 @@ const router = createBrowserRouter([
                 Component: () => (
                     <ProtectedRoute requiredPermissions={[PERMISSIONS.AUDIT_VIEW_ALL]}>
                         <AuditLogs />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'create-role',
+                Component: () => (
+                    <ProtectedRoute requiredPermissions={[PERMISSIONS.ROLE_CREATE]}>
+                       <Role title="Create Role" description="Define a new role and assign its permissions." />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'edit-role/:id',
+                Component: () => (
+                    <ProtectedRoute requiredPermissions={[PERMISSIONS.ROLE_UPDATE]}>
+                        <Role title="Edit Role" description="Update role details and manage permissions." />
                     </ProtectedRoute>
                 )
             }

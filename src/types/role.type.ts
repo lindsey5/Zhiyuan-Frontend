@@ -1,4 +1,4 @@
-import type { PERMISSIONS } from "../config/permission";
+import type { ApiResponse } from "./type";
 
 export interface Role {
     id: number
@@ -32,11 +32,16 @@ export interface GetRolesResponse {
 export interface CreateRoleResponse {
     success: boolean
     role: Role
+    message?: string
     permissions: Permission[]
 }
 
-export interface RoleCreateDTO {
+export interface RoleDTO {
     name: string,
     description: string,
-    permissions: typeof PERMISSIONS[keyof typeof PERMISSIONS]
+    permissions: string[]
+}
+
+export interface UpdateRoleResponse extends ApiResponse {
+    role: Role
 }

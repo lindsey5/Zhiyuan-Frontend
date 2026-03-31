@@ -1,6 +1,6 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import type { CreateProductResponse, GetProductResponse, GetProductsParams, GetProductsResponse, SearchProductResponse, UpdateProductPayload, UpdateProductResponse } from "../types/product";
-import type { DeleteResponse } from "../types/type";
+import type { ApiResponse } from "../types/type";
 
 export const productService = {
   getProducts: (params : GetProductsParams): Promise<GetProductsResponse> => {
@@ -37,7 +37,7 @@ export const productService = {
   },
 
   deleteProduct: (id : number, accessToken : string) => {
-    return apiAxios<DeleteResponse>(`products/${id}`, {
+    return apiAxios<ApiResponse>(`products/${id}`, {
       method: HttpMethod.DELETE,
       headers: {
         Authorization: `Bearer ${accessToken}`

@@ -3,7 +3,7 @@ export interface SortOption {
     order: 'ASC' | 'DESC';
 }
 
-export interface DeleteResponse {
+export interface ApiResponse {
     success: boolean;
     message: string;
 }

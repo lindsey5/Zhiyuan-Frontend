@@ -54,7 +54,7 @@ export const PaginationControls = <T,>({ table }: PaginationControlsProps<T>) =>
                     className={cn(
                         "w-7 h-7 cursor-pointer rounded",
                         p === pageIndex
-                        ? "bg-gold font-semibold text-avatar"
+                        ? "bg-gold font-semibold text-inverse"
                         : "hover:text-gold"
                     )}
                 >

@@ -67,7 +67,7 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
 
         <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
             {/* Avatar */}
-            <div className="text-avatar w-10 h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
+            <div className="text-inverse w-10 h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
                 {user?.firstname.charAt(0)}{user?.lastname?.charAt(0)}
             </div>
 

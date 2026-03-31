@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import type { GetRoleResponse, GetRolesResponse } from "../types/role.type"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import type { GetRoleResponse, GetRolesResponse, RoleDTO } from "../types/role.type"
 import { roleService } from "../service/roleService"
 import { useAuthStore } from "../lib/store/authStore"
 
@@ -25,9 +25,34 @@ export const useRole = () => {
         })
     }
 
+    const createRole = useMutation({
+        mutationFn: ({ payload, accessToken } : { payload : RoleDTO, accessToken: string}) => {
+            return roleService.createRole(payload, accessToken)
+        },
+        onSuccess: () => window.location.href = '/dashboard/roles'
+    })
+
+    const getRoleById = (id : number, accessToken : string) => (
+        useQuery<GetRoleResponse>({
+            queryKey: ['role'],
+            queryFn: async () => {
+                return roleService.getRoleById(id, accessToken)
+            },
+        })
+    )
+
+    const updateRole = useMutation({
+        mutationFn: ({ payload, accessToken, id } : { payload: RoleDTO, accessToken: string, id: number})=> {
+            return roleService.updateRole(id, payload, accessToken);
+        }
+    })
+
     return {
         getOwnRole,
-        getRoles
+        getRoles,
+        createRole,
+        getRoleById,
+        updateRole
     }
 
 }

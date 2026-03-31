@@ -52,7 +52,10 @@ export default function Products () {
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");
         if (!isConfirmed) return;
 
-        promiseToast(deleteProduct.mutateAsync({ id, accessToken: accessToken || "" }), "top-center", "Product succesfully deleted.")
+        promiseToast(deleteProduct.mutateAsync({ 
+            id, 
+            accessToken: accessToken || "" 
+        }), "top-center", "Product succesfully deleted.")
     };
 
     const columns: ColumnDef<Product>[] = [

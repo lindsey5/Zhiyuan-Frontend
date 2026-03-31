@@ -12,7 +12,6 @@ export const PERMISSIONS = {
 
     // Role management
     ROLE_CREATE: 'role:create',
-    ROLE_READ: 'role:read',
     ROLE_READ_ALL: 'role:read:all',
     ROLE_UPDATE: 'role:update',
     ROLE_DELETE: 'role:delete',
@@ -35,44 +34,61 @@ export const PERMISSIONS = {
     CATEGORY_DELETE: 'category:delete'
 }
 
-export const PERMISSION_DESCRIPTIONS = {
+type PermissionGroup = {
+    description: string;
+    [permissionKey: string]: string;
+};
+
+export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     Dashboard: {
+        description: "Manage access to dashboard features and overview data.",
         DASHBOARD_VIEW: "Allows access to the dashboard",
     },
+
     Audit: {
-        AUDIT_VIEW_ALL: 'View all audit logs',
+        description: "Manage access to system audit logs and activity tracking.",
+        AUDIT_VIEW_ALL: "View all audit logs",
     },
+
     "User Management": {
+        description: "Manage system users including creation, updates, and removal.",
         USER_CREATE: "Create new users",
         USER_READ: "View user details",
         USER_READ_ALL: "View all users",
         USER_UPDATE: "Update user information",
         USER_DELETE: "Delete users",
     },
+
     "Role Management": {
+        description: "Manage roles and assign permissions for system access control.",
         ROLE_CREATE: "Create roles",
-        ROLE_READ: "View role details",
         ROLE_READ_ALL: "View all roles",
         ROLE_UPDATE: "Update roles",
         ROLE_DELETE: "Delete roles",
     },
+
     "Product Management": {
+        description: "Manage products and variants including updates and inventory setup.",
         PRODUCT_READ_ALL: "View all products including variants",
         PRODUCT_CREATE: "Create products including variants",
         PRODUCT_UPDATE: "Update products including variants",
         PRODUCT_DELETE: "Delete products including variants",
     },
+
     "Order Management": {
+        description: "Manage customer orders including viewing and updating order status.",
         ORDER_READ_ALL: "View all orders",
         ORDER_READ: "View specific order",
         ORDER_UPDATE: "Update order status",
     },
-    "Category Management" : {
+
+    "Category Management": {
+        description: "Manage product categories including creation, updates, and deletion.",
         CATEGORY_READ_ALL: "View all categories",
         CATEGORY_CREATE: "Create categories",
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",
-    }
+    },
 };
 
 export const getPermissionKey = (value: string) => {

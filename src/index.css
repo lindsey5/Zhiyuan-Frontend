@@ -12,13 +12,14 @@
   --color-toggle-thumb: var(--toggle-thumb);
   --color-separator: var(--separator);
   --color-gold: var(--accent-gold);
-  --color-avatar: var(--text-avatar);
   --color-hover: var(--bg-hover);
   --color-chip: var(--bg-chip);
   
   /* Mapping Text Colors */
   --color-primary: var(--text-primary);
   --color-muted: var(--text-muted);
+  --color-inverse: var(--text-inverse);
+  --color-gray: var(--border-ui);
 
   /* Fonts */
   --font-sans: "League Spartan", sans-serif;
@@ -45,7 +46,7 @@
 
     --text-primary: #4a3728;
     --text-muted: #8c7662;
-    --text-avatar: #fff;
+    --text-inverse: #fff;
 
     --border-ui: #a0a0a0;
     --accent-gold: #c2864a;
@@ -69,7 +70,7 @@
 
     --text-primary: #e0e0e0;
     --text-muted: #888888;
-    --text-avatar: #313131;
+    --text-inverse: #313131;
 
     --border-ui: #707070;
     --accent-gold: #d4af37;
@@ -80,24 +81,6 @@
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
     --border-panel: #646464;
   }
-}
-
-@layer base {
-  table tbody tr:nth-child(even) {
-    background-color: var(--bg-table-row-even);
-  }
-
-  table tbody tr:nth-child(odd) {
-    background-color: var(--bg-table-row-odd)
-  }
-
-  table tbody tr {
-    transition: background-color 0.2s ease;
-  }
-
-  table tbody tr:hover {
-    opacity: 70%;
-  } 
 }
 
 @layer base {
@@ -138,6 +121,54 @@
 
   .dark body {
     scrollbar-color: var(--accent-gold) var(--bg-main);
+  }
+
+    table tbody tr:nth-child(even) {
+    background-color: var(--bg-table-row-even);
+  }
+
+  table tbody tr:nth-child(odd) {
+    background-color: var(--bg-table-row-odd)
+  }
+
+  table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  table tbody tr:hover {
+    opacity: 70%;
+  } 
+
+  /* Checked state */
+  input[type="checkbox"]:checked {
+    background-color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  /* Checkmark inside */
+  input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid var(--bg-input); /* white-ish checkmark */
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-ui);
+    border-radius: 4px; /* optional */
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    appearance: none; /* remove default OS style */
+    -webkit-appearance: none; /* Safari */
+    position: relative;
+    background-color: var(--bg-input);
   }
 }
 

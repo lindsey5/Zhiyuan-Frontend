@@ -22,7 +22,8 @@ export const useProduct = () => {
     const deleteProduct = useMutation({
         mutationFn: ({ id, accessToken } : { id: number, accessToken: string}) => {
             return productService.deleteProduct(id, accessToken);
-        }
+        },
+        onSuccess: () => window.location.reload()
     })
 
     const createProduct = useMutation({
