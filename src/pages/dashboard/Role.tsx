@@ -96,11 +96,13 @@ export default function Role ({ title, description } : { title : string, descrip
                             label="Name"
                             registration={register("name")}
                             placeholder="Enter role name"
+                            error={errors.name?.message}
                         />
                         <TextField 
                             label="Description"
                             registration={register("description")}
                             placeholder="Enter role description"
+                            error={errors.description?.message}
                         />
                     </div>
                 </Card>

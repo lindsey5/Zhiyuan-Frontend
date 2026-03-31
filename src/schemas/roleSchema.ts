@@ -4,11 +4,11 @@ import { PERMISSIONS } from '../config/permission';
 export const roleSchema = z.object({
     name: z
         .string()
-        .min(3, "Name must be at least 3 characters long")
+        .min(3, "Name must be at least 3 characters")
         .max(50, "Name must not exceed 50 characters"),
     description: z
         .string()
-        .min(10, "Description must be at least 10 characters long")
+        .min(10, "Description must be at least 10 characters")
         .max(100, "Description must not exceed 100 characters"),
 
     permissions: z
