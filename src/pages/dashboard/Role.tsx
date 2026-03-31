@@ -44,6 +44,11 @@ export default function Role ({ title, description } : { title : string, descrip
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
         resolver: zodResolver(roleSchema),
+        defaultValues: {
+            name: '',
+            description: '',
+            permissions: []
+        }
     });
 
     useEffect(() => {
