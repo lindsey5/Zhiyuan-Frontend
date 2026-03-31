@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { GetRolesResponse, GetRoleResponse, Role, RoleDTO, UpdateRoleResponse, CreateRoleResponse } from "../types/role.type";
+import type { GetRolesResponse, GetRoleResponse, RoleDTO, UpdateRoleResponse, CreateRoleResponse } from "../types/role.type";
 
 export const roleService = {
   getOwnRole: (accessToken : string): Promise<GetRoleResponse> => {
