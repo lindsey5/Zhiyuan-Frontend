@@ -22,7 +22,7 @@ export const categoryService = {
             params
         }),
 
-    updateCategory: (id: number, data : { name: string }, accessToken : string) : Promise<CreateAndUpdateCategoryResponse> => 
+    updateCategory: (id: string, data : { name: string }, accessToken : string) : Promise<CreateAndUpdateCategoryResponse> => 
         apiAxios<CreateAndUpdateCategoryResponse>(`categories/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -31,7 +31,7 @@ export const categoryService = {
             data
         }),
 
-    deleteCategory: (id: number, accessToken : string) : Promise<ApiResponse> =>
+    deleteCategory: (id: string, accessToken : string) : Promise<ApiResponse> =>
         apiAxios<ApiResponse>(`categories/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`

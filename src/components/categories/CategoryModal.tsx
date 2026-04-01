@@ -31,7 +31,7 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
     }
 
     const onSubmit : SubmitHandler<CategoryFormData> = async (data) => {
-        const callBack = category ? updateCategory.mutateAsync({ id: category.id, data, accessToken: accessToken || ""}) : createCategory.mutateAsync({ data, accessToken: accessToken || ""});
+        const callBack = category ? updateCategory.mutateAsync({ id: category._id, data, accessToken: accessToken || ""}) : createCategory.mutateAsync({ data, accessToken: accessToken || ""});
         promiseToast(callBack)
     }
 

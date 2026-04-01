@@ -1,7 +1,7 @@
 import type { User } from "./user.type";
 
 export interface AuditLog{
-    id: number;
+    _id: string;
     user_id: number;
     user: User;
     role: string;

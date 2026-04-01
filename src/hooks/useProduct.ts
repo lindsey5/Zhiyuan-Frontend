@@ -12,7 +12,7 @@ export const useProduct = () => {
         })
     }
 
-    const getProductById = (id : number) => {
+    const getProductById = (id : string) => {
         return useQuery<GetProductResponse, Error>({
             queryKey: [`products/${id}`],
             queryFn: () => productService.getProductById(id),
@@ -20,7 +20,7 @@ export const useProduct = () => {
     }
 
     const deleteProduct = useMutation({
-        mutationFn: ({ id, accessToken } : { id: number, accessToken: string}) => {
+        mutationFn: ({ id, accessToken } : { id: string, accessToken: string}) => {
             return productService.deleteProduct(id, accessToken);
         },
         onSuccess: () => window.location.reload()
@@ -37,7 +37,8 @@ export const useProduct = () => {
     })
 
     const updateProduct = useMutation({
-        mutationFn: ({ id, data, accessToken } : { id : number, data : UpdateProductPayload, accessToken : string }) => {
+        mutationFn: ({ id, data, accessToken } : { id : string, data : UpdateProductPayload, accessToken : string }) => {
+            console.log(data)
             return productService.updateProduct(id, data, accessToken);
         },
         onSuccess: () => window.location.reload(),

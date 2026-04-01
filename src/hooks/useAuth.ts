@@ -20,7 +20,7 @@ export const useAuth = () => {
     mutationFn: authService.logout,
     onSuccess: () => {
       logout()
-      navigate("/login");
+      navigate("/");
     },
   })
 

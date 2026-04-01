@@ -30,7 +30,7 @@ export const useRole = () => {
         onSuccess: () => window.location.href = '/dashboard/roles'
     })
 
-    const getRoleById = (id : number, accessToken : string) => (
+    const getRoleById = (id : string, accessToken : string) => (
         useQuery<GetRoleResponse>({
             queryKey: ['role'],
             queryFn: async () => {
@@ -40,13 +40,13 @@ export const useRole = () => {
     )
 
     const updateRole = useMutation({
-        mutationFn: ({ payload, accessToken, id } : { payload: RoleDTO, accessToken: string, id: number})=> {
+        mutationFn: ({ payload, accessToken, id } : { payload: RoleDTO, accessToken: string, id: string})=> {
             return roleService.updateRole(id, payload, accessToken);
         }
     })
 
     const deleteRole = useMutation({
-        mutationFn: ({ id, accessToken } : { id: number, accessToken: string}) => {
+        mutationFn: ({ id, accessToken } : { id: string, accessToken: string}) => {
             return roleService.deleteRole(id, accessToken)
         } 
     })

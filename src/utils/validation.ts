@@ -6,7 +6,7 @@ export const checkIfProductNameExist = async <T extends { product_name: string }
     clearErrors: UseFormClearErrors<T>,
     data: T,
     accessToken: string,
-    id?: number
+    id?: string
 ): Promise<boolean> => {
     try {
         clearErrors("product_name" as Path<T>);
@@ -49,7 +49,7 @@ export const checkIfVariantFieldExist = async <
             clearErrors(`variants.${index}.${field}` as Path<T>);
             const response = await productService.searchVariant({
                 params: { [field]: variant[field] },
-                id: includeId ? variant.id : undefined,
+                id: includeId ? variant._id : undefined,
                 accessToken,
             });
 

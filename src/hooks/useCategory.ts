@@ -21,7 +21,7 @@ export const useCategory = () => {
     })
 
     const updateCategory = useMutation({
-        mutationFn: ({ id, data, accessToken } : { id: number, data : { name: string }, accessToken : string}) => {
+        mutationFn: ({ id, data, accessToken } : { id: string, data : { name: string }, accessToken : string}) => {
             return categoryService.updateCategory(id, data, accessToken)
         },
         onSuccess: () => {
@@ -30,7 +30,7 @@ export const useCategory = () => {
     })
 
     const deleteCategory = useMutation({
-        mutationFn: ({ id, accessToken } : { id: number, accessToken : string}) => {
+        mutationFn: ({ id, accessToken } : { id: string, accessToken : string}) => {
             return categoryService.deleteCategory(id, accessToken)
         },
         onSuccess: () => {

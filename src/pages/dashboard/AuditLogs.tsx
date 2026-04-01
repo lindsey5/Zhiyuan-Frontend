@@ -47,7 +47,7 @@ export default function AuditLogs () {
         },
         accessToken || ""
     )
-
+    console.log(data)
     const columns: ColumnDef<AuditLog>[] = [
         {
             header: "Date",

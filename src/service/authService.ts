@@ -1,4 +1,4 @@
-import type { AuthResponse, DistributorAuthResponse } from "../types/auth.type";
+import type { AuthResponse } from "../types/auth.type";
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 
 export interface LoginPayload {

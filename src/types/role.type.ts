@@ -1,7 +1,7 @@
 import type { ApiResponse } from "./type";
 
 export interface Role {
-    id: number
+    _id: string;
     name: string
     description: string
     permissions: Permission[]
@@ -9,7 +9,7 @@ export interface Role {
 }
 
 export interface Permission {
-    id: number;
+    _id: string;
     action: string;
     role_id: number;
 }

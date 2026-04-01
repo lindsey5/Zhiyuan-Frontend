@@ -31,7 +31,7 @@ export default function Categories () {
     const { getCategories, deleteCategory } = useCategory();
     const { data, isLoading } = getCategories({ search: debouncedSearch });
 
-    const deleteExistingCategory = (id: number) => {
+    const deleteExistingCategory = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
         if (!isConfirmed) return;
 
@@ -69,7 +69,7 @@ export default function Categories () {
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white"
-                                onClick={() => deleteExistingCategory(row.original.id)}
+                                onClick={() => deleteExistingCategory(row.original._id)}
                             />
                         )}
                     </div>

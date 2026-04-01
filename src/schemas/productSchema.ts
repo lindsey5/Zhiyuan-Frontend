@@ -81,8 +81,8 @@ export const createProductSchema = z.object({
 export type CreateProductFormData = z.infer<typeof createProductSchema>;
 
 const editVariantSchema = z.object({
-    id: z.number().int('Id must be a whole number').optional(),
-    product_id: z.number().int('Product id must be a whole number').optional(),
+    _id: z.string().optional(),
+    product_id: z.string().optional(),
     variant_name: z.string()
         .min(3, "Variant name must be at least 3 characters")
         .max(100, "Variant name must not exceed 100 characters"),
@@ -102,7 +102,7 @@ const editVariantSchema = z.object({
 });
 
 export const editProductSchema = z.object({
-    id: z.number().int('Id must be a whole number'),
+    _id: z.string(),
     product_name: z.string()
         .min(3, "Product name must be at least 3 characters")
         .max(100, "Product name must not exceed 100 characters"),

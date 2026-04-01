@@ -26,7 +26,7 @@ export default function EditProduct () {
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
     const { updateProduct, getProductById } = useProduct();
-    const { data : product } = getProductById(Number(id));
+    const { data : product } = getProductById(id || "");
     const { 
         register, 
         handleSubmit, 
@@ -52,7 +52,7 @@ export default function EditProduct () {
             clearErrors,
             data,
             accessToken || "",
-            Number(id)
+            id
         )
 
         const isSkuExist = await checkIfVariantFieldExist(
@@ -69,7 +69,7 @@ export default function EditProduct () {
 
         const callBack = updateProduct.mutateAsync({ 
             data, 
-            id: Number(id), 
+            id: id, 
             accessToken: accessToken || ""
         })
         promiseToast(callBack)
@@ -87,7 +87,7 @@ export default function EditProduct () {
 
     const addVariant = () => {
         reset({
-            id: watch('id'),
+            _id: watch('_id'),
             thumbnail_url: watch('thumbnail_url'),
             description: watch('description') || "",
             category: watch('category') || "",

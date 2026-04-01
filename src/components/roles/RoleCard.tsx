@@ -16,7 +16,7 @@ export default function RoleCard ({ role, navigateTo } : { role : RoleWithUsersC
                         <p className="text-[var(--border-ui)] text-sm">Users: {role.usersCount}</p>
                     </div>
                 </div>
-                <button className="hover:opacity-50 cursor-pointer" onClick={() => navigateTo(`/dashboard/edit-role/${role.id}`)}>
+                <button className="hover:opacity-50 cursor-pointer" onClick={() => navigateTo(`/dashboard/edit-role/${role._id}`)}>
                     <Pencil size={20} className="text-gold"/>
                 </button>
             </div>

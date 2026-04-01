@@ -48,7 +48,7 @@ export default function Role ({ title, description } : { title : string, descrip
     const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
     
     const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
-    const { data, isSuccess } = getRoleById(Number(id), accessToken || "");
+    const { data, isSuccess } = getRoleById(id || "", accessToken || "");
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
         resolver: zodResolver(roleSchema),
@@ -80,7 +80,7 @@ export default function Role ({ title, description } : { title : string, descrip
         
         if(id){
             promiseToast(updateRole.mutateAsync({ 
-                id: Number(id),
+                id: id,
                 payload: data,
                 accessToken: accessToken || ""
             }))
@@ -99,7 +99,7 @@ export default function Role ({ title, description } : { title : string, descrip
         if (!isConfirm) return;
 
         promiseToast(deleteRole.mutateAsync({
-            id: Number(id),
+            id: id || "",
             accessToken: accessToken || ""
         }))
     }

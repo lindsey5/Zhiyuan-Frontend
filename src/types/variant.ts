@@ -2,8 +2,8 @@ import type { PaginationResponse } from "./pagination.type";
 import type { Product } from "./product.type";
 
 export interface Variant {
-    id: number;
-    product_id: number;
+    _id: string;
+    product_id: string;
     variant_name: string;
     stock: number;
     price: number;

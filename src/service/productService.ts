@@ -20,13 +20,13 @@ export const productService = {
     })
   },
 
-  getProductById: (id : number) : Promise<GetProductResponse> => {
+  getProductById: (id : string) : Promise<GetProductResponse> => {
     return apiAxios<GetProductResponse>(`products/${id}`, {
       method: HttpMethod.GET
     })
   },
 
-  updateProduct: (id : number, data : UpdateProductPayload, accessToken : string) : Promise<UpdateProductResponse> => {
+  updateProduct: (id: string, data : UpdateProductPayload, accessToken : string) : Promise<UpdateProductResponse> => {
     return apiAxios<UpdateProductResponse>(`products/${id}`, {
       method: HttpMethod.PUT,
       headers: {
@@ -36,7 +36,7 @@ export const productService = {
     })
   },
 
-  deleteProduct: (id : number, accessToken : string) => {
+  deleteProduct: (id: string, accessToken : string) => {
     return apiAxios<ApiResponse>(`products/${id}`, {
       method: HttpMethod.DELETE,
       headers: {
@@ -45,7 +45,7 @@ export const productService = {
     })
   },
 
-  searchProduct: ({ params, accessToken, id } : { params : Record<string, string>, id?: number, accessToken : string}) : Promise<SearchProductResponse> => {
+  searchProduct: ({ params, accessToken, id } : { params : Record<string, string>, id?: string, accessToken : string}) : Promise<SearchProductResponse> => {
     return apiAxios<SearchProductResponse>("products/search", {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -54,7 +54,7 @@ export const productService = {
       params: { ...params, id }
     })
   },
-  searchVariant: ({ params, accessToken, id } : { params : Record<string, string>, id?: number, accessToken : string}) : Promise<SearchProductResponse> => {
+  searchVariant: ({ params, accessToken, id } : { params : Record<string, string>, id?: string, accessToken : string}) : Promise<SearchProductResponse> => {
     return apiAxios<SearchProductResponse>("variants/search", {
       headers: {
         Authorization: `Bearer ${accessToken}`

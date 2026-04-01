@@ -18,7 +18,7 @@ export const ProtectedRoute = ({
     requireAuthentication = true,
     requiredPermissions = [],
     anyPermissions = [],
-    redirectTo = '/login',
+    redirectTo = '/',
 }: ProtectedRouteProps) => {
     const {
         isAuthenticated,
@@ -27,8 +27,10 @@ export const ProtectedRoute = ({
     } = usePermissions();
     const accessToken = useAuthStore.getState().accessToken;
     const { getOwnRole } = useRole();
-    const { data } = getOwnRole(accessToken || "");
+    const { data, isLoading } = getOwnRole(accessToken || "");
     const permissions = data?.permissions || []
+
+    if(isLoading) return null
 
     if (requireAuthentication && !isAuthenticated()) {
         return <Navigate to={redirectTo} replace />;

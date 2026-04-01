@@ -31,7 +31,7 @@ export const roleService = {
     })
   },
 
-  getRoleById: (id : number, accessToken : string): Promise<GetRoleResponse> => {
+  getRoleById: (id : string, accessToken : string): Promise<GetRoleResponse> => {
     return apiAxios<GetRoleResponse>(`roles/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -40,7 +40,7 @@ export const roleService = {
     })
   },
 
-  updateRole: (id: number, data: RoleDTO, accessToken: string) : Promise<UpdateRoleResponse> => {
+  updateRole: (id: string, data: RoleDTO, accessToken: string) : Promise<UpdateRoleResponse> => {
     return apiAxios<UpdateRoleResponse>(`roles/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -50,7 +50,7 @@ export const roleService = {
     })
   },
 
-  deleteRole: (id : number, accessToken : string) : Promise<ApiResponse> => {
+  deleteRole: (id : string, accessToken : string) : Promise<ApiResponse> => {
     return apiAxios<ApiResponse>(`roles/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`

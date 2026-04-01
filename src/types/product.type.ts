@@ -3,7 +3,7 @@ import type { ApiResponse } from "./type";
 import type { Variant } from "./variant";
 
 export interface Product {
-    id: number;
+    _id: string;
     product_name: string;
     description: string;
     thumbnail_public_id: string;
@@ -49,7 +49,7 @@ export interface GetProductResponse {
 }
 
 export interface UpdateProductPayload {
-    id: number;
+    _id: string;
     product_name: string;
     description: string;
     thumbnail_public_id?: string;
@@ -60,8 +60,8 @@ export interface UpdateProductPayload {
 }
 
 export interface UpdateVariantPayload {
-    id?: number;
-    product_id?: number;
+    _id?: string;
+    product_id?: string;
     variant_name: string;
     stock: number;
     price: number;

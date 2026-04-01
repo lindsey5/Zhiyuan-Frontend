@@ -48,7 +48,7 @@ export default function Products () {
         order: sorting.order,
     });
 
-    const deleteExistingProduct = (id: number) => {
+    const deleteExistingProduct = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");
         if (!isConfirmed) return;
 
@@ -105,7 +105,7 @@ export default function Products () {
                                 <Button
                                     label="Edit"
                                     className="p-1 md:p-3"
-                                    onClick={() => navigate(`/dashboard/edit-product/${row.original.id}`)}
+                                    onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                                 />
                             )}
     
@@ -113,7 +113,7 @@ export default function Products () {
                                 <Button
                                     label="Delete"
                                     className="bg-red-600 text-white p-1 md:p-3"
-                                    onClick={() => deleteExistingProduct(row.original.id)}
+                                    onClick={() => deleteExistingProduct(row.original._id)}
                                 />
                             )}
                         </div>
