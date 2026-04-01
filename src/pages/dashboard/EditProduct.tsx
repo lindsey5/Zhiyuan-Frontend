@@ -48,6 +48,10 @@ export default function EditProduct () {
     if(!id) return null;
 
     const onSubmit: SubmitHandler<EditProductFormData> = async (data) => {
+        const isConfirm = confirm("Are you sure you want to update this product?");
+
+        if (!isConfirm) return;
+
         const isProductNameExist = await checkIfProductNameExist(
             setError,
             clearErrors,
