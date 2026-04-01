@@ -17,7 +17,7 @@ import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
 import type { VariantWithProduct } from "../../types/variant";
-import VariantsTableControls from "../../components/variants/VariantsTableControls";
+import VariantsTableControls from "../../components/user/variants/VariantsTableControls";
 import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Variants () {

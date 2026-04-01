@@ -1,10 +1,10 @@
 import type { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import TextField from "../ui/TextField";
-import type { CreateProductFormData } from "../../schemas/productSchema";
+import TextField from "../../ui/TextField";
+import type { CreateProductFormData } from "../../../schemas/productSchema";
 import { useState } from "react";
-import { fileToBase64 } from "../../utils/utils";
+import { fileToBase64 } from "../../../utils/utils";
 import { Upload, Image } from "lucide-react";
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
 
 interface AddProductVariant {
     register: UseFormRegister<CreateProductFormData>;

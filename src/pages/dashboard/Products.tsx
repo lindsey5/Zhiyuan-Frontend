@@ -13,7 +13,7 @@ import type { Product } from "../../types/product.type";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
-import ProductsTableControls from "../../components/products/ProductsTableControls";
+import ProductsTableControls from "../../components/user/products/ProductsTableControls";
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";

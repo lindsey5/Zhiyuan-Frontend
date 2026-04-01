@@ -1,7 +1,7 @@
 import type { UseFormReset, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import type { EditProductFormData } from "../../schemas/productSchema";
-import { fileToBase64 } from "../../utils/utils";
-import Thumbnail from "../ui/Thumbnail";
+import type { EditProductFormData } from "../../../schemas/productSchema";
+import { fileToBase64 } from "../../../utils/utils";
+import Thumbnail from "../../ui/Thumbnail";
 
 interface EditThumbnailProps {
     reset: UseFormReset<EditProductFormData>;

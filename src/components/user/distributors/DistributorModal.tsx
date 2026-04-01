@@ -1,14 +1,14 @@
-import Card from "../ui/Card"
+import Card from "../../ui/Card"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import TextField from "../ui/TextField"
-import Button from "../ui/Button"
+import TextField from "../../ui/TextField"
+import Button from "../../ui/Button"
 import { X } from "lucide-react"
-import { promiseToast } from "../../utils/sileo"
-import GoldButton from "../ui/GoldButton"
-import { useAuthStore } from "../../lib/store/authStore"
-import { useDistributor } from "../../hooks/useDistributor"
-import { distributorSchema, type DistributorFormData } from "../../schemas/distributorSchema"
+import { promiseToast } from "../../../utils/sileo"
+import GoldButton from "../../ui/GoldButton"
+import { useAuthStore } from "../../../lib/store/authStore"
+import { useDistributor } from "../../../hooks/useDistributor"
+import { distributorSchema, type DistributorFormData } from "../../../schemas/distributorSchema"
 
 type DistributorModalProps = {
     open: boolean

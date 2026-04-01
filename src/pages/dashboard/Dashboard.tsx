@@ -1,5 +1,5 @@
-import DashboardChart from "../../components/dashboard/DashboardChart"
-import Metrics from "../../components/dashboard/Metrics"
+import DashboardChart from "../../components/user/dashboard/DashboardChart"
+import Metrics from "../../components/user/dashboard/Metrics"
 import PageContainer from "../../components/ui/PageContainer"
 
 export default function Dashboard() {

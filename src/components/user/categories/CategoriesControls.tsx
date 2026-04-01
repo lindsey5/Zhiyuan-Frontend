@@ -1,10 +1,10 @@
 import { Plus } from "lucide-react";
-import Button from "../ui/Button";
-import { SearchField } from "../ui/TextField";
+import Button from "../../ui/Button";
+import { SearchField } from "../../ui/TextField";
 import CategoryModal from "./CategoryModal";
-import usePermissions from "../../hooks/usePermissions";
-import { PERMISSIONS } from "../../config/permission";
-import type { Category } from "../../types/category.type";
+import usePermissions from "../../../hooks/usePermissions";
+import { PERMISSIONS } from "../../../config/permission";
+import type { Category } from "../../../types/category.type";
 
 interface CategoriesControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>

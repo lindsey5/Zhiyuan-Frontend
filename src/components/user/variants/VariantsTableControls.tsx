@@ -1,7 +1,7 @@
 import type React from "react";
-import type { SortOption } from "../../types/type";
-import Dropdown from "../ui/Dropdown";
-import { SearchField } from "../ui/TextField";
+import type { SortOption } from "../../../types/type";
+import Dropdown from "../../ui/Dropdown";
+import { SearchField } from "../../ui/TextField";
 import CategoryDropdown from "../products/CategoryDropdown";
 
 const options: Record<string, SortOption> = {

@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { type ReactNode } from 'react';
-import usePermissions from '../hooks/usePermissions';
-import { useRole } from '../hooks/useRole';
+import usePermissions from '../../hooks/usePermissions';
+import { useRole } from '../../hooks/useRole';
 import Unauthorized from './Unauthorized';
-import { useAuthStore } from '../lib/store/authStore';
+import { useAuthStore } from '../../lib/store/authStore';
 
 type ProtectedRouteProps = {
     children: ReactNode;

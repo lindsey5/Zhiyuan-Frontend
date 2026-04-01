@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../pages/dashboard/Dashboard";
 import LoginPage from "../pages/auth/Login";
 import DashboardLayout from "../pages/DashboardLayout";
-import { ProtectedRoute } from "../components/ProtectedRoute";
+import { ProtectedRoute } from "../components/user/ProtectedRoute";
 import AccountSettings from "../pages/dashboard/AccountSettings";
 import Products from "../pages/dashboard/Products";
 import Categories from "../pages/dashboard/Categories";

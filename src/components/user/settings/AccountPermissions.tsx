@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../config/permission";
-import { useRole } from "../../hooks/useRole";
-import Card from "../ui/Card";
-import Chip from "../ui/Chip";
-import { useAuthStore } from "../../lib/store/authStore";
+import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../../config/permission";
+import { useRole } from "../../../hooks/useRole";
+import Card from "../../ui/Card";
+import Chip from "../../ui/Chip";
+import { useAuthStore } from "../../../lib/store/authStore";
 
 export default function AccountPermissions() {
     const accessToken = useAuthStore().accessToken;

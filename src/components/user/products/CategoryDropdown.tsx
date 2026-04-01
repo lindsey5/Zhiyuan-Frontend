@@ -1,6 +1,6 @@
 import type React from "react";
-import { useCategory } from "../../hooks/useCategory";
-import Dropdown from "../ui/Dropdown";
+import { useCategory } from "../../../hooks/useCategory";
+import Dropdown from "../../ui/Dropdown";
 
 interface CategoryDropdownProps {
     category: string;

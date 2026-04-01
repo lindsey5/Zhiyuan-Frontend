@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useAuthStore } from "../../lib/store/authStore";
 import { useDistributor } from "../../hooks/useDistributor";
-import DistributorControls from "../../components/distributors/DistributorsControls";
+import DistributorControls from "../../components/user/distributors/DistributorsControls";
 import { Trash } from "lucide-react";
 
 export default function Distributors () {

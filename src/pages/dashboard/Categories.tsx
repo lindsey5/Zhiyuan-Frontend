@@ -7,7 +7,7 @@ import type { Category } from "../../types/category.type";
 import { formatDate } from "../../utils/utils";
 import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
-import CategoriesControls from "../../components/categories/CategoriesControls";
+import CategoriesControls from "../../components/user/categories/CategoriesControls";
 import Button from "../../components/ui/Button";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";

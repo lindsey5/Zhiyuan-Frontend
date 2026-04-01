@@ -1,4 +1,4 @@
-import Card from "./ui/Card";
+import Card from "../ui/Card";
 import { Lock } from "lucide-react";
 
 export default function Unauthorized ({ children } : { children : React.ReactNode }) {

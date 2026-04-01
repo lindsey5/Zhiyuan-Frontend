@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../config/permission";
+import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../../config/permission";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
-import type { RoleFormData } from "../../schemas/roleSchema";
-import { cn } from "../../utils/utils";
+import type { RoleFormData } from "../../../schemas/roleSchema";
+import { cn } from "../../../utils/utils";
 
 interface PermissionsContainer { 
     category: string

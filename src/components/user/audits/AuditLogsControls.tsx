@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { SearchField } from "../ui/TextField";
+import { SearchField } from "../../ui/TextField";
 import { Filter } from "lucide-react";
-import Dropdown, { RoleDropdown } from "../ui/Dropdown";
-import { cn } from "../../utils/utils";
-import DateInput from "../ui/DateInput";
+import Dropdown, { RoleDropdown } from "../../ui/Dropdown";
+import { cn } from "../../../utils/utils";
+import DateInput from "../../ui/DateInput";
 
 interface AuditLogsControlsProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;

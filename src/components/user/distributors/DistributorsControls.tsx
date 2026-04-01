@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
-import Button from "../ui/Button";
-import { SearchField } from "../ui/TextField";
-import usePermissions from "../../hooks/usePermissions";
-import { PERMISSIONS } from "../../config/permission";
+import Button from "../../ui/Button";
+import { SearchField } from "../../ui/TextField";
+import usePermissions from "../../../hooks/usePermissions";
+import { PERMISSIONS } from "../../../config/permission";
 import DistributorModal from "./DistributorModal";
 
 interface DistributorsControlsProps {

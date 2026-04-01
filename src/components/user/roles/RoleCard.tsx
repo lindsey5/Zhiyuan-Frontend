@@ -1,8 +1,8 @@
 import { Pencil, Shield, User } from "lucide-react";
-import { getPermissionKey } from "../../config/permission";
-import type { RoleWithUsersCount } from "../../types/role.type";
-import Card from "../ui/Card";
-import Chip from "../ui/Chip";
+import { getPermissionKey } from "../../../config/permission";
+import type { RoleWithUsersCount } from "../../../types/role.type";
+import Card from "../../ui/Card";
+import Chip from "../../ui/Chip";
 import type { NavigateFunction } from "react-router-dom";
 
 export default function RoleCard ({ role, navigateTo } : { role : RoleWithUsersCount, navigateTo: NavigateFunction }) {

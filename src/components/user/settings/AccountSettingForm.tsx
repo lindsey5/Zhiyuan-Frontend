@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUser } from "../../hooks/useUser";
-import { useAuthStore } from "../../lib/store/authStore";
-import Card from "../ui/Card"
-import TextField from "../ui/TextField"
-import { UserSchema, type UserFormData } from "../../schemas/userSchema";
+import { useUser } from "../../../hooks/useUser";
+import { useAuthStore } from "../../../lib/store/authStore";
+import Card from "../../ui/Card"
+import TextField from "../../ui/TextField"
+import { UserSchema, type UserFormData } from "../../../schemas/userSchema";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { promiseToast } from "../../utils/sileo";
-import GoldButton from "../ui/GoldButton";
-import Button from "../ui/Button";
+import { promiseToast } from "../../../utils/sileo";
+import GoldButton from "../../ui/GoldButton";
+import Button from "../../ui/Button";
 import { Edit } from "lucide-react";
 
 export default function AccountSettingsForm () {
