@@ -9,11 +9,9 @@ export const distributorSchema = z.object({
         .string()
         .email('Invalid email address')
         .max(100, "Email must not exceed 100 characters"),
-    commission_rate: z
+    parent_distributor_id: z
         .number()
-        .positive("Commission rate must be positive")
-        .max(99.99, "Commission rate cannot be 100% or more"),
-        
+        .optional(),
 });
 
 export type DistributorFormData = z.infer<typeof distributorSchema>;

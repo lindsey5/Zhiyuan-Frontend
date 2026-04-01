@@ -12,7 +12,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useAuthStore } from "../../lib/store/authStore";
 import { useDistributor } from "../../hooks/useDistributor";
 import DistributorControls from "../../components/distributors/DistributorsControls";
-import { formatDate } from "../../utils/utils";
+import { Trash } from "lucide-react";
 
 export default function Distributors () {
     const accessToken = useAuthStore().accessToken;
@@ -23,7 +23,6 @@ export default function Distributors () {
 
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
-    const [distributor, setDistributor] = useState<Distributor>();
     const [showModal, setShowModal] = useState(false);
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -67,40 +66,16 @@ export default function Distributors () {
             },
             meta: { align: 'center' },
         },
-        {
-            header: "Creator",
-            accessorKey: 'user',
-            cell: ({ row }) => {
-                if(!row.original.user) return 'N/A';
-
-                return <div>
-                    <h1 className="font-semibold">{row.original.user.firstname} {row.original.user.lastname}</h1>
-                    <p>{row.original.user.email}</p>
-                </div>
-            },
-            meta: { align: 'center' },
-        },
-
-        ...(hasAnyPermissions([ PERMISSIONS.DISTRIBUTOR_DELETE, PERMISSIONS.DISTRIBUTOR_UPDATE], permissions)
+        ...(hasAnyPermissions([ PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
             ? [
                 {
                     header: "Action",
                     cell: ({ row }: { row: Row<Distributor> }) => (
                         <div className="flex gap-3 text-sm justify-center">
-                            {hasPermissions([PERMISSIONS.DISTRIBUTOR_UPDATE], permissions) && (
-                                <Button
-                                    label="Edit"
-                                    onClick={() => {
-                                        setShowModal(true)
-                                        setDistributor(row.original)
-                                   }}
-                                />
-                            )}
-    
                             {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
                                 <Button
-                                    label="Delete"
-                                    className="bg-red-600 text-white"
+                                    className="border-none"
+                                    icon={<Trash size={20} color="red"/>}
                                 />
                             )}
                         </div>
@@ -130,10 +105,8 @@ export default function Distributors () {
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <DistributorControls 
                     permissions={permissions}
-                    setDistributor={setDistributor}
                     setSearch={setSearch}
                     setShowModal={setShowModal}
-                    distributor={distributor}
                     showModal={showModal}
                 />
                 {isLoading ? <TableSkeleton columns={columns.length} /> : (

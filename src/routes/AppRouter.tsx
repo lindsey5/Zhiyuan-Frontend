@@ -15,10 +15,15 @@ import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
 import Distributors from "../pages/dashboard/Distributors";
+import DistributorLogin from "../pages/auth/DistributorLogin";
 
 const router = createBrowserRouter([
     {
         index: true,
+        Component: () => <DistributorLogin />
+    },   
+    {
+        path: 'login',
         Component: () => <LoginPage />
     },
     {

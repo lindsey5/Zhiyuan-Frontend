@@ -3,13 +3,10 @@ import Button from "../ui/Button";
 import { SearchField } from "../ui/TextField";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
-import type { Distributor } from "../../types/distributor.type";
 import DistributorModal from "./DistributorModal";
 
 interface DistributorsControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>
-    distributor?: Distributor;
-    setDistributor: React.Dispatch<React.SetStateAction<Distributor | undefined>>
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     permissions: string[]
@@ -17,8 +14,6 @@ interface DistributorsControlsProps {
 
 export default function DistributorControls ({ 
     setSearch, 
-    distributor,
-    setDistributor,
     setShowModal, 
     showModal,
     permissions
@@ -26,7 +21,6 @@ export default function DistributorControls ({
     const { hasPermissions } = usePermissions();
 
     const onClose = () =>{
-        setDistributor(undefined);
         setShowModal(false)
     }
 
@@ -41,7 +35,6 @@ export default function DistributorControls ({
             <DistributorModal 
                 onClose={onClose}
                 open={showModal}
-                distributor={distributor}
             />
             {hasPermissions([PERMISSIONS.DISTRIBUTOR_CREATE], permissions) && (
                 <Button 

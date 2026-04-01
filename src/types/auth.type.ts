@@ -1,3 +1,4 @@
+import type { Distributor } from './distributor.type';
 import type { User } from './user.type';
 
 export interface AuthState {
@@ -20,8 +21,22 @@ export interface AuthResponse {
   }
 }
 
+export interface DistributorAuthState {
+  distributor: Distributor | null
+  accessToken: string | null
+  refreshToken: string | null
 
-/*
-*  THIS TYPES SHOULD BE UPDATED ACCORDING TO THE 
-*  USER TABLE STRUCTURE
-*/
+  setAuth: (accessToken: string, refreshToken: string) => void
+  setDistributor: (distributor : Distributor) => void
+  isAuthenticated: () => boolean
+  logout: () => void
+}
+
+export interface DistributorAuthResponse { 
+  success: boolean
+  distributor: Distributor
+  token: {
+    accessToken: string
+    refreshToken: string
+  }
+}

@@ -45,7 +45,7 @@ export interface GetDistributorsResponse extends PaginationResponse {
 export interface DistributorPayload {
     distributor_name: string;
     email: string;
-    commission_rate: number;
+    parent_distributor_id?: number;
 }
 
 export interface DistributorResponse extends ApiResponse{
