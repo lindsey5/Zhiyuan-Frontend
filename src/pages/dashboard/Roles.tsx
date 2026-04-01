@@ -9,7 +9,7 @@ import RoleCardSkeleton from "../../components/roles/RoleCardSkeleton";
 export default function Roles () {
     const accessToken = useAuthStore().accessToken;
     const { getRoles } = useRole();
-    const { data, isLoading } = getRoles(accessToken || "");
+    const { data, isFetching } = getRoles(accessToken || "");
     const navigate = useNavigate();
 
     return (
@@ -23,7 +23,7 @@ export default function Roles () {
                 </GoldButton>
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {isLoading ? (
+                {isFetching ? (
                     Array.from({ length: 6 }).map((_, index) => (
                         <RoleCardSkeleton key={index} />
                     ))

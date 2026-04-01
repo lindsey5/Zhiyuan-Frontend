@@ -45,7 +45,7 @@ export default function AuditLogs () {
         order: order
     }
 
-    const { data, isLoading } = getAuditLogs(params,accessToken || "")
+    const { data, isFetching } = getAuditLogs(params,accessToken || "")
 
     const columns: ColumnDef<AuditLog>[] = [
         {
@@ -132,7 +132,7 @@ export default function AuditLogs () {
                     setOrder={setOrder}
                 />;
                 <CustomizedTable 
-                    isLoading={isLoading}
+                    isLoading={isFetching}
                     table={table} 
                     showPagination
                     noDataMessage="No Audit Logs Found"

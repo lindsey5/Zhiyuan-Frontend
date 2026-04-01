@@ -27,7 +27,7 @@ export default function EditProduct () {
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
     const { updateProduct, getProductById } = useProduct();
-    const { data : product, isLoading } = getProductById(id || "");
+    const { data : product, isFetching } = getProductById(id || "");
     const { 
         register, 
         handleSubmit, 
@@ -114,7 +114,7 @@ export default function EditProduct () {
             title="Edit Product"
             description="Update product details and information"
         >
-            {isLoading || !product?.product ? <EditProductSkeleton /> : 
+            {isFetching ? <EditProductSkeleton /> : 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 items-start">
                 <EditProductThumbnail
                     reset={reset}

@@ -43,7 +43,7 @@ export default function Variants () {
     }
 
     const { getVariants } = useVariant();
-    const { data, isLoading } = getVariants(params);
+    const { data, isFetching } = getVariants(params);
 
     const columns: ColumnDef<VariantWithProduct>[] = [
         {
@@ -135,7 +135,7 @@ export default function Variants () {
                 />
                 <CustomizedTable 
                     table={table}
-                    isLoading={isLoading}
+                    isLoading={isFetching}
                     showPagination
                     noDataMessage="No Variants Found"
                 />

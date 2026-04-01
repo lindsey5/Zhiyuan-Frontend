@@ -29,7 +29,7 @@ export default function Categories () {
     const debouncedSearch = useDebounce(search, 200);
 
     const { getCategories, deleteCategory } = useCategory();
-    const { data, isLoading } = getCategories({ search: debouncedSearch });
+    const { data, isFetching } = getCategories({ search: debouncedSearch });
 
     const deleteExistingCategory = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
@@ -104,7 +104,7 @@ export default function Categories () {
                 <CustomizedTable 
                     table={table} 
                     showPagination={false} 
-                    isLoading={isLoading}
+                    isLoading={isFetching}
                     noDataMessage="No Categories Found"
                 />
             </Card>

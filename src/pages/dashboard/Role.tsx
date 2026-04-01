@@ -49,7 +49,7 @@ export default function Role ({ title, description } : { title : string, descrip
     const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
     
     const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
-    const { data, isSuccess, isLoading } = getRoleById(id || "", accessToken || "");
+    const { data, isSuccess, isFetching } = getRoleById(id || "", accessToken || "");
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
         resolver: zodResolver(roleSchema),
@@ -107,7 +107,7 @@ export default function Role ({ title, description } : { title : string, descrip
 
     return (
         <PageContainer title={title} description={description}>
-            {isLoading || !data?.role ? <RoleDetailsSkeleton /> : 
+            {isFetching ? <RoleDetailsSkeleton /> : 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
 
                 <Card>

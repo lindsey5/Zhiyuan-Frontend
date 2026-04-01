@@ -49,7 +49,7 @@ export default function Products () {
         order: sorting.order,
     }
 
-    const { data, isLoading } = getProducts(params);
+    const { data, isFetching } = getProducts(params);
 
     const deleteExistingProduct = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");
@@ -156,7 +156,7 @@ export default function Products () {
                 <CustomizedTable 
                     table={table}
                     showPagination
-                    isLoading={isLoading}
+                    isLoading={isFetching}
                     noDataMessage="No Products Found"
                 />
             </Card>
