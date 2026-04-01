@@ -1,4 +1,4 @@
-import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState, type Row } from "@tanstack/react-table";
+import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
