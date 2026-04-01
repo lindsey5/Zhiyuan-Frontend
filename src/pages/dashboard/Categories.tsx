@@ -1,7 +1,7 @@
 import { getCoreRowModel, useReactTable, type ColumnDef, type Row } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
+import CustomizedTable from "../../components/ui/Table";
 import { useCategory } from "../../hooks/useCategory";
 import type { Category } from "../../types/category.type";
 import { formatDate } from "../../utils/utils";
@@ -86,7 +86,6 @@ export default function Categories () {
         getCoreRowModel: getCoreRowModel(),
     });
 
-
     return (
         <PageContainer 
             className="h-screen" 
@@ -102,15 +101,12 @@ export default function Categories () {
                     showModal={showModal}
                     permissions={permissions}
                 />
-                {isLoading ? 
-                    <TableSkeleton columns={columns.length}/> 
-                    : 
-                    <CustomizedTable 
-                        table={table} 
-                        showPagination={false} 
-                        noDataMessage="No Categories Found"
-                    />
-                }
+                <CustomizedTable 
+                    table={table} 
+                    showPagination={false} 
+                    isLoading={isLoading}
+                    noDataMessage="No Categories Found"
+                />
             </Card>
         </PageContainer>
     )

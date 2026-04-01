@@ -9,7 +9,7 @@ export const useVariant = () => {
 
     const getVariants = (params : GetVariantsParams) => {
         return useQuery<GetVariantsResponse, Error>({
-            queryKey: ['products', params],
+            queryKey: ['variants', params],
             queryFn: () => variantService.getVariants(params, accessToken || ""),
             placeholderData: (prev) => prev,
         })

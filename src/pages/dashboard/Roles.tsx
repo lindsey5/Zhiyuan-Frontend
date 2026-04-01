@@ -4,11 +4,12 @@ import GoldButton from "../../components/ui/GoldButton";
 import RoleCard from "../../components/roles/RoleCard";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
+import RoleCardSkeleton from "../../components/roles/RoleCardSkeleton";
 
 export default function Roles () {
     const accessToken = useAuthStore().accessToken;
     const { getRoles } = useRole();
-    const { data } = getRoles(accessToken || "");
+    const { data, isLoading } = getRoles(accessToken || "");
     const navigate = useNavigate();
 
     return (
@@ -22,9 +23,15 @@ export default function Roles () {
                 </GoldButton>
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {data?.roles?.map(role => (
-                    <RoleCard role={role} navigateTo={navigate}/>
-                ))}
+                {isLoading ? (
+                    Array.from({ length: 6 }).map((_, index) => (
+                        <RoleCardSkeleton key={index} />
+                    ))
+                ) : (
+                    data?.roles?.map(role => (
+                        <RoleCard key={role._id} role={role} navigateTo={navigate}/>
+                    ))
+                )}
             </div>
         </PageContainer>
     )

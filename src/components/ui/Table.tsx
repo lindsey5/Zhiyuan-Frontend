@@ -98,7 +98,7 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
                             >
                                 <div
                                 className="h-4 rounded w-full"
-                                style={{ backgroundColor: 'var(--bg-hover)' }}
+                                style={{ backgroundColor: 'var(--bg-loading)' }}
                                 ></div>
                             </td>
                             ))}
@@ -111,21 +111,37 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
     );
 };
 
-const CustomizedTable = <T,>({ table, showPagination, noDataMessage = "No Data Available" }: { table: Table<T>, showPagination: boolean, noDataMessage: string}) => {
+const CustomizedTable = <T,>({ 
+    table, 
+    isLoading, 
+    showPagination, 
+    noDataMessage = "No Data Available" } : 
+    { 
+        table: Table<T>, 
+        isLoading : boolean, 
+        showPagination: boolean, 
+        noDataMessage: string
+    }
+) => {
     const rows = table.getRowModel().rows;
-    
+    const cols = table.getAllColumns().length;
+
     return (
         <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
-            <div className="overflow-auto flex-grow relative">
-                <table className="w-full text-xs lg:text-sm">
-                    <TableColumns table={table} />
-                    <TableRows table={table} />
-                </table>
-                {rows.length === 0 && <div className="absolute top-1/2 left-1/2 transform -translate-1/2 text-muted font-bold">
-                    {noDataMessage}
-                </div>}
-            </div>
-            {showPagination && rows.length > 0 && <PaginationControls table={table} />}
+            {isLoading ? <TableSkeleton columns={cols}/> : 
+                <>
+                <div className="overflow-auto flex-grow relative">
+                    <table className="w-full text-xs lg:text-sm">
+                        <TableColumns table={table} />
+                        <TableRows table={table} />
+                    </table>
+                    {rows.length === 0 && !isLoading && <div className="absolute top-1/2 left-1/2 transform -translate-1/2 text-muted font-bold">
+                        {noDataMessage}
+                    </div>}
+                </div>
+                {showPagination && rows.length > 0 && <PaginationControls table={table} />}
+                </>
+            }
         </div>
     );
 };

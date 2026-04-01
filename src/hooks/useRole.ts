@@ -6,7 +6,7 @@ export const useRole = () => {
 
     const getOwnRole = (accessToken : string) => {
         return useQuery<GetRoleResponse, Error>({
-            queryKey: ['permissions'],
+            queryKey: ['role'],
             queryFn: async () => {
                 return roleService.getOwnRole(accessToken)
             }
@@ -15,7 +15,7 @@ export const useRole = () => {
 
     const getRoles = (accessToken : string) => {
         return useQuery<GetRolesResponse, Error>({
-            queryKey: ['role'],
+            queryKey: ['roles'],
             queryFn: async () => {
                 return roleService.getRoles(accessToken)
             },
@@ -32,7 +32,7 @@ export const useRole = () => {
 
     const getRoleById = (id : string, accessToken : string) => (
         useQuery<GetRoleResponse>({
-            queryKey: ['role'],
+            queryKey: ['role', id],
             queryFn: async () => {
                 return roleService.getRoleById(id, accessToken)
             },

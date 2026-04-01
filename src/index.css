@@ -12,7 +12,7 @@
   --color-toggle-thumb: var(--toggle-thumb);
   --color-separator: var(--separator);
   --color-gold: var(--accent-gold);
-  --color-hover: var(--bg-hover);
+  --color-loading: var(--bg-loading);
   --color-chip: var(--bg-chip);
   
   /* Mapping Text Colors */
@@ -41,7 +41,7 @@
     --bg-panel: #ffffff; 
     --bg-table-row-odd: #fff;
     --bg-table-row-even: #ecebeb;
-    --bg-hover: #f1c9a1;
+    --bg-loading: #f1c9a1;
     --bg-chip: #a67c5233;
 
     --text-primary: #4a3728;
@@ -66,7 +66,7 @@
     --bg-panel: #313131;
     --bg-table-row-odd: #313131;
     --bg-table-row-even: #292929;
-    --bg-hover: #53535366;
+    --bg-loading: #53535366;
 
     --text-primary: #e0e0e0;
     --text-muted: #888888;

@@ -10,7 +10,7 @@ import {
   type Row,
 } from "@tanstack/react-table";
 import type { Product } from "../../types/product.type";
-import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
+import CustomizedTable from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
 import ProductsTableControls from "../../components/products/ProductsTableControls";
@@ -39,14 +39,17 @@ export default function Products () {
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
     
     const { getProducts, deleteProduct } = useProduct();
-    const { data, isLoading } = getProducts({ 
+    
+    const params = { 
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
         sortBy: sorting.sortBy,
         category: category === 'All' ? undefined : category,
         order: sorting.order,
-    });
+    }
+
+    const { data, isLoading } = getProducts(params);
 
     const deleteExistingProduct = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");
@@ -105,6 +108,7 @@ export default function Products () {
                                 <Button
                                     label="Edit"
                                     className="p-1 md:p-3"
+                                    disabled={deleteProduct.isPending}
                                     onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                                 />
                             )}
@@ -113,6 +117,7 @@ export default function Products () {
                                 <Button
                                     label="Delete"
                                     className="bg-red-600 text-white p-1 md:p-3"
+                                    disabled={deleteProduct.isPending}
                                     onClick={() => deleteExistingProduct(row.original._id)}
                                 />
                             )}
@@ -148,13 +153,12 @@ export default function Products () {
                     category={category}
                     setCategory={setCategory}
                 />
-                {isLoading ? <TableSkeleton columns={columns.length} /> : (
-                    <CustomizedTable 
-                        table={table}
-                        showPagination
-                        noDataMessage="No Products Found"
-                    />
-                )}
+                <CustomizedTable 
+                    table={table}
+                    showPagination
+                    isLoading={isLoading}
+                    noDataMessage="No Products Found"
+                />
             </Card>
         </PageContainer>
     )

@@ -33,15 +33,17 @@ export default function Variants () {
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
     
-    const { getVariants } = useVariant();
-    const { data, isLoading } = getVariants({ 
+    const params = { 
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
         sortBy: sorting.sortBy,
         category: category === 'All' ? undefined : category,
         order: sorting.order,
-    });
+    }
+
+    const { getVariants } = useVariant();
+    const { data, isLoading } = getVariants(params);
 
     const columns: ColumnDef<VariantWithProduct>[] = [
         {
@@ -131,13 +133,12 @@ export default function Variants () {
                     category={category}
                     setCategory={setCategory}
                 />
-                {isLoading ? <TableSkeleton columns={columns.length} /> : (
-                    <CustomizedTable 
-                        table={table}
-                        showPagination
-                        noDataMessage="No Variants Found"
-                    />
-                )}
+                <CustomizedTable 
+                    table={table}
+                    isLoading={isLoading}
+                    showPagination
+                    noDataMessage="No Variants Found"
+                />
             </Card>
         </PageContainer>
     )

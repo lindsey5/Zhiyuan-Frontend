@@ -14,6 +14,7 @@ import { promiseToast } from "../../utils/sileo";
 import GoldButton from "../../components/ui/GoldButton";
 import Button from "../../components/ui/Button";
 import usePermissions from "../../hooks/usePermissions";
+import RoleDetailsSkeleton from "../../components/role/RoleDetailsSkeleton";
 
 function CategorizedPermissions () {
     const result: Record<string, { description: string, value: string}[]> = {};
@@ -48,7 +49,7 @@ export default function Role ({ title, description } : { title : string, descrip
     const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
     
     const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
-    const { data, isSuccess } = getRoleById(id || "", accessToken || "");
+    const { data, isSuccess, isLoading } = getRoleById(id || "", accessToken || "");
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
         resolver: zodResolver(roleSchema),
@@ -106,6 +107,7 @@ export default function Role ({ title, description } : { title : string, descrip
 
     return (
         <PageContainer title={title} description={description}>
+            {isLoading || !data?.role ? <RoleDetailsSkeleton /> : 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
 
                 <Card>
@@ -152,7 +154,7 @@ export default function Role ({ title, description } : { title : string, descrip
                         {id ? 'Update Role' : 'Create Role'}
                     </GoldButton>
                 </div>
-            </form>
+            </form>}
         </PageContainer>
     )
 }

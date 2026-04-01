@@ -1,7 +1,7 @@
 import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
+import CustomizedTable from "../../components/ui/Table";
 import type { AuditLog } from "../../types/audit.type";
 import { formatDate } from "../../utils/utils";
 import { useState } from "react";
@@ -34,20 +34,19 @@ export default function AuditLogs () {
 
     const { getAuditLogs } = useAudit();
 
-    const { data, isLoading } = getAuditLogs(
-        {
-            limit: pagination.pageSize,
-            page: pagination.pageIndex + 1,
-            search: debouncedSearch,
-            startDate: startDate ? formatDate(startDate) : undefined,
-            endDate: endDate ? formatDate(endDate) : undefined,
-            role: role,
-            severity: severity,
-            order: order
-        },
-        accessToken || ""
-    )
-    console.log(data)
+    const params = {
+        limit: pagination.pageSize,
+        page: pagination.pageIndex + 1,
+        search: debouncedSearch,
+        startDate: startDate ? formatDate(startDate) : undefined,
+        endDate: endDate ? formatDate(endDate) : undefined,
+        role: role,
+        severity: severity,
+        order: order
+    }
+
+    const { data, isLoading } = getAuditLogs(params,accessToken || "")
+
     const columns: ColumnDef<AuditLog>[] = [
         {
             header: "Date",
@@ -132,15 +131,12 @@ export default function AuditLogs () {
                     order={order}
                     setOrder={setOrder}
                 />;
-                {isLoading ? 
-                    <TableSkeleton columns={columns.length}/> 
-                    : 
-                    <CustomizedTable 
-                        table={table} 
-                        showPagination
-                        noDataMessage="No Audit Logs Found"
-                    />
-                }
+                <CustomizedTable 
+                    isLoading={isLoading}
+                    table={table} 
+                    showPagination
+                    noDataMessage="No Audit Logs Found"
+                />
             </Card>
         </PageContainer>
     )

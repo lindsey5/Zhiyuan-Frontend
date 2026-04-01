@@ -17,6 +17,7 @@ import EditProductVariant from "../../components/edit-product/EditProductVariant
 import { useParams } from "react-router-dom";
 import { promiseToast } from "../../utils/sileo";
 import { useEffect } from "react";
+import EditProductSkeleton from "../../components/edit-product/EditProductSkeleton";
 
 export default function EditProduct () {
     const params = useParams();
@@ -26,7 +27,7 @@ export default function EditProduct () {
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
     const { updateProduct, getProductById } = useProduct();
-    const { data : product } = getProductById(id || "");
+    const { data : product, isLoading } = getProductById(id || "");
     const { 
         register, 
         handleSubmit, 
@@ -65,7 +66,10 @@ export default function EditProduct () {
             true
         )
 
-        if(isProductNameExist || isSkuExist) return;
+        if(isProductNameExist || isSkuExist) {
+            updateProduct.isPending = false;
+            return;
+        }
 
         const callBack = updateProduct.mutateAsync({ 
             data, 
@@ -110,7 +114,8 @@ export default function EditProduct () {
             title="Edit Product"
             description="Update product details and information"
         >
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 relative items-start">
+            {isLoading || !product?.product ? <EditProductSkeleton /> : 
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10 items-start">
                 <EditProductThumbnail
                     reset={reset}
                     setValue={setValue}
@@ -161,6 +166,7 @@ export default function EditProduct () {
                         label="Add Variant"
                         className="font-bold"
                         onClick={addVariant}
+                        disabled={updateProduct.isPending}
                     />
                     <div className="flex gap-10 w-full pt-10">
                         <GoldButton 
@@ -170,7 +176,7 @@ export default function EditProduct () {
                         >Save Changes</GoldButton>
                     </div>
                 </Card>
-            </form>
+            </form>}
         </PageContainer>
     )
 }

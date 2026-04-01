@@ -14,7 +14,7 @@ export const useProduct = () => {
 
     const getProductById = (id : string) => {
         return useQuery<GetProductResponse, Error>({
-            queryKey: [`products/${id}`],
+            queryKey: ['product', id],
             queryFn: () => productService.getProductById(id),
         })
     }
