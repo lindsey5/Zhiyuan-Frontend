@@ -31,9 +31,14 @@ export const promiseToast = <T extends { message?: string}>(
     return sileo.promise(promise, {
         position: position,
         loading: { title: "Loading..." },
-        success: (data: T) => ({
-            title: data?.message || successTitle || "Success",
-        }),
+        success: (data: T) => {
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000)
+            return ({
+                title: data?.message || successTitle || "Success",
+            })
+        },
         error: (err: any) => ({
             title: err?.message || "Something went wrong",
         }),

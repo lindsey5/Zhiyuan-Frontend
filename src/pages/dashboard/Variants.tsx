@@ -18,10 +18,12 @@ import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
 import type { VariantWithProduct } from "../../types/variant";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
+import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Variants () {
+    const accessToken = useAuthStore().accessToken;
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
+    const { data : role } = getOwnRole(accessToken || "");
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 

@@ -1,25 +1,23 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import type { GetRoleResponse, GetRolesResponse, RoleDTO } from "../types/role.type"
 import { roleService } from "../service/roleService"
-import { useAuthStore } from "../lib/store/authStore"
 
 export const useRole = () => {
-    const { accessToken } = useAuthStore();
 
-    const getOwnRole = () => {
+    const getOwnRole = (accessToken : string) => {
         return useQuery<GetRoleResponse, Error>({
             queryKey: ['permissions'],
             queryFn: async () => {
-                return roleService.getOwnRole(accessToken || "")
+                return roleService.getOwnRole(accessToken)
             }
         })
     }
 
-    const getRoles = () => {
+    const getRoles = (accessToken : string) => {
         return useQuery<GetRolesResponse, Error>({
             queryKey: ['role'],
             queryFn: async () => {
-                return roleService.getRoles(accessToken || "")
+                return roleService.getRoles(accessToken)
             },
             
         })
@@ -47,12 +45,19 @@ export const useRole = () => {
         }
     })
 
+    const deleteRole = useMutation({
+        mutationFn: ({ id, accessToken } : { id: number, accessToken: string}) => {
+            return roleService.deleteRole(id, accessToken)
+        } 
+    })
+
     return {
         getOwnRole,
         getRoles,
         createRole,
         getRoleById,
-        updateRole
+        updateRole,
+        deleteRole
     }
 
 }

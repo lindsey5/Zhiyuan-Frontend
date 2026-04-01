@@ -3,10 +3,12 @@ import { getPermissionKey, PERMISSION_DESCRIPTIONS } from "../../config/permissi
 import { useRole } from "../../hooks/useRole";
 import Card from "../ui/Card";
 import Chip from "../ui/Chip";
+import { useAuthStore } from "../../lib/store/authStore";
 
 export default function AccountPermissions() {
+    const accessToken = useAuthStore().accessToken;
     const { getOwnRole } = useRole();
-    const { data } = getOwnRole();
+    const { data } = getOwnRole(accessToken || "");
     const role = data?.role;
     const permissions = data?.permissions || [];
 

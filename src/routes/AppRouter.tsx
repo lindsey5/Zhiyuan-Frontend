@@ -14,6 +14,7 @@ import Variants from "../pages/dashboard/Variants";
 import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
+import Distributors from "../pages/dashboard/Distributors";
 
 const router = createBrowserRouter([
     {
@@ -143,6 +144,26 @@ const router = createBrowserRouter([
                         <Role title="Edit Role" description="Update role details and manage permissions." />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: 'distributors',
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute anyPermissions={
+                                [
+                                    PERMISSIONS.DISTRIBUTOR_CREATE, 
+                                    PERMISSIONS.DISTRIBUTOR_READ_ALL, 
+                                    PERMISSIONS.DISTRIBUTOR_DELETE, 
+                                    PERMISSIONS.DISTRIBUTOR_UPDATE
+                                ]
+                            }>
+                                <Distributors />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]
             }
         ]
     },
@@ -153,5 +174,5 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
-  return <RouterProvider router={router} />;
+    return <RouterProvider router={router} />;
 }

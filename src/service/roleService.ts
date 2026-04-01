@@ -1,5 +1,6 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import type { GetRolesResponse, GetRoleResponse, RoleDTO, UpdateRoleResponse, CreateRoleResponse } from "../types/role.type";
+import { type ApiResponse } from "../types/type";
 
 export const roleService = {
   getOwnRole: (accessToken : string): Promise<GetRoleResponse> => {
@@ -41,11 +42,20 @@ export const roleService = {
 
   updateRole: (id: number, data: RoleDTO, accessToken: string) : Promise<UpdateRoleResponse> => {
     return apiAxios<UpdateRoleResponse>(`roles/${id}`, {
-            headers: {
+      headers: {
         Authorization: `Bearer ${accessToken}`
       },
       method: HttpMethod.PUT,
       data
+    })
+  },
+
+  deleteRole: (id : number, accessToken : string) : Promise<ApiResponse> => {
+    return apiAxios<ApiResponse>(`roles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      method: HttpMethod.DELETE
     })
   }
 

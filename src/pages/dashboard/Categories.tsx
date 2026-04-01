@@ -3,7 +3,7 @@ import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { useCategory } from "../../hooks/useCategory";
-import type { Category } from "../../types/category";
+import type { Category } from "../../types/category.type";
 import { formatDate } from "../../utils/utils";
 import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -19,7 +19,7 @@ export default function Categories () {
     const { accessToken } = useAuthStore();
 
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
+    const { data : role } = getOwnRole(accessToken || "");
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 

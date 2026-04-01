@@ -1,4 +1,5 @@
-import type { PaginationResponse } from "./pagination";
+import type { PaginationResponse } from "./pagination.type";
+import type { ApiResponse } from "./type";
 import type { Variant } from "./variant";
 
 export interface Product {
@@ -33,9 +34,7 @@ export interface CreateVariant {
     image: File;
 }
 
-export interface CreateProductResponse {
-    success: boolean;
-    message?: string;
+export interface CreateProductResponse extends ApiResponse {
     product: Product
 }
 
@@ -71,8 +70,6 @@ export interface UpdateVariantPayload {
     sku: string;
 }
 
-export interface UpdateProductResponse {
-    success: boolean;
+export interface UpdateProductResponse extends ApiResponse {
     product: Product;
-    message?: string;
 }

@@ -14,6 +14,10 @@ import {
     Tags,
     Layers,
     User,
+    Share2,
+    TrendingUp,
+    DollarSign,
+    Users,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -131,6 +135,19 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/users')}
                 isActive={pathname === '/dashboard/users'}
+            />
+
+            <SidebarDropdown
+                title="Distributor Management"
+                icon={<Share2 size={24} />}
+                collapsed={collapsed}
+                navigate={navigate}
+                items={[
+                    { label: "Distributors", icon: <Users size={20} />, path: '/dashboard/distributors'},
+                    { label: "Sales", icon: <DollarSign size={20} />, path: '/dashboard/distributors/sales'},
+                    { label: "Reports", icon: <TrendingUp size={20} />, path: '/dashboard/distributors/reports'},
+                ]}
+                setCollapsed={setCollapsed}
             />
 
             <SidebarDropdown

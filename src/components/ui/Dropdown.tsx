@@ -2,6 +2,7 @@ import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { cn } from "../../utils/utils"
 import { useRole } from "../../hooks/useRole"
+import { useAuthStore } from "../../lib/store/authStore"
 
 type Option = {
     label: string
@@ -82,8 +83,9 @@ type RoleDropdownProps = {
 }
 
 export function RoleDropdown ({value, onChange,}: RoleDropdownProps) {
+    const accessToken = useAuthStore().accessToken;
     const { getRoles } = useRole();
-    const { data } = getRoles();
+    const { data } = getRoles(accessToken || "");
 
     const options = [
         { label: 'All', value: '' },

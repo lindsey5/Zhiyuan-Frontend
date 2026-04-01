@@ -1,3 +1,4 @@
+import type { ApiResponse } from "./type";
 
 export interface Category {
     id: number;
@@ -10,9 +11,7 @@ export interface GetCategoryResponse {
     categories: Category[];
 }
 
-export interface CreateAndUpdateCategoryResponse {
-    success: boolean;
-    message?: string;
+export interface CreateAndUpdateCategoryResponse extends ApiResponse {
     category: Category;
 }
 

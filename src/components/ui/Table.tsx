@@ -112,7 +112,7 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
 
 const CustomizedTable = <T,>({ table, showPagination, noDataMessage = "No Data Available" }: { table: Table<T>, showPagination: boolean, noDataMessage: string}) => {
     const rows = table.getRowModel().rows;
-
+    
     return (
         <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
             <div className="overflow-auto flex-grow relative">

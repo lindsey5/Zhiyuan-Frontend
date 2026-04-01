@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { CreateProductResponse, GetProductResponse, GetProductsParams, GetProductsResponse, SearchProductResponse, UpdateProductPayload, UpdateProductResponse } from "../types/product";
+import type { CreateProductResponse, GetProductResponse, GetProductsParams, GetProductsResponse, SearchProductResponse, UpdateProductPayload, UpdateProductResponse } from "../types/product.type";
 import type { ApiResponse } from "../types/type";
 
 export const productService = {
@@ -27,7 +27,7 @@ export const productService = {
   },
 
   updateProduct: (id : number, data : UpdateProductPayload, accessToken : string) : Promise<UpdateProductResponse> => {
-    return apiAxios<GetProductResponse>(`products/${id}`, {
+    return apiAxios<UpdateProductResponse>(`products/${id}`, {
       method: HttpMethod.PUT,
       headers: {
         Authorization: `Bearer ${accessToken}`

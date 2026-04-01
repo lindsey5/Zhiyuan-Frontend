@@ -3,6 +3,7 @@ import { type ReactNode } from 'react';
 import usePermissions from '../hooks/usePermissions';
 import { useRole } from '../hooks/useRole';
 import Unauthorized from './Unauthorized';
+import { useAuthStore } from '../lib/store/authStore';
 
 type ProtectedRouteProps = {
     children: ReactNode;
@@ -24,15 +25,16 @@ export const ProtectedRoute = ({
         hasPermissions,
         hasAnyPermissions
     } = usePermissions();
+    const accessToken = useAuthStore.getState().accessToken;
     const { getOwnRole } = useRole();
-    const { data } = getOwnRole();
+    const { data } = getOwnRole(accessToken || "");
     const permissions = data?.permissions || []
 
     if (requireAuthentication && !isAuthenticated()) {
         return <Navigate to={redirectTo} replace />;
     }
 
-    if (permissions.length > 0) {
+    if (requiredPermissions.length > 0) {
         const hasRequiredPermissions = hasPermissions(requiredPermissions, permissions);
 
         if (!hasRequiredPermissions) {

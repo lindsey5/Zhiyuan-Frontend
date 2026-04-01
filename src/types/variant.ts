@@ -1,5 +1,5 @@
-import type { PaginationResponse } from "./pagination";
-import type { Product } from "./product";
+import type { PaginationResponse } from "./pagination.type";
+import type { Product } from "./product.type";
 
 export interface Variant {
     id: number;

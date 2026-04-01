@@ -29,10 +29,8 @@ export interface GetRolesResponse {
     roles: RoleWithUsersCount[]
 }
 
-export interface CreateRoleResponse {
-    success: boolean
+export interface CreateRoleResponse extends ApiResponse{
     role: Role
-    message?: string
     permissions: Permission[]
 }
 

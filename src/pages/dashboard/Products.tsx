@@ -9,7 +9,7 @@ import {
   type PaginationState,
   type Row,
 } from "@tanstack/react-table";
-import type { Product } from "../../types/product";
+import type { Product } from "../../types/product.type";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
@@ -28,7 +28,7 @@ export default function Products () {
     const { accessToken } = useAuthStore();
 
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
+    const { data : role } = getOwnRole(accessToken || "");
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 

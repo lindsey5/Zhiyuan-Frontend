@@ -1,5 +1,7 @@
 import z from "zod";
 
+const MAX_FILE_SIZE = 500 * 1024 * 1024;
+
 const createVariantSchema = z.object({
     variant_name: z.string()
         .min(3, "Variant name must be at least 3 characters")
@@ -19,6 +21,9 @@ const createVariantSchema = z.object({
     image: z
         .instanceof(File, { message: "Image is required" })
         .refine((file) => file !== undefined, { message: "Image is required" })
+        .refine((file) => file.size <= MAX_FILE_SIZE, {
+            message: "Image must be less than 500MB",
+        }),
 });
 
 export const createProductSchema = z.object({
@@ -32,7 +37,10 @@ export const createProductSchema = z.object({
 
     thumbnail: z
         .instanceof(File, { message: "Thumbnail is required" })
-        .refine((file) => file !== undefined, { message: "Thumbnail is required" }),
+        .refine((file) => file !== undefined, { message: "Thumbnail is required" })
+        .refine((file) => file.size <= MAX_FILE_SIZE, {
+            message: "Image must be less than 500MB",
+        }),
     category: z.string().min(1, "Category is required."),
 
     variants: z.array(createVariantSchema).min(1, "At least one variant is required"),

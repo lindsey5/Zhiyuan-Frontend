@@ -12,6 +12,8 @@ import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
 import { promiseToast } from "../../utils/sileo";
 import GoldButton from "../../components/ui/GoldButton";
+import Button from "../../components/ui/Button";
+import usePermissions from "../../hooks/usePermissions";
 
 function CategorizedPermissions () {
     const result: Record<string, { description: string, value: string}[]> = {};
@@ -38,8 +40,14 @@ export default function Role ({ title, description } : { title : string, descrip
      const params = useParams();
     const id = params.id;
     const accessToken = useAuthStore(state => state.accessToken);
+
+    const { getOwnRole } = useRole();
+    const { data : role } = getOwnRole(accessToken || "");
+    const permissions = role?.permissions || [];
+    const { hasPermissions } = usePermissions();
+    const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
     
-    const { createRole,  getRoleById, updateRole } =  useRole();
+    const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
     const { data, isSuccess } = getRoleById(Number(id), accessToken || "");
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
@@ -85,6 +93,17 @@ export default function Role ({ title, description } : { title : string, descrip
         }
     }
 
+    const handleDelete = () => {
+        const isConfirm = confirm("Are you sure you want to delete this role?");
+
+        if (!isConfirm) return;
+
+        promiseToast(deleteRole.mutateAsync({
+            id: Number(id),
+            accessToken: accessToken || ""
+        }))
+    }
+
     return (
         <PageContainer title={title} description={description}>
             <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
@@ -120,7 +139,15 @@ export default function Role ({ title, description } : { title : string, descrip
                         />
                     ))}
                 </Card>
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-5">
+                    {id && hasDeletePermission && (
+                        <Button 
+                            type="button"
+                            className="bg-red-500 text-white rounded-md font-semibold text-md"
+                            label="Delete Role"
+                            onClick={handleDelete}
+                        />
+                    )}
                     <GoldButton type="submit">
                         {id ? 'Update Role' : 'Create Role'}
                     </GoldButton>

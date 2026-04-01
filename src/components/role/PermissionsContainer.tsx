@@ -21,7 +21,7 @@ export default function PermissionsContainer ({
     watch,
     setValue
 } : PermissionsContainer) {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const checkedPermissions = watch('permissions');
     const description = PERMISSION_DESCRIPTIONS[category]?.description;
 
@@ -54,7 +54,7 @@ export default function PermissionsContainer ({
             {show && (
                 <div className="space-y-5 mt-6">
                     {permissions.map((perm) => (
-                        <div key={perm.value} className="flex items-center gap-2 flex">
+                        <label key={perm.value} className="flex items-center gap-2 flex cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={checkedPermissions.includes(perm.value)}
@@ -63,7 +63,7 @@ export default function PermissionsContainer ({
                             />
                             <h1>{getPermissionKey(perm.value)}</h1>
                             <p className="text-gray">{perm.description}</p>
-                        </div>
+                        </label>
                     ))}
                 </div>
             )}

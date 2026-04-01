@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { CreateAndUpdateCategoryResponse, GetCategoryParams, GetCategoryResponse } from "../types/category";
+import type { CreateAndUpdateCategoryResponse, GetCategoryParams, GetCategoryResponse } from "../types/category.type";
 import type { ApiResponse } from "../types/type";
 
 export interface CreateCategoryPayload {

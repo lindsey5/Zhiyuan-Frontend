@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import type { GetCategoryParams, GetCategoryResponse } from "../types/category"
+import type { GetCategoryParams, GetCategoryResponse } from "../types/category.type"
 import { categoryService, type CreateCategoryPayload } from "../service/categoryService"
 
 export const useCategory = () => {
