@@ -13,7 +13,7 @@ import type { Product } from "../../types/product.type";
 import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
-import ProductsTableControls from "../../components/user/products/ProductsTableControls";
+import ProductsTableControls from "../../components/products/ProductsTableControls";
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
@@ -63,9 +63,9 @@ export default function Products () {
             header: "Product",
             accessorKey: "product_name",
             cell: ({ row }) => (
-                <div className="flex items-center gap-3 justify-start">
-                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
-                    <span className="text-sm">{row.original.product_name}</span>
+                <div className="m-3 flex items-center gap-3 justify-start">
+                    <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
+                    <span className="text-xs lg:text-sm">{row.original.product_name}</span>
                 </div>
             ),
             meta: { align: 'left' },
@@ -74,7 +74,7 @@ export default function Products () {
             header: "Category",
             accessorKey: "category",
             
-            cell: info => <span className="text-sm">{info.getValue() as string}</span>,
+            cell: info => <span className="text-xs lg:text-sm">{info.getValue() as string}</span>,
             meta: { align: 'center' },
         },
         {
@@ -86,7 +86,7 @@ export default function Products () {
             header: "Stock",
             cell: ({ row }) => {
                 const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
-                return <span className="text-sm">{total}</span>;
+                return <span className="text-xs lg:text-sm">{total}</span>;
             },
             meta: { align: 'center' },
         },
@@ -104,6 +104,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
+                                    className="p-1 md:p-3"
                                     onClick={() => navigate(`/dashboard/edit-product/${row.original.id}`)}
                                 />
                             )}
@@ -111,7 +112,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white"
+                                    className="bg-red-600 text-white p-1 md:p-3"
                                     onClick={() => deleteExistingProduct(row.original.id)}
                                 />
                             )}

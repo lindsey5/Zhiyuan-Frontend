@@ -1,5 +1,5 @@
-import DashboardChart from "../../components/user/dashboard/DashboardChart"
-import Metrics from "../../components/user/dashboard/Metrics"
+import DashboardChart from "../../components/dashboard/DashboardChart"
+import Metrics from "../../components/dashboard/Metrics"
 import PageContainer from "../../components/ui/PageContainer"
 
 export default function Dashboard() {
@@ -13,8 +13,11 @@ export default function Dashboard() {
 
             <DashboardChart
                 title="Monthly Sales"
-                labels={["Mon", "Tue", "Wed", "Thu", "Fri"]}
-                values={[30, 50, 40, 70, 60]}
+                labels={[
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                ]}
+                values={[30, 50, 40, 70, 60, 90, 80, 75, 65, 85, 95, 100]}
             />
         </PageContainer>
     );

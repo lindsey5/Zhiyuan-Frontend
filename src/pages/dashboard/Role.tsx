@@ -6,7 +6,7 @@ import { useRole } from "../../hooks/useRole";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type RoleFormData, roleSchema } from "../../schemas/roleSchema";
 import { getPermissionKey, PERMISSION_DESCRIPTIONS, PERMISSIONS } from "../../config/permission";
-import PermissionsContainer from "../../components/user/role/PermissionsContainer";
+import PermissionsContainer from "../../components/role/PermissionsContainer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";

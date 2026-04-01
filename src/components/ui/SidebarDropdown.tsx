@@ -34,7 +34,7 @@ export default function SidebarDropdown({
             {/* Trigger */}
             <div
                 onClick={openDropdown}
-                className="relative group flex items-center justify-between px-3 py-2 rounded-md cursor-pointer hover:bg-[rgba(166,124,82,0.1)] hover:text-gold transition"
+                className="group flex items-center justify-between px-3 py-2 rounded-md cursor-pointer hover:bg-[rgba(166,124,82,0.1)] hover:text-gold transition"
             >
                 <div className="flex items-center gap-3">
                     <span className="text-gold">{icon}</span>
@@ -64,7 +64,7 @@ export default function SidebarDropdown({
             {/* Dropdown */}
             {!collapsed && (
                 <div
-                    className={`flex flex-col ml-6 border-l border-[var(--border-panel)] pl-3 gap-1 overflow-hidden transition-all duration-300 ease-in-out
+                    className={`flex flex-col ml-6 border-l border-[var(--border-panel)] pl-3 gap-1 transition-all duration-300 ease-in-out
                         ${open ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"}
                     `}
                 >

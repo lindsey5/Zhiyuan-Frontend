@@ -1,5 +1,5 @@
-import AccountPermissions from "../../components/user/settings/AccountPermissions";
-import AccountSettingsForm from "../../components/user/settings/AccountSettingForm";
+import AccountPermissions from "../../components/settings/AccountPermissions";
+import AccountSettingsForm from "../../components/settings/AccountSettingForm";
 import PageContainer from "../../components/ui/PageContainer";
 
 export default function AccountSettings() {

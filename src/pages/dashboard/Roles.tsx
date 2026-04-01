@@ -1,7 +1,7 @@
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
 import GoldButton from "../../components/ui/GoldButton";
-import RoleCard from "../../components/user/roles/RoleCard";
+import RoleCard from "../../components/roles/RoleCard";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
 

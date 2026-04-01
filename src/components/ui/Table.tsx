@@ -7,7 +7,7 @@ type TableRowProps<T> = {
 
 const TableRow = <T,>({ row }: TableRowProps<T>) => {
     return (
-        <tr>
+        <tr className="mx-10000">
         {row.getVisibleCells().map(cell => {
             const align = (cell.column.columnDef.meta as any)?.align || 'left';
             return (
@@ -41,7 +41,8 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
                 return (
                 <th
                     key={header.id}
-                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel text-${align} z-1`}
+                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel z-1`}
+                    style={{ textAlign: align }}
                 >
                     {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>

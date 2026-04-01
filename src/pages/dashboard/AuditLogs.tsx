@@ -6,7 +6,7 @@ import type { AuditLog } from "../../types/audit.type";
 import { formatDate } from "../../utils/utils";
 import { useState } from "react";
 import { useAudit } from "../../hooks/useAudit";
-import AuditLogsControls from "../../components/user/audits/AuditLogsControls";
+import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useAuthStore } from "../../lib/store/authStore";
 import Chip from "../../components/ui/Chip";

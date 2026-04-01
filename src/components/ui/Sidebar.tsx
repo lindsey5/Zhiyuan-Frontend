@@ -14,10 +14,6 @@ import {
     Tags,
     Layers,
     User,
-    Share2,
-    TrendingUp,
-    DollarSign,
-    Users,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -37,8 +33,8 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
     return (
         <aside
             className={cn(
-                "z-2 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all duration-300",
-                collapsed ? "w-20" : "w-64"
+            "z-50 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all duration-300",
+            collapsed ? "w-0 lg:w-20 hidden lg:flex" : "w-64"
             )}
         >
         {/* Header / Toggle */}
@@ -135,19 +131,6 @@ export default function Sidebar({ collapsed, setCollapsed} : { collapsed : boole
                 collapsed={collapsed}
                 onClick={() => navigate('/dashboard/users')}
                 isActive={pathname === '/dashboard/users'}
-            />
-
-            <SidebarDropdown
-                title="Distributor Management"
-                icon={<Share2 size={24} />}
-                collapsed={collapsed}
-                navigate={navigate}
-                items={[
-                    { label: "Distributors", icon: <Users size={20} />, path: '/dashboard/distributors'},
-                    { label: "Sales", icon: <DollarSign size={20} />, path: '/dashboard/distributors/sales'},
-                    { label: "Reports", icon: <TrendingUp size={20} />, path: '/dashboard/distributors/reports'},
-                ]}
-                setCollapsed={setCollapsed}
             />
 
             <SidebarDropdown

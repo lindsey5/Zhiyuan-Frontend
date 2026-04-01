@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../pages/dashboard/Dashboard";
 import LoginPage from "../pages/auth/Login";
 import DashboardLayout from "../pages/DashboardLayout";
-import { ProtectedRoute } from "../components/user/ProtectedRoute";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 import AccountSettings from "../pages/dashboard/AccountSettings";
 import Products from "../pages/dashboard/Products";
 import Categories from "../pages/dashboard/Categories";
@@ -14,16 +14,10 @@ import Variants from "../pages/dashboard/Variants";
 import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
-import Distributors from "../pages/dashboard/Distributors";
-import DistributorLogin from "../pages/auth/DistributorLogin";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter([ 
     {
         index: true,
-        Component: () => <DistributorLogin />
-    },   
-    {
-        path: 'login',
         Component: () => <LoginPage />
     },
     {
@@ -150,26 +144,6 @@ const router = createBrowserRouter([
                     </ProtectedRoute>
                 )
             },
-            {
-                path: 'distributors',
-                children: [
-                    {
-                        index: true,
-                        Component: () => (
-                            <ProtectedRoute anyPermissions={
-                                [
-                                    PERMISSIONS.DISTRIBUTOR_CREATE, 
-                                    PERMISSIONS.DISTRIBUTOR_READ_ALL, 
-                                    PERMISSIONS.DISTRIBUTOR_DELETE, 
-                                    PERMISSIONS.DISTRIBUTOR_UPDATE
-                                ]
-                            }>
-                                <Distributors />
-                            </ProtectedRoute>
-                        )
-                    }
-                ]
-            }
         ]
     },
     {

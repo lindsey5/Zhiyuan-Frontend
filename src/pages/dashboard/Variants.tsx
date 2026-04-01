@@ -17,7 +17,7 @@ import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
 import type { VariantWithProduct } from "../../types/variant";
-import VariantsTableControls from "../../components/user/variants/VariantsTableControls";
+import VariantsTableControls from "../../components/variants/VariantsTableControls";
 import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Variants () {
@@ -47,9 +47,9 @@ export default function Variants () {
         {
             header: "Variant",
             cell: ({ row }) => (
-                <div className="flex items-center gap-3 justify-start">
-                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
-                    <span className="text-sm">{row.original.variant_name}</span>
+                <div className="m-3 flex items-center gap-3 justify-start">
+                    <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.image_url} />
+                    <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
                 </div>
             ),
             meta: { align: 'left' },
@@ -68,7 +68,7 @@ export default function Variants () {
             header: "Category",
             accessorKey: "product.category",
             
-            cell: info => <span className="text-sm">{info.getValue() as string}</span>,
+            cell: info => <span className="text-xs lg:text-sm">{info.getValue() as string}</span>,
             meta: { align: 'center' },
         },
         {

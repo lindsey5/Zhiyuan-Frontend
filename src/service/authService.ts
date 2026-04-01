@@ -1,5 +1,5 @@
 import type { AuthResponse, DistributorAuthResponse } from "../types/auth.type";
-import { apiAxios, distributorApi, HttpMethod } from "../lib/api/apiAxios";
+import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 
 export interface LoginPayload {
   email: string;
@@ -23,16 +23,4 @@ export const authService = {
       method: HttpMethod.POST,
       data: { refreshToken }
     }),
-
-  distributorLogin: (data: LoginPayload): Promise<DistributorAuthResponse> =>
-    distributorApi<DistributorAuthResponse>("auth/login/distributor", {
-      method: HttpMethod.POST,
-      data,
-    }),
-    
-  distributorRefreshAccessToken: (refreshToken : string): Promise<DistributorAuthResponse> => 
-    distributorApi<DistributorAuthResponse>("auth/refreshToken/distributor", {
-      method: HttpMethod.POST,
-      data: { refreshToken }
-    })
 };
