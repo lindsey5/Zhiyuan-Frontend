@@ -17,7 +17,7 @@ type DistributorModalProps = {
 
 export default function DistributorModal({ open, onClose }: DistributorModalProps) {
     const { accessToken } = useAuthStore();
-    const { createDistributor, updateDistributor } = useDistributor();
+    const { createDistributor } = useDistributor();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<DistributorFormData>({
         resolver: zodResolver(distributorSchema),
     });

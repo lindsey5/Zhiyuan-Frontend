@@ -70,7 +70,7 @@ export default function Distributors () {
             ? [
                 {
                     header: "Action",
-                    cell: ({ row }: { row: Row<Distributor> }) => (
+                    cell: () => (
                         <div className="flex gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
                                 <Button
