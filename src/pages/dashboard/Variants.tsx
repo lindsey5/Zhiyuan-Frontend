@@ -7,7 +7,7 @@ import {
   type ColumnDef,
   type PaginationState,
 } from "@tanstack/react-table";
-import CustomizedTable, { TableSkeleton } from "../../components/ui/Table";
+import CustomizedTable from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
 import PageContainer from "../../components/ui/PageContainer";
