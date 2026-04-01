@@ -25,7 +25,6 @@ export const useDistributorAuthStore = create<DistributorAuthState>()(
       },
 
       logout: () => {
-        window.location.reload();
         set({
           distributor: null,
           accessToken: null,

@@ -25,7 +25,6 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
-        window.location.reload();
         set({
           user: null,
           accessToken: null,

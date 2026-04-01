@@ -18,7 +18,7 @@ export const ProtectedRoute = ({
     requireAuthentication = true,
     requiredPermissions = [],
     anyPermissions = [],
-    redirectTo = '/',
+    redirectTo = '/login',
 }: ProtectedRouteProps) => {
     const {
         isAuthenticated,
