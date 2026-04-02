@@ -78,7 +78,6 @@ export default function EditProduct () {
         const callBack = updateProduct.mutateAsync({ 
             data, 
             id: id, 
-            accessToken: accessToken || ""
         })
         promiseToast(callBack)
 
@@ -102,7 +101,7 @@ export default function EditProduct () {
             createdAt: watch('createdAt'),
             variants : [
                 ...(watch("variants") || []),
-                { price: 0, sku: "", stock: 0, variant_name: "", image_url: undefined }
+                { price: 0, sku: "", stock: 0, variant_name: "", image_url: "" }
             ]
         })
         setTimeout(() => {

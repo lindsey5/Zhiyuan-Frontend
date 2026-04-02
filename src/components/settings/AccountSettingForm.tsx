@@ -12,7 +12,7 @@ import Button from "../ui/Button";
 import { Edit } from "lucide-react";
 
 export default function AccountSettingsForm () {
-    const { user, accessToken } = useAuthStore();
+    const { user } = useAuthStore();
     const [editMode, setEditMode] = useState(false);
     const { updateOwn } = useUser();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({
@@ -32,8 +32,7 @@ export default function AccountSettingsForm () {
         if(!isConfirm) return;
 
         promiseToast(updateOwn.mutateAsync({ 
-            payload: data, 
-            accessToken: accessToken || ""
+            payload: data
         })).then(() => setEditMode(false));
     }
 

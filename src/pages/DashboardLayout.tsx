@@ -20,7 +20,7 @@ export default function DashboardLayout () {
                 collapsed={collapsed} 
                 setCollapsed={setCollapsed}
             />
-            <ToggleButton className="hidden lg:fixed z-10 top-10 right-10" /> 
+            <ToggleButton className="fixed z-20 top-3 right-3 lg:top-10 lg:right-10" /> 
             <Outlet />
         </div>
     )

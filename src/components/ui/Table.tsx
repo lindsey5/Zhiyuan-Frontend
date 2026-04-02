@@ -88,7 +88,7 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
                             {Array.from({ length: columns }).map((_, colIdx) => (
                             <td
                                 key={colIdx}
-                                className="py-5 px-3 border-b border-[var(--border-panel)]"
+                                className="min-w-30 py-5 px-3 border-b border-[var(--border-panel)]"
                                 style={{
                                 backgroundColor:
                                     rowIdx % 2 === 0
@@ -128,16 +128,16 @@ const CustomizedTable = <T,>({
 
     return (
         <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
-            {isLoading ? <TableSkeleton columns={cols}/> : 
+            {rows.length < 1 && !isLoading ? <div className="text-center my-20 text-muted font-bold">
+                {noDataMessage}
+            </div> :
+            isLoading ? <TableSkeleton columns={cols}/> : 
                 <>
                 <div className="overflow-auto flex-grow relative">
                     <table className="w-full text-xs lg:text-sm">
                         <TableColumns table={table} />
                         <TableRows table={table} />
                     </table>
-                    {rows.length === 0 && !isLoading && <div className="absolute top-1/2 left-1/2 transform -translate-1/2 text-muted font-bold">
-                        {noDataMessage}
-                    </div>}
                 </div>
                 {showPagination && rows.length > 0 && <PaginationControls table={table} />}
                 </>

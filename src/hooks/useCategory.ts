@@ -1,8 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import type { GetCategoryParams, GetCategoryResponse } from "../types/category.type"
 import { categoryService, type CreateCategoryPayload } from "../service/categoryService"
+import { useAuthStore } from "../lib/store/authStore"
 
 export const useCategory = () => {
+    const { accessToken } = useAuthStore();
+
     const getCategories = (params : GetCategoryParams) => {
         return useQuery<GetCategoryResponse, Error>({
             queryKey: ['categories', params],
@@ -12,8 +15,8 @@ export const useCategory = () => {
     }
 
     const createCategory = useMutation({
-        mutationFn: ({ data, accessToken } : { data:  CreateCategoryPayload, accessToken : string}) => {
-            return categoryService.createCategory(data, accessToken)
+        mutationFn: ({ data } : { data:  CreateCategoryPayload, accessToken : string}) => {
+            return categoryService.createCategory(data, accessToken || "")
         },
         onSuccess: () => {
             window.location.reload();
@@ -21,8 +24,8 @@ export const useCategory = () => {
     })
 
     const updateCategory = useMutation({
-        mutationFn: ({ id, data, accessToken } : { id: string, data : { name: string }, accessToken : string}) => {
-            return categoryService.updateCategory(id, data, accessToken)
+        mutationFn: ({ id, data } : { id: string, data : { name: string }, accessToken : string}) => {
+            return categoryService.updateCategory(id, data, accessToken || "")
         },
         onSuccess: () => {
             window.location.reload();
@@ -30,8 +33,8 @@ export const useCategory = () => {
     })
 
     const deleteCategory = useMutation({
-        mutationFn: ({ id, accessToken } : { id: string, accessToken : string}) => {
-            return categoryService.deleteCategory(id, accessToken)
+        mutationFn: ({ id } : { id: string }) => {
+            return categoryService.deleteCategory(id, accessToken || "")
         },
         onSuccess: () => {
             window.location.reload();

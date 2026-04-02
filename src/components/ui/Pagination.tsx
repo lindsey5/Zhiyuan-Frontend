@@ -6,10 +6,10 @@ interface PaginationControlsProps<T> {
 }
 
 export const PaginationControls = <T,>({ table }: PaginationControlsProps<T>) => {
-    const { pageIndex } = table.getState().pagination;
+    const { pageIndex, pageSize } = table.getState().pagination;
     const pageCount = table.getPageCount();
 
-    const delta = 2; // pages around current page
+    const delta = 2;
 
     const getPageNumbers = () => {
         const range: (number | string)[] = [];
@@ -28,60 +28,78 @@ export const PaginationControls = <T,>({ table }: PaginationControlsProps<T>) =>
     };
 
     return (
-        <div className="flex items-center justify-end gap-1 mt-10 lg:text-sm xxl:text-md text-primary flex-wrap">
+        <div className="flex items-center justify-between gap-3 mt-10 lg:text-sm xxl:text-md text-primary flex-wrap">
+        
+        {/* Page size */}
+        <div className="flex items-center gap-2">
+            <span className="text-sm">Rows per page:</span>
+            <select
+                value={pageSize}
+                onChange={(e) => table.setPageSize(Number(e.target.value))}
+                className="border border-gray-300 rounded px-2 py-1 text-sm"
+            >
+                {[5, 10, 20, 50, 100].map((size) => (
+                    <option key={size} value={size} className="bg-panel">
+                    {size}
+                    </option>
+                ))}
+            </select>
+        </div>
+
+        {/* Pagination buttons */}
+        <div className="flex items-center justify-end gap-1 text-primary flex-wrap">
             {/* First & Prev */}
             <button
                 onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}
-                className="px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
+                className="text-sm md:text-base px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
             >
-                First
+            First
             </button>
             <button
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
-                className="px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
+                className="text-sm md:text-base px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
             >
-                Prev
+            Prev
             </button>
 
             {/* Page numbers */}
             {getPageNumbers().map((p, idx) =>
-                typeof p === "number" ? (
+            typeof p === "number" ? (
                 <button
                     key={idx}
                     onClick={() => table.setPageIndex(p)}
                     className={cn(
-                        "w-7 h-7 cursor-pointer rounded",
+                        "text-sm md:text-base w-7 h-7 cursor-pointer rounded",
                         p === pageIndex
                         ? "bg-gold font-semibold text-inverse"
                         : "hover:text-gold"
                     )}
                 >
-                    {p + 1}
+                {p + 1}
                 </button>
-                ) : (
-                <span key={idx} className="px-2 py-1 text-muted">
-                    {p}
-                </span>
-                )
+            ) : (
+                <span key={idx} className="px-2 py-1 text-muted">{p}</span>
+            )
             )}
 
             {/* Next & Last */}
             <button
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
-                className="px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
+                className="text-sm md:text-base px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
             >
-                Next
+            Next
             </button>
             <button
                 onClick={() => table.setPageIndex(pageCount - 1)}
                 disabled={!table.getCanNextPage()}
-                className="px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
+                className="text-sm md:text-base px-2 py-1 rounded hover:bg-hover disabled:opacity-50 cursor-pointer"
             >
-                Last
+            Last
             </button>
+        </div>
         </div>
     );
 };

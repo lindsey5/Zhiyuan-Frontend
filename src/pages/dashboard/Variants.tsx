@@ -18,12 +18,10 @@ import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
 import type { VariantWithProduct } from "../../types/variant";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
-import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Variants () {
-    const accessToken = useAuthStore().accessToken;
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole(accessToken || "");
+    const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 
@@ -49,7 +47,7 @@ export default function Variants () {
         {
             header: "Variant",
             cell: ({ row }) => (
-                <div className="m-3 flex items-center gap-3 justify-start">
+                <div className="min-w-50 m-3 flex items-center gap-3 justify-start">
                     <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.image_url} />
                     <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
                 </div>
@@ -121,7 +119,7 @@ export default function Variants () {
 
     return (
         <PageContainer 
-            className="h-screen" 
+            className="max-h-screen" 
             title="Variants"
             description="View and manage all product variants"
         >

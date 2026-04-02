@@ -1,5 +1,5 @@
-import { Search } from "lucide-react";
-import type { InputHTMLAttributes } from "react";
+import { Eye, EyeOff, Search } from "lucide-react";
+import { useState, type InputHTMLAttributes } from "react";
 
 type InputProps = {
     label?: string;
@@ -11,40 +11,51 @@ type InputProps = {
 };
 
 export default function TextField({
-    label,
-    type = "text",
-    placeholder,
-    disabled,
-    error,
-    registration,
+  label,
+  type = "text",
+  placeholder,
+  disabled,
+  error,
+  registration,
 }: InputProps) {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const inputType =
+        type === "password" ? (showPassword ? "text" : "password") : type;
+
     return (
         <div className="w-full flex flex-col gap-1">
-            {label && (
-                <label className="text-sm text-primary font-medium">
-                    {label}
-                </label>
-            )}
+        {label && (
+            <label className="text-sm text-primary font-medium">{label}</label>
+        )}
 
+        <div className="relative w-full">
             <input
-                {...registration}
-                disabled={disabled}
-                type={type}
-                placeholder={placeholder}
-                className={`w-full p-3 bg-input-ui border rounded-sm font-sans text-primary outline-none transition-all
-                    ${
-                        error
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-[var(--border-ui)] focus:border-gold"
-                    }
-                `}
+            {...registration}
+            disabled={disabled}
+            type={inputType}
+            placeholder={placeholder}
+            className={`w-full p-3 pr-12 bg-input-ui border rounded-sm font-sans text-primary outline-none transition-all
+                ${
+                error
+                    ? "border-red-500 focus:border-red-500"
+                    : "border-[var(--border-ui)] focus:border-gold"
+                }
+            `}
             />
 
-            {error && (
-                <span className="text-xs text-red-500">
-                    {error}
-                </span>
+            {type === "password" && (
+            <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:opacity-60"
+            >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
             )}
+        </div>
+
+        {error && <span className="text-xs text-red-500">{error}</span>}
         </div>
     );
 }

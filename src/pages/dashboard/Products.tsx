@@ -20,15 +20,13 @@ import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../lib/store/authStore";
 import { promiseToast } from "../../utils/sileo";
 
 export default function Products () {
     const navigate = useNavigate();
-    const { accessToken } = useAuthStore();
 
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole(accessToken || "");
+    const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 
@@ -57,7 +55,6 @@ export default function Products () {
 
         promiseToast(deleteProduct.mutateAsync({ 
             id, 
-            accessToken: accessToken || "" 
         }), "top-center", "Product succesfully deleted.")
     };
 
@@ -66,7 +63,7 @@ export default function Products () {
             header: "Product",
             accessorKey: "product_name",
             cell: ({ row }) => (
-                <div className="m-3 flex items-center gap-3 justify-start">
+                <div className="min-w-50 flex items-center gap-3 justify-start">
                     <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
                     <span className="text-xs lg:text-sm">{row.original.product_name}</span>
                 </div>
@@ -141,7 +138,7 @@ export default function Products () {
 
     return (
         <PageContainer 
-            className="h-screen" 
+            className="max-h-screen" 
             title="Products"
             description="View and manage all products"
         >

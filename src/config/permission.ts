@@ -32,12 +32,6 @@ export const PERMISSIONS = {
     CATEGORY_CREATE: 'category:create',
     CATEGORY_UPDATE: 'category:update',
     CATEGORY_DELETE: 'category:delete',
-
-    //Distributor management
-    DISTRIBUTOR_READ_ALL: 'distributor:read:all',
-    DISTRIBUTOR_CREATE: 'distributor:create',
-    DISTRIBUTOR_UPDATE: 'distributor:update',
-    DISTRIBUTOR_DELETE: 'distributor:delete'
 }
 
 type PermissionGroup = {
@@ -59,7 +53,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     "User Management": {
         description: "Manage system users including creation, updates, and removal.",
         USER_CREATE: "Create new users",
-        USER_READ: "View user details",
         USER_READ_ALL: "View all users",
         USER_UPDATE: "Update user information",
         USER_DELETE: "Delete users",
@@ -95,13 +88,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",
     },
-    "Distributor Management": {
-        description: "Manage distributors.",
-        DISTRIBUTOR_READ_ALL: "View all distributors.",
-        DISTRIBUTOR_CREATE: "Create a new distributor.",
-        DISTRIBUTOR_UPDATE: "Update distributor details.",
-        DISTRIBUTOR_DELETE: "Delete or deactivate a distributor."
-    }
 };
 
 export const getPermissionKey = (value: string) => {

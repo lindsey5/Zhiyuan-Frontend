@@ -2,7 +2,6 @@ import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { cn } from "../../utils/utils"
 import { useRole } from "../../hooks/useRole"
-import { useAuthStore } from "../../lib/store/authStore"
 
 type Option = {
     label: string
@@ -15,6 +14,7 @@ type DropdownProps = {
     value: string
     onChange: (value: string) => void
     error?: string
+    className?: string
 }
 
 export default function Dropdown({
@@ -22,6 +22,7 @@ export default function Dropdown({
     options,
     value,
     onChange,
+    className,
     error
 }: DropdownProps) {
     const [open, setOpen] = useState(false)
@@ -29,7 +30,10 @@ export default function Dropdown({
     const selected = options.find(o => o.value === value)
 
     return (
-        <div className="flex flex-col space-y-1 w-48">
+        <div className={cn(
+            "flex flex-col space-y-1",
+            className
+        )}>
             {/* Title */}
             {title && (
                 <span className="text-xs text-muted px-1">
@@ -37,13 +41,13 @@ export default function Dropdown({
                 </span>
             )}
 
-            <div className="relative">
+            <div className="relative h-full">
                 {/* Button */}
                 <button
                     type="button"
                     onClick={() => setOpen(prev => !prev)}
                     className={cn(
-                        "w-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-sm text-primary",
+                        "w-full h-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-sm text-primary",
                         error && "border-red-500"
                     )}
                 >
@@ -53,7 +57,7 @@ export default function Dropdown({
 
                 {/* Dropdown */}
                 {open && (
-                    <div className="max-h-50 overflow-y-auto absolute mt-2 w-full bg-panel border border-[var(--border-ui)] rounded-sm z-10">
+                    <div className="overflow-y-auto absolute mt-2 w-full bg-panel border border-[var(--border-ui)] rounded-sm z-10">
                         {options.map(option => (
                             <div
                                 key={option.value}
@@ -83,9 +87,8 @@ type RoleDropdownProps = {
 }
 
 export function RoleDropdown ({value, onChange,}: RoleDropdownProps) {
-    const accessToken = useAuthStore().accessToken;
     const { getRoles } = useRole();
-    const { data } = getRoles(accessToken || "");
+    const { data } = getRoles();
 
     const options = [
         { label: 'All', value: '' },

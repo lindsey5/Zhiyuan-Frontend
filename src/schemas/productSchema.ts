@@ -88,17 +88,17 @@ const editVariantSchema = z.object({
         .max(100, "Variant name must not exceed 100 characters"),
 
     price: z.number()
-        .positive("Variant price must be positive"),
+        .positive("Price must not be blank, negative or 0"),
 
     stock: z.number()
         .int("Stock must be a whole number")
-        .positive("Stock must be positive"),
+        .positive("Stock must not be blank, negative or 0"),
 
     sku: z.string()
         .min(3, "SKU must be at least 3 characters")
         .max(100, "SKU must not exceed 100 characters"),
     image_url: z.string().min(1, 'Image is required'),
-    image_public_id: z.string().min(1, 'Image public id is required').optional(),
+    image_public_id: z.string().optional(),
 });
 
 export const editProductSchema = z.object({

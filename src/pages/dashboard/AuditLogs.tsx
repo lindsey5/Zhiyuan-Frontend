@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useAudit } from "../../hooks/useAudit";
 import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
-import { useAuthStore } from "../../lib/store/authStore";
 import Chip from "../../components/ui/Chip";
 
 const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
@@ -19,7 +18,6 @@ const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
 };
 
 export default function AuditLogs () {
-    const { accessToken } = useAuthStore();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 
     const [search, setSearch] = useState("");
@@ -45,7 +43,7 @@ export default function AuditLogs () {
         order: order
     }
 
-    const { data, isFetching } = getAuditLogs(params,accessToken || "")
+    const { data, isFetching } = getAuditLogs(params)
 
     const columns: ColumnDef<AuditLog>[] = [
         {
@@ -115,7 +113,7 @@ export default function AuditLogs () {
 
     return (
         <PageContainer 
-            className="h-screen" 
+            className="max-h-screen" 
             title="Audit Logs"
             description="View all system activity and changes"
         >

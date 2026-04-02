@@ -3,13 +3,11 @@ import { useRole } from "../../hooks/useRole";
 import GoldButton from "../../components/ui/GoldButton";
 import RoleCard from "../../components/roles/RoleCard";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../lib/store/authStore";
 import RoleCardSkeleton from "../../components/roles/RoleCardSkeleton";
 
 export default function Roles () {
-    const accessToken = useAuthStore().accessToken;
     const { getRoles } = useRole();
-    const { data, isFetching } = getRoles(accessToken || "");
+    const { data, isFetching } = getRoles();
     const navigate = useNavigate();
 
     return (

@@ -14,6 +14,7 @@ import Variants from "../pages/dashboard/Variants";
 import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
+import Users from "../pages/dashboard/Users";
 
 const router = createBrowserRouter([ 
     {
@@ -144,6 +145,14 @@ const router = createBrowserRouter([
                     </ProtectedRoute>
                 )
             },
+            {
+                path: 'users',
+                Component: () => (
+                    <ProtectedRoute anyPermissions={[PERMISSIONS.USER_CREATE, PERMISSIONS.USER_DELETE, PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_READ_ALL]}>
+                        <Users />
+                    </ProtectedRoute>
+                )
+            }
         ]
     },
     {

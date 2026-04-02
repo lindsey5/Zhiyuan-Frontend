@@ -39,9 +39,9 @@ export default function AuditLogsControls({
                     />
                 </div>
 
-            <FiltersMenu show={showFilters} setShow={setShowFilters}>
+            <FiltersMenu containerStyle="w-[80vw] md:w-100" show={showFilters} setShow={setShowFilters}>
                 <h1 className="font-bold text-lg">Filter</h1>
-                <div className="flex flex-wrap gap-5 mt-4">
+                <div className="grid grid-cols-2 gap-5 mt-4">
                     <DateInput 
                         label="Start Date"
                         onChange={(value) => setStartDate(value)}

@@ -1,53 +1,55 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import type { GetRoleResponse, GetRolesResponse, RoleDTO } from "../types/role.type"
 import { roleService } from "../service/roleService"
+import { useAuthStore } from "../lib/store/authStore"
 
 export const useRole = () => {
+    const { accessToken } = useAuthStore();
 
-    const getOwnRole = (accessToken : string) => {
+    const getOwnRole = () => {
         return useQuery<GetRoleResponse, Error>({
             queryKey: ['role'],
             queryFn: async () => {
-                return roleService.getOwnRole(accessToken)
+                return roleService.getOwnRole(accessToken || "")
             }
         })
     }
 
-    const getRoles = (accessToken : string) => {
+    const getRoles = () => {
         return useQuery<GetRolesResponse, Error>({
             queryKey: ['roles'],
             queryFn: async () => {
-                return roleService.getRoles(accessToken)
+                return roleService.getRoles(accessToken || "")
             },
             
         })
     }
 
     const createRole = useMutation({
-        mutationFn: ({ payload, accessToken } : { payload : RoleDTO, accessToken: string}) => {
-            return roleService.createRole(payload, accessToken)
+        mutationFn: ({ payload } : { payload : RoleDTO }) => {
+            return roleService.createRole(payload, accessToken || "")
         },
         onSuccess: () => window.location.href = '/dashboard/roles'
     })
 
-    const getRoleById = (id : string, accessToken : string) => (
+    const getRoleById = (id : string) => (
         useQuery<GetRoleResponse>({
             queryKey: ['role', id],
             queryFn: async () => {
-                return roleService.getRoleById(id, accessToken)
+                return roleService.getRoleById(id, accessToken || "")
             },
         })
     )
 
     const updateRole = useMutation({
-        mutationFn: ({ payload, accessToken, id } : { payload: RoleDTO, accessToken: string, id: string})=> {
-            return roleService.updateRole(id, payload, accessToken);
+        mutationFn: ({ payload, id } : { payload: RoleDTO, id: string})=> {
+            return roleService.updateRole(id, payload, accessToken || "");
         }
     })
 
     const deleteRole = useMutation({
-        mutationFn: ({ id, accessToken } : { id: string, accessToken: string}) => {
-            return roleService.deleteRole(id, accessToken)
+        mutationFn: ({ id } : { id: string }) => {
+            return roleService.deleteRole(id, accessToken || "")
         } 
     })
 

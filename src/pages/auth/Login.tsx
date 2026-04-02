@@ -32,17 +32,17 @@ const LoginPage: React.FC = () => {
             className="relative flex flex-col items-center justify-center min-h-screen p-6 transition-all duration-500 bg-main bg-cover bg-center"
             style={{ backgroundImage: `url(${isDark ? '/dark-bg.jpg' : '/light-bg.jpg'})` }}
         >
-            <ToggleButton className="absolute top-8 right-8"/>
+            <ToggleButton className="absolute top-3 right-3 lg:top-8 lg:right-8"/>
 
             <header className="flex flex-col items-center mb-10 text-center leading-0.1">
-                <div className="w-56 h-56">
+                <div className="w-46 h-46 lg:w-56 lg:h-56">
                 <img 
                     src={isDark ? "/light-logo.png" : "/dark-logo.png"} 
                     alt="Zhiyuan Logo" 
                     className="w-full h-full object-contain transition-opacity duration-500" 
                 />
                 </div>
-                <div className="font-sans text-gold text-4xl uppercase leading-tight text-center tracking-tighter">
+                <div className="font-sans text-gold text-3xl lg:text-4xl uppercase leading-tight text-center tracking-tighter">
                     <h1 
                         className="bg-gradient-to-r from-[#b8860b] to-[#ffd700] text-transparent bg-clip-text"
                     >
@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
                     </h1>                    
                     <div className="flex items-center justify-center gap-4 mt-2">
                         <TaperedLine direction="right" className="w-32" />                        
-                        <span className="text-lg whitespace-nowrap">Group Inc</span>
+                        <span className="text-base lg:text-lg whitespace-nowrap">Group Inc</span>
                         <TaperedLine direction="left" className="w-32" />                    
                     </div>
                 </div>

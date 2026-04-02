@@ -9,7 +9,6 @@ import { getPermissionKey, PERMISSION_DESCRIPTIONS, PERMISSIONS } from "../../co
 import PermissionsContainer from "../../components/role/PermissionsContainer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuthStore } from "../../lib/store/authStore";
 import { promiseToast } from "../../utils/sileo";
 import GoldButton from "../../components/ui/GoldButton";
 import Button from "../../components/ui/Button";
@@ -40,16 +39,15 @@ function CategorizedPermissions () {
 export default function Role ({ title, description } : { title : string, description : string}) {
      const params = useParams();
     const id = params.id;
-    const accessToken = useAuthStore(state => state.accessToken);
 
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole(accessToken || "");
+    const { data : role } = getOwnRole();
     const permissions = role?.permissions || [];
     const { hasPermissions } = usePermissions();
     const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
     
     const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
-    const { data, isSuccess, isFetching } = getRoleById(id || "", accessToken || "");
+    const { data, isSuccess, isFetching } = getRoleById(id || "");
 
     const { register, handleSubmit, watch, setValue, reset, formState: { errors} } = useForm<RoleFormData>({
         resolver: zodResolver(roleSchema),
@@ -83,14 +81,10 @@ export default function Role ({ title, description } : { title : string, descrip
             promiseToast(updateRole.mutateAsync({ 
                 id: id,
                 payload: data,
-                accessToken: accessToken || ""
             }))
             
         }else {
-            promiseToast(createRole.mutateAsync({ 
-                payload: data,
-                accessToken: accessToken || ""
-            }))
+            promiseToast(createRole.mutateAsync({ payload: data }))
         }
     }
 
@@ -99,15 +93,12 @@ export default function Role ({ title, description } : { title : string, descrip
 
         if (!isConfirm) return;
 
-        promiseToast(deleteRole.mutateAsync({
-            id: id || "",
-            accessToken: accessToken || ""
-        }))
+        promiseToast(deleteRole.mutateAsync({ id: id || "" }))
     }
 
     return (
         <PageContainer title={title} description={description}>
-            {isFetching ? <RoleDetailsSkeleton /> : 
+            {isFetching && id ? <RoleDetailsSkeleton /> : 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
 
                 <Card>

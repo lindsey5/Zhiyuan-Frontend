@@ -13,13 +13,11 @@ import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import { promiseToast } from "../../utils/sileo";
-import { useAuthStore } from "../../lib/store/authStore";
 
 export default function Categories () {
-    const { accessToken } = useAuthStore();
 
     const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole(accessToken || "");
+    const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 
@@ -35,7 +33,7 @@ export default function Categories () {
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
         if (!isConfirmed) return;
 
-        promiseToast(deleteCategory.mutateAsync({ id, accessToken: accessToken || "" }), "top-center", "Category succesfully deleted.")
+        promiseToast(deleteCategory.mutateAsync({ id }), "top-center", "Category succesfully deleted.")
     };
 
     const columns: ColumnDef<Category>[] = [
@@ -88,7 +86,7 @@ export default function Categories () {
 
     return (
         <PageContainer 
-            className="h-screen" 
+            className="max-h-screen" 
             title="Categories"
             description="Manage all product categories"
         >

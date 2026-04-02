@@ -11,6 +11,7 @@ import type { Category } from "../../types/category.type"
 import { useEffect } from "react"
 import GoldButton from "../ui/GoldButton"
 import { useAuthStore } from "../../lib/store/authStore"
+import Modal from "../ui/Modal"
 
 type CategoryModalProps = {
     open: boolean
@@ -42,7 +43,10 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
     if (!open) return null
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-5">
+        <Modal
+            open={open}
+            onClose={onClose}
+        >
             <Card className="w-full max-w-md">
                 <div className="flex items-center justify-between mb-5">
                     <h2 className="text-lg font-semibold font-sans">{category ? 'Edit' : 'Add'} Category</h2>
@@ -72,6 +76,6 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
                     </div>
                 </form>
             </Card>
-        </div>
+        </Modal>
     )
 }
