@@ -22,11 +22,12 @@ export const PaginationButton = ({
             onClick={onClick}
             disabled={disabled}
             className={cn(
-                "disabled:opacity-50 cursor-pointer relative group",
+                "disabled:opacity-50 relative group",
+                !disabled && 'cursor-pointer',
                 className
             )}
         >
-            {tooltip && (
+            {tooltip && !disabled && (
                 <span className="pointer-events-none select-none absolute -top-full left-1/2 transform -translate-x-1/2 ml-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition">
                     {tooltip}
                 </span>
@@ -80,14 +81,22 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
                     disabled={!table.getCanPreviousPage()}
                     tooltip="First"
                 >
-                    <ChevronsLeft className="hover:text-gold"/>
+                    <ChevronsLeft 
+                        className={cn(
+                            table.getCanPreviousPage() && "hover:text-gold"
+                        )}
+                        />
                 </PaginationButton>
                 <PaginationButton
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                     tooltip="Prev"
                 >
-                    <ChevronLeft className="hover:text-gold"/>
+                    <ChevronLeft 
+                        className={cn(
+                            table.getCanPreviousPage() && "hover:text-gold"
+                        )}
+                    />
                 </PaginationButton>
 
                 {/* Page numbers */}
@@ -116,14 +125,22 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
                     disabled={!table.getCanNextPage()}
                     tooltip="Next"
                 >
-                    <ChevronRight className="hover:text-gold"/>
+                    <ChevronRight 
+                        className={cn(
+                            table.getCanNextPage() && "hover:text-gold"
+                        )}
+                    />
                 </PaginationButton>
                 <PaginationButton
                     onClick={() => table.setPageIndex(pageCount - 1)}
                     disabled={!table.getCanNextPage()}
                     tooltip="Last"
                 >
-                    <ChevronsRight className="hover:text-gold"/>
+                    <ChevronsRight 
+                        className={cn(
+                            table.getCanNextPage() && "hover:text-gold"
+                        )}
+                    />
                 </PaginationButton>
             </div>
 
