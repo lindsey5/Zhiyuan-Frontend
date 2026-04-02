@@ -6,43 +6,36 @@ import { useAuthStore } from "../lib/store/authStore"
 export const useProduct = () => {
     const { accessToken } = useAuthStore();
 
-    const getProducts = (params : GetProductsParams) => {
-        return useQuery<GetProductsResponse, Error>({
+    const getProducts = (params : GetProductsParams) => (
+        useQuery<GetProductsResponse, Error>({
             queryKey: ['products', params],
             queryFn: () => productService.getProducts(params),
             placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
-    const getProductById = (id : string) => {
-        return useQuery<GetProductResponse, Error>({
+    const getProductById = (id : string) => (
+        useQuery<GetProductResponse, Error>({
             queryKey: ['product', id],
             queryFn: () => productService.getProductById(id),
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
     const deleteProduct = useMutation({
-        mutationFn: ({ id } : { id: string }) => {
-            return productService.deleteProduct(id, accessToken || "");
-        },
+        mutationFn: ({ id } : { id: string }) => productService.deleteProduct(id, accessToken || ""),
         onSuccess: () => window.location.reload()
     })
 
     const createProduct = useMutation({
-        mutationFn: ({ formData } : { formData : FormData}) =>  {
-            return productService.createProduct(formData, accessToken || "")
-        },
-        onSuccess: () => {
-            window.location.href = `/dashboard/products`;
-        },
+        mutationFn: ({ formData } : { formData : FormData}) =>  productService.createProduct(formData, accessToken || ""),
+        onSuccess: () => window.location.href = `/dashboard/products`,
         onError: (err) => console.log(err)
     })
 
     const updateProduct = useMutation({
-        mutationFn: ({ id, data } : { id : string, data : UpdateProductPayload }) => {
-            console.log(data)
-            return productService.updateProduct(id, data, accessToken || "");
-        },
+        mutationFn: ({ id, data } : { id : string, data : UpdateProductPayload }) => productService.updateProduct(id, data, accessToken || ""),
         onSuccess: () => window.location.reload(),
         onError: (err) => console.log(err)
     })

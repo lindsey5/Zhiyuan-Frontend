@@ -22,33 +22,30 @@ export const useUser = () => {
     const updateOwn = useMutation({
         mutationFn: ({ payload } : { 
             payload: UpdateUserOwnPayload, 
-        }) => {
-            return userService.updateOwnAccount(payload, accessToken || "")
-        },
-        onSuccess: (data) => {
-            setUser(data.user)
-        },
+        }) => userService.updateOwnAccount(payload, accessToken || ""),
+        onSuccess: (data) => setUser(data.user)
     })
 
     const deleteUser = useMutation({
-        mutationFn: ({ id } : { id: string }) => {
-            return userService.deleteUser(id, accessToken || "")
-        },
+        mutationFn: ({ id } : { id: string }) => userService.deleteUser(id, accessToken || "")
     })
 
-    const getUsers = (params : GetUsersParams) => {
-        return useQuery<GetUsersResponse, Error>({
+    const getUsers = (params : GetUsersParams) => (
+        useQuery<GetUsersResponse, Error>({
             queryKey: ['users', params],
-            queryFn: () => userService.getUsers(accessToken || "", params)
+            queryFn: () => userService.getUsers(accessToken || "", params),
+            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
-    const getUsersCount = () => {
-        return useQuery<GetUsersCountResponse, Error>({
+    const getUsersCount = () => (
+        useQuery<GetUsersCountResponse, Error>({
             queryKey: ['users/count'],
-            queryFn: () => userService.getUsersCount(accessToken || "")
+            queryFn: () => userService.getUsersCount(accessToken || ""),
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
     return {
         createUser,

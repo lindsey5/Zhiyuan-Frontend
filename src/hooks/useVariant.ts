@@ -7,13 +7,14 @@ import { variantService } from "../service/variantService";
 export const useVariant = () => {
     const { accessToken } = useAuthStore.getState();
 
-    const getVariants = (params : GetVariantsParams) => {
-        return useQuery<GetVariantsResponse, Error>({
+    const getVariants = (params : GetVariantsParams) => (
+        useQuery<GetVariantsResponse, Error>({
             queryKey: ['variants', params],
             queryFn: () => variantService.getVariants(params, accessToken || ""),
             placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
     return {
         getVariants

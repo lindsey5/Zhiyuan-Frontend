@@ -6,13 +6,14 @@ import { useAuthStore } from "../lib/store/authStore"
 export const useAudit = () => {
     const { accessToken } = useAuthStore();
 
-    const getAuditLogs = (params : GetAuditParams) => {
-        return useQuery<GetAuditLogsResponse, Error>({
+    const getAuditLogs = (params : GetAuditParams) => (
+        useQuery<GetAuditLogsResponse, Error>({
             queryKey: ['audit_logs', params],
             queryFn: () => auditService.getAuditLogs({ params, accessToken: accessToken || "" }),
-            placeholderData: (prev) => prev
+            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
-    }
+    )
 
     return {
         getAuditLogs
