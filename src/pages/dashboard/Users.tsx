@@ -16,6 +16,7 @@ import UsersTableControls from "../../components/users/UsersTableControls";
 import UsersCount from "../../components/users/UsersCount";
 import GoldButton from "../../components/ui/GoldButton";
 import UserModal from "../../components/users/UserModal";
+import { promiseToast } from "../../utils/sileo";
 
 export default function Users () {
     const [user, setUser] = useState<GetUser>();
@@ -31,7 +32,7 @@ export default function Users () {
     const [role, setRole] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 
-    const { getUsers } = useUser();
+    const { getUsers, deleteUser } = useUser();
     const { data, isFetching } = getUsers(
         {
             search: debouncedSearch,
@@ -52,6 +53,13 @@ export default function Users () {
     }
 
     const handleShow = () => setShowModal(true);
+
+    const handleDelete = (id : string) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this user?");
+        if (!isConfirmed) return;
+
+        promiseToast(deleteUser.mutateAsync({ id }));
+    }
 
     const columns: ColumnDef<GetUser>[] = [
         {
@@ -106,6 +114,7 @@ export default function Users () {
                                 <Button
                                     label="Delete"
                                     className="bg-red-600 text-white p-1 md:p-3"
+                                    onClick={() => handleDelete(row.original._id)}
                                 />
                             )}
                         </div>

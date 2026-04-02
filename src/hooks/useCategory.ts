@@ -18,27 +18,18 @@ export const useCategory = () => {
         mutationFn: ({ data } : { data:  CreateCategoryPayload, accessToken : string}) => {
             return categoryService.createCategory(data, accessToken || "")
         },
-        onSuccess: () => {
-            window.location.reload();
-        }
     })
 
     const updateCategory = useMutation({
         mutationFn: ({ id, data } : { id: string, data : { name: string }, accessToken : string}) => {
             return categoryService.updateCategory(id, data, accessToken || "")
         },
-        onSuccess: () => {
-            window.location.reload();
-        }
     })
 
     const deleteCategory = useMutation({
         mutationFn: ({ id } : { id: string }) => {
             return categoryService.deleteCategory(id, accessToken || "")
         },
-        onSuccess: () => {
-            window.location.reload();
-        }
      })
 
     return {

@@ -40,12 +40,10 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
         if(category) reset({ name: category.name })
     }, [category])
 
-    if (!open) return null
-
     return (
         <Modal
             open={open}
-            onClose={onClose}
+            onClose={close}
         >
             <Card className="w-full max-w-md">
                 <div className="flex items-center justify-between mb-5">

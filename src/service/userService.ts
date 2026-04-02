@@ -11,6 +11,7 @@ export const userService = {
             }
         })
     },
+    
     getUsers: (accessToken : string, params : GetUsersParams) => {
         return apiAxios<GetUsersResponse>("users", {
             method: HttpMethod.GET,
@@ -20,6 +21,7 @@ export const userService = {
             params
         })
     },
+
     getUsersCount: (accessToken : string) => {
         return apiAxios<GetUsersCountResponse>("users/count", {
             method: HttpMethod.GET,
@@ -48,6 +50,16 @@ export const userService = {
             data
         })
     },
+
+    deleteUser: (id : string, accessToken: string) => {
+        return apiAxios<UpdateUserResponse>(`users/${id}`, {
+            method: HttpMethod.DELETE,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+    },
+
     isEmailExist: ({id, email, accessToken} : { id?: string, email: string, accessToken: string}) => {
         return apiAxios<CreateUserResponse>(`users/email`, {
             method: HttpMethod.GET,

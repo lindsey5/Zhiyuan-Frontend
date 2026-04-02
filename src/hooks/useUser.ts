@@ -30,6 +30,12 @@ export const useUser = () => {
         },
     })
 
+    const deleteUser = useMutation({
+        mutationFn: ({ id } : { id: string }) => {
+            return userService.deleteUser(id, accessToken || "")
+        },
+    })
+
     const getUsers = (params : GetUsersParams) => {
         return useQuery<GetUsersResponse, Error>({
             queryKey: ['users', params],
@@ -48,6 +54,7 @@ export const useUser = () => {
         createUser,
         updateUser,
         updateOwn,
+        deleteUser,
         getUsers,
         getUsersCount
     }
