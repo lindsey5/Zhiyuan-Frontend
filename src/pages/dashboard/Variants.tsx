@@ -136,6 +136,7 @@ export default function Variants () {
                     isLoading={isFetching}
                     showPagination
                     noDataMessage="No Variants Found"
+                    total={data?.total || 0}
                 />
             </Card>
         </PageContainer>

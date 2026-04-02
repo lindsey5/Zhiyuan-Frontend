@@ -134,6 +134,7 @@ export default function AuditLogs () {
                     table={table} 
                     showPagination
                     noDataMessage="No Audit Logs Found"
+                    total={data?.total || 0}
                 />
             </Card>
         </PageContainer>

@@ -155,6 +155,7 @@ export default function Products () {
                     showPagination
                     isLoading={isFetching}
                     noDataMessage="No Products Found"
+                    total={data?.total || 0}
                 />
             </Card>
         </PageContainer>

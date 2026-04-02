@@ -55,8 +55,8 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
 };
 
 type TableSkeletonProps = {
-  columns: number;
-  rows?: number;
+    columns: number;
+    rows?: number;
 };
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
@@ -115,12 +115,14 @@ const CustomizedTable = <T,>({
     table, 
     isLoading, 
     showPagination, 
+    total,
     noDataMessage = "No Data Available" } : 
     { 
         table: Table<T>, 
         isLoading : boolean, 
         showPagination: boolean, 
-        noDataMessage: string
+        noDataMessage: string,
+        total?: number
     }
 ) => {
     const rows = table.getRowModel().rows;
@@ -139,7 +141,7 @@ const CustomizedTable = <T,>({
                         <TableRows table={table} />
                     </table>
                 </div>
-                {showPagination && rows.length > 0 && <PaginationControls table={table} />}
+                {showPagination && rows.length > 0 && <PaginationControls total={total || 0} table={table} />}
                 </>
             }
         </div>

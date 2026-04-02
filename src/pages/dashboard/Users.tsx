@@ -152,6 +152,7 @@ export default function Users () {
                     showPagination
                     isLoading={isFetching}
                     noDataMessage="No Users Found"
+                    total={data?.total || 0}
                 />
             </Card>
             <UserModal 
