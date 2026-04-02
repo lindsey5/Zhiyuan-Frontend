@@ -4,15 +4,17 @@ import Dropdown from "./Dropdown";
 
 interface CategoryDropdownProps {
     category: string;
+    className?: string
     setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function CategoryDropdown ({ category, setCategory } : CategoryDropdownProps) {
+export default function CategoryDropdown ({ className, category, setCategory } : CategoryDropdownProps) {
     const { getCategories } = useCategory();
     const { data } = getCategories({ });
 
     return (
         <Dropdown 
+            className={className}
             title="Category"
             value={category}
             onChange={setCategory}

@@ -69,8 +69,9 @@ export default function VariantsTableControls ({
                     setCategory={setCategory}
                 />
             </FiltersMenu>
-            <div className="hidden lg:flex items-center space-x-3">
+            <div className="w-[30%] hidden lg:flex items-center space-x-3">
                 <Dropdown 
+                    className="flex-1"
                     title="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
@@ -79,6 +80,7 @@ export default function VariantsTableControls ({
                     value={getKeyByValue(options, sorting) || ""}
                 />
                 <CategoryDropdown 
+                    className="flex-1"
                     category={category}
                     setCategory={setCategory}
                 />

@@ -55,6 +55,7 @@ export default function ProductsTableControls ({
                 className="lg:hidden"
                 setShow={setShowFilter}
                 show={showFilter}
+                
             >
                 <Dropdown 
                     title="Sort"
@@ -69,8 +70,9 @@ export default function ProductsTableControls ({
                     setCategory={setCategory}
                 />
             </FiltersMenu>
-            <div className="hidden lg:flex items-center space-x-3 flex-wrap">
+            <div className="w-[30%] hidden lg:flex items-center space-x-3 flex-wrap">
                 <Dropdown 
+                    className="flex-1"
                     title="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
@@ -79,6 +81,7 @@ export default function ProductsTableControls ({
                     value={getKeyByValue(options, sorting) || ""}
                 />
                 <CategoryDropdown 
+                    className="flex-1"
                     category={category}
                     setCategory={setCategory}
                 />
