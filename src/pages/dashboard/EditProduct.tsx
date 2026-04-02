@@ -70,10 +70,7 @@ export default function EditProduct () {
             true
         )
 
-        if(isProductNameExist || isSkuExist) {
-            updateProduct.isPending = false;
-            return;
-        }
+        if(isProductNameExist || isSkuExist) return;
 
         const callBack = updateProduct.mutateAsync({ 
             data, 

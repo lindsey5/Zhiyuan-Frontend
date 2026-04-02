@@ -13,6 +13,8 @@ import { useEffect } from "react";
 import { promiseToast } from "../../utils/sileo";
 import { useRole } from "../../hooks/useRole";
 import Dropdown from "../ui/Dropdown";
+import { checkIfEmailExist } from "../../utils/validation";
+import { useAuthStore } from "../../lib/store/authStore";
 
 interface UserModalProps {
     open: boolean;
@@ -23,16 +25,45 @@ interface UserModalProps {
 type UserFormData = CreateUserFormData | UpdateUserFormData
 
 export default function UserModal ({ open, user, onClose } : UserModalProps) {
+    const { accessToken } = useAuthStore();
+
     const { createUser, updateUser } = useUser();
 
     const { getRoles } = useRole();
     const { data } = getRoles();
 
-    const { register, handleSubmit, formState: { errors}, reset, setValue, watch } = useForm<UserFormData>({
+    const { 
+        register, 
+        handleSubmit, 
+        formState: { errors}, 
+        reset, 
+        setValue,
+        watch,
+        setError,
+        clearErrors
+    } = useForm<UserFormData>({
         resolver: zodResolver(user ? UpdateUserSchema : CreateUserSchema)
     })
     
-    const onSubmit : SubmitHandler<UserFormData> = (data) => {
+    const onSubmit : SubmitHandler<UserFormData> = async (data) => {
+        const isConfirm = confirm(
+            user
+            ? "Are you sure you want to update this user?"
+            : "Are you sure you want to create this user?"
+        );
+
+        if (!isConfirm) return;
+
+        const isEmailExist = await checkIfEmailExist(
+            setError,
+            clearErrors,
+            data.email,
+            accessToken || "",
+            user?._id
+        )
+
+        if(isEmailExist) return
+
         const callBack = user ? 
             updateUser.mutateAsync({ 
                 id: user._id, 

@@ -74,7 +74,7 @@ export default function AddProduct () {
         variant_images.forEach((file) => {
             formData.append("variant_images", file);
         });
-        const callBack = createProduct.mutateAsync({ formData, accessToken: accessToken || "" });
+        const callBack = createProduct.mutateAsync({ formData });
         promiseToast(callBack);
 
     }

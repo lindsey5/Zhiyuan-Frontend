@@ -47,6 +47,18 @@ export const userService = {
             },
             data
         })
-    }
+    },
+    isEmailExist: ({id, email, accessToken} : { id?: string, email: string, accessToken: string}) => {
+        return apiAxios<CreateUserResponse>(`users/email`, {
+            method: HttpMethod.GET,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+            params: {
+                email,
+                id
+            }
+        })
+    },
 
 }

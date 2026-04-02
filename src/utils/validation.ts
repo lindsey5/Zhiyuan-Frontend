@@ -1,5 +1,32 @@
 import type { Path, UseFormClearErrors, UseFormSetError } from "react-hook-form";
 import { productService } from "../service/productService";
+import { userService } from "../service/userService";
+import type { CreateUserFormData, UpdateUserFormData } from "../schemas/userSchema";
+
+export const checkIfEmailExist = async (
+    setError: UseFormSetError<CreateUserFormData | UpdateUserFormData>,
+    clearErrors: UseFormClearErrors<CreateUserFormData | UpdateUserFormData>,
+    email: string,
+    accessToken: string,
+    id?: string,
+) =>  {
+    try{
+        clearErrors("email");
+        const response = await userService.isEmailExist({id, email, accessToken});
+        if (response.success) {
+            setError("email", {
+                type: "manual",
+                message: "Email already exists",
+            });
+            return true; 
+        }
+
+        return false;
+    }catch(err){
+        console.error(err);
+        return false;
+    }
+}
 
 export const checkIfProductNameExist = async <T extends { product_name: string }>(
     setError: UseFormSetError<T>,
