@@ -83,12 +83,12 @@ export default function Distributors () {
                     noDataMessage="No Audit Logs Found"
                     total={data?.total || 0}
                 />
-                <div className="flex justify-end pb-3 px-3">
-                    <GoldButton
-                        className="text-sm"
-                    >Create Distributor</GoldButton>
-                </div>
             </Card>
+            <div className="flex justify-end">
+                <GoldButton
+                    className="text-sm"
+                >Create Distributor</GoldButton>
+            </div>
         </PageContainer>
     )
 }

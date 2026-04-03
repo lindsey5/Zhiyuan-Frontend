@@ -11,7 +11,7 @@ export default function Button({ icon, label, className, ...props }: ButtonProps
         <button
             {...props}
             className={cn(
-                "px-4 py-2 rounded-sm bg-panel border border-[var(--border-panel)] text-primary transition flex items-center justify-center gap-2 text-sm font-sans cursor-pointer hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed",
+                "px-4 py-2 rounded-sm bg-panel border border-[var(--border-panel)] text-primary transition flex items-center justify-center gap-2 text-sm cursor-pointer hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed",
                 className
             )}
         >
