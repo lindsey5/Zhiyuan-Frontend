@@ -1,4 +1,4 @@
-import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table";
+import { type ColumnDef, type PaginationState } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
@@ -101,15 +101,6 @@ export default function AuditLogs () {
         }
     ];
 
-    const table = useReactTable({
-        data: data?.auditLogs || [],
-        columns,
-        pageCount: data?.totalPages || 0,
-        state: { pagination },
-        onPaginationChange: setPagination,
-        getCoreRowModel: getCoreRowModel(),
-        manualPagination: true,
-    });
 
     return (
         <PageContainer 
@@ -131,7 +122,11 @@ export default function AuditLogs () {
                 />;
                 <CustomizedTable 
                     isLoading={isFetching}
-                    table={table} 
+                    data={data?.auditLogs || []}
+                    columns={columns}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    totalPages={data?.totalPages || 0}
                     showPagination
                     noDataMessage="No Audit Logs Found"
                     total={data?.total || 0}

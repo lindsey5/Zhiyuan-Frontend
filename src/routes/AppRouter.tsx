@@ -15,6 +15,7 @@ import PageNotFound from "../pages/PageNotFound";
 import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
 import Users from "../pages/dashboard/Users";
+import Distributors from "../pages/dashboard/Distributors";
 
 const router = createBrowserRouter([ 
     {
@@ -152,6 +153,25 @@ const router = createBrowserRouter([
                         <Users />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: 'distributors',
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute
+                                anyPermissions={[
+                                    PERMISSIONS.DISTRIBUTOR_CREATE,
+                                    PERMISSIONS.DISTRIBUTOR_READ_ALL,
+                                    PERMISSIONS.DISTRIBUTOR_DELETE
+                                ]}
+                            >
+                                <Distributors />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]
             }
         ]
     },

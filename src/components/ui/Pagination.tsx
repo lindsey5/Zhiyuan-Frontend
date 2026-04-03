@@ -1,6 +1,6 @@
 import { type Table } from "@tanstack/react-table";
 import { cn } from "../../utils/utils";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationButtonProps {
     onClick: () => void;
@@ -22,7 +22,7 @@ export const PaginationButton = ({
             onClick={onClick}
             disabled={disabled}
             className={cn(
-                "disabled:opacity-50 relative group",
+                "disabled:text-gray disabled:opacity-50 disabled:cursor-not-allowed relative group",
                 !disabled && 'cursor-pointer',
                 className
             )}
@@ -69,82 +69,6 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
 
     return (
         <div className="flex items-center justify-between gap-3 mt-10 lg:text-sm xxl:text-md text-primary flex-wrap">
-            <div className="text-sm">
-                Showing {startRow} - {endRow} from {total}
-            </div>
-
-            {/* Pagination buttons */}
-            <div className="flex items-center justify-end gap-2 text-primary flex-wrap">
-                {/* First & Prev */}
-                <PaginationButton
-                    onClick={() => table.setPageIndex(0)}
-                    disabled={!table.getCanPreviousPage()}
-                    tooltip="First"
-                >
-                    <ChevronsLeft 
-                        className={cn(
-                            table.getCanPreviousPage() && "hover:text-gold"
-                        )}
-                        />
-                </PaginationButton>
-                <PaginationButton
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                    tooltip="Prev"
-                >
-                    <ChevronLeft 
-                        className={cn(
-                            table.getCanPreviousPage() && "hover:text-gold"
-                        )}
-                    />
-                </PaginationButton>
-
-                {/* Page numbers */}
-                {getPageNumbers().map((p, idx) =>
-                    typeof p === "number" ? (
-                        <button
-                            key={idx}
-                            onClick={() => table.setPageIndex(p)}
-                            className={cn(
-                                "text-sm lg:text-base w-7 h-7 cursor-pointer rounded",
-                                p === pageIndex
-                                ? "text-gold border border-gold font-semibold"
-                                : "hover:text-gold"
-                            )}
-                        >
-                        {p + 1}
-                        </button>
-                    ) : (
-                        <span key={idx} className="px-2 py-1 text-muted">{p}</span>
-                    )
-                )}
-
-                {/* Next & Last */}
-                <PaginationButton
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                    tooltip="Next"
-                >
-                    <ChevronRight 
-                        className={cn(
-                            table.getCanNextPage() && "hover:text-gold"
-                        )}
-                    />
-                </PaginationButton>
-                <PaginationButton
-                    onClick={() => table.setPageIndex(pageCount - 1)}
-                    disabled={!table.getCanNextPage()}
-                    tooltip="Last"
-                >
-                    <ChevronsRight 
-                        className={cn(
-                            table.getCanNextPage() && "hover:text-gold"
-                        )}
-                    />
-                </PaginationButton>
-            </div>
-
-            {/* Page size */}
             <div className="flex items-center gap-2">
                 <span className="text-sm">Rows per page:</span>
                 <select
@@ -158,6 +82,57 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
                         </option>
                     ))}
                 </select>
+            </div>
+
+            <div className="flex items-center gap-5">
+                <div className="text-sm">
+                    Showing {startRow} - {endRow} of {total}
+                </div>
+                {/* Pagination buttons */}
+                <div className="flex items-center justify-end gap-2 text-primary flex-wrap">
+                    <PaginationButton
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        tooltip="Prev"
+                    >
+                        <ChevronLeft 
+                            className={cn(
+                                table.getCanPreviousPage() && "hover:text-gold"
+                            )}
+                        />
+                    </PaginationButton>
+
+                    {/* Page numbers */}
+                    {getPageNumbers().map((p, idx) =>
+                        typeof p === "number" ? (
+                            <button
+                                key={idx}
+                                onClick={() => table.setPageIndex(p)}
+                                className={cn(
+                                    "text-sm w-7 h-7 cursor-pointer rounded-full",
+                                    p === pageIndex
+                                    ? "bg-gold font-semibold text-panel"
+                                    : "hover:text-gold"
+                                )}
+                            >
+                            {p + 1}
+                            </button>
+                        ) : (
+                            <span key={idx} className="px-2 py-1 text-muted">{p}</span>
+                        )
+                    )}
+                    <PaginationButton
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        tooltip="Next"
+                    >
+                        <ChevronRight 
+                            className={cn(
+                                table.getCanNextPage() && "hover:text-gold"
+                            )}
+                        />
+                    </PaginationButton>
+                </div>
             </div>
         </div>
     );

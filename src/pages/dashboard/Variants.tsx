@@ -2,8 +2,6 @@ import { useState } from "react";
 import Card from "../../components/ui/Card";
 import { useDebounce } from "../../hooks/useDebounce";
 import {
-  useReactTable,
-  getCoreRowModel,
   type ColumnDef,
   type PaginationState,
 } from "@tanstack/react-table";
@@ -107,16 +105,6 @@ export default function Variants () {
         : []),
     ];
 
-    const table = useReactTable({
-        data: data?.variants ?? [],
-        columns,
-        pageCount: data?.totalPages || 0,
-        state: { pagination },
-        onPaginationChange: setPagination,
-        getCoreRowModel: getCoreRowModel(),
-        manualPagination: true,
-    });
-
     return (
         <PageContainer 
             className="max-h-screen" 
@@ -132,7 +120,11 @@ export default function Variants () {
                     setCategory={setCategory}
                 />
                 <CustomizedTable 
-                    table={table}
+                    data={data?.variants || []}
+                    columns={columns}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    totalPages={data?.totalPages || 0}
                     isLoading={isFetching}
                     showPagination
                     noDataMessage="No Variants Found"

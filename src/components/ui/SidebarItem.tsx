@@ -13,7 +13,7 @@ export default function SidebarItem({
 }) {
     return (
         <button 
-            className={`z-30 group flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition
+            className={`z-20 group flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition
                 ${
                     isActive
                         ? "bg-[rgba(166,124,82,0.35)] text-gold"

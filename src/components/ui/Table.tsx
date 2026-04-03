@@ -1,4 +1,4 @@
-import { flexRender, type Row, type Table } from "@tanstack/react-table"
+import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState, type Row, type Table } from "@tanstack/react-table"
 import { PaginationControls } from "./Pagination";
 
 type TableRowProps<T> = {
@@ -111,20 +111,38 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
     );
 };
 
+type CustomTableProps<T> = {
+    data: T[];
+    columns: ColumnDef<T>[];         
+    totalPages?: number;
+    pagination?: PaginationState;
+    setPagination?: React.Dispatch<React.SetStateAction<PaginationState>>;
+    isLoading: boolean;
+    showPagination: boolean;
+    total?: number;
+    noDataMessage?: string;
+};
+
 const CustomizedTable = <T,>({ 
-    table, 
+    data,
+    totalPages,
+    pagination,
+    setPagination,
+    columns,
     isLoading, 
     showPagination, 
     total,
-    noDataMessage = "No Data Available" } : 
-    { 
-        table: Table<T>, 
-        isLoading : boolean, 
-        showPagination: boolean, 
-        noDataMessage: string,
-        total?: number
-    }
+    noDataMessage = "No Data Available" } : CustomTableProps<T>
 ) => {
+    const table = useReactTable({
+        data,
+        columns,
+        pageCount: totalPages,
+        state: { pagination },
+        onPaginationChange: setPagination,
+        getCoreRowModel: getCoreRowModel(),
+        manualPagination: true,
+    });
     const rows = table.getRowModel().rows;
     const cols = table.getAllColumns().length;
 

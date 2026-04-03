@@ -3,8 +3,6 @@ import Card from "../../components/ui/Card";
 import { useProduct } from "../../hooks/useProduct"
 import { useDebounce } from "../../hooks/useDebounce";
 import {
-  useReactTable,
-  getCoreRowModel,
   type ColumnDef,
   type PaginationState,
   type Row,
@@ -126,16 +124,6 @@ export default function Products () {
         : []),
     ];
 
-    const table = useReactTable({
-        data: data?.products ?? [],
-        columns,
-        pageCount: data?.totalPages || 0,
-        state: { pagination },
-        onPaginationChange: setPagination,
-        getCoreRowModel: getCoreRowModel(),
-        manualPagination: true,
-    });
-
     return (
         <PageContainer 
             className="max-h-screen" 
@@ -151,7 +139,11 @@ export default function Products () {
                     setCategory={setCategory}
                 />
                 <CustomizedTable 
-                    table={table}
+                    data={data?.products || []}
+                    columns={columns}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    totalPages={data?.totalPages || 0}
                     showPagination
                     isLoading={isFetching}
                     noDataMessage="No Products Found"

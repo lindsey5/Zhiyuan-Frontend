@@ -4,7 +4,7 @@ import PageContainer from "../../components/ui/PageContainer";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useUser } from "../../hooks/useUser";
 import type { GetUser } from "../../types/user.type";
-import { getCoreRowModel, useReactTable, type ColumnDef, type PaginationState, type Row } from "@tanstack/react-table";
+import { type ColumnDef, type PaginationState, type Row } from "@tanstack/react-table";
 import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
@@ -125,16 +125,6 @@ export default function Users () {
         : []),
     ]
 
-    const table = useReactTable({
-        data: data?.users ?? [],
-        columns,
-        pageCount: data?.totalPages || 0,
-        state: { pagination },
-        onPaginationChange: setPagination,
-        getCoreRowModel: getCoreRowModel(),
-        manualPagination: true,
-    });
-
     return (
         <PageContainer 
             title="User Management"
@@ -148,7 +138,11 @@ export default function Users () {
                     setSearch={setSearch}
                 />
                 <CustomizedTable 
-                    table={table} 
+                    data={data?.users || []}
+                    columns={columns}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    totalPages={data?.totalPages || 0}
                     showPagination
                     isLoading={isFetching}
                     noDataMessage="No Users Found"
