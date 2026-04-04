@@ -101,7 +101,6 @@ export default function AuditLogs () {
         }
     ];
 
-
     return (
         <PageContainer 
             className="max-h-screen" 

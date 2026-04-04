@@ -91,7 +91,7 @@ export default function TransferCart({
                 </div>
 
                 {/* Body */}
-                <div className="max-h-[70vh] overflow-y-auto space-y-3 p-3">
+                <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
                     <p className="text-sm text-center">
                     No items in cart.
@@ -100,7 +100,7 @@ export default function TransferCart({
                     variants.map(item => (
                         <div
                             key={item.variant._id}
-                            className="flex items-center gap-3 border border-[var(--border-ui)] rounded-md p-2"
+                            className="flex items-center gap-3 border-b border-[var(--border-ui)] py-3"
                         >
                             <img
                                 src={item.variant.image_url}

@@ -1,4 +1,4 @@
-import type { PaginationResponse } from "./pagination.type";
+import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
 import type { Variant } from "./variant";
 
@@ -17,9 +17,7 @@ export interface GetProductsResponse extends PaginationResponse {
     products: Product[]
 }
 
-export interface GetProductsParams {
-    page: number;
-    limit: number;
+export interface GetProductsParams extends PaginationParams {
     search?: string;
     category?: string;
     sortBy?: string;

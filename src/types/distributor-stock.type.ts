@@ -1,4 +1,4 @@
-import type { PaginationResponse } from "./pagination.type";
+import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
 import type { Variant } from "./variant";
 
@@ -11,9 +11,7 @@ export interface DistributorStock {
     updatedAt: Date;
 }
 
-export interface GetDistributorStocksParams {
-    page: number;
-    limit: number;
+export interface GetDistributorStocksParams extends PaginationParams {
     search?: string;
     sortBy?: string;
     order?: "desc" | "asc";

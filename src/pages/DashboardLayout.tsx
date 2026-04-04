@@ -11,19 +11,9 @@ export default function DashboardLayout() {
     const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
-        if (window.innerWidth >= 1024) setCollapsed(false);
-        else setCollapsed(true);
+        const handleResize = () => setCollapsed(window.innerWidth < 1024);
 
-        const handleResize = () => {
-            if (window.innerWidth >= 1024) {
-                setCollapsed(true);
-            } else {
-                setCollapsed(false);
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        handleResize();
     }, []);
 
     return (

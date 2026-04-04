@@ -1,4 +1,4 @@
-import type { PaginationResponse, PaginationState } from "./pagination.type";
+import type { PaginationResponse, PaginationParams } from "./pagination.type";
 import type { Role } from "./role.type";
 
 export interface User {
@@ -63,7 +63,7 @@ export interface GetUser {
   createdAt: Date;
 }
 
-export interface GetUsersParams extends PaginationState {
+export interface GetUsersParams extends PaginationParams {
   search?: string;
   role?: string;
 }

@@ -2,6 +2,7 @@
 export const PERMISSIONS = {
     DASHBOARD_VIEW: 'dashboard:view',
     AUDIT_VIEW_ALL: 'audit:view:all',
+    TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
 
     // User management
     USER_CREATE: 'user:create',
@@ -55,8 +56,13 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     },
 
     Audit: {
-        description: "Manage access to system audit logs and activity tracking.",
+        description: "View system audit logs and activity tracking records.",
         AUDIT_VIEW_ALL: "View all audit logs",
+    },
+
+    "Stock Transfer Log": {
+        description: "View stock transfer history and item movement records.",
+        TRANSFER_LOGS_VIEW_ALL: "View all transfer logs",
     },
 
     "User Management": {

@@ -1,4 +1,4 @@
-import type { PaginationResponse } from "./pagination.type";
+import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { Product } from "./product.type";
 
 export interface Variant {
@@ -21,9 +21,7 @@ export interface GetVariantsResponse extends PaginationResponse {
     variants: VariantWithProduct[]
 }
 
-export interface GetVariantsParams {
-    page: number;
-    limit: number;
+export interface GetVariantsParams extends PaginationParams {
     search?: string;
     category?: string;
     sortBy?: string;

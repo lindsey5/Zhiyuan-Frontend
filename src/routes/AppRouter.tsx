@@ -18,6 +18,7 @@ import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
 import DistributorStock from "../pages/dashboard/DistributorStock";
 import StockDistribution from "../pages/dashboard/StockDistribution";
+import TransferLogs from "../pages/dashboard/TransferLogs";
 
 const router = createBrowserRouter([ 
     {
@@ -196,6 +197,16 @@ const router = createBrowserRouter([
                             }
                         ]
                     },
+                    {
+                        path: 'transfer-logs',
+                        Component: () => (
+                            <ProtectedRoute
+                                requiredPermissions={[PERMISSIONS.TRANSFER_LOGS_VIEW_ALL]}
+                            >
+                                <TransferLogs />
+                            </ProtectedRoute>
+                        )
+                    }
                 ]
             }
         ]

@@ -1,3 +1,4 @@
+import type { PaginationParams } from "./pagination.type";
 import type { User } from "./user.type";
 
 export interface AuditLog{
@@ -15,9 +16,7 @@ export interface AuditLog{
     createdAt: Date;
 }
 
-export interface GetAuditParams {
-    page: number;
-    limit: number;
+export interface GetAuditParams extends PaginationParams {
     startDate?: string;
     endDate?: string;
     role?: string;
