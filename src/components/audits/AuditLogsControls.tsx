@@ -39,7 +39,7 @@ export default function AuditLogsControls({
 
             <FiltersMenu containerStyle="w-[80vw] md:w-100">
                 <h1 className="font-bold text-lg">Filter</h1>
-                <div className="grid grid-cols-2 gap-5 mt-4">
+                <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
                         label="Start Date"
                         onChange={(value) => setStartDate(value)}
