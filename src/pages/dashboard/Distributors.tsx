@@ -9,7 +9,7 @@ import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorModal from "../../components/distributors/DistributorModal";
-import { Box, Eye, Trash } from "lucide-react";
+import { Box, Trash } from "lucide-react";
 import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
 import { useRole } from "../../hooks/useRole";

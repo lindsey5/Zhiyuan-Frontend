@@ -6,7 +6,8 @@ import type { VariantWithProduct } from "../../types/variant";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import { ArrowRightCircle, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { useDistributorStock } from "../../hooks/useDistributorStock";
 
 export default function StockDistribution () {
     const [distributorId, setDistributorId] = useState<string | null>(null);
@@ -40,6 +41,7 @@ export default function StockDistribution () {
         successToast(`${newVariant.variant_name} successfully added`);
     };
 
+    console.log(distributorId)
 
     return (
         <PageContainer
