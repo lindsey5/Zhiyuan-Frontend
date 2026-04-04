@@ -164,7 +164,7 @@ export default function TransferCart({
                     <GoldButton
                         className="text-sm"
                         onClick={transfer}
-                        disabled={!distributorId || variants.length === 0}
+                        disabled={!distributorId || variants.length === 0 || createDistributorStocks.isPending}
                     >Transfer</GoldButton>
                 </div>
             </Card>
