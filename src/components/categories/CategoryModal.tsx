@@ -10,7 +10,6 @@ import { promiseToast } from "../../utils/sileo"
 import type { Category } from "../../types/category.type"
 import { useEffect } from "react"
 import GoldButton from "../ui/GoldButton"
-import { useAuthStore } from "../../lib/store/authStore"
 import Modal from "../ui/Modal"
 
 type CategoryModalProps = {
