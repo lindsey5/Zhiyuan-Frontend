@@ -7,11 +7,8 @@ export interface CreateCategoryPayload {
 }
 
 export const categoryService = {
-    createCategory: (data: CreateCategoryPayload, accessToken : string): Promise<CreateAndUpdateCategoryResponse> =>
+    createCategory: (data: CreateCategoryPayload): Promise<CreateAndUpdateCategoryResponse> =>
         apiAxios<CreateAndUpdateCategoryResponse>("categories", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.POST,
             data,
         }),
@@ -22,20 +19,14 @@ export const categoryService = {
             params
         }),
 
-    updateCategory: (id: string, data : { name: string }, accessToken : string) : Promise<CreateAndUpdateCategoryResponse> => 
+    updateCategory: (id: string, data : { name: string }) : Promise<CreateAndUpdateCategoryResponse> => 
         apiAxios<CreateAndUpdateCategoryResponse>(`categories/${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.PUT,
             data
         }),
 
-    deleteCategory: (id: string, accessToken : string) : Promise<ApiResponse> =>
+    deleteCategory: (id: string) : Promise<ApiResponse> =>
         apiAxios<ApiResponse>(`categories/${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.DELETE,
         })
 

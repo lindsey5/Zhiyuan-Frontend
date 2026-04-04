@@ -9,6 +9,12 @@ const axiosClient = axios.create({
     timeout: 10000,
 });
 
+axiosClient.interceptors.request.use((config) => {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+    return config;
+});
+
 axiosClient.interceptors.response.use(
     (response) => response,
     async (error) => {

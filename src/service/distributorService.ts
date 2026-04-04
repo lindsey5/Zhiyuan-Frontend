@@ -3,39 +3,27 @@ import type { CreateDistributorDTO, CreateDistributorResponse, GetDistributorRes
 import type { ApiResponse } from "../types/type";
 
 export const distributorService = {
-    createDistributor: (data: CreateDistributorDTO, accessToken: string): Promise<CreateDistributorResponse> =>
+    createDistributor: (data: CreateDistributorDTO): Promise<CreateDistributorResponse> =>
         apiAxios<CreateDistributorResponse>("/distributors", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.POST,
             data,
         }),
 
-    getDistributors: (params: GetDistributorsParams, accessToken: string): Promise<GetDistributorsResponse> => (
+    getDistributors: (params: GetDistributorsParams): Promise<GetDistributorsResponse> => (
         apiAxios<GetDistributorsResponse>("/distributors",{
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.GET,
             params
         })
     ),
 
-    getDistributorById: (id: string, accessToken: string): Promise<GetDistributorResponse> => (
+    getDistributorById: (id: string): Promise<GetDistributorResponse> => (
         apiAxios<GetDistributorResponse>(`/distributors/${id}`,{
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.GET,
         })
     ),
 
-    deleteDistributor: (id: string, accessToken: string) : Promise<ApiResponse> => (
+    deleteDistributor: (id: string) : Promise<ApiResponse> => (
         apiAxios<ApiResponse>(`/distributors/${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             method: HttpMethod.DELETE,
         })
     )

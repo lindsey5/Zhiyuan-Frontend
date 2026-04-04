@@ -9,7 +9,7 @@ import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorModal from "../../components/distributors/DistributorModal";
-import { Box, Trash } from "lucide-react";
+import { Eye, Trash } from "lucide-react";
 import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
 import { useRole } from "../../hooks/useRole";
@@ -97,9 +97,9 @@ export default function Distributors () {
                         {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
                             <button
                                 className="cursor-pointer hover:bg-gray-300 p-2 rounded-full"
-                                onClick={() => navigate(`stocks/${row.original._id}`)}
+                                onClick={() => navigate(`${row.original._id}`)}
                             >
-                                <Box className="text-gold" size={20} />
+                                <Eye className="text-gold" size={20} />
                             </button>
                         )}
                         {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (

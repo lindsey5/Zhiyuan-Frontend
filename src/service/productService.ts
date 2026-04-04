@@ -10,11 +10,8 @@ export const productService = {
     })
   },
 
-  createProduct: (data : FormData, accessToken : string) : Promise<CreateProductResponse> => {
+  createProduct: (data : FormData) : Promise<CreateProductResponse> => {
     return apiAxios<CreateProductResponse>("products", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.POST,
       data
     })
@@ -26,39 +23,27 @@ export const productService = {
     })
   },
 
-  updateProduct: (id: string, data : UpdateProductPayload, accessToken : string) : Promise<UpdateProductResponse> => {
+  updateProduct: (id: string, data : UpdateProductPayload) : Promise<UpdateProductResponse> => {
     return apiAxios<UpdateProductResponse>(`products/${id}`, {
       method: HttpMethod.PUT,
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       data
     })
   },
 
-  deleteProduct: (id: string, accessToken : string) => {
+  deleteProduct: (id: string) => {
     return apiAxios<ApiResponse>(`products/${id}`, {
       method: HttpMethod.DELETE,
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
     })
   },
 
-  searchProduct: ({ params, accessToken, id } : { params : Record<string, string>, id?: string, accessToken : string}) : Promise<SearchProductResponse> => {
+  searchProduct: ({ params, id } : { params : Record<string, string>, id?: string}) : Promise<SearchProductResponse> => {
     return apiAxios<SearchProductResponse>("products/search", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.GET,
       params: { ...params, id }
     })
   },
-  searchVariant: ({ params, accessToken, id } : { params : Record<string, string>, id?: string, accessToken : string}) : Promise<SearchProductResponse> => {
+  searchVariant: ({ params, id } : { params : Record<string, string>, id?: string }) : Promise<SearchProductResponse> => {
     return apiAxios<SearchProductResponse>("variants/search", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.GET,
       params: { ...params, id }
     })

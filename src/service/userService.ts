@@ -2,70 +2,49 @@ import { apiAxios, HttpMethod } from "../lib/api/apiAxios"
 import type { CreateUserPayload, CreateUserResponse, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload, UpdateUserResponse } from "../types/user.type"
 
 export const userService = {
-    updateOwnAccount: (data: UpdateUserOwnPayload, accessToken: string) => {
+    updateOwnAccount: (data: UpdateUserOwnPayload) => {
         return apiAxios<UpdateUserResponse>("users/me", {
             method: HttpMethod.PUT,
             data,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
         })
     },
     
-    getUsers: (accessToken : string, params : GetUsersParams) => {
+    getUsers: (params : GetUsersParams) => {
         return apiAxios<GetUsersResponse>("users", {
             method: HttpMethod.GET,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             params
         })
     },
 
-    getUsersCount: (accessToken : string) => {
+    getUsersCount: () => {
         return apiAxios<GetUsersCountResponse>("users/count", {
             method: HttpMethod.GET,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
         })
     },
 
-    createUser: (data : CreateUserPayload, accessToken : string) => {
+    createUser: (data : CreateUserPayload) => {
         return apiAxios<CreateUserResponse>("users", {
             method: HttpMethod.POST,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             data
         })
     },
 
-    updateUser: (id : string, data : UpdateUserPayload, accessToken : string) => {
+    updateUser: (id : string, data : UpdateUserPayload) => {
         return apiAxios<UpdateUserResponse>(`users/${id}`, {
             method: HttpMethod.PUT,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             data
         })
     },
 
-    deleteUser: (id : string, accessToken: string) => {
+    deleteUser: (id : string) => {
         return apiAxios<UpdateUserResponse>(`users/${id}`, {
             method: HttpMethod.DELETE,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
         })
     },
 
-    isEmailExist: ({id, email, accessToken} : { id?: string, email: string, accessToken: string}) => {
+    isEmailExist: ({id, email} : { id?: string, email: string}) => {
         return apiAxios<CreateUserResponse>(`users/email`, {
             method: HttpMethod.GET,
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             params: {
                 email,
                 id

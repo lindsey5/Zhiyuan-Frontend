@@ -20,7 +20,6 @@ type CategoryModalProps = {
 }
 
 export default function CategoryModal({ open, onClose, category }: CategoryModalProps) {
-    const { accessToken } = useAuthStore();
     const { createCategory, updateCategory } = useCategory();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CategoryFormData>({
         resolver: zodResolver(categorySchema),
@@ -32,7 +31,7 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
     }
 
     const onSubmit : SubmitHandler<CategoryFormData> = async (data) => {
-        const callBack = category ? updateCategory.mutateAsync({ id: category._id, data, accessToken: accessToken || ""}) : createCategory.mutateAsync({ data, accessToken: accessToken || ""});
+        const callBack = category ? updateCategory.mutateAsync({ id: category._id, data }) : createCategory.mutateAsync({ data });
         promiseToast(callBack)
     }
 

@@ -7,12 +7,11 @@ export const checkIfEmailExist = async (
     setError: UseFormSetError<CreateUserFormData | UpdateUserFormData>,
     clearErrors: UseFormClearErrors<CreateUserFormData | UpdateUserFormData>,
     email: string,
-    accessToken: string,
     id?: string,
 ) =>  {
     try{
         clearErrors("email");
-        const response = await userService.isEmailExist({id, email, accessToken});
+        const response = await userService.isEmailExist({id, email});
         if (response.success) {
             setError("email", {
                 type: "manual",
@@ -32,7 +31,6 @@ export const checkIfProductNameExist = async <T extends { product_name: string }
     setError: UseFormSetError<T>,
     clearErrors: UseFormClearErrors<T>,
     data: T,
-    accessToken: string,
     id?: string
 ): Promise<boolean> => {
     try {
@@ -41,7 +39,6 @@ export const checkIfProductNameExist = async <T extends { product_name: string }
         const response = await productService.searchProduct({
             params: { product_name: data.product_name },
             id,
-            accessToken: accessToken || "",
         });
 
         if (response.success) {
@@ -68,7 +65,6 @@ export const checkIfVariantFieldExist = async <
     field: K,
     errorMessage: string,
     variants: T["variants"],
-    accessToken: string,
     includeId?: boolean
 ): Promise<boolean> => {
     try {
@@ -77,7 +73,6 @@ export const checkIfVariantFieldExist = async <
             const response = await productService.searchVariant({
                 params: { [field]: variant[field] },
                 id: includeId ? variant._id : undefined,
-                accessToken,
             });
 
             if (response.success) {

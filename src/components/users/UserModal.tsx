@@ -14,7 +14,6 @@ import { promiseToast } from "../../utils/sileo";
 import { useRole } from "../../hooks/useRole";
 import Dropdown from "../ui/Dropdown";
 import { checkIfEmailExist } from "../../utils/validation";
-import { useAuthStore } from "../../lib/store/authStore";
 
 interface UserModalProps {
     open: boolean;
@@ -25,7 +24,6 @@ interface UserModalProps {
 type UserFormData = CreateUserFormData | UpdateUserFormData
 
 export default function UserModal ({ open, user, onClose } : UserModalProps) {
-    const { accessToken } = useAuthStore();
 
     const { createUser, updateUser } = useUser();
 
@@ -58,7 +56,6 @@ export default function UserModal ({ open, user, onClose } : UserModalProps) {
             setError,
             clearErrors,
             data.email,
-            accessToken || "",
             user?._id
         )
 

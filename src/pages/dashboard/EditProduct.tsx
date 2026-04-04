@@ -10,7 +10,6 @@ import { useCategory } from "../../hooks/useCategory";
 import Button from "../../components/ui/Button";
 import GoldButton from "../../components/ui/GoldButton";
 import { useProduct } from "../../hooks/useProduct";
-import { useAuthStore } from "../../lib/store/authStore";
 import { checkIfProductNameExist, checkIfVariantFieldExist } from "../../utils/validation";
 import EditProductThumbnail from "../../components/edit-product/EditProductThumbnail";
 import EditProductVariant from "../../components/edit-product/EditProductVariant";
@@ -22,7 +21,6 @@ import EditProductSkeleton from "../../components/edit-product/EditProductSkelet
 export default function EditProduct () {
     const params = useParams();
     const id = params.id;
-    const accessToken = useAuthStore(state => state.accessToken);
     const { getCategories } = useCategory();
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
@@ -56,7 +54,6 @@ export default function EditProduct () {
             setError,
             clearErrors,
             data,
-            accessToken || "",
             id
         )
 
@@ -66,7 +63,6 @@ export default function EditProduct () {
             "sku",
             "SKU already exists",
             data.variants,
-            accessToken || "",
             true
         )
 

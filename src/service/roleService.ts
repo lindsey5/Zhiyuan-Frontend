@@ -3,58 +3,40 @@ import type { GetRolesResponse, GetRoleResponse, RoleDTO, UpdateRoleResponse, Cr
 import { type ApiResponse } from "../types/type";
 
 export const roleService = {
-  getOwnRole: (accessToken : string): Promise<GetRoleResponse> => {
+  getOwnRole: (): Promise<GetRoleResponse> => {
     return apiAxios<GetRoleResponse>("roles/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.GET,
     })
   },
 
-  getRoles: (accessToken : string): Promise<GetRolesResponse> => {
+  getRoles: (): Promise<GetRolesResponse> => {
     return apiAxios<GetRolesResponse>("roles", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.GET,
     })
   },
   
-  createRole: (data : RoleDTO, accessToken : string): Promise<CreateRoleResponse> => {
+  createRole: (data : RoleDTO): Promise<CreateRoleResponse> => {
     return apiAxios<CreateRoleResponse>("roles", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.POST,
       data
     })
   },
 
-  getRoleById: (id : string, accessToken : string): Promise<GetRoleResponse> => {
+  getRoleById: (id : string): Promise<GetRoleResponse> => {
     return apiAxios<GetRoleResponse>(`roles/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }, 
       method: HttpMethod.GET,
     })
   },
 
-  updateRole: (id: string, data: RoleDTO, accessToken: string) : Promise<UpdateRoleResponse> => {
+  updateRole: (id: string, data: RoleDTO) : Promise<UpdateRoleResponse> => {
     return apiAxios<UpdateRoleResponse>(`roles/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.PUT,
       data
     })
   },
 
-  deleteRole: (id : string, accessToken : string) : Promise<ApiResponse> => {
+  deleteRole: (id : string) : Promise<ApiResponse> => {
     return apiAxios<ApiResponse>(`roles/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
       method: HttpMethod.DELETE
     })
   }

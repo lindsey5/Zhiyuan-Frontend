@@ -175,27 +175,22 @@ const router = createBrowserRouter([
                         )
                     },
                     {
-                        path: "stocks",
-                        children: [
-                            {
-                                path: ":id",
-                                Component: () => (
-                                    <ProtectedRoute
-                                        requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_READ]}
-                                    >
-                                        <DistributorStock />
-                                    </ProtectedRoute>
-                                )
-                            },
-                            {
-                                path: 'add',
-                                Component: () => (
-                                    <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_CREATE]}>
-                                        <StockDistribution />
-                                    </ProtectedRoute>
-                                )
-                            }
-                        ]
+                        path: ":id",
+                        Component: () => (
+                            <ProtectedRoute
+                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_READ]}
+                            >
+                                <DistributorStock />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'distribute',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_CREATE]}>
+                                <StockDistribution />
+                            </ProtectedRoute>
+                        )
                     },
                     {
                         path: 'transfer-logs',

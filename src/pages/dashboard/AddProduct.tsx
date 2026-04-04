@@ -13,11 +13,9 @@ import AddProductVariant from "../../components/add-product/AddProductVariant";
 import GoldButton from "../../components/ui/GoldButton";
 import { useProduct } from "../../hooks/useProduct";
 import { promiseToast } from "../../utils/sileo";
-import { useAuthStore } from "../../lib/store/authStore";
 import { checkIfProductNameExist, checkIfVariantFieldExist } from "../../utils/validation";
 
 export default function AddProduct () {
-    const accessToken = useAuthStore(state => state.accessToken);
     const { getCategories } = useCategory();
     const { data } = getCategories({ search: '' });
     const categories = data?.categories.map(category => ({ label: category.name, value: category.name}))|| [];
@@ -46,7 +44,6 @@ export default function AddProduct () {
             setError,
             clearErrors,
             data,
-            accessToken || ""
         )
 
         const isSkuExist = await checkIfVariantFieldExist(
@@ -55,7 +52,6 @@ export default function AddProduct () {
             "sku",
             "SKU already exists",
             data.variants,
-            accessToken || ""
         )
 
         if(isProductNameExist || isSkuExist) return;

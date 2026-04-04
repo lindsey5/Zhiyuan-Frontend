@@ -1,15 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { useAuthStore } from "../lib/store/authStore"
 import type { CreateDistributorDTO, GetDistributorResponse, GetDistributorsParams, GetDistributorsResponse } from "../types/distributor.type";
 import { distributorService } from "../service/distributorService";
 
 export const useDistributor = () => {
-    const { accessToken } = useAuthStore();
 
     const getDistributors = (params : GetDistributorsParams) => (
         useQuery<GetDistributorsResponse, Error>({
             queryKey: ['distributors', params],
-            queryFn: () => distributorService.getDistributors(params, accessToken || ""),
+            queryFn: () => distributorService.getDistributors(params),
             placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
@@ -18,18 +16,18 @@ export const useDistributor = () => {
     const getDistributorById = (id: string) => (
         useQuery<GetDistributorResponse, Error>({
             queryKey: [`distributors/${id}`],
-            queryFn: () => distributorService.getDistributorById(id, accessToken || ""),
+            queryFn: () => distributorService.getDistributorById(id),
             placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
 
     const createDistributor = useMutation({
-        mutationFn: ({ data } : { data : CreateDistributorDTO}) =>  distributorService.createDistributor(data, accessToken || ""),
+        mutationFn: ({ data } : { data : CreateDistributorDTO}) =>  distributorService.createDistributor(data),
     })
 
     const deleteDistributor = useMutation({
-        mutationFn: ({ id } : { id : string }) => distributorService.deleteDistributor(id, accessToken || "")
+        mutationFn: ({ id } : { id : string }) => distributorService.deleteDistributor(id)
     })
 
     return {

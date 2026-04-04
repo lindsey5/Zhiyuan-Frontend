@@ -10,7 +10,7 @@ interface CategoryDropdownProps {
 
 export default function CategoryDropdown ({ className, category, setCategory } : CategoryDropdownProps) {
     const { getCategories } = useCategory();
-    const { data } = getCategories({ });
+    const { data } = getCategories({});
 
     return (
         <Dropdown 
