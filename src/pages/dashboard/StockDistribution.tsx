@@ -7,7 +7,6 @@ import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
 import { ShoppingCart } from "lucide-react";
-import { useDistributorStock } from "../../hooks/useDistributorStock";
 
 export default function StockDistribution () {
     const [distributorId, setDistributorId] = useState<string | null>(null);
