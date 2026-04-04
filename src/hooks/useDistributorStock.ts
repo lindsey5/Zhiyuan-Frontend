@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useAuthStore } from "../lib/store/authStore"
-import type { CreateDistributorStocksPayload, GetDistributorStocksParams, GetDistributorStocksResponse } from "../types/distributor-stock.type";
+import type { CreateDistributorStockPayload, GetDistributorStocksParams, GetDistributorStocksResponse } from "../types/distributor-stock.type";
 import { distributorStockService } from "../service/distributorStockService";
 
 export const useDistributorStock = () => {
@@ -16,7 +16,7 @@ export const useDistributorStock = () => {
     )
 
     const createDistributorStocks = useMutation({
-        mutationFn: ({ id, data } : { id: string, data: CreateDistributorStocksPayload }) => distributorStockService.createDistributorStocks(id, data, accessToken || ""),
+        mutationFn: ({ id, data } : { id: string, data: CreateDistributorStockPayload[] }) => distributorStockService.createDistributorStocks(id, data, accessToken || ""),
     })
 
     return {

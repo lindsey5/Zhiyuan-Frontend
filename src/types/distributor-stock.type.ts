@@ -23,11 +23,9 @@ export interface GetDistributorStocksResponse extends PaginationResponse {
     distributorStocks: DistributorStock[];
 }
 
-export interface CreateDistributorStocksPayload {
-    variants: {
-        variant_id: string;
-        quantity: number;
-    }[]
+export interface CreateDistributorStockPayload {
+    variant_id: string;
+    quantity: number;
 }
 
 export interface CreateDistributorStocksResponse extends ApiResponse {

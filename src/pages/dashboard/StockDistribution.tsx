@@ -7,10 +7,12 @@ import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
 import { ShoppingCart } from "lucide-react";
+import TransferCart from "../../components/stockDistribution/TransferCart";
 
 export default function StockDistribution () {
     const [distributorId, setDistributorId] = useState<string | null>(null);
     const [variants, setVariants] = useState<{ variant: VariantWithProduct, quantity: number }[]>([]);
+    const [showModal, setShowModal] = useState(false);
 
     const addVariant = (newVariant: VariantWithProduct, quantity: number) => {
         const existing = variants.find(v => v.variant._id === newVariant._id);
@@ -40,20 +42,28 @@ export default function StockDistribution () {
         successToast(`${newVariant.variant_name} successfully added`);
     };
 
-    console.log(distributorId)
-
     return (
         <PageContainer
             title="Stock Distribution"
             description="Manage stock transfers from Admin to Distributors"
         >
+            <TransferCart 
+                close={() => setShowModal(false)}
+                open={showModal}
+                setVariants={setVariants}
+                variants={variants}
+                distributorId={distributorId}
+            />
             <div className="flex justify-end">
-                <GoldButton className="text-sm relative">
+                <GoldButton 
+                    className="text-sm relative" 
+                    onClick={() => setShowModal(true)}
+                >
                     <ShoppingCart size={20} />
                     Transfer Cart
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                    {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
                         {variants.length}
-                    </span>
+                    </span>}
                 </GoldButton>
             </div>
             <div className="flex flex-col gap-5">

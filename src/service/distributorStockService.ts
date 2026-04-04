@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type CreateDistributorStocksResponse, type CreateDistributorStocksPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse } from "../types/distributor-stock.type";
+import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse } from "../types/distributor-stock.type";
 
 export const distributorStockService = {
     getDistributorStocks: (id: string, params: GetDistributorStocksParams, accessToken: string): Promise<GetDistributorStocksResponse> => (
@@ -12,7 +12,7 @@ export const distributorStockService = {
         })
     ),
 
-    createDistributorStocks: (id: string, data: CreateDistributorStocksPayload, accessToken: string) => (
+    createDistributorStocks: (id: string, data: CreateDistributorStockPayload[], accessToken: string) => (
         apiAxios<CreateDistributorStocksResponse>(`/distributor-stocks/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
