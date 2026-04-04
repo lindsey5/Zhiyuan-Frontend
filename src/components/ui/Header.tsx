@@ -18,7 +18,7 @@ export default function Header ({ setCollapsed } : { setCollapsed : React.Dispat
                     alt="Logo"
                     className="w-12 h-12 object-contain transition-opacity duration-500"
                 />
-                <div>
+                <div className="hidden md:block">
                     <h1 className="text-xs font-medium">Zhiyuan Enterprise</h1>
                     <p className="text-gold text-sm font-bold">Group Inc.</p>
                 </div>

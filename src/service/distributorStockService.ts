@@ -3,14 +3,14 @@ import { type CreateDistributorStocksResponse, type CreateDistributorStockPayloa
 
 export const distributorStockService = {
     getDistributorStocks: (id: string, params: GetDistributorStocksParams): Promise<GetDistributorStocksResponse> => (
-        apiAxios<GetDistributorStocksResponse>(`/distributor-stocks/${id}`,{
+        apiAxios<GetDistributorStocksResponse>(`distributor-stocks/${id}`,{
             method: HttpMethod.GET,
             params
         })
     ),
 
     createDistributorStocks: (id: string, data: CreateDistributorStockPayload[]) => (
-        apiAxios<CreateDistributorStocksResponse>(`/distributor-stocks/${id}`, {
+        apiAxios<CreateDistributorStocksResponse>(`distributor-stocks/${id}`, {
             method: HttpMethod.POST,
             data
         })

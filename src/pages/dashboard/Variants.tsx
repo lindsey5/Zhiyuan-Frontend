@@ -14,7 +14,7 @@ import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
-import type { VariantWithProduct } from "../../types/variant";
+import type { VariantWithProduct } from "../../types/variant.type";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
 
 export default function Variants () {
@@ -60,6 +60,11 @@ export default function Variants () {
         {
             header: 'Product name',
             accessorKey: 'product.product_name',
+            cell: info => (
+                <div className="min-w-50">
+                    {info.getValue() as string}
+                </div>
+            ),
             meta: { align: 'center' },
         },
         {
@@ -91,17 +96,18 @@ export default function Variants () {
                 {
                     header: "Action",
                     cell: () => (
-                        <div className="flex gap-3 text-sm justify-center">
+                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
+                                    className="p-1 md:p-3"
                                 />
                             )}
     
                             {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white"
+                                    className="bg-red-600 text-white p-1 md:p-3"
                                 />
                             )}
                         </div>

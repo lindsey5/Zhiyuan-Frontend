@@ -84,7 +84,11 @@ export default function Users () {
         {
             header: "Role",
             accessorKey: 'role.name',
-            cell: info => <Chip>{info.getValue() as string}</Chip>,
+            cell: info => (
+                <div className="min-w-30">
+                    <Chip>{info.getValue() as string}</Chip>
+                </div>
+            ),
             meta: { align: 'center' }
         },
         {
@@ -103,7 +107,7 @@ export default function Users () {
                 {
                     header: "Action",
                     cell: ({ row } : { row: Row<GetUser> }) => (
-                        <div className="flex gap-3 text-sm justify-center">
+                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"

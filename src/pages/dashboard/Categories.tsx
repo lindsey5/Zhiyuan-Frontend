@@ -52,10 +52,11 @@ export default function Categories () {
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Category> }) => (
-                    <div className="flex gap-3 text-sm justify-center">
+                    <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
                         {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
                             <Button
                                 label="Edit"
+                                className="p-1 md:p-3"
                                 onClick={() => {
                                     setCategory(row.original);
                                     setShowModal(true);
@@ -66,7 +67,7 @@ export default function Categories () {
                         {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
                             <Button
                                 label="Delete"
-                                className="bg-red-600 text-white"
+                                className="bg-red-600 text-white p-1 md:p-3"
                                 onClick={() => deleteExistingCategory(row.original._id)}
                             />
                         )}

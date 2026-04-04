@@ -98,7 +98,7 @@ export default function Products () {
                 {
                     header: "Action",
                     cell: ({ row }: { row: Row<Product> }) => (
-                        <div className="flex gap-3 text-sm justify-center">
+                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"

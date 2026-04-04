@@ -1,7 +1,7 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { User } from "./user.type";
-import type { Variant } from "./variant";
+import type { Variant } from "./variant.type";
 
 export interface StockTransferLog {
     _id: string;

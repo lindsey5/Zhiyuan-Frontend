@@ -12,21 +12,21 @@ export default function DistributorInfo ({ id, showBalance = true } : { id : str
     
     return (
         <>
-        <Card className="flex items-center gap-5">
-            <div className="w-20 h-20 bg-gold rounded-full p-5">
+        <Card className="flex-1 flex items-center gap-5">
+            <div className="w-15 h-15 md:w-20 md:h-20 bg-gold rounded-full p-5">
                 <User className="w-full h-full text-inverse"/>
             </div>
-            <div>
+            <div className="text-sm lg:text-base break-all">
                 <h1>{distributorData?.distributor.distributor_name}</h1>
                 <h1 className="font-bold">{distributorData?.distributor.email}</h1>
             </div>
         </Card>
 
         {showBalance && <Card className="flex-1 flex items-center gap-5">
-            <div className="w-20 h-20 bg-gold rounded-full p-5">
+            <div className="w-15 h-15 md:w-20 md:h-20 bg-gold rounded-full p-5">
                 <Wallet className="w-full h-full text-inverse"/>
             </div>
-            <div>
+            <div className="text-sm lg:text-base break-all">
                 <p className="mb-1">Wallet Balance</p>
                 <p className="font-bold text-xl">{formatToPeso(distributorData?.distributor.wallet_balance || 0)}</p>
             </div>
@@ -43,8 +43,8 @@ function DistributorInfoSkeleton () {
             <div className="w-20 h-20 bg-loading rounded-full" />
 
             <div className="flex flex-col gap-2">
-                <div className="h-4 w-40 bg-loading rounded" />
-                <div className="h-4 w-56 bg-loading rounded" />
+                <div className="h-3 w-32 bg-loading rounded" />
+                <div className="h-5 w-48 bg-loading rounded" />
             </div>
         </Card>
 

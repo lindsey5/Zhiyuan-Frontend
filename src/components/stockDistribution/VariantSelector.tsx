@@ -1,6 +1,6 @@
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import Card from "../ui/Card";
-import type { VariantWithProduct } from "../../types/variant";
+import type { VariantWithProduct } from "../../types/variant.type";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import { useVariant } from "../../hooks/useVariant";
 import { useState } from "react";

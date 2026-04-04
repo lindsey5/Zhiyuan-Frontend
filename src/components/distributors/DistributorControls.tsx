@@ -38,16 +38,16 @@ export default function DistributorControls ({
                     placeholder="Search distributor..."
                 />
             </div>
-            <FiltersMenu className="md:hidden" containerStyle="flex gap-3 w-[80vw] md:w-100">
+            <FiltersMenu className="md:hidden" containerStyle="md:flex gap-3 w-[80vw] md:w-100">
                 <Dropdown 
-                    className="flex-1"
+                    className="md:flex-1"
                     title="Sort by"
                     options={sortOptions.map(opt => opt)}
                     onChange={(value) => setSort(value)}
                     value={sort}
                 />
                 <Dropdown 
-                    className="flex-1"
+                    className="md:flex-1"
                     title="Order"
                     options={orderOptions.map(opt => opt)}
                     onChange={(value) => setOrder(value as 'asc' | 'desc')}

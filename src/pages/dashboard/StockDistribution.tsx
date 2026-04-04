@@ -2,7 +2,7 @@
 import { useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
 import VariantSelector from "../../components/stockDistribution/VariantSelector";
-import type { VariantWithProduct } from "../../types/variant";
+import type { VariantWithProduct } from "../../types/variant.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
@@ -47,14 +47,7 @@ export default function StockDistribution () {
             title="Stock Distribution"
             description="Manage stock transfers from Admin to Distributors"
         >
-            <TransferCart 
-                close={() => setShowModal(false)}
-                open={showModal}
-                setVariants={setVariants}
-                variants={variants}
-                distributorId={distributorId}
-            />
-            <div className="flex justify-end">
+            <div className="hidden md:flex justify-end">
                 <GoldButton 
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}
@@ -73,6 +66,25 @@ export default function StockDistribution () {
                 <VariantSelector 
                     addVariant={addVariant}
                 />
+            </div>
+            <TransferCart 
+                close={() => setShowModal(false)}
+                open={showModal}
+                setVariants={setVariants}
+                variants={variants}
+                distributorId={distributorId}
+            />
+            <div className="flex md:hidden justify-end">
+                <GoldButton 
+                    className="text-sm relative" 
+                    onClick={() => setShowModal(true)}
+                >
+                    <ShoppingCart size={20} />
+                    Transfer Cart
+                    {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                        {variants.length}
+                    </span>}
+                </GoldButton>
             </div>
         </PageContainer>
     )

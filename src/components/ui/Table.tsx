@@ -14,7 +14,7 @@ const TableRow = <T,>({ row }: TableRowProps<T>) => {
             return (
             <td
                 key={cell.id}
-                className={`py-3 lg:py-5 px-1 lg:px-3 border-b border-[var(--border-panel)] text-${align}`}
+                className={`min-w-30 p-5 border-b border-[var(--border-panel)] text-${align}`}
             >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>

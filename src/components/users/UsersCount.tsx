@@ -6,7 +6,7 @@ export default function UsersCount () {
     const { data } = getUsersCount();
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-5 w-full">
             {data?.usersCount.map((count) => (
                 <Card key={count.role_name} className="space-y-2">
                     <h1 className="text-md lg:text-lg font-semibold">{count.role_name}</h1>

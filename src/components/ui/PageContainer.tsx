@@ -17,7 +17,7 @@ export default function PageContainer ({
     
     return (
          <div className={cn(
-            "w-full p-3 lg:p-6 flex flex-col space-y-6 relative",
+            "w-full p-2 lg:p-6 flex flex-col space-y-6 relative",
             className
          )}>
             <Card className="space-y-2">

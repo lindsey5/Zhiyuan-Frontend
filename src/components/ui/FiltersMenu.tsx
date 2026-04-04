@@ -2,42 +2,51 @@ import type React from "react";
 import { Filter } from "lucide-react";
 import { cn } from "../../utils/utils";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface FiltersMenuProps {
-  children: React.ReactNode;
-  className?: string;
-  containerStyle?: string;
+    children: React.ReactNode;
+    className?: string;
+    containerStyle?: string;
 }
 
 export default function FiltersMenu({
-  children,
-  className,
-  containerStyle
+    children,
+    className,
+    containerStyle
 }: FiltersMenuProps) {
     const [show, setShow] = useState(false);
+    const menuRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setShow(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
-        <div className={cn(
-            "relative",
-            className
-        )}>
-        <button
-            className="p-2 rounded-md"
-            onClick={() => setShow((prev) => !prev)}
-        >
-            <Filter size={20} className={cn(show && "text-gold")} />
-        </button>
+        <div ref={menuRef} className={cn("relative", className)}>
+            <button
+                className="p-2 rounded-md"
+                onClick={() => setShow((prev) => !prev)}
+            >
+                <Filter size={20} className={cn(show && "text-gold")} />
+            </button>
 
-        <Card
-            className={cn(
-            "absolute right-0 mt-2 w-56 z-50 transition-all duration-300 ease-in",
-            show ? "opacity-100 visible" : "opacity-0 invisible",
-            containerStyle
-            )}
-        >
-            {children}
-        </Card>
+            <Card
+                className={cn(
+                "absolute right-0 mt-2 w-56 z-20 transition-all duration-300 ease-in",
+                show ? "opacity-100 visible" : "opacity-0 invisible",
+                containerStyle
+                )}
+            >
+                {children}
+            </Card>
         </div>
     );
 }

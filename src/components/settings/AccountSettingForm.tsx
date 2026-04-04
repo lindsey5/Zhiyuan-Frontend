@@ -49,7 +49,7 @@ export default function AccountSettingsForm () {
     return (
         <Card>
             <div className="flex items-center justify-between mb-5">
-                <h2 className="font-sans text-lg text-gold mb-4 font-semibold">
+                <h2 className="font-sans text-lg text-gold font-semibold">
                     Profile Information
                 </h2>
                 {!editMode && (

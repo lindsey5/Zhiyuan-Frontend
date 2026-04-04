@@ -1,6 +1,6 @@
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
-import type { Variant } from "./variant";
+import type { Variant } from "./variant.type";
 
 export interface Product {
     _id: string;

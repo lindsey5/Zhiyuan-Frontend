@@ -1,5 +1,5 @@
 import { Minus, Plus, X } from "lucide-react";
-import type { VariantWithProduct } from "../../types/variant";
+import type { VariantWithProduct } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { formatToPeso } from "../../utils/utils";

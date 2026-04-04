@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { GetVariantsParams, GetVariantsResponse } from "../types/variant"
+import type { GetVariantsParams, GetVariantsResponse } from "../types/variant.type"
 import { variantService } from "../service/variantService";
 
 
