@@ -12,6 +12,7 @@ interface SidebarDropdownProps {
     open: boolean;
     setOpen: () => void;
     className?: string;
+    setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function SidebarDropdown({
@@ -23,14 +24,23 @@ export default function SidebarDropdown({
     open,
     setOpen,
     className,
+    setCollapsed
 }: SidebarDropdownProps) {
     const location = useLocation();
+
+    const openDropdown = () => {
+        if(collapsed) {
+            setCollapsed(false)
+            setOpen()
+        }
+        else setOpen()
+    }
 
     return (
         <div className={cn("flex flex-col relative", className)}>
             {/* Trigger */}
             <div
-                onClick={setOpen}
+                onClick={openDropdown}
                 className="group flex items-center justify-between px-3 py-2 rounded-md cursor-pointer hover:bg-[rgba(166,124,82,0.1)] hover:text-gold transition"
             >
                 <div className="flex items-center gap-3">

@@ -4,13 +4,12 @@ import Dropdown from "../ui/Dropdown";
 import { SearchField } from "../ui/TextField";
 import CategoryDropdown from "../ui/CategoryDropdown";
 import FiltersMenu from "../ui/FiltersMenu";
-import { useState } from "react";
 
 const options: Record<string, SortOption> = {
-    'Newest': { sortBy: 'createdAt', order: 'DESC' },
-    'Oldest': { sortBy: 'createdAt', order: 'ASC' },
-    'A-Z': { sortBy: 'product_name', order: 'ASC' },
-    'Z-A': { sortBy: 'product_name', order: 'DESC' },
+    'Newest': { sortBy: 'createdAt', order: 'desc' },
+    'Oldest': { sortBy: 'createdAt', order: 'asc' },
+    'A-Z': { sortBy: 'product_name', order: 'asc' },
+    'Z-A': { sortBy: 'product_name', order: 'desc' },
 };
 
 function getKeyByValue(
@@ -41,22 +40,16 @@ export default function ProductsTableControls ({
     category,
     setCategory
 } : ProductsTableControlsProps) {
-    const [showFilter, setShowFilter] = useState(false);
 
     return (
         <div className="px-5 flex items-center justify-between gap-5">
-            <div className="w-full lg:max-w-100">
+            <div className="w-full md:max-w-100">
                 <SearchField 
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search by product name..."
                 />
             </div>
-            <FiltersMenu 
-                className="lg:hidden"
-                setShow={setShowFilter}
-                show={showFilter}
-                
-            >
+            <FiltersMenu className="md:hidden">
                 <Dropdown 
                     title="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
@@ -70,7 +63,7 @@ export default function ProductsTableControls ({
                     setCategory={setCategory}
                 />
             </FiltersMenu>
-            <div className="w-[30%] hidden lg:flex items-center space-x-3 flex-wrap">
+            <div className="max-w-100 w-[40%] hidden md:flex items-center space-x-3 flex-wrap">
                 <Dropdown 
                     className="flex-1"
                     title="Sort"

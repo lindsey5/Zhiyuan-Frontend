@@ -1,6 +1,7 @@
 import Card from "../components/ui/Card";
 import { XCircle } from "lucide-react";
 import { useThemeStore } from "../lib/store/themeStore";
+import { Link } from "react-router-dom";
 
 export default function PageNotFound() {
     const { isDark } = useThemeStore();    
@@ -17,12 +18,12 @@ export default function PageNotFound() {
                 <p className="text-muted text-sm">
                     The page you are looking for might have been removed or does not exist.
                 </p>
-                <a
-                    href="/"
+                <Link
+                    to="/"
                     className="mt-4 px-5 py-2 bg-gold text-white rounded-md font-medium hover:bg-opacity-90 transition"
                 >
-                    Back to Home
-                </a>
+                    Back to Dashboard
+                </Link>
             </Card>
         </div>
     );

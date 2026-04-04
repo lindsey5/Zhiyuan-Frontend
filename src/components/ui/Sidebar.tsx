@@ -19,6 +19,7 @@ import {
     TrendingUp,
     BarChart,
     Repeat,
+    Box,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -85,7 +86,7 @@ export default function Sidebar({
             <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
                 <div className="text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
                     {user?.firstname.charAt(0)}
-                    {user?.lastname?.charAt(0)}
+                    {user?.lastname.charAt(0)}
                 </div>
 
                 {!collapsed && (
@@ -114,13 +115,10 @@ export default function Sidebar({
                     title="Product Management"
                     icon={<Package size={24} />}
                     collapsed={collapsed}
+                    setCollapsed={setCollapsed}
                     navigate={navigate}
                     open={openDropdown === "Product Management"}
-                    setOpen={() =>
-                        setOpenDropdown((prev) =>
-                            prev === "Product Management" ? null : "Product Management"
-                        )
-                    }
+                    setOpen={() => setOpenDropdown((prev) => prev === "Product Management" ? null : "Product Management")}
                     items={[
                         { label: "View Products", icon: <Eye size={20} />, path: "/dashboard/products" },
                         { label: "Add Product", icon: <Plus size={20} />, path: "/dashboard/add-product" },
@@ -157,15 +155,13 @@ export default function Sidebar({
                     title="Distributor Management"
                     icon={<Network size={24} />}
                     collapsed={collapsed}
+                    setCollapsed={setCollapsed}
                     navigate={navigate}
                     open={openDropdown === "Distributor Management"}
-                    setOpen={() =>
-                        setOpenDropdown((prev) =>
-                            prev === "Distributor Management" ? null : "Distributor Management"
-                        )
-                    }
+                    setOpen={() => setOpenDropdown((prev) => prev === "Distributor Management" ? null : "Distributor Management")}
                     items={[
                         { label: "View Distributors", icon: <Eye size={20} />, path: "/dashboard/distributors" },
+                        { label: "Distribute Stocks", icon: <Box size={20} />, path: "/dashboard/distributors/stocks/add" },
                         { label: "Distributor Sales", icon: <TrendingUp size={20} />, path: "/dashboard/distributors/sales" },
                         { label: "Reports", icon: <BarChart size={20} />, path: "/dashboard/distributors/reports" },
                         { label: "Transfer Logs", icon: <Repeat size={20} />, path: "/dashboard/distributors/transfer-logs" },
@@ -176,6 +172,7 @@ export default function Sidebar({
                     title="Settings"
                     icon={<Settings size={24} />}
                     collapsed={collapsed}
+                    setCollapsed={setCollapsed}
                     navigate={navigate}
                     open={openDropdown === "Settings"}
                     setOpen={() =>

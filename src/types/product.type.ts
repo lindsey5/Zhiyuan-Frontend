@@ -23,7 +23,7 @@ export interface GetProductsParams {
     search?: string;
     category?: string;
     sortBy?: string;
-    order?: "ASC" | "DESC";
+    order?: "asc" | "desc";
 };
 
 export interface CreateVariant {

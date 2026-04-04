@@ -1,4 +1,4 @@
-import { type ColumnDef, type PaginationState } from "@tanstack/react-table";
+import { type ColumnDef, type PaginationState, type Row } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
@@ -8,14 +8,29 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
 import GoldButton from "../../components/ui/GoldButton";
+import DistributorModal from "../../components/distributors/DistributorModal";
+import { Box, Eye, Trash } from "lucide-react";
+import { promiseToast } from "../../utils/sileo";
+import usePermissions from "../../hooks/usePermissions";
+import { useRole } from "../../hooks/useRole";
+import { PERMISSIONS } from "../../config/permission";
+import DistributorControls from "../../components/distributors/DistributorControls";
+import { useNavigate } from "react-router-dom";
 
 export default function Distributors () {
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+
+    const { hasAnyPermissions, hasPermissions } = usePermissions();
+    const { getOwnRole } = useRole();
+    const permissions = getOwnRole().data?.permissions || [];
+
     const [sortBy, setSortBy] = useState('createdAt');
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
-    const { getDistributors } = useDistributor();
+    const { getDistributors, deleteDistributor } = useDistributor();
 
     const { data, isFetching } = getDistributors({
         search: debouncedSearch,
@@ -24,6 +39,14 @@ export default function Distributors () {
         sortBy: sortBy,
         order: order
     });
+
+    const handleDelete = (id : string) => {
+        const isConfirmed = confirm('Are you sure you want to delete this distributor?');
+
+        if(!isConfirmed) return;
+
+        promiseToast(deleteDistributor.mutateAsync({ id }));
+    } 
 
     const columns: ColumnDef<Distributor>[] = [
         {
@@ -38,18 +61,20 @@ export default function Distributors () {
         },
         {
             header: "Commission Rate",
-            cell: ({ row }) => `${row.original.commission_rate} %`,
+            accessorKey: 'commission_rate',
+            cell: info => `${info.getValue()}%`,
             meta: { align: 'center '}
         },
         {
             header: "Recruit by",
-            cell: ({ row }) => row.original.parent_distributor ? row.original.parent_distributor.distributor_name : "N/A",
+            accessorKey: 'parent_distributor',
+            cell: info => info.getValue() ? (info.getValue() as Distributor).parent_distributor.distributor_name : "N/A",
             meta: { align: 'center '}
         },
         {
             header: "Wallet Balance",
             accessorKey: "wallet_balance",
-            cell: ({ row }) => formatToPeso(row.original.wallet_balance),
+            cell: info => formatToPeso(info.getValue() as number),
             meta: { align: 'center '}
         },
         {
@@ -60,9 +85,36 @@ export default function Distributors () {
         {
             header: "Date Created",
             accessorKey: "createdAt",
-            cell: ({ row }) => formatDate(row.original.createdAt),
+            cell: info => formatDate(info.getValue() as string),
             meta: { align: 'center '}
+        },
+         ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
+            ? [
+            {
+                header: 'Actions',
+                cell: ({ row } : { row : Row<Distributor>}) => (
+                    <div className="flex gap-2">
+                        {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
+                            <button
+                                className="cursor-pointer hover:bg-gray-300 p-2 rounded-full"
+                                onClick={() => navigate(`stocks/${row.original._id}`)}
+                            >
+                                <Box className="text-gold" size={20} />
+                            </button>
+                        )}
+                        {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
+                            <button
+                                className="cursor-pointer hover:bg-gray-300 p-2 rounded-full"
+                                onClick={() => handleDelete(row.original._id)}
+                            >
+                                <Trash color='red' size={20} />
+                            </button>
+                        )}
+                    </div>
+                )
         }
+        ]
+        : [])
     ]
 
     return (
@@ -72,6 +124,13 @@ export default function Distributors () {
             description="View and manage distributors"
         >
             <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
+                <DistributorControls 
+                    setSearch={setSearch}
+                    sort={sortBy}
+                    setSort={setSortBy}
+                    order={order}
+                    setOrder={setOrder}
+                />
                 <CustomizedTable 
                     isLoading={isFetching}
                     data={data?.distributors || []}
@@ -80,13 +139,18 @@ export default function Distributors () {
                     setPagination={setPagination}
                     totalPages={data?.totalPages || 0}
                     showPagination
-                    noDataMessage="No Audit Logs Found"
+                    noDataMessage="No Distributors Found"
                     total={data?.total || 0}
                 />
             </Card>
+            <DistributorModal 
+                onClose={() => setShowModal(false)}
+                open={showModal}
+            />
             <div className="flex justify-end">
                 <GoldButton
                     className="text-sm"
+                    onClick={() => setShowModal(true)}
                 >Create Distributor</GoldButton>
             </div>
         </PageContainer>

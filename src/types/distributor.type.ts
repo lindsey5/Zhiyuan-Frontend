@@ -42,3 +42,7 @@ export interface GetDistributorsParams{
 export interface GetDistributorsResponse extends PaginationResponse {
     distributors: Distributor[]
 }
+
+export interface GetDistributorResponse extends ApiResponse {
+    distributor: Distributor
+}

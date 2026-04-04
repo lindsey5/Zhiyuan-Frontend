@@ -35,7 +35,7 @@ export default function TextField({
             disabled={disabled}
             type={inputType}
             placeholder={placeholder}
-            className={`w-full p-3 pr-12 bg-input-ui border rounded-sm text-primary outline-none transition-all
+            className={`w-full p-3 pr-12 bg-input-ui border text-sm rounded-sm text-primary outline-none transition-all
                 ${
                 error
                     ? "border-red-500 focus:border-red-500"
@@ -71,7 +71,7 @@ export function SearchField(props: SearchFieldProps) {
             />
             <input
                 {...props}
-                className="w-full p-3 pl-10 bg-input-ui border border-[var(--border-ui)] rounded-lg focus:border-gold text-primary outline-none transition-all"
+                className="text-sm w-full p-3 pl-10 bg-input-ui border border-[var(--border-ui)] rounded-lg focus:border-gold text-primary outline-none transition-all"
             />
         </div>
     )

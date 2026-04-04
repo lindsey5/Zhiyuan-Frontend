@@ -32,7 +32,7 @@ export default function Products () {
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
     const [category, setCategory] = useState('All');
-    const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
+    const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     
     const { getProducts, deleteProduct } = useProduct();
     

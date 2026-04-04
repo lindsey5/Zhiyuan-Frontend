@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useAuthStore } from "../lib/store/authStore"
-import type { CreateDistributorDTO, GetDistributorsParams, GetDistributorsResponse } from "../types/distributor.type";
+import type { CreateDistributorDTO, GetDistributorResponse, GetDistributorsParams, GetDistributorsResponse } from "../types/distributor.type";
 import { distributorService } from "../service/distributorService";
 
 export const useDistributor = () => {
@@ -15,15 +15,28 @@ export const useDistributor = () => {
         })
     )
 
+    const getDistributorById = (id: string) => (
+        useQuery<GetDistributorResponse, Error>({
+            queryKey: [`distributors/${id}`],
+            queryFn: () => distributorService.getDistributorById(id, accessToken || ""),
+            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
+        })
+    )
+
     const createDistributor = useMutation({
         mutationFn: ({ data } : { data : CreateDistributorDTO}) =>  distributorService.createDistributor(data, accessToken || ""),
-        onSuccess: () => window.location.href = `/dashboard/products`,
-        onError: (err) => console.log(err)
+    })
+
+    const deleteDistributor = useMutation({
+        mutationFn: ({ id } : { id : string }) => distributorService.deleteDistributor(id, accessToken || "")
     })
 
     return {
        getDistributors,
-       createDistributor
+       getDistributorById,
+       createDistributor,
+       deleteDistributor
     }
 
 }

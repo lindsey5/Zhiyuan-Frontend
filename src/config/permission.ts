@@ -97,6 +97,15 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",
     },
+
+    "Distributor Management": {
+        description: "Manage distributors, their accounts, stock inventory, and distribution activities.",
+        DISTRIBUTOR_READ_ALL: "View all distributors",
+        DISTRIBUTOR_CREATE: "Create new distributor accounts",
+        DISTRIBUTOR_DELETE: "Delete distributor accounts",
+        DISTRIBUTOR_STOCK_CREATE: "Add or update distributor stock inventory",
+        DISTRIBUTOR_STOCK_READ: "View distributor stock inventory",
+    },
 };
 
 export const getPermissionKey = (value: string) => {

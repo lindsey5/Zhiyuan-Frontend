@@ -28,7 +28,7 @@ export default function AuditLogs () {
     
     const [role, setRole] = useState("");
     const [severity, setSeverity] = useState("");
-    const [order, setOrder] = useState<"ASC" | "DESC">("DESC");
+    const [order, setOrder] = useState<"asc" | "desc">("desc");
 
     const { getAuditLogs } = useAudit();
 
@@ -84,12 +84,12 @@ export default function AuditLogs () {
         {
             header: "Severity",
             accessorKey: "severity",
-            cell: ({ row }) => (
+            cell: info => (
                 <Chip className="rounded-full px-3 py-1 flex items-center justify-center gap-2">
                     <span
-                        className={`w-2.5 h-2.5 rounded-full ${severityColor[row.original.severity]}`}
+                        className={`w-2.5 h-2.5 rounded-full ${severityColor[info.getValue() as "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"]}`}
                     />
-                    <span className="font-semibold">{row.original.severity}</span>
+                    <span className="font-semibold">{info.getValue() as string}</span>
                 </Chip>
             ),
             meta: { align: 'center' },
@@ -119,7 +119,7 @@ export default function AuditLogs () {
                     setSeverity={setSeverity}
                     order={order}
                     setOrder={setOrder}
-                />;
+                />
                 <CustomizedTable 
                     isLoading={isFetching}
                     data={data?.auditLogs || []}

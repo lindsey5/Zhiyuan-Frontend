@@ -2,22 +2,21 @@ import type React from "react";
 import { Filter } from "lucide-react";
 import { cn } from "../../utils/utils";
 import Card from "./Card";
+import { useState } from "react";
 
 interface FiltersMenuProps {
   children: React.ReactNode;
   className?: string;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  show: boolean;
   containerStyle?: string;
 }
 
 export default function FiltersMenu({
   children,
   className,
-  show,
-  setShow,
   containerStyle
 }: FiltersMenuProps) {
+    const [show, setShow] = useState(false);
+
     return (
         <div className={cn(
             "relative",

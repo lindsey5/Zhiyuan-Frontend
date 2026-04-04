@@ -6,7 +6,7 @@ import {
   type PaginationState,
 } from "@tanstack/react-table";
 import CustomizedTable from "../../components/ui/Table";
-import { formatDate } from "../../utils/utils";
+import { formatDate, formatToPeso } from "../../utils/utils";
 import type { SortOption } from "../../types/type";
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
@@ -27,7 +27,7 @@ export default function Variants () {
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
     const [category, setCategory] = useState('All');
-    const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "DESC" });
+    const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     
     const params = { 
         page: pagination.pageIndex + 1, 
@@ -75,8 +75,15 @@ export default function Variants () {
             meta: { align: 'center' },
         },
         {
+            header: "Price",
+            accessorKey: "price",
+            cell: info => formatToPeso(info.getValue() as number),
+            meta: { align: 'center' },
+        },
+        {
             header: "Created At",
-            cell: ({ row }) => formatDate(row.original.createdAt),
+            accessorKey: 'createdAt',
+            cell: info => formatDate(info.getValue() as string),
             meta: { align: 'center' },
         },
         ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)

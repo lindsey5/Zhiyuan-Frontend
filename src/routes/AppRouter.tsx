@@ -16,6 +16,8 @@ import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
 import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
+import DistributorStock from "../pages/dashboard/DistributorStock";
+import StockDistribution from "../pages/dashboard/StockDistribution";
 
 const router = createBrowserRouter([ 
     {
@@ -170,7 +172,30 @@ const router = createBrowserRouter([
                                 <Distributors />
                             </ProtectedRoute>
                         )
-                    }
+                    },
+                    {
+                        path: "stocks",
+                        children: [
+                            {
+                                path: ":id",
+                                Component: () => (
+                                    <ProtectedRoute
+                                        requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_READ]}
+                                    >
+                                        <DistributorStock />
+                                    </ProtectedRoute>
+                                )
+                            },
+                            {
+                                path: 'add',
+                                Component: () => (
+                                    <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_CREATE]}>
+                                        <StockDistribution />
+                                    </ProtectedRoute>
+                                )
+                            }
+                        ]
+                    },
                 ]
             }
         ]

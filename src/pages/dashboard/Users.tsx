@@ -83,7 +83,8 @@ export default function Users () {
         },
         {
             header: "Role",
-            cell: ({ row }) => <Chip>{row.original.role.name}</Chip>,
+            accessorKey: 'role.name',
+            cell: info => <Chip>{info.getValue() as string}</Chip>,
             meta: { align: 'center' }
         },
         {
@@ -93,7 +94,8 @@ export default function Users () {
         },
         {
             header: "Created At",
-            cell: ({ row }) => formatDate(row.original.createdAt),
+            accessorKey: 'createdAt',
+            cell: info => formatDate(info.getValue() as string),
             meta: { align: 'center' },
         },
         ...(hasAnyPermissions([ PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_DELETE], permissions)

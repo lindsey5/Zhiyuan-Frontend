@@ -27,5 +27,5 @@ export interface GetVariantsParams {
     search?: string;
     category?: string;
     sortBy?: string;
-    order?: "ASC" | "DESC"
+    order?: "asc" | "desc"
 }

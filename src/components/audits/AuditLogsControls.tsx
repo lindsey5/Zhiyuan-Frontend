@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SearchField } from "../ui/TextField";
 import Dropdown, { RoleDropdown } from "../ui/Dropdown";
 import DateInput from "../ui/DateInput";
@@ -12,8 +11,8 @@ interface AuditLogsControlsProps {
   setRole: React.Dispatch<React.SetStateAction<string>>;
   severity: string;
   setSeverity: React.Dispatch<React.SetStateAction<string>>;
-  order: "ASC" | "DESC";
-  setOrder: React.Dispatch<React.SetStateAction<"ASC" | "DESC">>;
+  order: "asc" | "desc";
+  setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
 }
 
 export default function AuditLogsControls({
@@ -27,7 +26,6 @@ export default function AuditLogsControls({
   order,
   setOrder,
 }: AuditLogsControlsProps) {
-    const [showFilters, setShowFilters] = useState(false);
 
     return (
         <div className="flex flex-col gap-4 px-5">
@@ -39,7 +37,7 @@ export default function AuditLogsControls({
                     />
                 </div>
 
-            <FiltersMenu containerStyle="w-[80vw] md:w-100" show={showFilters} setShow={setShowFilters}>
+            <FiltersMenu containerStyle="w-[80vw] md:w-100">
                 <h1 className="font-bold text-lg">Filter</h1>
                 <div className="grid grid-cols-2 gap-5 mt-4">
                     <DateInput 
@@ -73,10 +71,10 @@ export default function AuditLogsControls({
                     <Dropdown 
                         title="Sort"
                         value={order}
-                        onChange={(value) => setOrder(value as "ASC" | "DESC")}
+                        onChange={(value) => setOrder(value as "asc" | "desc")}
                         options={[
-                            { label: 'NEWEST', value: 'DESC' },
-                            { label: 'OLDEST', value: 'ASC' },
+                            { label: 'NEWEST', value: 'desc' },
+                            { label: 'OLDEST', value: 'asc' },
                         ]}
                     />
                 </div>

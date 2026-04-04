@@ -1,0 +1,142 @@
+import { useState, type SetStateAction } from "react";
+import Card from "../ui/Card";
+import CustomizedTable from "../ui/Table";
+import { useDebounce } from "../../hooks/useDebounce";
+import type { Distributor } from "../../types/distributor.type";
+import type { ColumnDef, PaginationState } from "@tanstack/react-table";
+import { useDistributor } from "../../hooks/useDistributor";
+import { SearchField } from "../ui/TextField";
+import GoldButton from "../ui/GoldButton";
+import { User } from "lucide-react";
+
+interface DistributorSelectorProps {
+    setDistributor: React.Dispatch<SetStateAction<string | null>>;
+}
+
+export default function DistributorSelector({ setDistributor } : DistributorSelectorProps) {
+    const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
+    const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 200);
+    const { getDistributors } = useDistributor();
+    const [pagination, setPagination] = useState<PaginationState>({
+        pageSize: 50,
+        pageIndex: 0,
+    });
+
+    const { data, isFetching } = getDistributors({
+        search: debouncedSearch,
+        limit: pagination.pageSize,
+        page: pagination.pageIndex + 1,
+    });
+
+    const columns: ColumnDef<Distributor>[] = [
+        {
+            header: "Name",
+            accessorKey: "distributor_name",
+            meta: { align: "left" },
+        },
+        {
+            header: "Email",
+            accessorKey: "email",
+            meta: { align: "center" },
+        },
+        {
+            header: "Commission Rate",
+            accessorKey: "commission_rate",
+            cell: (info) => `${info.getValue()}%`,
+            meta: { align: "center" },
+        },
+        {
+            header: "Recruit by",
+            accessorKey: "parent_distributor",
+            cell: (info) =>
+                info.getValue()
+                ? (info.getValue() as Distributor).parent_distributor.distributor_name
+                : "N/A",
+            meta: { align: "center" },
+        },
+        {
+            header: "Total Stocks",
+            accessorKey: "total_stocks",
+            meta: { align: "center" },
+        },
+        {
+            header: "Action",
+            cell: ({ row }) => (
+                <div className="flex justify-center">
+                    <GoldButton onClick={() => {
+                        setSelectedDistributor(row.original)
+                        setDistributor(row.original._id)
+                    }}>
+                    Select
+                    </GoldButton>
+                </div>
+            ),
+            meta: { align: "center" },
+        },
+    ];
+
+    return (
+        <Card className="p-0 flex flex-col">
+            {/* If selected distributor exists show info */}
+            {selectedDistributor ? (
+                <div className="p-6 space-y-5">
+                <h1 className="text-lg font-bold">Selected Distributor</h1>
+
+                <div className="flex items-center gap-4 p-4 border border-[var(--border-ui)] rounded-lg">
+                    <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center">
+                    <User className="text-inverse w-7 h-7" />
+                    </div>
+
+                    <div className="flex flex-col">
+                    <span className="font-bold text-lg">
+                        {selectedDistributor.distributor_name}
+                    </span>
+                    <span className="text-sm text-muted">{selectedDistributor.email}</span>
+                    <span className="text-xs text-muted">
+                        Commission Rate: {selectedDistributor.commission_rate}%
+                    </span>
+                    </div>
+                </div>
+
+                <div className="flex gap-3">
+                    <GoldButton 
+                        onClick={() => {
+                            setSelectedDistributor(null)
+                            setDistributor(null)
+                        }}
+                        className="text-sm"
+                    >
+                    Change Distributor
+                    </GoldButton>
+                </div>
+                </div>
+            ) : (
+                <>
+                {/* Search */}
+                <div className="max-w-80 mt-5 mx-5 space-y-2">
+                    <h1 className="text-lg font-bold">Select Distributor</h1>
+                    <SearchField
+                    placeholder="Search distributor"
+                    onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
+
+                {/* Table */}
+                <CustomizedTable
+                    isLoading={isFetching}
+                    data={data?.distributors || []}
+                    columns={columns}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    totalPages={data?.totalPages || 0}
+                    showPagination
+                    noDataMessage="No Distributors Found"
+                    total={data?.total || 0}
+                    className="max-h-[40vh] lg:max-h-[70vh]"
+                />
+                </>
+            )}
+        </Card>
+    );
+}

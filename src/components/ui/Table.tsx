@@ -1,5 +1,6 @@
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState, type Row, type Table } from "@tanstack/react-table"
 import { PaginationControls } from "./Pagination";
+import { cn } from "../../utils/utils";
 
 type TableRowProps<T> = {
     row: Row<T>
@@ -41,7 +42,7 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
                 return (
                 <th
                     key={header.id}
-                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel z-1`}
+                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel z-5`}
                     style={{ textAlign: align }}
                 >
                     {flexRender(header.column.columnDef.header, header.getContext())}
@@ -61,7 +62,7 @@ type TableSkeletonProps = {
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
     return (
-        <div className="min-h-0 flex-grow flex flex-col pb-5 px-5 animate-pulse">
+        <div className="min-h-0 flex-grow flex flex-col animate-pulse">
             <div className="overflow-auto flex-grow">
                 <table className="w-full text-sm border-collapse">
                     {/* Table Head */}
@@ -121,6 +122,7 @@ type CustomTableProps<T> = {
     showPagination: boolean;
     total?: number;
     noDataMessage?: string;
+    className?: string
 };
 
 const CustomizedTable = <T,>({ 
@@ -132,6 +134,7 @@ const CustomizedTable = <T,>({
     isLoading, 
     showPagination, 
     total,
+    className,
     noDataMessage = "No Data Available" } : CustomTableProps<T>
 ) => {
     const table = useReactTable({
@@ -147,7 +150,10 @@ const CustomizedTable = <T,>({
     const cols = table.getAllColumns().length;
 
     return (
-        <div className="min-h-0 flex-grow flex flex-col pb-5 px-5">
+        <div className={cn(
+            "min-h-0 flex-grow flex flex-col pb-5 px-5",
+            className
+        )}>
             {rows.length < 1 && !isLoading ? <div className="text-center my-20 text-muted font-bold">
                 {noDataMessage}
             </div> :

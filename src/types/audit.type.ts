@@ -23,7 +23,7 @@ export interface GetAuditParams {
     role?: string;
     severity?: string;
     search?: string;
-    order?: "ASC" | "DESC";
+    order?: "asc" | "desc";
 };
 
 export interface GetAuditLogsResponse {
