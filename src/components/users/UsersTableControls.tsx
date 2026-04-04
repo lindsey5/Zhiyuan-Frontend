@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SearchField } from "../ui/TextField";
 import { RoleDropdown } from "../ui/Dropdown";
 import FiltersMenu from "../ui/FiltersMenu";
@@ -14,7 +13,6 @@ export default function UsersTableControls({
     role,
     setRole,
 }: UsersTableControlsProps) {
-    const [showFilters, setShowFilters] = useState(false);
 
     return (
             <div className="flex items-center justify-between w-full gap-2 px-4">
@@ -35,7 +33,7 @@ export default function UsersTableControls({
             </div>
 
             {/* Mobile Filters */}
-            <FiltersMenu className="md:hidden" show={showFilters} setShow={setShowFilters}>
+            <FiltersMenu className="md:hidden">
                 <RoleDropdown 
                     onChange={setRole}
                     value={role}
