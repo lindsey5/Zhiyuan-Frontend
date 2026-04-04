@@ -25,7 +25,6 @@ export const useProduct = () => {
 
     const deleteProduct = useMutation({
         mutationFn: ({ id } : { id: string }) => productService.deleteProduct(id, accessToken || ""),
-        onSuccess: () => window.location.reload()
     })
 
     const createProduct = useMutation({
@@ -36,7 +35,6 @@ export const useProduct = () => {
 
     const updateProduct = useMutation({
         mutationFn: ({ id, data } : { id : string, data : UpdateProductPayload }) => productService.updateProduct(id, data, accessToken || ""),
-        onSuccess: () => window.location.reload(),
         onError: (err) => console.log(err)
     })
 

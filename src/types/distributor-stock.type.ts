@@ -1,4 +1,5 @@
 import type { PaginationResponse } from "./pagination.type";
+import type { ApiResponse } from "./type";
 import type { Variant } from "./variant";
 
 export interface DistributorStock {
@@ -20,4 +21,15 @@ export interface GetDistributorStocksParams {
 
 export interface GetDistributorStocksResponse extends PaginationResponse {
     distributorStocks: DistributorStock[];
+}
+
+export interface CreateDistributorStocksPayload {
+    variants: {
+        variant_id: string;
+        quantity: number;
+    }[]
+}
+
+export interface CreateDistributorStocksResponse extends ApiResponse {
+    newStocks: DistributorStock[]
 }
