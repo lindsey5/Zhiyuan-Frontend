@@ -1,14 +1,13 @@
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState, type Row, type Table } from "@tanstack/react-table"
 import { PaginationControls } from "./Pagination";
 import { cn } from "../../utils/utils";
-
 type TableRowProps<T> = {
     row: Row<T>
 }
 
 const TableRow = <T,>({ row }: TableRowProps<T>) => {
     return (
-        <tr className="mx-10000">
+        <tr>
         {row.getVisibleCells().map(cell => {
             const align = (cell.column.columnDef.meta as any)?.align || 'left';
             return (
@@ -62,7 +61,7 @@ type TableSkeletonProps = {
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
     return (
-        <div className="min-h-0 flex-grow flex flex-col animate-pulse">
+        <div className="hidden min-h-0 flex-grow md:flex flex-col animate-pulse">
             <div className="overflow-auto flex-grow">
                 <table className="w-full text-sm border-collapse">
                     {/* Table Head */}
@@ -97,9 +96,7 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
                                     : 'var(--bg-table-row-odd)',
                                 }}
                             >
-                                <div
-                                className="h-4 rounded w-full"
-                                style={{ backgroundColor: 'var(--bg-loading)' }}
+                                <div className="h-4 rounded w-full" style={{ backgroundColor: 'var(--bg-loading)' }}
                                 ></div>
                             </td>
                             ))}
@@ -108,6 +105,56 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
                     </tbody>
                 </table>
             </div>
+        </div>
+    );
+};
+
+export const TableCard = <T,>({ row } : { row: Row<T>}) => {
+    return (
+        <div key={row.id} className="border-b border-[var(--border-panel)] py-3">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-5">
+                {row.getVisibleCells().map((cell, i) => {
+                const header = cell.column.columnDef.header;
+
+                return (
+                    <div
+                        key={cell.id}
+                        className="flex flex-col gap-1"
+                    >
+                    <span className="text-xs font-bold uppercase text-gold">
+                        {header as string}
+                    </span>
+                    <span className="text-xs my-2">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </span>
+                    </div>
+                );
+                })}
+            </div>
+        </div>
+    )
+}
+
+type TableCardSkeletonProps = {
+  cards?: number;
+  fields?: number;
+};
+
+export const TableCardSkeleton: React.FC<TableCardSkeletonProps> = ({ cards = 6, fields = 6 }) => {
+    return (
+        <div className="md:hidden flex flex-col overflow-y-auto flex-grow gap-3 animate-pulse">
+        {Array.from({ length: cards }).map((_, cardIdx) => (
+            <div key={cardIdx} className="border-b border-[var(--border-panel)] py-3">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-5">
+                {Array.from({ length: fields }).map((_, i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                        <div className="bg-loading p-3 rounded-md" />
+                        <div className="bg-loading p-3 rounded-md" />
+                    </div>
+                ))}
+            </div>
+        </div>
+        ))}
         </div>
     );
 };
@@ -157,13 +204,23 @@ const CustomizedTable = <T,>({
             {rows.length < 1 && !isLoading ? <div className="text-center my-20 text-muted font-bold">
                 {noDataMessage}
             </div> :
-            isLoading ? <TableSkeleton columns={cols}/> : 
+            isLoading ? 
                 <>
-                <div className="overflow-auto flex-grow relative">
+                    <TableSkeleton columns={cols}/>
+                    <TableCardSkeleton />
+                </>
+            : 
+                <>
+                <div className="overflow-auto flex-grow hidden md:block relative">
                     <table className="w-full text-xs lg:text-sm">
                         <TableColumns table={table} />
                         <TableRows table={table} />
                     </table>
+                </div>
+                <div className="flex-grow overflow-auto flex flex-col gap-2 md:hidden">
+                {rows.map(row => (
+                    <TableCard key={row.id} row={row}/>
+                ))}
                 </div>
                 {showPagination && rows.length > 0 && <PaginationControls total={total || 0} table={table} />}
                 </>

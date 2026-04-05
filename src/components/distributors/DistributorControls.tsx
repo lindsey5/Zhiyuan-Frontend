@@ -31,7 +31,7 @@ export default function DistributorControls ({
 } : DistributorsControlsProps) {
 
     return (
-        <div className="flex items-center justify-between gap-5 px-5">
+        <div className="flex items-center justify-between gap-5 px-5 mb-5">
             <div className="w-full md:max-w-100">
                 <SearchField 
                     onChange={(e) => setSearch(e.target.value)}

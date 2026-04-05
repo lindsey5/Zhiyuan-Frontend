@@ -63,14 +63,11 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         {
             header: "Action",
             cell: ({ row }) => (
-                <div className="flex justify-center">
-                    <GoldButton onClick={() => {
-                        setSelectedDistributor(row.original)
-                        setDistributor(row.original._id)
-                    }}>
-                    Select
-                    </GoldButton>
-                </div>
+                <GoldButton 
+                    className="md:text-sm text-xs"
+                    onClick={() => { setSelectedDistributor(row.original); setDistributor(row.original._id)}}>
+                Select
+                </GoldButton>
             ),
             meta: { align: "center" },
         },
@@ -114,7 +111,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
             ) : (
                 <>
                 {/* Search */}
-                <div className="max-w-80 mt-5 mx-5 space-y-2">
+                <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
                     <h1 className="text-lg font-bold">Select Distributor</h1>
                     <SearchField
                     placeholder="Search distributor"

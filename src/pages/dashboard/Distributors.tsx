@@ -116,7 +116,7 @@ export default function Distributors () {
 
     return (
         <PageContainer 
-            className="max-h-screen" 
+            className="md:max-h-screen" 
             title="Distributor Management"
             description="View and manage distributors"
         >

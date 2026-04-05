@@ -63,11 +63,6 @@ export default function Users () {
 
     const columns: ColumnDef<GetUser>[] = [
         {
-            header: '#',
-            cell: ({ row }) => row.index + 1,
-            meta: { align: 'center' }
-        },
-        {
             header: "User",
             cell: ({ row }) => {
                 const { firstname, lastname, email } = row.original;
@@ -107,11 +102,11 @@ export default function Users () {
                 {
                     header: "Action",
                     cell: ({ row } : { row: Row<GetUser> }) => (
-                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
+                        <div className="flex gap-3 md:justify-center">
                             {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-1 lg:p-3"
+                                    className="p-2 lg:p-3 text-xs md:text-sm"
                                     onClick={() => showEdit(row.original)}
                                 />
                             )}
@@ -119,7 +114,7 @@ export default function Users () {
                             {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-1 lg:p-3"
+                                    className="bg-red-600 text-white p-2 lg:p-3 text-xs md:text-sm"
                                     onClick={() => handleDelete(row.original._id)}
                                 />
                             )}
@@ -137,7 +132,13 @@ export default function Users () {
             description="View and manage all users"
         >
             <UsersCount  />
-            <Card className="p-0 flex flex-col space-y-5 pt-10">
+            <div className="w-full justify-end flex md:hidden">
+                <GoldButton 
+                    className="text-sm p-2"
+                    onClick={handleShow}
+                >Create User</GoldButton>
+            </div>
+            <Card className="p-0 flex flex-col space-y-5 pt-5">
                 <UsersTableControls 
                     role={role}
                     setRole={setRole}
@@ -160,7 +161,7 @@ export default function Users () {
                 onClose={closeModal}
                 open={showModal}
             />
-            <div className="w-full flex justify-end">
+            <div className="w-full justify-end hidden md:flex">
                 <GoldButton onClick={handleShow}>Create User</GoldButton>
             </div>
         </PageContainer>

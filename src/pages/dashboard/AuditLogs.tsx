@@ -103,7 +103,7 @@ export default function AuditLogs () {
 
     return (
         <PageContainer 
-            className="max-h-screen" 
+            className="md:max-h-screen" 
             title="Audit Logs"
             description="View all system activity and changes"
         >

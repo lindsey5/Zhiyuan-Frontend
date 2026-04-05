@@ -61,8 +61,8 @@ export default function Products () {
             header: "Product",
             accessorKey: "product_name",
             cell: ({ row }) => (
-                <div className="min-w-50 flex items-center gap-3 justify-start">
-                    <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
+                <div className="lg:min-w-50 flex flex-wrap md:flex-nowrap items-center gap-3 justify-start">
+                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
                     <span className="text-xs lg:text-sm">{row.original.product_name}</span>
                 </div>
             ),
@@ -98,11 +98,11 @@ export default function Products () {
                 {
                     header: "Action",
                     cell: ({ row }: { row: Row<Product> }) => (
-                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
+                        <div className="flex flex-col lg:flex-row gap-3 justify-center">
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-1 lg:p-3"
+                                    className="p-1 lg:p-3 text-xs md:text-sm"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                                 />
@@ -111,7 +111,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-1 lg:p-3"
+                                    className="bg-red-600 text-white p-1 lg:p-3 text-xs md:text-sm"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => deleteExistingProduct(row.original._id)}
                                 />
@@ -126,11 +126,11 @@ export default function Products () {
 
     return (
         <PageContainer 
-            className="max-h-screen" 
+            className="md:max-h-screen" 
             title="Products"
             description="View and manage all products"
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
+            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
                 <ProductsTableControls 
                     setSearch={setSearch}
                     setSorting={setSorting}

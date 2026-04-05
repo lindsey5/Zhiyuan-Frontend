@@ -52,11 +52,11 @@ export default function Categories () {
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Category> }) => (
-                    <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
+                    <div className="flex gap-3 text-sm md:justify-center">
                         {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
                             <Button
                                 label="Edit"
-                                className="p-1 md:p-3"
+                                className="p-2 md:p-3 text-xs md:text-sm"
                                 onClick={() => {
                                     setCategory(row.original);
                                     setShowModal(true);
@@ -67,7 +67,7 @@ export default function Categories () {
                         {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
                             <Button
                                 label="Delete"
-                                className="bg-red-600 text-white p-1 md:p-3"
+                                className="bg-red-600 text-white p-2 md:p-3 text-xs md:text-sm"
                                 onClick={() => deleteExistingCategory(row.original._id)}
                             />
                         )}
@@ -81,11 +81,11 @@ export default function Categories () {
 
     return (
         <PageContainer 
-            className="max-h-screen" 
+            className="md:max-h-screen" 
             title="Categories"
             description="Manage all product categories"
         >
-            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-10">
+            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
                 <CategoriesControls 
                     setSearch={setSearch} 
                     category={category}

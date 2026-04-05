@@ -76,18 +76,19 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
             header: 'Action',
             cell: ({ row }) => (
                 <GoldButton
+                    className="text-xs md:text-sm"
                     onClick={() => addVariant(row.original, 1)}
-                >Add</GoldButton>
+                >Add to Cart</GoldButton>
             )
         }
     ]
 
     return (
         <Card className="p-0 flex flex-col">
-            <div className="max-w-80 mt-5 mx-5 space-y-2">
+            <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
                 <h1 className="text-lg font-bold">Select Variants</h1>
                 <SearchField
-                    placeholder="Search distributor"
+                    placeholder="Search variants"
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>

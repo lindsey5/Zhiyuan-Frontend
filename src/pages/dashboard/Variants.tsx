@@ -68,8 +68,8 @@ export default function Variants () {
         {
             header: "Variant",
             cell: ({ row }) => (
-                <div className="min-w-50 m-3 flex items-center gap-3 justify-start">
-                    <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.image_url} />
+                <div className="lg:min-w-50 lg:m-3 flex flex-wrap md:flex-nowrap items-center gap-3 justify-start">
+                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
                     <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
                 </div>
             ),
@@ -84,7 +84,7 @@ export default function Variants () {
             header: 'Product name',
             accessorKey: 'product.product_name',
             cell: info => (
-                <div className="min-w-50">
+                <div className="md:min-w-50">
                     {info.getValue() as string}
                 </div>
             ),
@@ -123,7 +123,7 @@ export default function Variants () {
                             <Button
                                 label="Edit"
                                 disabled={deleteVariant.isPending}
-                                className="p-1 lg:p-3"
+                                className="p-1 lg:p-3 text-xs md:text-sm"
                                 onClick={() => {
                                     handleEdit(row.original);
                                 }}
@@ -132,7 +132,7 @@ export default function Variants () {
                             <Button
                                 label="Delete"
                                 disabled={deleteVariant.isPending}
-                                className="bg-red-600 text-white p-1 lg:p-3"
+                                className="bg-red-600 text-white p-1 lg:p-3 text-xs md:text-sm"
                                 onClick={() => handleDelete(row.original._id)}
                             />
                         </div>
@@ -145,7 +145,7 @@ export default function Variants () {
 
     return (
         <PageContainer 
-            className="max-h-screen" 
+            className="md:max-h-screen" 
             title="Variants"
             description="View and manage all product variants"
         >
@@ -155,7 +155,7 @@ export default function Variants () {
                 variant={variant}
             />
 
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
+            <Card className="p-0 flex flex-col flex-1 min-h-0 flex-grow space-y-5 pt-5">
                 <VariantsTableControls
                     setSearch={setSearch}
                     setSorting={setSorting}
