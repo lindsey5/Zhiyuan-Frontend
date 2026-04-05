@@ -12,7 +12,7 @@ export default function DistributorInfo ({ id, showBalance = true } : { id : str
     
     return (
         <div className="flex flex-col md:flex-row gap-3 lg:gap-5">
-            <Card className="flex-1 flex items-center gap-5">
+            <Card className="flex-1 flex items-center gap-5 px-3 py-4">
                 <div className="w-15 h-15 md:w-18 md:h-18 bg-gold rounded-full p-5">
                     <User className="w-full h-full text-inverse"/>
                 </div>
@@ -22,7 +22,7 @@ export default function DistributorInfo ({ id, showBalance = true } : { id : str
                 </div>
             </Card>
 
-            {showBalance && <Card className="flex-1 flex items-center gap-5">
+            {showBalance && <Card className="flex-1 flex items-center gap-5 px-3 py-4">
                 <div className="w-15 h-15 md:w-18 md:h-18 bg-gold rounded-full p-5">
                     <Wallet className="w-full h-full text-inverse"/>
                 </div>
@@ -39,7 +39,7 @@ function DistributorInfoSkeleton () {
     return (
         <div className="flex flex-col md:flex-row gap-3 lg:gap-5">
         {/* Distributor Info Skeleton */}
-        <Card className="flex-1 flex items-center gap-5">
+        <Card className="flex-1 flex items-center gap-5 px-3 py-4">
             <div className="w-20 h-20 bg-loading rounded-full animate-pulse" />
 
             <div className="flex flex-col gap-2 animate-pulse">
@@ -49,7 +49,7 @@ function DistributorInfoSkeleton () {
         </Card>
 
         {/* Wallet Balance Skeleton */}
-        <Card className="flex-1 flex items-center gap-5">
+        <Card className="flex-1 flex items-center gap-5 px-3 py-4">
             <div className="w-20 h-20 bg-loading rounded-full animate-pulse" />
 
             <div className="flex flex-col gap-2 animate-pulse">
