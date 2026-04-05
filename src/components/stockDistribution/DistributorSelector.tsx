@@ -79,10 +79,10 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         <Card className="p-0 flex flex-col">
             {/* If selected distributor exists show info */}
             {selectedDistributor ? (
-                <div className="p-6 space-y-5">
+                <div className="p-3 xl:p-6 space-y-3 xl:space-y-5 mt-3">
                 <h1 className="text-md xl:text-lg font-bold">Selected Distributor</h1>
 
-                <div className="flex items-center gap-4 p-4 border border-[var(--border-ui)] rounded-lg">
+                <div className="flex items-center gap-4 p-2 xl:p-4 border border-[var(--border-ui)] rounded-lg">
                     <div className="w-12 h-12 xl:w-14 xl:h-14 rounded-full bg-gold flex items-center justify-center">
                     <User className="text-inverse w-7 h-7" />
                     </div>
@@ -98,13 +98,13 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     </div>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="hidden md:flex gap-3">
                     <GoldButton 
                         onClick={() => {
                             setSelectedDistributor(null)
                             setDistributor(null)
                         }}
-                        className="text-sm"
+                        className="text-xs xl:text-sm"
                     >
                     Change Distributor
                     </GoldButton>
@@ -114,7 +114,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                 <>
                 {/* Search */}
                 <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
-                    <h1 className="text-lg font-bold">Select Distributor</h1>
+                    <h1 className="text-md xl:text-lg font-bold">Select Distributor</h1>
                     <SearchField
                     placeholder="Search distributor"
                     onChange={(e) => setSearch(e.target.value)}

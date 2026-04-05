@@ -33,7 +33,7 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
             cell: ({ row }) => (
                 <div className="md:min-w-50 md:m-3 flex items-center gap-3 justify-start">
                     <img className="w-10 :h-10 rounded-md object-cover" src={row.original.image_url} />
-                    <span className="text-xs md:text-sm">{row.original.variant_name}</span>
+                    <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
                 </div>
             ),
             meta: { align: 'left' },

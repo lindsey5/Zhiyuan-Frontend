@@ -44,9 +44,10 @@ export default function StockDistribution () {
     return (
         <PageContainer
             title="Stock Distribution"
+            className="relative"
             description="Manage stock transfers from Admin to Distributors"
         >
-            <div className="hidden md:flex justify-end">
+            <div className="flex justify-end sticky top-20">
                 <GoldButton 
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}
@@ -73,18 +74,6 @@ export default function StockDistribution () {
                 variants={variants}
                 distributorId={distributorId}
             />
-            <div className="flex md:hidden justify-end">
-                <GoldButton 
-                    className="text-sm relative" 
-                    onClick={() => setShowModal(true)}
-                >
-                    <ShoppingCart size={20} />
-                    Transfer Cart
-                    {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                        {variants.length}
-                    </span>}
-                </GoldButton>
-            </div>
         </PageContainer>
     )
 }
