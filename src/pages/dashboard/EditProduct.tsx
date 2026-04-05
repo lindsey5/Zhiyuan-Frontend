@@ -10,7 +10,7 @@ import { useCategory } from "../../hooks/useCategory";
 import Button from "../../components/ui/Button";
 import GoldButton from "../../components/ui/GoldButton";
 import { useProduct } from "../../hooks/useProduct";
-import { checkIfProductNameExist, checkIfVariantFieldExist } from "../../utils/validation";
+import { checkIfProductNameExist, checkIfVariantsFieldExist } from "../../utils/validation";
 import EditProductThumbnail from "../../components/edit-product/EditProductThumbnail";
 import EditProductVariant from "../../components/edit-product/EditProductVariant";
 import { useParams } from "react-router-dom";
@@ -35,9 +35,7 @@ export default function EditProduct () {
         formState: { errors },
         setError,
         clearErrors
-    } = useForm<EditProductFormData>({
-        resolver: zodResolver(editProductSchema)
-    });
+    } = useForm<EditProductFormData>({ resolver: zodResolver(editProductSchema)});
 
     useEffect(() => {
         reset(product?.product)
@@ -57,7 +55,7 @@ export default function EditProduct () {
             id
         )
 
-        const isSkuExist = await checkIfVariantFieldExist(
+        const isSkuExist = await checkIfVariantsFieldExist(
             setError,
             clearErrors,
             "sku",
@@ -169,7 +167,7 @@ export default function EditProduct () {
                             type="submit" 
                             className="flex-1"
                             disabled={updateProduct.isPending}
-                        >Save Changes</GoldButton>
+                        >{updateProduct.isPending ? 'Loading...' : 'Save Changes'}</GoldButton>
                     </div>
                 </Card>
             </form>}

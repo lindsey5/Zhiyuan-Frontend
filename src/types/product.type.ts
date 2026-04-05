@@ -1,6 +1,6 @@
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
-import type { Variant } from "./variant.type";
+import type { UpdateVariantPayload, Variant } from "./variant.type";
 
 export interface Product {
     _id: string;
@@ -55,17 +55,6 @@ export interface UpdateProductPayload {
     category: string;
     createdAt: string;
     variants: UpdateVariantPayload[];
-}
-
-export interface UpdateVariantPayload {
-    _id?: string;
-    product_id?: string;
-    variant_name: string;
-    stock: number;
-    price: number;
-    image_public_id?: string;
-    image_url: string;
-    sku: string;
 }
 
 export interface UpdateProductResponse extends ApiResponse {

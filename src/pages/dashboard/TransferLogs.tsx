@@ -8,6 +8,9 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import CustomizedTable from "../../components/ui/Table";
 import StockTransferLogsControls from "../../components/stockTransferLog/StockTransferLogControls";
+import StockTransferItems from "../../components/stockTransferLog/StockTransferItems";
+import { Eye } from "lucide-react";
+import IconButton from "../../components/ui/IconButton";
 
 export default function TransferLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -27,6 +30,19 @@ export default function TransferLogs () {
     }
     const { getStockTransferLogs } = useStockTransfer();
     const { data, isFetching } = getStockTransferLogs(params);
+
+    const [stockTransferLog, setStockTransferLog] = useState<StockTransferLog | null>(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const closeModal = () => {
+        setShowModal(false)
+        setStockTransferLog(null)
+    }
+
+    const openModal = (transferLog : StockTransferLog) => {
+        setShowModal(true)
+        setStockTransferLog(transferLog)
+    }
 
     const columns: ColumnDef<StockTransferLog>[] = [
         {
@@ -61,13 +77,29 @@ export default function TransferLogs () {
             cell: info => formatDate(info.getValue() as string),
             meta: { align: 'center' },
         },
+        {
+            header: 'Action',
+            cell: ({ row }) => (
+                <IconButton
+                    onClick={() => openModal(row.original)}
+                    icon={<Eye className="text-gold"/>}
+                />
+            ),
+            meta: { align: 'center' }
+        }
     ];
+
 
     return (
         <PageContainer
             title="Transfer Logs"
             description="View the history of stock transfers form admin to distributors"
         >
+            <StockTransferItems 
+                open={showModal}
+                close={closeModal}
+                stockTransferLog={(stockTransferLog)}
+            />
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <StockTransferLogsControls 
                     setSearch={setSearch}

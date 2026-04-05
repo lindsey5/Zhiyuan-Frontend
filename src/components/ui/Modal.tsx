@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "../../utils/utils";
 
 type AnimatedModalProps = {
     open: boolean;
@@ -19,7 +20,10 @@ export default function Modal({ open, onClose, children, className = "" }: Anima
                 onClick={onClose}
             >
                 <motion.div
-                    className={`w-full max-w-md ${className}`}
+                    className={cn(
+                        'w-full max-w-md',
+                        className
+                    )}
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -50, opacity: 0 }}

@@ -98,11 +98,11 @@ export default function Products () {
                 {
                     header: "Action",
                     cell: ({ row }: { row: Row<Product> }) => (
-                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
+                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-1 md:p-3"
+                                    className="p-1 lg:p-3"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                                 />
@@ -111,7 +111,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-1 md:p-3"
+                                    className="bg-red-600 text-white p-1 lg:p-3"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => deleteExistingProduct(row.original._id)}
                                 />

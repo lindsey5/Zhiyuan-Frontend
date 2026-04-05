@@ -11,6 +11,50 @@ import { type SortOption } from "../../types/type";
 import DistributorStockControls from "../../components/distributorStock/DistributorStockControls";
 import DistributorInfo from "../../components/distributors/DistributorInfo";
 
+const columns: ColumnDef<DistributorStock>[] = [
+    {
+        header: "Variant",
+        accessorKey: "createdAt",
+        cell: ({ row }) => (
+            <div className="min-w-30 flex gap-3 items-center">
+                <img 
+                    className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
+                    src={row.original.variant.image_url} 
+                    alt={row.original.variant.variant_name}
+                />
+                <h1>{row.original.variant.variant_name}</h1>
+            </div>
+        ),
+        meta: { align: 'left' },
+    },
+    {
+        header: "SKU",
+        accessorKey: 'variant.sku',
+        meta: { align: 'center' }
+    },
+    {
+        header: 'Product name',
+        accessorKey: 'variant.product.product_name',
+        meta: { align: 'center' },
+    },
+    {
+        header: "Quantity",
+        accessorKey: 'quantity',
+        meta: { align: 'center' }
+    },
+    {
+        header: "Price",
+        cell: ({ row }) => formatToPeso(row.original.variant.price),
+        meta: { align: 'center' }
+    },
+    {
+        header: 'Updated At',
+        accessorKey: 'updatedAt',
+        cell: ({ row }) => formatDate(row.original.updatedAt),
+        meta: { align: 'center' }
+    }
+];
+
 export default function DistributorStock () {
     const params = useParams();
     const id = params.id;
@@ -31,50 +75,6 @@ export default function DistributorStock () {
         sortBy: sorting.sortBy,
         order: sorting.order
     });
-
-    const columns: ColumnDef<DistributorStock>[] = [
-        {
-            header: "Variant",
-            accessorKey: "createdAt",
-            cell: ({ row }) => (
-                <div className="min-w-30 flex gap-3 items-center">
-                    <img 
-                        className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
-                        src={row.original.variant.image_url} 
-                        alt={row.original.variant.variant_name}
-                    />
-                    <h1>{row.original.variant.variant_name}</h1>
-                </div>
-            ),
-            meta: { align: 'left' },
-        },
-        {
-            header: "SKU",
-            accessorKey: 'variant.sku',
-            meta: { align: 'center' }
-        },
-        {
-            header: 'Product name',
-            accessorKey: 'variant.product.product_name',
-            meta: { align: 'center' },
-        },
-        {
-            header: "Quantity",
-            accessorKey: 'quantity',
-            meta: { align: 'center' }
-        },
-        {
-            header: "Price",
-            cell: ({ row }) => formatToPeso(row.original.variant.price),
-            meta: { align: 'center' }
-        },
-        {
-            header: 'Updated At',
-            accessorKey: 'updatedAt',
-            cell: ({ row }) => formatDate(row.original.updatedAt),
-            meta: { align: 'center' }
-        }
-    ];
 
     return (
         <div className="flex flex-col gap-5 p-5">

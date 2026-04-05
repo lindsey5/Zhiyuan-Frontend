@@ -4,6 +4,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import {
   type ColumnDef,
   type PaginationState,
+  type Row,
 } from "@tanstack/react-table";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
@@ -14,21 +15,25 @@ import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
 import { useVariant } from "../../hooks/useVariant";
-import type { VariantWithProduct } from "../../types/variant.type";
+import type { Variant, VariantWithProduct } from "../../types/variant.type";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
+import { promiseToast } from "../../utils/sileo";
+import EditVariant from "../../components/variants/EditVariant";
 
 export default function Variants () {
     const { getOwnRole } = useRole();
     const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
-    const { hasPermissions, hasAnyPermissions } = usePermissions();
+    const { hasPermissions } = usePermissions();
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 200);
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
-    
+    const [showModal, setShowModal] = useState(false);
+    const [variant, setVariant] = useState<Variant | null>(null);
+
     const params = { 
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
@@ -38,8 +43,26 @@ export default function Variants () {
         order: sorting.order,
     }
 
-    const { getVariants } = useVariant();
+    const { getVariants, deleteVariant } = useVariant();
     const { data, isFetching } = getVariants(params);
+
+    const handleDelete = (id: string) => {
+        const isConfirmed = confirm('Are you sure you want to delete this variant?');
+
+        if(!isConfirmed) return;
+
+        promiseToast(deleteVariant.mutateAsync({ id }))
+    }
+
+    const handleEdit = (variant : Variant) => {
+        setShowModal(true);
+        setVariant(variant);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+        setVariant(null);
+    }
 
     const columns: ColumnDef<VariantWithProduct>[] = [
         {
@@ -91,25 +114,27 @@ export default function Variants () {
             cell: info => formatDate(info.getValue() as string),
             meta: { align: 'center' },
         },
-        ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)
+        ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions)
             ? [
                 {
                     header: "Action",
-                    cell: () => (
-                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
-                            {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
-                                <Button
-                                    label="Edit"
-                                    className="p-1 md:p-3"
-                                />
-                            )}
+                    cell: ({ row } : { row: Row<VariantWithProduct>}) => (
+                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
+                            <Button
+                                label="Edit"
+                                disabled={deleteVariant.isPending}
+                                className="p-1 lg:p-3"
+                                onClick={() => {
+                                    handleEdit(row.original);
+                                }}
+                            />
     
-                            {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
-                                <Button
-                                    label="Delete"
-                                    className="bg-red-600 text-white p-1 md:p-3"
-                                />
-                            )}
+                            <Button
+                                label="Delete"
+                                disabled={deleteVariant.isPending}
+                                className="bg-red-600 text-white p-1 lg:p-3"
+                                onClick={() => handleDelete(row.original._id)}
+                            />
                         </div>
                     ),
                     meta: { align: 'center' },
@@ -124,6 +149,12 @@ export default function Variants () {
             title="Variants"
             description="View and manage all product variants"
         >
+            <EditVariant 
+                open={showModal}
+                close={closeModal}
+                variant={variant}
+            />
+
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <VariantsTableControls
                     setSearch={setSearch}

@@ -16,6 +16,7 @@ import { useRole } from "../../hooks/useRole";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorControls from "../../components/distributors/DistributorControls";
 import { useNavigate } from "react-router-dom";
+import IconButton from "../../components/ui/IconButton";
 
 export default function Distributors () {
     const navigate = useNavigate();
@@ -95,20 +96,16 @@ export default function Distributors () {
                 cell: ({ row } : { row : Row<Distributor>}) => (
                     <div className="flex gap-2">
                         {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
-                            <button
-                                className="cursor-pointer hover:bg-gray-300 p-2 rounded-full"
+                            <IconButton 
                                 onClick={() => navigate(`${row.original._id}`)}
-                            >
-                                <Eye className="text-gold" size={20} />
-                            </button>
+                                icon={<Eye className="text-gold" size={20} />}
+                            />
                         )}
                         {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
-                            <button
-                                className="cursor-pointer hover:bg-gray-300 p-2 rounded-full"
-                                onClick={() => handleDelete(row.original._id)}
-                            >
-                                <Trash color='red' size={20} />
-                            </button>
+                            <IconButton 
+                                icon={<Trash color='red' size={20} />}
+                                 onClick={() => handleDelete(row.original._id)}
+                            />
                         )}
                     </div>
                 )

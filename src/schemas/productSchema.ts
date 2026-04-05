@@ -1,4 +1,5 @@
 import z from "zod";
+import { editVariantSchema } from "./variantSchema";
 
 const MAX_FILE_SIZE = 500 * 1024 * 1024;
 
@@ -79,27 +80,6 @@ export const createProductSchema = z.object({
 });
 
 export type CreateProductFormData = z.infer<typeof createProductSchema>;
-
-const editVariantSchema = z.object({
-    _id: z.string().optional(),
-    product_id: z.string().optional(),
-    variant_name: z.string()
-        .min(3, "Variant name must be at least 3 characters")
-        .max(100, "Variant name must not exceed 100 characters"),
-
-    price: z.number()
-        .positive("Price must not be blank, negative or 0"),
-
-    stock: z.number()
-        .int("Stock must be a whole number")
-        .positive("Stock must not be blank, negative or 0"),
-
-    sku: z.string()
-        .min(3, "SKU must be at least 3 characters")
-        .max(100, "SKU must not exceed 100 characters"),
-    image_url: z.string().min(1, 'Image is required'),
-    image_public_id: z.string().optional(),
-});
 
 export const editProductSchema = z.object({
     _id: z.string(),

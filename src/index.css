@@ -207,6 +207,16 @@
   @apply my-1;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 body {
    @apply bg-main text-primary transition-all duration-500 ease-in-out font-serif;
 }

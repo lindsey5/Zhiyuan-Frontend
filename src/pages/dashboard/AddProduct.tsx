@@ -13,7 +13,7 @@ import AddProductVariant from "../../components/add-product/AddProductVariant";
 import GoldButton from "../../components/ui/GoldButton";
 import { useProduct } from "../../hooks/useProduct";
 import { promiseToast } from "../../utils/sileo";
-import { checkIfProductNameExist, checkIfVariantFieldExist } from "../../utils/validation";
+import { checkIfProductNameExist, checkIfVariantsFieldExist } from "../../utils/validation";
 
 export default function AddProduct () {
     const { getCategories } = useCategory();
@@ -46,7 +46,7 @@ export default function AddProduct () {
             data,
         )
 
-        const isSkuExist = await checkIfVariantFieldExist(
+        const isSkuExist = await checkIfVariantsFieldExist(
             setError,
             clearErrors,
             "sku",
@@ -177,7 +177,7 @@ export default function AddProduct () {
                             type="submit" 
                             className="flex-1"
                             disabled={createProduct.isPending}
-                        >Save</GoldButton>
+                        >{createProduct.isPending ? 'Loading...' : 'Save'}</GoldButton>
                     </div>
                 </Card>
             </form>

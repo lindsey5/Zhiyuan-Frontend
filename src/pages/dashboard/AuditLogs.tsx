@@ -17,6 +17,62 @@ const severityColor: Record<"LOW" | "MEDIUM" | "HIGH" | "CRITICAL", string> = {
     CRITICAL: "bg-red-500",
 };
 
+const columns: ColumnDef<AuditLog>[] = [
+    {
+        header: "Date",
+        accessorKey: "createdAt",
+        cell: info => formatDate(info.getValue() as string),
+        meta: { align: 'left' },
+    },
+    {
+        header: "User",
+        cell: ({ row }) => {
+            const fullname = `${row.original.user.firstname} ${row.original.user.lastname}`;
+            const email = row.original.user.email;
+
+            return <div>
+                <h3>{fullname}</h3>
+                <p>{email}</p>
+            </div>
+        },
+        meta: { align: 'center' },
+    },
+    {
+        header: "Role",
+        accessorKey: "role",
+        cell: info => <Chip className="font-semibold">{info.getValue() as string}</Chip>,
+        meta: { align: 'center' },
+    },
+    {
+        header: "Action",
+        accessorKey: "action",
+        meta: { align: 'center' },
+    },
+    {
+        header: "Description",
+        accessorKey: "description",
+        meta: { align: 'center' },
+    },
+    {
+        header: "Severity",
+        accessorKey: "severity",
+        cell: info => (
+            <Chip className="rounded-full px-3 py-1 flex items-center justify-center gap-2">
+                <span
+                    className={`w-2.5 h-2.5 rounded-full ${severityColor[info.getValue() as "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"]}`}
+                />
+                <span className="font-semibold">{info.getValue() as string}</span>
+            </Chip>
+        ),
+        meta: { align: 'center' },
+    },
+    {
+        header: "Device Info",
+        accessorKey: "user_agent",
+        meta: { align: 'center' },
+    }
+];
+
 export default function AuditLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 
@@ -44,62 +100,6 @@ export default function AuditLogs () {
     }
 
     const { data, isFetching } = getAuditLogs(params)
-
-    const columns: ColumnDef<AuditLog>[] = [
-        {
-            header: "Date",
-            accessorKey: "createdAt",
-            cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'left' },
-        },
-        {
-            header: "User",
-            cell: ({ row }) => {
-                const fullname = `${row.original.user.firstname} ${row.original.user.lastname}`;
-                const email = row.original.user.email;
-
-                return <div>
-                    <h3>{fullname}</h3>
-                    <p>{email}</p>
-                </div>
-            },
-            meta: { align: 'center' },
-        },
-        {
-            header: "Role",
-            accessorKey: "role",
-            cell: info => <Chip className="font-semibold">{info.getValue() as string}</Chip>,
-            meta: { align: 'center' },
-        },
-        {
-            header: "Action",
-            accessorKey: "action",
-            meta: { align: 'center' },
-        },
-        {
-            header: "Description",
-            accessorKey: "description",
-            meta: { align: 'center' },
-        },
-        {
-            header: "Severity",
-            accessorKey: "severity",
-            cell: info => (
-                <Chip className="rounded-full px-3 py-1 flex items-center justify-center gap-2">
-                    <span
-                        className={`w-2.5 h-2.5 rounded-full ${severityColor[info.getValue() as "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"]}`}
-                    />
-                    <span className="font-semibold">{info.getValue() as string}</span>
-                </Chip>
-            ),
-            meta: { align: 'center' },
-        },
-        {
-            header: "Device Info",
-            accessorKey: "user_agent",
-            meta: { align: 'center' },
-        }
-    ];
 
     return (
         <PageContainer 

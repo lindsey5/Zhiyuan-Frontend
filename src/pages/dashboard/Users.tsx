@@ -107,11 +107,11 @@ export default function Users () {
                 {
                     header: "Action",
                     cell: ({ row } : { row: Row<GetUser> }) => (
-                        <div className="flex flex-col md:flex-row gap-3 text-sm justify-center">
+                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
                             {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-1 md:p-3"
+                                    className="p-1 lg:p-3"
                                     onClick={() => showEdit(row.original)}
                                 />
                             )}
@@ -119,7 +119,7 @@ export default function Users () {
                             {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-1 md:p-3"
+                                    className="bg-red-600 text-white p-1 lg:p-3"
                                     onClick={() => handleDelete(row.original._id)}
                                 />
                             )}

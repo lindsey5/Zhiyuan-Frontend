@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import type { GetVariantsParams, GetVariantsResponse } from "../types/variant.type"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import type { GetVariantsParams, GetVariantsResponse, UpdateVariantPayload } from "../types/variant.type"
 import { variantService } from "../service/variantService";
 
 
@@ -14,7 +14,17 @@ export const useVariant = () => {
         })
     )
 
+    const deleteVariant = useMutation({
+         mutationFn: ({ id } : { id: string }) =>  variantService.deleteVariant(id),
+    })
+
+    const updateVariant = useMutation({
+        mutationFn: ({ id, data } : { id: string, data: UpdateVariantPayload}) => variantService.updateVariant(id, data)
+    })
+
     return {
-        getVariants
+        getVariants,
+        deleteVariant,
+        updateVariant
     }
 }
