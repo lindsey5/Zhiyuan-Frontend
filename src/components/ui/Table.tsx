@@ -113,7 +113,7 @@ export const TableCard = <T,>({ row } : { row: Row<T>}) => {
     return (
         <div key={row.id} className="border-b border-[var(--border-panel)] py-3">
             <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-                {row.getVisibleCells().map((cell, i) => {
+                {row.getVisibleCells().map((cell) => {
                 const header = cell.column.columnDef.header;
 
                 return (
