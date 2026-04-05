@@ -65,7 +65,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
             cell: ({ row }) => (
                 <div className="flex md:justify-center">
                     <GoldButton 
-                        className="md:text-sm text-xs p-2"
+                        className="p-2"
                         onClick={() => { setSelectedDistributor(row.original); setDistributor(row.original._id)}}>
                     Select
                     </GoldButton>
@@ -80,19 +80,19 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
             {/* If selected distributor exists show info */}
             {selectedDistributor ? (
                 <div className="p-6 space-y-5">
-                <h1 className="text-lg font-bold">Selected Distributor</h1>
+                <h1 className="text-md xl:text-lg font-bold">Selected Distributor</h1>
 
                 <div className="flex items-center gap-4 p-4 border border-[var(--border-ui)] rounded-lg">
-                    <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center">
+                    <div className="w-12 h-12 xl:w-14 xl:h-14 rounded-full bg-gold flex items-center justify-center">
                     <User className="text-inverse w-7 h-7" />
                     </div>
 
                     <div className="flex flex-col">
-                    <span className="font-bold text-lg">
+                    <span className="font-bold text-sm xl:text-md">
                         {selectedDistributor.distributor_name}
                     </span>
-                    <span className="text-sm text-muted">{selectedDistributor.email}</span>
-                    <span className="text-xs text-muted">
+                    <span className="text-xs xl:text-md text-muted">{selectedDistributor.email}</span>
+                    <span className="text-xs xl:text-md text-muted">
                         Commission Rate: {selectedDistributor.commission_rate}%
                     </span>
                     </div>

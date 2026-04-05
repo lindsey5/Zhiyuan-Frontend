@@ -70,11 +70,11 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
     return (
         <div className="flex items-center justify-between gap-3 mt-10 lg:text-sm xxl:text-md text-primary flex-wrap">
             <div className="flex items-center gap-2">
-                <span className="text-sm">Rows per page:</span>
+                <span className="text-xs xl:text-sm">Rows per page:</span>
                 <select
                     value={pageSize}
                     onChange={(e) => table.setPageSize(Number(e.target.value))}
-                    className="border border-gray-300 rounded px-2 py-1 text-sm"
+                    className="border border-gray-300 rounded px-2 py-1 text-xs xl:text-sm"
                 >
                     {[5, 10, 20, 50, 100].map((size) => (
                         <option key={size} value={size} className="bg-panel">
@@ -85,7 +85,7 @@ export const PaginationControls = <T,>({ table, total }: PaginationControlsProps
             </div>
 
             <div className="flex items-center gap-5">
-                <div className="text-sm">
+                <div className="text-xs xl:text-sm">
                     Showing {startRow} - {endRow} of {total}
                 </div>
                 {/* Pagination buttons */}
