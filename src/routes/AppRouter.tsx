@@ -19,6 +19,7 @@ import Distributors from "../pages/dashboard/Distributors";
 import DistributorStock from "../pages/dashboard/DistributorStock";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
+import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
 
 const router = createBrowserRouter([ 
     {
@@ -28,10 +29,10 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <ProtectedRoute 
-                requireAuthentication 
-            >
-                <DashboardLayout />
+            <ProtectedRoute requireAuthentication>
+                <StockTransferSocketContextProvider>
+                    <DashboardLayout />
+                </StockTransferSocketContextProvider>
             </ProtectedRoute>
         ),
         children: [

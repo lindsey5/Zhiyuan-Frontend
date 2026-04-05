@@ -98,7 +98,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     </div>
                 </div>
 
-                <div className="hidden md:flex gap-3">
+                <div className="gap-3">
                     <GoldButton 
                         onClick={() => {
                             setSelectedDistributor(null)
