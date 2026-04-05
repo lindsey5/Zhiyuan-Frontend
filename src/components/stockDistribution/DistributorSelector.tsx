@@ -87,14 +87,14 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     <User className="text-inverse w-7 h-7" />
                     </div>
 
-                    <div className="flex flex-col">
-                    <span className="font-bold text-sm xl:text-md">
-                        {selectedDistributor.distributor_name}
-                    </span>
-                    <span className="text-xs xl:text-md text-muted">{selectedDistributor.email}</span>
-                    <span className="text-xs xl:text-md text-muted">
-                        Commission Rate: {selectedDistributor.commission_rate}%
-                    </span>
+                    <div className="flex flex-col break-all">
+                        <span className="font-bold text-sm xl:text-md">
+                            {selectedDistributor.distributor_name}
+                        </span>
+                        <span className="text-xs xl:text-md text-muted">{selectedDistributor.email}</span>
+                        <span className="text-xs xl:text-md text-muted">
+                            Commission Rate: {selectedDistributor.commission_rate}%
+                        </span>
                     </div>
                 </div>
 
