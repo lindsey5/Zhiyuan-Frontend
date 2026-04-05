@@ -53,7 +53,7 @@ export default function TransferLogs () {
                     <p>{row.original.receiver.email}</p>
                 </div>
             ),
-            meta: { align: 'center' },
+            meta: { align: 'left' },
         },
         {
             header: "Sender",
@@ -63,19 +63,19 @@ export default function TransferLogs () {
                     <p>{row.original.sender.email}</p>
                 </div>
             ),
-            meta: { align: 'center' },
+            meta: { align: 'left' },
         },
         {
             header: "Description",
             accessorKey: "description",
             cell: ({ row }) => `${row.original.receiver.distributor_name} receives ${row.original.items.reduce((acc, item) => acc + item.quantity, 0)} stocks`,
-            meta: { align: 'center' },
+            meta: { align: 'left' },
         },
         {
             header: "Date",
             accessorKey: "createdAt",
             cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'center' },
+            meta: { align: 'left' },
         },
         {
             header: 'Action',
