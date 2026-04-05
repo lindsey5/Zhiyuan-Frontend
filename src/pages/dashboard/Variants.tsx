@@ -70,7 +70,7 @@ export default function Variants () {
             cell: ({ row }) => (
                 <div className="lg:min-w-50 lg:m-3 flex flex-wrap md:flex-nowrap items-center gap-3 justify-start">
                     <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
-                    <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
+                    <span className="text-xs xl:text-sm">{row.original.variant_name}</span>
                 </div>
             ),
             meta: { align: 'left' },
@@ -94,7 +94,7 @@ export default function Variants () {
             header: "Category",
             accessorKey: "product.category",
             
-            cell: info => <span className="text-xs lg:text-sm">{info.getValue() as string}</span>,
+            cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
             meta: { align: 'center' },
         },
         {
@@ -119,11 +119,11 @@ export default function Variants () {
                 {
                     header: "Action",
                     cell: ({ row } : { row: Row<VariantWithProduct>}) => (
-                        <div className="flex flex-col lg:flex-row gap-3 text-sm justify-center">
+                        <div className="flex flex-col lg:flex-row gap-3 justify-center">
                             <Button
                                 label="Edit"
                                 disabled={deleteVariant.isPending}
-                                className="p-1 lg:p-3 text-xs md:text-sm"
+                                className="p-1 lg:p-3 text-xs xl:text-sm"
                                 onClick={() => {
                                     handleEdit(row.original);
                                 }}
@@ -132,7 +132,7 @@ export default function Variants () {
                             <Button
                                 label="Delete"
                                 disabled={deleteVariant.isPending}
-                                className="bg-red-600 text-white p-1 lg:p-3 text-xs md:text-sm"
+                                className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
                                 onClick={() => handleDelete(row.original._id)}
                             />
                         </div>

@@ -17,11 +17,11 @@ export default function PageContainer ({
     
     return (
          <div className={cn(
-            "w-full p-2 lg:p-6 flex flex-col space-y-6 relative",
+            "w-full p-3 lg:p-6 flex flex-col space-y-3 md:space-y-6 relative",
             className
          )}>
             <Card className="space-y-2">
-                <h1 className="font-sans text-gold font-bold text-xl lg:text-2xl">{title}</h1>
+                <h1 className="text-gold font-bold text-lg">{title}</h1>
                 <p className="text-sm lg:text-md text-gray">{description}</p>
             </Card>
             {children}

@@ -49,14 +49,14 @@ export default function AccountSettingsForm () {
     return (
         <Card>
             <div className="flex items-center justify-between mb-5">
-                <h2 className="font-sans text-lg text-gold font-semibold">
+                <h2 className="text-md xl:text-lg text-gold font-semibold">
                     Profile Information
                 </h2>
                 {!editMode && (
                     <Button 
                         label="Edit"
                         onClick={() => setEditMode(true)}
-                        className="text-gold text-md border-none"
+                        className="text-gold text-sm xl:text-md border-none"
                         icon={<Edit size={20} />}
                     />
                 )}
@@ -100,12 +100,13 @@ export default function AccountSettingsForm () {
                         type="button"
                         disabled={updateOwn.isPending}
                         onClick={cancel}
-                        className="px-4 py-2 rounded-md border border-[var(--border-panel)] hover:bg-[rgba(166,124,82,0.1)] transition cursor-pointer"
+                        className="text-sm px-4 py-2 rounded-md border border-[var(--border-panel)] hover:bg-[rgba(166,124,82,0.1)] transition cursor-pointer"
                     >
                         Cancel
                     </button>
 
                     <GoldButton
+                        className="text-sm"
                         type="submit"
                         disabled={updateOwn.isPending}
                     >{updateOwn.isPending ? 'Saving...' : 'Save Changes'}</GoldButton>

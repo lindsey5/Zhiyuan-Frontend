@@ -36,7 +36,7 @@ export default function Dropdown({
         )}>
             {/* Title */}
             {title && (
-                <span className="text-xs text-muted px-1">
+                <span className="text-xs xl:text-sm text-muted px-1">
                     {title}
                 </span>
             )}
@@ -47,7 +47,7 @@ export default function Dropdown({
                     type="button"
                     onClick={() => setOpen(prev => !prev)}
                     className={cn(
-                        "w-full h-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-sm text-primary",
+                        "w-full h-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-xs xl:text-sm text-primary",
                         error && "border-red-500"
                     )}
                 >
@@ -66,7 +66,7 @@ export default function Dropdown({
                                     setOpen(false)
                                 }}
                                 className={cn(
-                                    "px-4 py-2 text-sm cursor-pointer transition hover:opacity-50",
+                                    "px-4 py-2 text-xs xl:text-sm cursor-pointer transition hover:opacity-50",
                                     value === option.value && 'text-gold'
                                 )}
                             >

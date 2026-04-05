@@ -31,9 +31,9 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
         {
             header: "Variant",
             cell: ({ row }) => (
-                <div className="min-w-50 m-3 flex items-center gap-3 justify-start">
-                    <img className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" src={row.original.image_url} />
-                    <span className="text-xs lg:text-sm">{row.original.variant_name}</span>
+                <div className="md:min-w-50 md:m-3 flex items-center gap-3 justify-start">
+                    <img className="w-10 :h-10 rounded-md object-cover" src={row.original.image_url} />
+                    <span className="text-xs md:text-sm">{row.original.variant_name}</span>
                 </div>
             ),
             meta: { align: 'left' },
@@ -78,7 +78,7 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
                 <GoldButton
                     className="text-xs md:text-sm"
                     onClick={() => addVariant(row.original, 1)}
-                >Add to Cart</GoldButton>
+                >Add</GoldButton>
             )
         }
     ]
@@ -102,7 +102,7 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
                 showPagination
                 noDataMessage="No Variants Found"
                 total={data?.total || 0}
-                className="max-h-[40vh] lg:max-h-[70vh]"
+                className="max-h-[70vh]"
             />
         </Card>
     )

@@ -38,12 +38,12 @@ export default function PermissionsContainer ({
                 className="cursor-pointer"
                 onClick={() => setShow(!show)}
             >
-                <div className="w-full flex justify-between">
+                <div className="w-full flex justify-between items-center">
                     <div className="flex flex-col items-start gap-2">
-                        <h1 className="text-gold text-md font-semibold">
+                        <h1 className="text-gold text-xs xl:text-sm font-semibold">
                             {category}
                         </h1>
-                        <p className="text-gray">{description}</p>
+                        <p className="text-gray text-xs xl:text-sm">{description}</p>
                     </div>
                     {show ? <ChevronUp /> : <ChevronDown />}
                 </div>
@@ -52,17 +52,17 @@ export default function PermissionsContainer ({
 
             {/* Permissions */}
             {show && (
-                <div className="space-y-5 mt-6">
+                <div>
                     {permissions.map((perm) => (
-                        <label key={perm.value} className="flex items-center gap-2 flex cursor-pointer">
+                        <label key={perm.value} className="border-l border-[var(--border-panel)] ml-2 xl:ml-5 pl-3 py-3 flex flex-wrap xl:flex-nowrap items-center gap-2 flex cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={checkedPermissions.includes(perm.value)}
                                 className={cn("h-5 w-5", checkedPermissions.includes(perm.value) && "text-gold")}
                                 onChange={() => handleChange(perm.value)}
                             />
-                            <h1>{getPermissionKey(perm.value)}</h1>
-                            <p className="text-gray">{perm.description}</p>
+                            <h1 className="text-xs xl:text-md">{getPermissionKey(perm.value)}</h1>
+                            <p className="text-gray text-xs xl:text-md">{perm.description}</p>
                         </label>
                     ))}
                 </div>

@@ -45,7 +45,7 @@ export default function SidebarDropdown({
             >
                 <div className="flex items-center gap-3">
                     <span className="text-gold">{icon}</span>
-                    {!collapsed && <span className="text-md font-sans">{title}</span>}
+                    {!collapsed && <span className="text-xs xl:text-sm">{title}</span>}
                 </div>
 
                 {!collapsed && (
@@ -61,7 +61,7 @@ export default function SidebarDropdown({
             {!collapsed && (
                 <div
                     className={cn(
-                        "flex flex-col ml-6 border-l border-[var(--border-panel)] pl-3 gap-1 transition-all duration-300 ease-in-out",
+                        "flex flex-col px-3 ml-6 border-l border-[var(--border-panel)] pl-3 gap-1 transition-all duration-300 ease-in-out",
                         open ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0 overflow-hidden"
                     )}
                 >
@@ -79,7 +79,7 @@ export default function SidebarDropdown({
                                 )}
                             >
                                 {item.icon}
-                                {!collapsed && <span className="text-sm">{item.label}</span>}
+                                {!collapsed && <span className="text-xs xl:text-sm">{item.label}</span>}
                             </button>
                         );
                     })}

@@ -100,10 +100,9 @@ export default function Role ({ title, description } : { title : string, descrip
         <PageContainer title={title} description={description}>
             {isFetching && id ? <RoleDetailsSkeleton /> : 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-
                 <Card>
-                    <h1 className="text-xl font-bold pb-4 border-b border-[var(--color-gray)]">Role Details</h1>
-                    <div className="flex gap-10 mt-4">
+                    <h1 className="text-sm lg:text-md font-bold">Role Details</h1>
+                    <div className="flex flex-col lg:flex-row gap-5 mt-4">
                         <TextField 
                             label="Name"
                             registration={register("name")}
@@ -120,7 +119,7 @@ export default function Role ({ title, description } : { title : string, descrip
                 </Card>
 
                 <Card className="space-y-5">
-                    <h1 className="text-xl font-bold pb-4 border-b border-[var(--color-gray)]">Role Permissions</h1>
+                    <h1 className="text-md font-bold mb-4">Role Permissions</h1>
                     {errors.permissions && <span className="text-xs text-red-500">{errors.permissions.message}</span>}
                     {Object.entries(CategorizedPermissions()).map(([category, perms]) => (
                         <PermissionsContainer 

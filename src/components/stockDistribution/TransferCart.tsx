@@ -81,7 +81,7 @@ export default function TransferCart({
             <Card>
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold">Transfer Cart</h2>
+                    <h2 className="text-md xl:text-lg font-bold">Transfer Cart</h2>
                     <button
                         onClick={close}
                         className="cursor-pointer hover:opacity-50"
@@ -131,7 +131,7 @@ export default function TransferCart({
                                         <Minus size={16} />
                                     </button>
 
-                                    <span className="w-6 text-center font-semibold">
+                                    <span className="w-6 text-sm text-center font-semibold">
                                         {item.quantity}
                                     </span>
 
@@ -157,12 +157,13 @@ export default function TransferCart({
                 {/* Footer */}
                 <div className="flex justify-end gap-2 mt-4">
                     <Button
+                        className="md:px-4 lg:py-3"
                         label="Cancel"   
                         onClick={close}  
                     />
 
                     <GoldButton
-                        className="text-sm"
+                        className="text-xs xl:text-sm md:px-4 lg:py-3"
                         onClick={transfer}
                         disabled={!distributorId || variants.length === 0 || createDistributorStocks.isPending}
                     >Transfer</GoldButton>

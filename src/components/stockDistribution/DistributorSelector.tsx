@@ -63,11 +63,13 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         {
             header: "Action",
             cell: ({ row }) => (
-                <GoldButton 
-                    className="md:text-sm text-xs"
-                    onClick={() => { setSelectedDistributor(row.original); setDistributor(row.original._id)}}>
-                Select
-                </GoldButton>
+                <div className="flex md:justify-center">
+                    <GoldButton 
+                        className="md:text-sm text-xs p-2"
+                        onClick={() => { setSelectedDistributor(row.original); setDistributor(row.original._id)}}>
+                    Select
+                    </GoldButton>
+                </div>
             ),
             meta: { align: "center" },
         },
@@ -130,7 +132,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     showPagination
                     noDataMessage="No Distributors Found"
                     total={data?.total || 0}
-                    className="max-h-[40vh] lg:max-h-[70vh]"
+                    className="max-h-[70vh]"
                 />
                 </>
             )}

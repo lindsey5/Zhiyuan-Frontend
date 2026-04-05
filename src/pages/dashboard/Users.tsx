@@ -106,7 +106,7 @@ export default function Users () {
                             {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-2 lg:p-3 text-xs md:text-sm"
+                                    className="p-2 lg:p-3 text-xs"
                                     onClick={() => showEdit(row.original)}
                                 />
                             )}
@@ -114,7 +114,7 @@ export default function Users () {
                             {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-2 lg:p-3 text-xs md:text-sm"
+                                    className="bg-red-600 text-white p-2 lg:p-3 text-xs"
                                     onClick={() => handleDelete(row.original._id)}
                                 />
                             )}
@@ -161,7 +161,7 @@ export default function Users () {
                 onClose={closeModal}
                 open={showModal}
             />
-            <div className="w-full justify-end hidden md:flex">
+            <div className="w-full justify-end hidden md:flex text-sm">
                 <GoldButton onClick={handleShow}>Create User</GoldButton>
             </div>
         </PageContainer>

@@ -63,7 +63,7 @@ export default function Products () {
             cell: ({ row }) => (
                 <div className="lg:min-w-50 flex flex-wrap md:flex-nowrap items-center gap-3 justify-start">
                     <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
-                    <span className="text-xs lg:text-sm">{row.original.product_name}</span>
+                    <span className="text-xs xl:text-sm">{row.original.product_name}</span>
                 </div>
             ),
             meta: { align: 'left' },
@@ -71,8 +71,7 @@ export default function Products () {
         {
             header: "Category",
             accessorKey: "category",
-            
-            cell: info => <span className="text-xs lg:text-sm">{info.getValue() as string}</span>,
+            cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
             meta: { align: 'center' },
         },
         {
@@ -84,7 +83,7 @@ export default function Products () {
             header: "Stock",
             cell: ({ row }) => {
                 const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
-                return <span className="text-xs lg:text-sm">{total}</span>;
+                return <span className="text-xs xl:text-sm">{total}</span>;
             },
             meta: { align: 'center' },
         },
@@ -102,7 +101,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
                                 <Button
                                     label="Edit"
-                                    className="p-1 lg:p-3 text-xs md:text-sm"
+                                    className="p-1 lg:p-3 text-xs xl:text-sm"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                                 />
@@ -111,7 +110,7 @@ export default function Products () {
                             {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
                                 <Button
                                     label="Delete"
-                                    className="bg-red-600 text-white p-1 lg:p-3 text-xs md:text-sm"
+                                    className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
                                     disabled={deleteProduct.isPending}
                                     onClick={() => deleteExistingProduct(row.original._id)}
                                 />

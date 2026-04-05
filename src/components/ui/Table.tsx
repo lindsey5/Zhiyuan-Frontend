@@ -212,7 +212,7 @@ const CustomizedTable = <T,>({
             : 
                 <>
                 <div className="overflow-auto flex-grow hidden md:block relative">
-                    <table className="w-full text-xs lg:text-sm">
+                    <table className="w-full text-xs xl:text-sm">
                         <TableColumns table={table} />
                         <TableRows table={table} />
                     </table>

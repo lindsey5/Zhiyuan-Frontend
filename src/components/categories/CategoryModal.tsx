@@ -45,7 +45,7 @@ export default function CategoryModal({ open, onClose, category }: CategoryModal
         >
             <Card className="w-full max-w-md">
                 <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-lg font-semibold">{category ? 'Edit' : 'Add'} Category</h2>
+                    <h2 className="text-md xl:text-lg font-semibold">{category ? 'Edit' : 'Add'} Category</h2>
                     <Button 
                         className="border-none p-0"
                         icon={<X size={20}/>}

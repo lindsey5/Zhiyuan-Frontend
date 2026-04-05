@@ -12,7 +12,7 @@ export default function RoleCard ({ role, navigateTo } : { role : RoleWithUsersC
                 <div className="flex items-center gap-3">
                     {role.name === 'Admin' ? <Shield size={35} className="text-gold"/> : <User size={35} className="text-gold"/>}
                     <div>
-                        <h1 className="text-gold font-bold text-lg">{role.name}</h1>
+                        <h1 className="text-gold font-bold text-md">{role.name}</h1>
                         <p className="text-[var(--border-ui)] text-sm">Users: {role.usersCount}</p>
                     </div>
                 </div>
@@ -21,8 +21,8 @@ export default function RoleCard ({ role, navigateTo } : { role : RoleWithUsersC
                 </button>
             </div>
             <div className="h-[2px] bg-[var(--border-panel)]"/>
-            <p className="text-sm">{role.description}</p>
-            <p className="text-[var(--border-ui)] text-sm mt-2">Permissions ({role.permissions.length})</p>
+            <p className="text-sm xl:text-md">{role.description}</p>
+            <p className="text-[var(--border-ui)] text-xs xl:text-sm mt-2">Permissions ({role.permissions.length})</p>
             <div className="flex flex-wrap gap-2">
                 {role.permissions.slice(0, 5).map(perm => (
                     <Chip key={perm.action}>

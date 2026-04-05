@@ -77,7 +77,7 @@ export default function DistributorStock () {
     });
 
     return (
-        <div className="flex flex-col gap-5 p-5">
+        <div className="flex flex-col gap-3 p-2 lg:p-6">
             <DistributorInfo id={id || ""} />
             <Card className="p-0">
                 <h1 className="p-5 font-bold text-lg">Distributor Inventory</h1>

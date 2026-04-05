@@ -56,7 +56,7 @@ export default function Sidebar({
             <div
                 className={cn(
                     "p-2 flex items-center justify-between border-b border-[var(--border-panel)]",
-                    collapsed && "p-5 justify-center"
+                    collapsed && "justify-center"
                 )}
             >
                 {!collapsed && (
@@ -82,8 +82,8 @@ export default function Sidebar({
             </div>
 
             {/* Avatar & User Info */}
-            <div className={cn("flex items-center gap-3 p-5", collapsed && "justify-center")}>
-                <div className="text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
+            <div className={cn("flex items-center gap-3 p-3", collapsed && "justify-center")}>
+                <div className="text-xs lg:text-sm text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
                     {user?.firstname.charAt(0)}
                     {user?.lastname.charAt(0)}
                 </div>
@@ -101,7 +101,10 @@ export default function Sidebar({
             </div>
 
             {/* Menu */}
-            <nav className="flex-1 p-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
+            <nav className={cn(
+                "flex-1 p-2 flex flex-col gap-2 overflow-y-auto overflow-x-hidden",
+                collapsed && 'items-center'
+            )}>
                 <SidebarItem
                     icon={<LayoutDashboard size={24} />}
                     label="Dashboard"
