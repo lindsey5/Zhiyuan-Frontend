@@ -61,7 +61,7 @@ type TableSkeletonProps = {
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
     return (
-        <div className="hidden min-h-0 flex-grow md:flex flex-col animate-pulse">
+        <div className="min-h-0 flex-grow flex flex-col animate-pulse">
             <div className="overflow-auto flex-grow">
                 <table className="w-full text-sm border-collapse">
                     {/* Table Head */}
@@ -207,20 +207,14 @@ const CustomizedTable = <T,>({
             isLoading ? 
                 <>
                     <TableSkeleton columns={cols}/>
-                    <TableCardSkeleton />
                 </>
             : 
                 <>
-                <div className="overflow-auto flex-grow hidden md:block relative">
+                <div className="overflow-auto flex-grow relative">
                     <table className="w-full text-xs xl:text-sm">
                         <TableColumns table={table} />
                         <TableRows table={table} />
                     </table>
-                </div>
-                <div className="flex-grow overflow-auto flex flex-col gap-2 md:hidden">
-                {rows.map(row => (
-                    <TableCard key={row.id} row={row}/>
-                ))}
                 </div>
                 {showPagination && rows.length > 0 && <PaginationControls total={total || 0} table={table} />}
                 </>

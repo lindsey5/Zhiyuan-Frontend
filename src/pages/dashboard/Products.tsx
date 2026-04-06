@@ -61,7 +61,7 @@ export default function Products () {
             header: "Product",
             accessorKey: "product_name",
             cell: ({ row }) => (
-                <div className="lg:min-w-50 flex flex-wrap md:flex-nowrap items-center gap-3 justify-start">
+                <div className="min-w-50 flex items-center gap-3 justify-start">
                     <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
                     <span className="text-xs xl:text-sm">{row.original.product_name}</span>
                 </div>
