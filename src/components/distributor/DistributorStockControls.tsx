@@ -35,7 +35,8 @@ export default function DistributorStockControls ({
                 placeholder="Search by variant, sku or product name..."
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <FiltersMenu className="md:hidden">
+            <FiltersMenu className="md:hidden" containerStyle="w-[80vw] space-y-3">
+                <h1 className="font-bold text-md md:text-lg">Filter</h1>
                 <Dropdown 
                     label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}

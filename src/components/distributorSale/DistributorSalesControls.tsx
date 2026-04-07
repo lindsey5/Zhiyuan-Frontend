@@ -51,7 +51,7 @@ export default function DistributorSalesControls ({
                 placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by seller, item name, or sku..."}
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <FiltersMenu containerStyle="space-y-3 w-[70vw] md:w-90">
+            <FiltersMenu containerStyle="space-y-3 w-[80vw] md:w-90">
                 <h1 className="font-bold text-md md:text-lg">Filter</h1>
                 <div className="grid grid-cols-2 gap-3 ">
                     <DateInput 

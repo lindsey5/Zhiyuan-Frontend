@@ -53,7 +53,7 @@ export default function StockTransferLogsControls({
 
                 <FiltersMenu className="md:hidden" containerStyle="w-[80vw] md:w-100">
                     <h1 className="font-bold text-md md:text-lg">Filter</h1>
-                    <div className="grid grid-cols-2 gap-5 mt-4">
+                    <div className="grid md:grid-cols-2 gap-5 mt-4">
                         <DateInput 
                             label="From"
                             onChange={(value) => setStartDate(value)}
