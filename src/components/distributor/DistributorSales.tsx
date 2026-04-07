@@ -98,7 +98,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 setPagination={setPagination}
                 totalPages={data?.totalPages || 0}
                 showPagination
-                noDataMessage="No Sales Yet"
+                noDataMessage="No Sales Found"
                 total={data?.total || 0}
             />
         </Card>
