@@ -21,6 +21,7 @@ import TransferLogs from "../pages/dashboard/TransferLogs";
 import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
 import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
+import DistributorReports from "../pages/dashboard/Reports";
 
 const router = createBrowserRouter([ 
     {
@@ -187,6 +188,14 @@ const router = createBrowserRouter([
                         Component: () => (
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]}>
                                 <StockDistribution />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'reports',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]}>
+                                <DistributorReports />
                             </ProtectedRoute>
                         )
                     },

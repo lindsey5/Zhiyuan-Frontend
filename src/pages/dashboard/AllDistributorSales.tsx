@@ -68,9 +68,9 @@ export default function AllDistributorSales () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const { getDistributorSales } = useDistributorSale();
+    const { getAllDistributorSales } = useDistributorSale();
 
-    const { data, isFetching } = getDistributorSales({
+    const { data, isFetching } = getAllDistributorSales({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,

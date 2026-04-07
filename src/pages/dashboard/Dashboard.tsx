@@ -1,4 +1,4 @@
-import DashboardChart from "../../components/dashboard/DashboardChart"
+import DashboardChart from "../../components/ui/Chart"
 import Metrics from "../../components/dashboard/Metrics"
 import PageContainer from "../../components/ui/PageContainer"
 

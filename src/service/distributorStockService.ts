@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse } from "../types/distributor-stock.type";
+import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorTotalStocksResponse } from "../types/distributor-stock.type";
 
 export const distributorStockService = {
     getDistributorStocks: (id: string, params: GetDistributorStocksParams): Promise<GetDistributorStocksResponse> => (
@@ -13,6 +13,12 @@ export const distributorStockService = {
         apiAxios<CreateDistributorStocksResponse>(`distributor-stocks/${id}`, {
             method: HttpMethod.POST,
             data
+        })
+    ),
+
+    getDistributorTotalStocks: (id: string) => (
+        apiAxios<GetDistributorTotalStocksResponse>(`distributor-stocks/stock/${id}`, {
+            method: HttpMethod.GET
         })
     )
 };

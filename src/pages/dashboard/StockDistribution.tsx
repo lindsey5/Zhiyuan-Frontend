@@ -7,9 +7,12 @@ import DistributorSelector from "../../components/stockDistribution/DistributorS
 import { errorToast, successToast } from "../../utils/sileo";
 import { ShoppingCart } from "lucide-react";
 import TransferCart from "../../components/stockDistribution/TransferCart";
+import { useSearchParams } from "react-router-dom";
 
 export default function StockDistribution () {
-    const [distributorId, setDistributorId] = useState<string | null>(null);
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+    const [distributorId, setDistributorId] = useState<string | null>(id);
     const [variants, setVariants] = useState<{ variant: VariantWithProduct, quantity: number }[]>([]);
     const [showModal, setShowModal] = useState(false);
 
@@ -62,6 +65,7 @@ export default function StockDistribution () {
             <div className="flex flex-col gap-5">
                 <DistributorSelector 
                     setDistributor={setDistributorId}
+                    defaultDistributor={id}
                 />
                 <VariantSelector 
                     addVariant={addVariant}

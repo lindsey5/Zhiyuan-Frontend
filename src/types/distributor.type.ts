@@ -35,6 +35,7 @@ export interface GetDistributorsParams extends PaginationParams {
     search?: string;
     sortBy?: string;
     order?: "asc" | "desc"
+    id?: string;
 }
 
 export interface GetDistributorsResponse extends PaginationResponse {

@@ -57,7 +57,7 @@ export default function Dropdown({
 
                 {/* Dropdown */}
                 {open && (
-                    <div className="overflow-y-auto absolute mt-2 w-full bg-input-ui border border-[var(--border-ui)] rounded-sm z-5">
+                    <div className="overflow-y-auto absolute mt-2 w-full bg-input-ui border border-[var(--border-ui)] rounded-sm z-10">
                         {options.map(option => (
                             <div
                                 key={option.value}

@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
-import Card from "../ui/Card";
+import Card from "./Card";
 import { useThemeStore } from "../../lib/store/themeStore";
 import { useEffect, useState } from "react";
 
@@ -30,7 +30,7 @@ interface ChartProps {
   values: number[];
 }
 
-export default function DashboardChart({ title, labels, values }: ChartProps) {
+export default function Chart({ title, labels, values }: ChartProps) {
   const { isDark } = useThemeStore();
   const [gold, setGold] = useState("");
 
@@ -134,7 +134,7 @@ export default function DashboardChart({ title, labels, values }: ChartProps) {
   };
 
   return (
-    <Card className="w-full h-[280px] sm:h-[350px] md:h-[450px]">
+    <Card className="w-full h-[500px]">
       <h2 className="font-sans text-gold text-base sm:text-lg font-bold mb-4 sm:mb-8">
         {title}
       </h2>

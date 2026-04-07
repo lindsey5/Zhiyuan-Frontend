@@ -47,7 +47,7 @@ const columns: ColumnDef<DistributorSale>[] = [
     },
 ];
 
-export default function DistributorSales () {
+export default function DistributorSales ({ distributorId } : { distributorId: string }) {
     const [sorting, setSorting] = useState<SortOption>({
         order: 'desc',
         sortBy: 'createdAt'
@@ -59,7 +59,7 @@ export default function DistributorSales () {
     const [endDate, setEndDate] = useState('');
     const { getDistributorSales } = useDistributorSale();
 
-    const { data, isFetching } = getDistributorSales({
+    const { data, isFetching } = getDistributorSales(distributorId, {
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,
@@ -90,7 +90,7 @@ export default function DistributorSales () {
                 setPagination={setPagination}
                 totalPages={data?.totalPages || 0}
                 showPagination
-                noDataMessage="No Distributors Found"
+                noDataMessage="No Sales Yet"
                 total={data?.total || 0}
             />
         </Card>

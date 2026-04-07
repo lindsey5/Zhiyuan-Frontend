@@ -1,4 +1,4 @@
-import Card from "../ui/Card";
+import Card from "./Card";
 
 interface MetricCardProps {
     title: string;
@@ -16,4 +16,15 @@ export default function MetricCard({ title, content }: MetricCardProps) {
             </div>
         </Card>
     );
+}
+
+export function MetricCardSkeleton() {
+    return (
+        <Card>
+            <div className="flex flex-col gap-5">
+                <div className="w-full h-5 bg-loading animate-pulse"></div>
+                <div className="w-full h-5 bg-loading animate-pulse"></div>
+            </div>
+        </Card>
+    )
 }

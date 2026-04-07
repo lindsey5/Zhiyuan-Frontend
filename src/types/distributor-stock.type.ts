@@ -29,3 +29,7 @@ export interface CreateDistributorStockPayload {
 export interface CreateDistributorStocksResponse extends ApiResponse {
     newStocks: DistributorStock[]
 }
+
+export interface GetDistributorTotalStocksResponse extends ApiResponse {
+    totalStocks: number;
+}

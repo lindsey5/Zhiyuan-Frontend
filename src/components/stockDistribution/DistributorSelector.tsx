@@ -1,4 +1,4 @@
-import { useState, type SetStateAction } from "react";
+import { useEffect, useState, type SetStateAction } from "react";
 import Card from "../ui/Card";
 import CustomizedTable from "../ui/Table";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -11,9 +11,10 @@ import TextField from "../ui/TextField";
 
 interface DistributorSelectorProps {
     setDistributor: React.Dispatch<SetStateAction<string | null>>;
+    defaultDistributor: string | null;
 }
 
-export default function DistributorSelector({ setDistributor } : DistributorSelectorProps) {
+export default function DistributorSelector({ setDistributor, defaultDistributor } : DistributorSelectorProps) {
     const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
@@ -27,6 +28,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
+        id: defaultDistributor || undefined
     });
 
     const columns: ColumnDef<Distributor>[] = [
@@ -75,6 +77,10 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         },
     ];
 
+    useEffect(() => {
+        if(defaultDistributor) setSelectedDistributor(data?.distributors[0] || null);
+    }, [data])
+
     return (
         <Card className="p-0 flex flex-col">
             {/* If selected distributor exists show info */}
@@ -98,17 +104,15 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     </div>
                 </div>
 
-                <div className="gap-3">
-                    <GoldButton 
-                        onClick={() => {
-                            setSelectedDistributor(null)
-                            setDistributor(null)
-                        }}
-                        className="text-xs xl:text-sm"
-                    >
-                    Change Distributor
-                    </GoldButton>
-                </div>
+                {!defaultDistributor && <GoldButton 
+                    onClick={() => {
+                        setSelectedDistributor(null)
+                        setDistributor(null)
+                    }}
+                    className="text-xs xl:text-sm"
+                >
+                Change Distributor
+                </GoldButton>}
                 </div>
             ) : (
                 <>

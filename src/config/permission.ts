@@ -44,7 +44,13 @@ export const PERMISSIONS = {
     
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
-    DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view'
+    DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
+
+    // Distributor Stats
+    DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
+
+    // Distributor Reports
+    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view'
 }
 
 type PermissionGroup = {
@@ -114,7 +120,9 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
         DISTRIBUTOR_STOCK_TRANSFER: "Transfer stocks to ditributor",
         DISTRIBUTOR_STOCK_VIEW: "View distributor stocks",
-        DISTRIBUTOR_SALES_VIEW: 'View distributor sales'
+        DISTRIBUTOR_SALES_VIEW: 'View distributor sales',
+        DISTRIBUTOR_STATS_VIEW: 'View distributor\'s stats and analytics',
+        DISTRIBUTOR_REPORTS_VIEW: '"View distributors overall reports and analytics'
     },
 };
 
