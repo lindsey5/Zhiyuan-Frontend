@@ -16,9 +16,9 @@ import {
     Layers,
     User,
     Network,
-    TrendingUp,
-    BarChart,
     Repeat,
+    FileBarChart,
+    BarChartBig,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -163,8 +163,8 @@ export default function Sidebar({
                     setOpen={() => setOpenDropdown((prev) => prev === "Distributor Management" ? null : "Distributor Management")}
                     items={[
                         { label: "View Distributors", icon: <Eye size={20} />, path: "/dashboard/distributors" },
-                        { label: "Distributor Sales", icon: <TrendingUp size={20} />, path: "/dashboard/distributors/sales" },
-                        { label: "Reports", icon: <BarChart size={20} />, path: "/dashboard/distributors/reports" },
+                        { label: "Distributor Sales", icon: <BarChartBig size={20} />, path: "/dashboard/distributors/sales" },
+                        { label: "Reports", icon: <FileBarChart size={20} />, path: "/dashboard/distributors/reports" },
                         { label: "Transfer History", icon: <Repeat size={20} />, path: "/dashboard/distributors/transfer-logs" },
                     ]}
                 />

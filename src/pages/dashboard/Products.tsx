@@ -111,7 +111,7 @@ export default function Products () {
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     

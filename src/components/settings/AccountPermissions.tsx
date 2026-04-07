@@ -59,7 +59,7 @@ export default function AccountPermissions() {
                         ([category, perms]) => (
                             <Card
                                 key={category}
-                                className="space-y-3 shadow-0"
+                                className="space-y-3 shadow-0 bg-input-ui"
                             >
                                 {/* Category Title */}
                                 <h4 className="text-sm font-semibold text-primary">

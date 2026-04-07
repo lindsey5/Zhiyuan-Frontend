@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { SortOption } from "../types/type";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -48,4 +49,17 @@ export function formatToPeso (num : number) {
     });
 
     return `₱ ${formatted}`;
+}
+
+export function getKeyByValue(
+    obj: Record<string, SortOption>,
+    target: SortOption
+) {
+    return Object.keys(obj).find(key => {
+        const value = obj[key]
+        return (
+            value.sortBy === target.sortBy &&
+            value.order === target.order
+        )
+    })
 }

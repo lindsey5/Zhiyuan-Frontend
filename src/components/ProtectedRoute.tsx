@@ -3,6 +3,7 @@ import { type ReactNode } from 'react';
 import usePermissions from '../hooks/usePermissions';
 import { useRole } from '../hooks/useRole';
 import Unauthorized from './Unauthorized';
+import LoadingScreen from './ui/LoadingScreen';
 
 type ProtectedRouteProps = {
     children: ReactNode;
@@ -28,8 +29,8 @@ export const ProtectedRoute = ({
     const { data, isLoading } = getOwnRole();
     const permissions = data?.permissions || []
 
-    if(isLoading) return null
-
+    if(isLoading) return <LoadingScreen />
+    
     if (requireAuthentication && !isAuthenticated()) {
         return <Navigate to={redirectTo} replace />;
     }

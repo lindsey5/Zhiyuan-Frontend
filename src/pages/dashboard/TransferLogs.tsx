@@ -22,7 +22,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
-                <p>{row.original.receiver.email}</p>
+                <p className="text-gray">{row.original.receiver.email}</p>
             </div>
         ),
         meta: { align: 'left' },
@@ -32,7 +32,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
-                <p>{row.original.sender.email}</p>
+                <p className="text-gray">{row.original.sender.email}</p>
             </div>
         ),
         meta: { align: 'left' },
@@ -65,7 +65,7 @@ export default function TransferLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
+    const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -97,7 +97,7 @@ export default function TransferLogs () {
 
     return (
         <PageContainer
-            title="Transfer Logs"
+            title="Transfer History"
             description="View the history of transfered stocks from admin to distributors"
             className="md:max-h-screen"
         >
@@ -108,6 +108,8 @@ export default function TransferLogs () {
             />
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <StockTransferLogsControls 
+                    startDate={startDate}
+                    endDate={endDate}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}

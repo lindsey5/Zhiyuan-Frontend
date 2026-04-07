@@ -14,7 +14,7 @@ import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
 import { useRole } from "../../hooks/useRole";
 import { PERMISSIONS } from "../../config/permission";
-import DistributorControls from "../../components/distributors/DistributorControls";
+import DistributorControls from "../../components/distributors/DistributorsControls";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import IconButton from "../../components/ui/IconButton";
 import type { CreateColumnsParams } from "../../types/type";
@@ -70,13 +70,13 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center '}
     },
-        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
+        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
         ? [
         {
             header: 'Actions',
             cell: ({ row } : { row : Row<Distributor>}) => (
                 <div className="flex gap-2">
-                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
+                    {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW], permissions) && (
                         <IconButton 
                             onClick={() => navigate(`${row.original._id}`)}
                             icon={<Eye className="text-gold" size={20} />}
@@ -107,7 +107,7 @@ export default function Distributors () {
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
     const { getDistributors, deleteDistributor } = useDistributor();
 
     const { data, isFetching } = getDistributors({

@@ -30,10 +30,8 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
     }
 
     const onSubmit : SubmitHandler<DistributorFormData> = async (data) => {
-
         promiseToast(createDistributor.mutateAsync({ data})) 
     }
-    
 
     return (
         <Modal

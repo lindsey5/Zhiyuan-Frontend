@@ -77,7 +77,7 @@ export default function AuditLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
+    const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -109,6 +109,8 @@ export default function AuditLogs () {
         >
             <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
                 <AuditLogsControls
+                    startDate={startDate}
+                    endDate={endDate}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}

@@ -1,5 +1,6 @@
-import { Eye, EyeOff, Search } from "lucide-react";
-import { useState, type InputHTMLAttributes } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+import { cn } from "../../utils/utils";
 
 type InputProps = {
     label?: string;
@@ -8,15 +9,25 @@ type InputProps = {
     error?: string;
     disabled?: boolean;
     registration?: any; 
+    className?: string;
+    icon?: React.ReactNode; 
+    iconPosition?: "left" | "right";
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value?: string;
 };
 
 export default function TextField({
-  label,
-  type = "text",
-  placeholder,
-  disabled,
-  error,
-  registration,
+    label,
+    type = "text",
+    className,
+    placeholder,
+    disabled,
+    error,
+    registration,
+    icon,
+    iconPosition = "left",
+    onChange,
+    value
 }: InputProps) {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -24,25 +35,34 @@ export default function TextField({
         type === "password" ? (showPassword ? "text" : "password") : type;
 
     return (
-        <div className="w-full flex flex-col gap-1">
+        <div className={cn(
+            "w-full flex flex-col gap-1",
+            className
+        )}>
         {label && (
             <label className="text-xs xl:text-sm text-primary font-medium">{label}</label>
         )}
 
         <div className="relative w-full">
             <input
-            {...registration}
-            disabled={disabled}
-            type={inputType}
-            placeholder={placeholder}
-            className={`w-full p-3 pr-12 bg-input-ui border text-xs xl:text-sm rounded-sm text-primary outline-none transition-all
-                ${
-                error
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-[var(--border-ui)] focus:border-gold"
-                }
-            `}
+                {...registration}
+                disabled={disabled}
+                type={inputType}
+                {...(onChange ? { onChange } : {})}
+                placeholder={placeholder}
+                value={value}
+                className={cn(
+                    "w-full p-3 pr-12 bg-input-ui border text-xs xl:text-sm rounded-sm text-primary outline-none transition-all",
+                    icon ? (iconPosition === "left" ? "pl-10" : "pr-10") : "",
+                    error ? "border-red-500 focus:border-red-500" : "border-[var(--border-ui)] focus:border-gold"
+                )}
             />
+
+            {icon && iconPosition === "left" && (
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                {icon}
+            </div>
+            )}
 
             {type === "password" && (
             <button
@@ -53,26 +73,15 @@ export default function TextField({
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
             )}
+
+            {icon && iconPosition === "right" && (
+            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                {icon}
+            </div>
+            )}
         </div>
 
         {error && <span className="text-xs text-red-500">{error}</span>}
         </div>
     );
-}
-
-type SearchFieldProps = InputHTMLAttributes<HTMLInputElement>
-
-export function SearchField(props: SearchFieldProps) {
-    return (
-        <div className="relative">
-            <Search 
-                className="absolute left-3 top-3"
-                size={20}
-            />
-            <input
-                {...props}
-                className="text-xs xl:text-sm w-full p-3 pl-10 bg-input-ui border border-[var(--border-ui)] rounded-lg focus:border-gold text-primary outline-none transition-all"
-            />
-        </div>
-    )
 }

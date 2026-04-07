@@ -5,9 +5,9 @@ import { useDebounce } from "../../hooks/useDebounce";
 import type { Distributor } from "../../types/distributor.type";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDistributor } from "../../hooks/useDistributor";
-import { SearchField } from "../ui/TextField";
 import GoldButton from "../ui/GoldButton";
-import { User } from "lucide-react";
+import { Search, User } from "lucide-react";
+import TextField from "../ui/TextField";
 
 interface DistributorSelectorProps {
     setDistributor: React.Dispatch<SetStateAction<string | null>>;
@@ -16,7 +16,7 @@ interface DistributorSelectorProps {
 export default function DistributorSelector({ setDistributor } : DistributorSelectorProps) {
     const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
     const { getDistributors } = useDistributor();
     const [pagination, setPagination] = useState<PaginationState>({
         pageSize: 50,
@@ -115,9 +115,10 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                 {/* Search */}
                 <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
                     <h1 className="text-md xl:text-lg font-bold">Select Distributor</h1>
-                    <SearchField
-                    placeholder="Search distributor"
-                    onChange={(e) => setSearch(e.target.value)}
+                    <TextField 
+                        icon={<Search size={20}/>}
+                        placeholder="Search distributor..."
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
 

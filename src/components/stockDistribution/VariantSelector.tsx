@@ -5,9 +5,10 @@ import { formatDate, formatToPeso } from "../../utils/utils";
 import { useVariant } from "../../hooks/useVariant";
 import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
-import { SearchField } from "../ui/TextField";
 import CustomizedTable from "../ui/Table";
 import GoldButton from "../ui/GoldButton";
+import TextField from "../ui/TextField";
+import { Search } from "lucide-react";
 
 interface VariantSelectorProps {
     addVariant: (variant: VariantWithProduct, quantity: number) => void;
@@ -16,7 +17,7 @@ interface VariantSelectorProps {
 export default function VariantSelector ({ addVariant } : VariantSelectorProps) {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
 
     const params = { 
         page: pagination.pageIndex + 1, 
@@ -86,10 +87,12 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
         <Card className="p-0 flex flex-col">
             <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
                 <h1 className="text-md xl:text-lg font-bold">Select Variants</h1>
-                <SearchField
-                    placeholder="Search variants"
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                    <TextField 
+                        className="md:max-w-100"
+                        icon={<Search size={20}/>}
+                        placeholder="Search variants..."
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
             </div>
             <CustomizedTable
                 isLoading={isFetching}

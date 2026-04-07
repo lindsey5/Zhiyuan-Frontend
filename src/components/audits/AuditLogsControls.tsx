@@ -1,11 +1,14 @@
-import { SearchField } from "../ui/TextField";
+import TextField from "../ui/TextField";
 import Dropdown, { RoleDropdown } from "../ui/Dropdown";
 import DateInput from "../ui/DateInput";
 import FiltersMenu from "../ui/FiltersMenu";
+import { Search } from "lucide-react";
 
 interface AuditLogsControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
+    startDate: string;
     setStartDate: React.Dispatch<React.SetStateAction<string>>;
+    endDate: string;
     setEndDate: React.Dispatch<React.SetStateAction<string>>;
     role: string;
     setRole: React.Dispatch<React.SetStateAction<string>>;
@@ -16,6 +19,8 @@ interface AuditLogsControlsProps {
 }
 
 export default function AuditLogsControls({
+    startDate,
+    endDate,
     setSearch,
     setStartDate,
     setEndDate,
@@ -27,31 +32,41 @@ export default function AuditLogsControls({
     setOrder,
 }: AuditLogsControlsProps) {
 
+    const clear = () => {
+        setStartDate('');
+        setEndDate('');
+        setRole('');
+        setSeverity('');
+        setOrder('desc');
+    }
+
     return (
         <div className="flex flex-col gap-4 px-5 mb-5">
-            <div className="flex items-center justify-between w-full gap-2">
-                <div className="flex-1">
-                    <SearchField
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search by user or action..."
-                    />
-                </div>
+            <div className="flex items-center w-full gap-2">
+            <TextField 
+                className="md:max-w-100"
+                icon={<Search size={20}/>}
+                placeholder="Search by user or action..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
 
             <FiltersMenu containerStyle="w-[80vw] md:w-100">
                 <h1 className="font-bold text-lg">Filter</h1>
-                <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-5 mt-4">
+                <div className="flex flex-col gap-3 grid grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
                         label="From"
                         onChange={(value) => setStartDate(value)}
+                        value={startDate}
                     />
 
                     <DateInput 
                         label="To"
                         onChange={(value) => setEndDate(value)}
+                        value={endDate}
                     />
 
                     <Dropdown 
-                        title="Severity"
+                        label="Severity"
                         value={severity}
                         onChange={(value) => setSeverity(value)}
                         options={[
@@ -69,7 +84,7 @@ export default function AuditLogsControls({
                     />
 
                     <Dropdown 
-                        title="Sort"
+                        label="Sort"
                         value={order}
                         onChange={(value) => setOrder(value as "asc" | "desc")}
                         options={[
@@ -77,6 +92,12 @@ export default function AuditLogsControls({
                             { label: 'OLDEST', value: 'asc' },
                         ]}
                     />
+                </div>
+                <div className="flex justify-end">
+                    <button 
+                        className="cursor-pointer hover:text-gold text-sm md:text-sm"
+                        onClick={clear}
+                    >Clear</button>
                 </div>
             </FiltersMenu>
             </div>

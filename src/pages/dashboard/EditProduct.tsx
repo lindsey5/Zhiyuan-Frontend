@@ -137,7 +137,7 @@ export default function EditProduct () {
                             onChange={(value) => setValue('category', value)}
                             options={categories}
                             value={watch('category')}
-                            title="Category"
+                            label="Category"
                             error={errors.category?.message}
                         />
                     </div>

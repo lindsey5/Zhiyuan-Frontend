@@ -13,7 +13,7 @@ const TableRow = <T,>({ row }: TableRowProps<T>) => {
             return (
             <td
                 key={cell.id}
-                className={`min-w-30 p-5 border-b border-[var(--border-panel)] text-${align}`}
+                className={`min-w-30 p-3 border-b border-[var(--border-panel)] text-${align}`}
             >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>
@@ -41,7 +41,7 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
                 return (
                 <th
                     key={header.id}
-                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel z-5`}
+                    className={`text-gold border-b p-3 font-bold sticky top-0 bg-panel z-5`}
                     style={{ textAlign: align }}
                 >
                     {flexRender(header.column.columnDef.header, header.getContext())}

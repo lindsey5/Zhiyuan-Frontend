@@ -16,10 +16,11 @@ import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
 import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
-import DistributorStock from "../pages/dashboard/DistributorStock";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
 import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
+import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
+import Distributor from "../pages/dashboard/Distributor";
 
 const router = createBrowserRouter([ 
     {
@@ -29,11 +30,9 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <ProtectedRoute requireAuthentication>
-                <StockTransferSocketContextProvider>
-                    <DashboardLayout />
-                </StockTransferSocketContextProvider>
-            </ProtectedRoute>
+            <StockTransferSocketContextProvider>
+                <DashboardLayout />
+            </StockTransferSocketContextProvider>
         ),
         children: [
             {
@@ -176,12 +175,10 @@ const router = createBrowserRouter([
                         )
                     },
                     {
-                        path: ":id",
+                        path: "sales",
                         Component: () => (
-                            <ProtectedRoute
-                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_READ]}
-                            >
-                                <DistributorStock />
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW]}>
+                                <AllDistributorSales />
                             </ProtectedRoute>
                         )
                     },
@@ -202,7 +199,17 @@ const router = createBrowserRouter([
                                 <TransferLogs />
                             </ProtectedRoute>
                         )
-                    }
+                    },
+                    {
+                        path: ":id",
+                        Component: () => (
+                            <ProtectedRoute
+                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]}
+                            >
+                                <Distributor />
+                            </ProtectedRoute>
+                        )
+                    },
                 ]
             }
         ]

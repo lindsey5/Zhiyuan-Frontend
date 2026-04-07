@@ -105,7 +105,7 @@ export default function Users () {
     const permissions = roleData?.permissions || [];
 
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
+    const debouncedSearch = useDebounce(search, 500);
     const [role, setRole] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 

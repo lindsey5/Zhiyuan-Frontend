@@ -1,8 +1,10 @@
 import type React from "react";
 import type { SortOption } from "../../types/type";
 import Dropdown from "../ui/Dropdown";
-import { SearchField } from "../ui/TextField";
+import TextField from "../ui/TextField";
 import FiltersMenu from "../ui/FiltersMenu";
+import { getKeyByValue } from "../../utils/utils";
+import { Search } from "lucide-react";
 
 const options: Record<string, SortOption> = {
     'Newest' : { sortBy: 'updatedAt', order: 'desc' },
@@ -12,19 +14,6 @@ const options: Record<string, SortOption> = {
     'Quantity (ASC)' : { sortBy: 'quantity', order: 'asc' },
     'Quantity (DESC)' : { sortBy: 'quantity', order: 'desc' },
 };
-
-function getKeyByValue(
-    obj: Record<string, SortOption>,
-    target: SortOption
-) {
-    return Object.keys(obj).find(key => {
-        const value = obj[key]
-        return (
-            value.sortBy === target.sortBy &&
-            value.order === target.order
-        )
-    })
-}
 
 interface DistributorStockControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -40,15 +29,15 @@ export default function DistributorStockControls ({
 
     return (
         <div className="px-5 flex items-center md:items-end justify-between gap-5">
-            <div className="w-full md:max-w-100">
-                <SearchField 
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search by variant, sku or product name..."
-                />
-            </div>
+            <TextField 
+                className="md:max-w-100"
+                icon={<Search size={20}/>}
+                placeholder="Search by variant, sku or product name..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
             <FiltersMenu className="md:hidden">
                 <Dropdown 
-                    title="Sort"
+                    label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
                         setSorting(options[value])
@@ -58,7 +47,7 @@ export default function DistributorStockControls ({
             </FiltersMenu>
             <Dropdown 
                 className="max-w-60 w-[40%] hidden md:block"
-                title="Sort"
+                label="Sort"
                 options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                 onChange={(value) => setSorting(options[value]) }
                 value={getKeyByValue(options, sorting) || ""}

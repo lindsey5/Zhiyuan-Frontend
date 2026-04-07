@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
+import Button from "./ui/Button";
 import Card from "./ui/Card";
 import { Lock } from "lucide-react";
 
 export default function Unauthorized ({ children } : { children : React.ReactNode }) {
+    const navigate = useNavigate();
 
     return (
         <div className='relative w-full h-screen'>
@@ -16,6 +19,10 @@ export default function Unauthorized ({ children } : { children : React.ReactNod
                     <p className="text-gray-400 text-center">
                     You don’t have permission to view this content.
                     </p>
+                    <Button
+                        label="Go Back"
+                        onClick={() => navigate(-1)}
+                    />
                 </Card>
             </div>
             <div className="blur-md pointer-events-none select-none">

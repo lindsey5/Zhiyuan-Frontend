@@ -1,15 +1,13 @@
-import { useState } from "react";
-import { useDistributorStock } from "../../hooks/useDistributorStock"
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
-import { useDebounce } from "../../hooks/useDebounce";
-import { useParams } from "react-router-dom";
-import Card from "../../components/ui/Card";
-import { formatDate, formatToPeso } from "../../utils/utils";
 import type { DistributorStock } from "../../types/distributor-stock.type";
-import CustomizedTable from "../../components/ui/Table";
-import { type SortOption } from "../../types/type";
-import DistributorStockControls from "../../components/distributorStock/DistributorStockControls";
-import DistributorInfo from "../../components/distributors/DistributorInfo";
+import Card from "../ui/Card";
+import { formatDate, formatToPeso } from "../../utils/utils";
+import DistributorStockControls from "./DistributorStockControls";
+import { useDistributorStock } from "../../hooks/useDistributorStock";
+import { useState } from "react";
+import type { SortOption } from "../../types/type";
+import { useDebounce } from "../../hooks/useDebounce";
+import CustomizedTable from "../ui/Table";
 
 const columns: ColumnDef<DistributorStock>[] = [
     {
@@ -55,9 +53,7 @@ const columns: ColumnDef<DistributorStock>[] = [
     }
 ];
 
-export default function DistributorStock () {
-    const params = useParams();
-    const id = params.id;
+export default function DistributorInventory ({ distributorId } : { distributorId: string }) {
     const { getDistributorStocks } = useDistributorStock();
     
     const [sorting, setSorting] = useState<SortOption>({
@@ -66,9 +62,9 @@ export default function DistributorStock () {
     })
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
 
-    const { data, isFetching } = getDistributorStocks(id || "", {
+    const { data, isFetching } = getDistributorStocks(distributorId, {
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
@@ -77,27 +73,24 @@ export default function DistributorStock () {
     });
 
     return (
-        <div className="flex flex-col gap-3 p-2 lg:p-6 md:max-h-screen">
-            <DistributorInfo id={id || ""} />
-            <Card className="p-0">
-                <h1 className="p-5 font-bold text-lg">Distributor Inventory</h1>
-                <DistributorStockControls 
-                    setSearch={setSearch}
-                    setSorting={setSorting}
-                    sorting={sorting}
-                />
-                <CustomizedTable 
-                    isLoading={isFetching}
-                    data={data?.distributorStocks || []}
-                    columns={columns}
-                    pagination={pagination}
-                    setPagination={setPagination}
-                    totalPages={data?.totalPages || 0}
-                    showPagination
-                    noDataMessage="No Available Stock"
-                    total={data?.total || 0}
-                />
-            </Card>
-        </div>
+        <Card className="p-0 min-h-0 flex-1 flex flex-col gap-3 pt-5">
+            <h1 className="px-5 font-bold text-lg">Distributor Inventory</h1>
+            <DistributorStockControls 
+                setSearch={setSearch}
+                setSorting={setSorting}
+                sorting={sorting}
+            />
+            <CustomizedTable 
+                isLoading={isFetching}
+                data={data?.distributorStocks || []}
+                columns={columns}
+                pagination={pagination}
+                setPagination={setPagination}
+                totalPages={data?.totalPages || 0}
+                showPagination
+                noDataMessage="No Available Stock"
+                total={data?.total || 0}
+            />
+        </Card>
     )
 }

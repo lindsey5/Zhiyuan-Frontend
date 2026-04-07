@@ -1,9 +1,11 @@
 import type React from "react";
 import type { SortOption } from "../../types/type";
 import Dropdown from "../ui/Dropdown";
-import { SearchField } from "../ui/TextField";
 import CategoryDropdown from "../ui/CategoryDropdown";
 import FiltersMenu from "../ui/FiltersMenu";
+import { getKeyByValue } from "../../utils/utils";
+import TextField from "../ui/TextField";
+import { Search } from "lucide-react";
 
 const options: Record<string, SortOption> = {
     'Newest': { sortBy: 'createdAt', order: 'desc' },
@@ -11,19 +13,6 @@ const options: Record<string, SortOption> = {
     'A-Z': { sortBy: 'product_name', order: 'asc' },
     'Z-A': { sortBy: 'product_name', order: 'desc' },
 };
-
-function getKeyByValue(
-    obj: Record<string, SortOption>,
-    target: SortOption
-) {
-    return Object.keys(obj).find(key => {
-        const value = obj[key]
-        return (
-            value.sortBy === target.sortBy &&
-            value.order === target.order
-        )
-    })
-}
 
 interface ProductsTableControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -43,15 +32,16 @@ export default function ProductsTableControls ({
 
     return (
         <div className="px-5 flex items-center justify-between gap-5">
-            <div className="w-full md:max-w-100">
-                <SearchField 
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search by product name..."
-                />
-            </div>
-            <FiltersMenu className="md:hidden">
+            <TextField 
+                className="md:max-w-100"
+                icon={<Search size={20}/>}
+                placeholder="Search by product name..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
+            <FiltersMenu className="md:hidden" containerStyle="w-[60vw] md:w-auto space-y-3">
+                <h1 className="font-bold text-md md:text-lg">Filter</h1>
                 <Dropdown 
-                    title="Sort"
+                    label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
                         setSorting(options[value])
@@ -66,7 +56,7 @@ export default function ProductsTableControls ({
             <div className="max-w-100 w-[40%] hidden md:flex items-center space-x-3 flex-wrap">
                 <Dropdown 
                     className="flex-1"
-                    title="Sort"
+                    label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
                         setSorting(options[value])

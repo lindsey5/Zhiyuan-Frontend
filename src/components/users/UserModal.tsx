@@ -163,7 +163,7 @@ export default function UserModal ({ open, user, onClose } : UserModalProps) {
                         />
                     </div>
                         <Dropdown 
-                            title="Role"
+                            label="Role"
                             className="h-16"
                             options={data?.roles.map(role => ({ label: role.name, value: role._id})) || []}
                             onChange={(value) => setValue("role_id", value)}
