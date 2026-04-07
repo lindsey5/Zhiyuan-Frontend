@@ -1,22 +1,28 @@
 import { useState, useMemo } from "react";
 import { type ColumnDef, type Row } from "@tanstack/react-table";
 import { useOrders } from "../../hooks/useOrders";
-import CustomizedTable, { TableCardSkeleton } from "../../components/ui/Table";
+import CustomizedTable from "../../components/ui/Table";
 import OrdersFilter from "../../components/ui/orders/OrdersControls";
 import { Eye, CreditCard } from "lucide-react";
 import Button from "../../components/ui/Button";
 
 // 👉 define Order type (adjust if needed)
 type Order = {
-  id: string;
-  customerName: string;
-  deliveryType: string;
-  paymentMethod: string;
-  paymentStatus: string;
-  status: string;
-  totalAmount: number;
-  orderDate: string;
+  order_id: string;
+  customer_name: string;
+  status: "pending" | "processing" | "completed" | "cancelled";
+  total_amount: number;
+  delivery_type: "pickup" | "delivery";
+  payment_method: "COD" | "GCash" | "Card";
+  payment_status: "paid" | "unpaid";
+  createdAt: string;
 };
+
+type OrderFilters = {
+  status?: string;
+  payment_status?: string;
+  delivery_type?: string;
+}
 
 export default function Orders() {
   const [search, setSearch] = useState("");
@@ -40,25 +46,25 @@ export default function Orders() {
   const columns: ColumnDef<Order>[] = useMemo(() => [
     {
       header: "Order ID",
-      accessorKey: "id",
+      accessorKey: "order_id",
     },
     {
       header: "Customer",
-      accessorKey: "customerName",
+      accessorKey: "customer_name",
     },
     {
       header: "Delivery Type",
-      accessorKey: "deliveryType",
+      accessorKey: "delivery_type",
     },
     {
       header: "Payment Method",
-      accessorKey: "paymentMethod",
+      accessorKey: "payment_method",
     },
     {
       header: "Payment Status",
       cell: ({ row }) => (
         <span className="text-yellow-300">
-          {row.original.paymentStatus}
+          {row.original.payment_status}
         </span>
       ),
       meta: { align: "center" },
@@ -78,13 +84,13 @@ export default function Orders() {
         new Intl.NumberFormat("en-PH", {
           style: "currency",
           currency: "PHP",
-        }).format(row.original.totalAmount),
+        }).format(row.original.total_amount),
       meta: { align: "right" },
     },
     {
       header: "Order Date",
       cell: ({ row }) =>
-        new Date(row.original.orderDate).toLocaleDateString(),
+        new Date(row.original.createdAt).toLocaleDateString(),
       meta: { align: "center" },
     },
     {
@@ -101,7 +107,7 @@ export default function Orders() {
               <Eye size={16} />
             </Button>
 
-            {order.paymentStatus === "unpaid" && (
+            {order.payment_status === "unpaid" && (
               <Button
                 onClick={() => handleMarkPaid(order)}
                 className="bg-yellow-600 text-white p-2 text-xs"
@@ -114,7 +120,10 @@ export default function Orders() {
       },
       meta: { align: "center" },
     },
-  ], []);
+  ], [
+      handleView,
+      handleMarkpaid
+    ]);
 
   return (
     <div className="p-6 space-y-4">
@@ -122,7 +131,7 @@ export default function Orders() {
 
       <OrdersFilter 
         onSearch={setSearch}
-        onFilter={(f: any) => setFilters((prev) => ({ ...prev, ...f }))}
+        onFilter={(f: OrderFilters) => setFilters((prev) => ({ ...prev, ...f }))}
       />
 
       <CustomizedTable 
@@ -130,8 +139,7 @@ export default function Orders() {
         columns={columns}                
         isLoading={isFetching}           
         showPagination={true}
-        noDataMessage="No orders found"
-        total={0}                        
+        noDataMessage="No orders found"                       
       />
     </div>
   );
