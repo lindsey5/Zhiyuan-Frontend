@@ -15,12 +15,18 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
     return (
         <Modal open={open} onClose={close}>
             <Card className="max-h-[80vh] md:max-h-[70vh] overflow-y-auto">
-                <h2 className="text-md font-semibold mb-3">Transfered Items</h2>
+                <h2 className="text-md font-semibold mb-3">Transfer Details</h2>
+                <div className="text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
+                    <p>Sent by: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
+                    <p>Received by: {stockTransferLog?.receiver.distributor_name}</p>
+                    <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
+                </div>
+                <h2 className="text-md font-semibold my-3">Transfered Items</h2>
                 <div className="space-y-3">
                 {stockTransferLog?.items.map(item => (
                         <div
                             key={item.variant._id}
-                            className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 border-b border-[var(--border-ui)] py-3"
+                            className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 border-b border-[var(--border-panel)] py-3"
                         >
                             <img
                                 src={item.variant.image_url}
@@ -41,12 +47,6 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
                             </p>
                         </div>
                 ))}
-                </div>
-                <div className="my-5 text-sm border border-[var(--border-panel)] p-2 rounded-lg shadow-lg">
-                    <h2 className="text-md font-semibold mb-3">Transfer Log Details</h2>
-                    <p>Sent by: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
-                    <p>Received by: {stockTransferLog?.receiver.distributor_name}</p>
-                    <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
                 </div>
                 <div className="flex justify-end mt-4">
                     <GoldButton

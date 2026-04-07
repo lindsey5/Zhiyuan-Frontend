@@ -15,8 +15,85 @@ import usePermissions from "../../hooks/usePermissions";
 import { useRole } from "../../hooks/useRole";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorControls from "../../components/distributors/DistributorControls";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
 import IconButton from "../../components/ui/IconButton";
+import type { CreateColumnsParams } from "../../types/type";
+
+interface DistributorColsParams extends CreateColumnsParams {
+    handleDelete: (id: string) => void;
+    navigate: NavigateFunction;
+}
+
+const getColumns = ({ 
+    hasAnyPermissions, 
+    hasPermissions, 
+    permissions, 
+    handleDelete, 
+    navigate 
+} : DistributorColsParams) : ColumnDef<Distributor>[] => [
+    {
+        header: "Name",
+        accessorKey: "distributor_name",
+        meta: { align: 'left '}
+    },
+    {
+        header: "Email",
+        accessorKey: "email",
+        meta: { align: 'center '}
+    },
+    {
+        header: "Commission Rate",
+        accessorKey: 'commission_rate',
+        cell: info => `${info.getValue()}%`,
+        meta: { align: 'center '}
+    },
+    {
+        header: "Recruit by",
+        accessorKey: 'parent_distributor',
+        cell: info => info.getValue() ? (info.getValue() as Distributor).parent_distributor.distributor_name : "N/A",
+        meta: { align: 'center '}
+    },
+    {
+        header: "Wallet Balance",
+        accessorKey: "wallet_balance",
+        cell: info => formatToPeso(info.getValue() as number),
+        meta: { align: 'center '}
+    },
+    {
+        header: "Total Stocks",
+        accessorKey: "total_stocks",
+        meta: { align: 'center '}
+    },
+    {
+        header: "Date Created",
+        accessorKey: "createdAt",
+        cell: info => formatDate(info.getValue() as string),
+        meta: { align: 'center '}
+    },
+        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
+        ? [
+        {
+            header: 'Actions',
+            cell: ({ row } : { row : Row<Distributor>}) => (
+                <div className="flex gap-2">
+                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
+                        <IconButton 
+                            onClick={() => navigate(`${row.original._id}`)}
+                            icon={<Eye className="text-gold" size={20} />}
+                        />
+                    )}
+                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
+                        <IconButton 
+                            icon={<Trash color='red' size={20} />}
+                                onClick={() => handleDelete(row.original._id)}
+                        />
+                    )}
+                </div>
+            )
+    }
+    ]
+    : [])
+]
 
 export default function Distributors () {
     const navigate = useNavigate();
@@ -49,70 +126,13 @@ export default function Distributors () {
         promiseToast(deleteDistributor.mutateAsync({ id }));
     } 
 
-    const columns: ColumnDef<Distributor>[] = [
-        {
-            header: "Name",
-            accessorKey: "distributor_name",
-            meta: { align: 'left '}
-        },
-        {
-            header: "Email",
-            accessorKey: "email",
-            meta: { align: 'center '}
-        },
-        {
-            header: "Commission Rate",
-            accessorKey: 'commission_rate',
-            cell: info => `${info.getValue()}%`,
-            meta: { align: 'center '}
-        },
-        {
-            header: "Recruit by",
-            accessorKey: 'parent_distributor',
-            cell: info => info.getValue() ? (info.getValue() as Distributor).parent_distributor.distributor_name : "N/A",
-            meta: { align: 'center '}
-        },
-        {
-            header: "Wallet Balance",
-            accessorKey: "wallet_balance",
-            cell: info => formatToPeso(info.getValue() as number),
-            meta: { align: 'center '}
-        },
-        {
-            header: "Total Stocks",
-            accessorKey: "total_stocks",
-            meta: { align: 'center '}
-        },
-        {
-            header: "Date Created",
-            accessorKey: "createdAt",
-            cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'center '}
-        },
-         ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
-            ? [
-            {
-                header: 'Actions',
-                cell: ({ row } : { row : Row<Distributor>}) => (
-                    <div className="flex gap-2">
-                        {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_READ], permissions) && (
-                            <IconButton 
-                                onClick={() => navigate(`${row.original._id}`)}
-                                icon={<Eye className="text-gold" size={20} />}
-                            />
-                        )}
-                        {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
-                            <IconButton 
-                                icon={<Trash color='red' size={20} />}
-                                 onClick={() => handleDelete(row.original._id)}
-                            />
-                        )}
-                    </div>
-                )
-        }
-        ]
-        : [])
-    ]
+    const columns = getColumns({
+        hasAnyPermissions,
+        hasPermissions,
+        handleDelete,
+        navigate,
+        permissions
+    })
 
     return (
         <PageContainer 

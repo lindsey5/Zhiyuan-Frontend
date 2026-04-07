@@ -23,14 +23,14 @@ export default function StockTransferLogsControls({
                         placeholder="Search by receiver or sender..."
                     />
                 </div>
-                <div className="max-w-100 w-[40%] hidden md:flex items-center space-x-3 flex-wrap">
+                <div className="hidden md:flex items-center space-x-3 flex-wrap">
                         <DateInput 
-                            label="Start Date"
+                            label="From"
                             onChange={(value) => setStartDate(value)}
                         />
 
                         <DateInput 
-                            label="End Date"
+                            label="To"
                             onChange={(value) => setEndDate(value)}
                         />
                 </div>
@@ -39,12 +39,12 @@ export default function StockTransferLogsControls({
                     <h1 className="font-bold text-lg">Filter</h1>
                     <div className="grid grid-cols-2 gap-5 mt-4">
                         <DateInput 
-                            label="Start Date"
+                            label="From"
                             onChange={(value) => setStartDate(value)}
                         />
 
                         <DateInput 
-                            label="End Date"
+                            label="To"
                             onChange={(value) => setEndDate(value)}
                         />
                     </div>

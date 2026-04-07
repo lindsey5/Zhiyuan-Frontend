@@ -10,15 +10,96 @@ import {
 import type { Product } from "../../types/product.type";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate } from "../../utils/utils";
-import type { SortOption } from "../../types/type";
+import type { ApiResponse, CreateColumnsParams, SortOption } from "../../types/type";
 import ProductsTableControls from "../../components/products/ProductsTableControls";
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { promiseToast } from "../../utils/sileo";
+import type { UseMutationResult } from "@tanstack/react-query";
+
+interface ProductColsParams extends CreateColumnsParams {
+    deleteProduct: UseMutationResult<ApiResponse, Error, {id: string;}, unknown>;
+    deleteExistingProduct: (id: string) => void;
+    navigate: NavigateFunction;
+}
+
+const getColumns = ({ 
+    deleteExistingProduct, 
+    deleteProduct, 
+    hasAnyPermissions, 
+    hasPermissions, 
+    permissions, 
+    navigate
+} : ProductColsParams) : ColumnDef<Product>[] => [
+    {
+        header: "Product",
+        accessorKey: "product_name",
+        cell: ({ row }) => (
+            <div className="min-w-50 flex items-center gap-3 justify-start">
+                <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
+                <span className="text-xs xl:text-sm">{row.original.product_name}</span>
+            </div>
+        ),
+        meta: { align: 'left' },
+    },
+    {
+        header: "Category",
+        accessorKey: "category",
+        cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
+        meta: { align: 'center' },
+    },
+    {
+        header: "Variants",
+        cell: ({ row }) => row.original.variants?.length || 0,
+        meta: { align: 'center' },
+    },
+    {
+        header: "Stock",
+        cell: ({ row }) => {
+            const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
+            return <span className="text-xs xl:text-sm">{total}</span>;
+        },
+        meta: { align: 'center' },
+    },
+    {
+        header: "Created At",
+        cell: ({ row }) => formatDate(row.original.createdAt),
+        meta: { align: 'center' },
+    },
+    ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)
+        ? [
+            {
+                header: "Action",
+                cell: ({ row }: { row: Row<Product> }) => (
+                    <div className="flex flex-col lg:flex-row gap-3 justify-center">
+                        {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
+                            <Button
+                                label="Edit"
+                                className="p-1 lg:p-3 text-xs xl:text-sm"
+                                disabled={deleteProduct.isPending}
+                                onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
+                            />
+                        )}
+
+                        {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
+                            <Button
+                                label="Delete"
+                                className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
+                                disabled={deleteProduct.isPending}
+                                onClick={() => deleteExistingProduct(row.original._id)}
+                            />
+                        )}
+                    </div>
+                ),
+                meta: { align: 'center' },
+            },
+        ]
+    : []),
+];
 
 export default function Products () {
     const navigate = useNavigate();
@@ -56,72 +137,14 @@ export default function Products () {
         }), "top-center", "Product succesfully deleted.")
     };
 
-    const columns: ColumnDef<Product>[] = [
-        {
-            header: "Product",
-            accessorKey: "product_name",
-            cell: ({ row }) => (
-                <div className="min-w-50 flex items-center gap-3 justify-start">
-                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
-                    <span className="text-xs xl:text-sm">{row.original.product_name}</span>
-                </div>
-            ),
-            meta: { align: 'left' },
-        },
-        {
-            header: "Category",
-            accessorKey: "category",
-            cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
-            meta: { align: 'center' },
-        },
-        {
-            header: "Variants",
-            cell: ({ row }) => row.original.variants?.length || 0,
-            meta: { align: 'center' },
-        },
-        {
-            header: "Stock",
-            cell: ({ row }) => {
-                const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
-                return <span className="text-xs xl:text-sm">{total}</span>;
-            },
-            meta: { align: 'center' },
-        },
-        {
-            header: "Created At",
-            cell: ({ row }) => formatDate(row.original.createdAt),
-            meta: { align: 'center' },
-        },
-        ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)
-            ? [
-                {
-                    header: "Action",
-                    cell: ({ row }: { row: Row<Product> }) => (
-                        <div className="flex flex-col lg:flex-row gap-3 justify-center">
-                            {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
-                                <Button
-                                    label="Edit"
-                                    className="p-1 lg:p-3 text-xs xl:text-sm"
-                                    disabled={deleteProduct.isPending}
-                                    onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
-                                />
-                            )}
-    
-                            {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
-                                <Button
-                                    label="Delete"
-                                    className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
-                                    disabled={deleteProduct.isPending}
-                                    onClick={() => deleteExistingProduct(row.original._id)}
-                                />
-                            )}
-                        </div>
-                    ),
-                    meta: { align: 'center' },
-                },
-            ]
-        : []),
-    ];
+    const columns = getColumns({
+        deleteExistingProduct,
+        deleteProduct,
+        hasAnyPermissions,
+        hasPermissions,
+        navigate,
+        permissions
+    })
 
     return (
         <PageContainer 
@@ -149,6 +172,15 @@ export default function Products () {
                     total={data?.total || 0}
                 />
             </Card>
+            
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
+                <div className="flex justify-end">
+                    <Button 
+                        label="Transfer Stocks"
+                        onClick={() => navigate('/dashboard/distributors/transfer-stocks')}
+                    />
+                </div>
+            )}
         </PageContainer>
     )
 }

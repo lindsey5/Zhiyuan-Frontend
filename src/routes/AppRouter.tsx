@@ -186,9 +186,9 @@ const router = createBrowserRouter([
                         )
                     },
                     {
-                        path: 'distribute',
+                        path: 'transfer-stocks',
                         Component: () => (
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_CREATE]}>
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]}>
                                 <StockDistribution />
                             </ProtectedRoute>
                         )

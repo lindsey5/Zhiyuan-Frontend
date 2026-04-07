@@ -40,7 +40,7 @@ export const PERMISSIONS = {
     DISTRIBUTOR_DELETE: 'distributor:delete',
     
     // Distributor Stock Management
-    DISTRIBUTOR_STOCK_CREATE: 'distributor-stock:create',
+    DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
     DISTRIBUTOR_STOCK_READ: 'distributor-stock:read'
 }
 
@@ -109,8 +109,8 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_READ_ALL: "View all distributors",
         DISTRIBUTOR_CREATE: "Create new distributor accounts",
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
-        DISTRIBUTOR_STOCK_CREATE: "Add or update distributor stock inventory",
-        DISTRIBUTOR_STOCK_READ: "View distributor stock inventory",
+        DISTRIBUTOR_STOCK_TRANSFER: "Transfer stocks to ditributor",
+        DISTRIBUTOR_STOCK_READ: "View distributor stocks",
     },
 };
 

@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-table";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
-import type { SortOption } from "../../types/type";
+import type { ApiResponse, SortOption } from "../../types/type";
 import PageContainer from "../../components/ui/PageContainer";
 import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
@@ -19,8 +19,104 @@ import type { Variant, VariantWithProduct } from "../../types/variant.type";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
 import { promiseToast } from "../../utils/sileo";
 import EditVariant from "../../components/variants/EditVariant";
+import { useNavigate } from "react-router-dom";
+import type { UseMutationResult } from "@tanstack/react-query";
+
+interface VariantColsParams {
+    hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
+    permissions: string[];
+    deleteVariant: UseMutationResult<ApiResponse, Error, { id: string }, unknown>;
+    handleDelete: (id: string) => void;
+    handleEdit: (variant : Variant) => void;
+}
+
+const getColumns = ({
+    hasPermissions,
+    permissions,
+    deleteVariant,
+    handleDelete,
+    handleEdit
+} : VariantColsParams) : ColumnDef<VariantWithProduct>[] => [
+    {
+        header: "Variant",
+        cell: ({ row }) => (
+            <div className="min-w-50 flex items-center gap-3 justify-start">
+                <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
+                <span className="text-xs xl:text-sm">{row.original.variant_name}</span>
+            </div>
+        ),
+        meta: { align: 'left' },
+    },
+    {
+        header: 'SKU',
+        accessorKey: 'sku',
+        meta: { align: 'center' },
+    },
+    {
+        header: 'Product name',
+        accessorKey: 'product.product_name',
+        cell: info => (
+            <div className="md:min-w-50">
+                {info.getValue() as string}
+            </div>
+        ),
+        meta: { align: 'center' },
+    },
+    {
+        header: "Category",
+        accessorKey: "product.category",
+        
+        cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
+        meta: { align: 'center' },
+    },
+    {
+        header: "Stock",
+        accessorKey: "stock",
+        meta: { align: 'center' },
+    },
+    {
+        header: "Price",
+        accessorKey: "price",
+        cell: info => formatToPeso(info.getValue() as number),
+        meta: { align: 'center' },
+    },
+    {
+        header: "Created At",
+        accessorKey: 'createdAt',
+        cell: info => formatDate(info.getValue() as string),
+        meta: { align: 'center' },
+    },
+    ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions)
+        ? [
+            {
+                header: "Action",
+                cell: ({ row } : { row: Row<VariantWithProduct>}) => (
+                    <div className="flex flex-col lg:flex-row gap-3 justify-center">
+                        <Button
+                            label="Edit"
+                            disabled={deleteVariant.isPending}
+                            className="p-1 lg:p-3 text-xs xl:text-sm"
+                            onClick={() => {
+                                handleEdit(row.original);
+                            }}
+                        />
+
+                        <Button
+                            label="Delete"
+                            disabled={deleteVariant.isPending}
+                            className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
+                            onClick={() => handleDelete(row.original._id)}
+                        />
+                    </div>
+                ),
+                meta: { align: 'center' },
+            },
+        ]
+    : []),
+];
 
 export default function Variants () {
+    const navigate = useNavigate();
     const { getOwnRole } = useRole();
     const { data : role } = getOwnRole();
     const permissions =  role?.permissions || [];
@@ -64,84 +160,13 @@ export default function Variants () {
         setVariant(null);
     }
 
-    const columns: ColumnDef<VariantWithProduct>[] = [
-        {
-            header: "Variant",
-            cell: ({ row }) => (
-                <div className="min-w-50 flex items-center gap-3 justify-start">
-                    <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
-                    <span className="text-xs xl:text-sm">{row.original.variant_name}</span>
-                </div>
-            ),
-            meta: { align: 'left' },
-        },
-        {
-            header: 'SKU',
-            accessorKey: 'sku',
-            meta: { align: 'center' },
-        },
-        {
-            header: 'Product name',
-            accessorKey: 'product.product_name',
-            cell: info => (
-                <div className="md:min-w-50">
-                    {info.getValue() as string}
-                </div>
-            ),
-            meta: { align: 'center' },
-        },
-        {
-            header: "Category",
-            accessorKey: "product.category",
-            
-            cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
-            meta: { align: 'center' },
-        },
-        {
-            header: "Stock",
-            accessorKey: "stock",
-            meta: { align: 'center' },
-        },
-        {
-            header: "Price",
-            accessorKey: "price",
-            cell: info => formatToPeso(info.getValue() as number),
-            meta: { align: 'center' },
-        },
-        {
-            header: "Created At",
-            accessorKey: 'createdAt',
-            cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'center' },
-        },
-        ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions)
-            ? [
-                {
-                    header: "Action",
-                    cell: ({ row } : { row: Row<VariantWithProduct>}) => (
-                        <div className="flex flex-col lg:flex-row gap-3 justify-center">
-                            <Button
-                                label="Edit"
-                                disabled={deleteVariant.isPending}
-                                className="p-1 lg:p-3 text-xs xl:text-sm"
-                                onClick={() => {
-                                    handleEdit(row.original);
-                                }}
-                            />
-    
-                            <Button
-                                label="Delete"
-                                disabled={deleteVariant.isPending}
-                                className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
-                                onClick={() => handleDelete(row.original._id)}
-                            />
-                        </div>
-                    ),
-                    meta: { align: 'center' },
-                },
-            ]
-        : []),
-    ];
+    const columns = getColumns({
+        deleteVariant,
+        handleDelete,
+        handleEdit,
+        hasPermissions,
+        permissions
+    })
 
     return (
         <PageContainer 
@@ -155,7 +180,7 @@ export default function Variants () {
                 variant={variant}
             />
 
-            <Card className="p-0 flex flex-col flex-1 min-h-0 flex-grow space-y-5 pt-5">
+            <Card className="p-0 flex flex-col min-h-0 flex-grow space-y-5 pt-5">
                 <VariantsTableControls
                     setSearch={setSearch}
                     setSorting={setSorting}
@@ -175,6 +200,14 @@ export default function Variants () {
                     total={data?.total || 0}
                 />
             </Card>
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
+                <div className="flex justify-end">
+                    <Button 
+                        label="Transfer Stocks"
+                        onClick={() => navigate('/dashboard/distributors/transfer-stocks')}
+                    />
+                </div>
+            )}
         </PageContainer>
     )
 }

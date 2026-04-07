@@ -17,6 +17,83 @@ import UsersCount from "../../components/users/UsersCount";
 import GoldButton from "../../components/ui/GoldButton";
 import UserModal from "../../components/users/UserModal";
 import { promiseToast } from "../../utils/sileo";
+import type { CreateColumnsParams } from "../../types/type";
+
+interface UserColsParams extends CreateColumnsParams{
+    handleDelete: (id: string) => void;
+    showEdit: (user : GetUser) => void;
+}
+
+const getColumns = ({
+    hasAnyPermissions,
+    hasPermissions,
+    permissions,
+    handleDelete,
+    showEdit
+} : UserColsParams) : ColumnDef<GetUser>[] => [
+    {
+        header: "User",
+        cell: ({ row }) => {
+            const { firstname, lastname, email } = row.original;
+
+            return (
+                <div className="">
+                    <h1 className="font-semibold">{`${firstname} ${lastname}`}</h1>
+                    <p>{email}</p>
+                </div>
+            )
+        },
+        meta: { align: 'center' }
+    },
+    {
+        header: "Role",
+        accessorKey: 'role.name',
+        cell: info => (
+            <div className="min-w-30">
+                <Chip>{info.getValue() as string}</Chip>
+            </div>
+        ),
+        meta: { align: 'center' }
+    },
+    {
+        header: 'Permissions',
+        cell: ({ row }) => row.original.role.permissions.length,
+        meta: { align: 'center' }
+    },
+    {
+        header: "Created At",
+        accessorKey: 'createdAt',
+        cell: info => formatDate(info.getValue() as string),
+        meta: { align: 'center' },
+    },
+    ...(hasAnyPermissions([ PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_DELETE], permissions)
+        ? [
+            {
+                header: "Action",
+                cell: ({ row } : { row: Row<GetUser> }) => (
+                    <div className="flex gap-3 md:justify-center">
+                        {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
+                            <Button
+                                label="Edit"
+                                className="p-2 lg:p-3 text-xs"
+                                onClick={() => showEdit(row.original)}
+                            />
+                        )}
+
+                        {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
+                            <Button
+                                label="Delete"
+                                className="bg-red-600 text-white p-2 lg:p-3 text-xs"
+                                onClick={() => handleDelete(row.original._id)}
+                            />
+                        )}
+                    </div>
+                ),
+                meta: { align: 'center' },
+            },
+        ]
+    : []),
+]
 
 export default function Users () {
     const [user, setUser] = useState<GetUser>();
@@ -61,75 +138,19 @@ export default function Users () {
         promiseToast(deleteUser.mutateAsync({ id }));
     }
 
-    const columns: ColumnDef<GetUser>[] = [
-        {
-            header: "User",
-            cell: ({ row }) => {
-                const { firstname, lastname, email } = row.original;
-
-                return (
-                    <div className="">
-                        <h1 className="font-semibold">{`${firstname} ${lastname}`}</h1>
-                        <p>{email}</p>
-                    </div>
-                )
-            },
-            meta: { align: 'center' }
-        },
-        {
-            header: "Role",
-            accessorKey: 'role.name',
-            cell: info => (
-                <div className="min-w-30">
-                    <Chip>{info.getValue() as string}</Chip>
-                </div>
-            ),
-            meta: { align: 'center' }
-        },
-        {
-            header: 'Permissions',
-            cell: ({ row }) => row.original.role.permissions.length,
-            meta: { align: 'center' }
-        },
-        {
-            header: "Created At",
-            accessorKey: 'createdAt',
-            cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'center' },
-        },
-        ...(hasAnyPermissions([ PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_DELETE], permissions)
-            ? [
-                {
-                    header: "Action",
-                    cell: ({ row } : { row: Row<GetUser> }) => (
-                        <div className="flex gap-3 md:justify-center">
-                            {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
-                                <Button
-                                    label="Edit"
-                                    className="p-2 lg:p-3 text-xs"
-                                    onClick={() => showEdit(row.original)}
-                                />
-                            )}
-    
-                            {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
-                                <Button
-                                    label="Delete"
-                                    className="bg-red-600 text-white p-2 lg:p-3 text-xs"
-                                    onClick={() => handleDelete(row.original._id)}
-                                />
-                            )}
-                        </div>
-                    ),
-                    meta: { align: 'center' },
-                },
-            ]
-        : []),
-    ]
+    const columns = getColumns({
+        handleDelete,
+        hasAnyPermissions,
+        hasPermissions,
+        permissions,
+        showEdit,
+    })
 
     return (
         <PageContainer 
             title="User Management"
             description="View and manage all users"
+            className="md:max-h-screen"
         >
             <UsersCount  />
             <div className="w-full justify-end flex md:hidden">
@@ -138,7 +159,7 @@ export default function Users () {
                     onClick={handleShow}
                 >Create User</GoldButton>
             </div>
-            <Card className="p-0 flex flex-col space-y-5 pt-5">
+            <Card className="p-0 flex flex-col min-h-0 flex-grow space-y-5 pt-5">
                 <UsersTableControls 
                     role={role}
                     setRole={setRole}

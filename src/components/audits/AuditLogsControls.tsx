@@ -4,27 +4,27 @@ import DateInput from "../ui/DateInput";
 import FiltersMenu from "../ui/FiltersMenu";
 
 interface AuditLogsControlsProps {
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setStartDate: React.Dispatch<React.SetStateAction<string>>;
-  setEndDate: React.Dispatch<React.SetStateAction<string>>;
-  role: string;
-  setRole: React.Dispatch<React.SetStateAction<string>>;
-  severity: string;
-  setSeverity: React.Dispatch<React.SetStateAction<string>>;
-  order: "asc" | "desc";
-  setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+    setStartDate: React.Dispatch<React.SetStateAction<string>>;
+    setEndDate: React.Dispatch<React.SetStateAction<string>>;
+    role: string;
+    setRole: React.Dispatch<React.SetStateAction<string>>;
+    severity: string;
+    setSeverity: React.Dispatch<React.SetStateAction<string>>;
+    order: "asc" | "desc";
+    setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
 }
 
 export default function AuditLogsControls({
-  setSearch,
-  setStartDate,
-  setEndDate,
-  role,
-  setRole,
-  severity,
-  setSeverity,
-  order,
-  setOrder,
+    setSearch,
+    setStartDate,
+    setEndDate,
+    role,
+    setRole,
+    severity,
+    setSeverity,
+    order,
+    setOrder,
 }: AuditLogsControlsProps) {
 
     return (
@@ -41,12 +41,12 @@ export default function AuditLogsControls({
                 <h1 className="font-bold text-lg">Filter</h1>
                 <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
-                        label="Start Date"
+                        label="From"
                         onChange={(value) => setStartDate(value)}
                     />
 
                     <DateInput 
-                        label="End Date"
+                        label="To"
                         onChange={(value) => setEndDate(value)}
                     />
 
