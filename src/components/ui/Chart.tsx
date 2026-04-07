@@ -125,7 +125,7 @@ export default function Chart({ title, labels, values }: ChartProps) {
       y: {
         ticks: {
           color: gold,
-          callback: function (value: any, index: any, ticks: any) {
+          callback: function (value: any) {
             // Hide ticks if screen width <= 425px
             return window.innerWidth <= 425 ? "" : value;
           },
