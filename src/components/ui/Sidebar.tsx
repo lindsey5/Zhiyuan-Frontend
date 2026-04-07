@@ -163,7 +163,7 @@ export default function Sidebar({
                     setOpen={() => setOpenDropdown((prev) => prev === "Distributor Management" ? null : "Distributor Management")}
                     items={[
                         { label: "View Distributors", icon: <Eye size={20} />, path: "/dashboard/distributors" },
-                        { label: "Distributor Sales", icon: <BarChartBig size={20} />, path: "/dashboard/distributors/sales" },
+                        { label: "Distributors Sales", icon: <BarChartBig size={20} />, path: "/dashboard/distributors/sales" },
                         { label: "Reports", icon: <FileBarChart size={20} />, path: "/dashboard/distributors/reports" },
                         { label: "Transfer History", icon: <Repeat size={20} />, path: "/dashboard/distributors/transfer-logs" },
                     ]}

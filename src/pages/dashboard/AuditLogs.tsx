@@ -4,7 +4,7 @@ import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
 import type { AuditLog } from "../../types/audit.type";
 import { formatDate } from "../../utils/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAudit } from "../../hooks/useAudit";
 import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -86,20 +86,29 @@ export default function AuditLogs () {
     const [severity, setSeverity] = useState("");
     const [order, setOrder] = useState<"asc" | "desc">("desc");
 
-    const { getAuditLogs } = useAudit();
-
-    const params = {
+    const params = useMemo(() => ({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         search: debouncedSearch,
         startDate: startDate ? formatDate(startDate) : undefined,
         endDate: endDate ? formatDate(endDate) : undefined,
-        role: role,
-        severity: severity,
-        order: order
-    }
+        role,
+        severity,
+        order
+    }), [
+        pagination.pageSize,
+        pagination.pageIndex,
+        debouncedSearch,
+        startDate,
+        endDate,
+        role,
+        severity,
+        order
+    ]);
 
-    const { data, isFetching } = getAuditLogs(params)
+    const debouncedParams = useDebounce(params, 800);
+    const { getAuditLogs } = useAudit();
+    const { data, isFetching } = getAuditLogs(debouncedParams);
 
     return (
         <PageContainer 

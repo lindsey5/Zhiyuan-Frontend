@@ -5,7 +5,7 @@ import { DistributorItemsSoldThisMonth, DistributorItemsSoldThisWeek, Distributo
 export default function DistributorStats ({ distributorId } : { distributorId : string}) {
     return (
         <div className="space-y-3 md:space-y-5">
-           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+           <div className="flex flex-col gap-2 md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
                 <DistributorSalesToday id={distributorId} />
                 <DistributorSalesThisWeek id={distributorId} />
                 <DistributorSalesThisMonth id={distributorId} />

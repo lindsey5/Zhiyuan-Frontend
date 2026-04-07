@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -108,16 +108,17 @@ export default function Users () {
     const debouncedSearch = useDebounce(search, 500);
     const [role, setRole] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
+    const params = useMemo(() => ({
+        search: debouncedSearch,
+        page: pagination.pageIndex + 1,
+        limit: pagination.pageSize,
+        role
+    }), [debouncedSearch, pagination.pageIndex, pagination.pageSize, role]);
+
+    const debouncedParams = useDebounce(params, 800);
 
     const { getUsers, deleteUser } = useUser();
-    const { data, isFetching } = getUsers(
-        {
-            search: debouncedSearch,
-            page: pagination.pageIndex + 1,
-            limit: pagination.pageSize,
-            role
-        }
-    );
+    const { data, isFetching } = getUsers(debouncedParams);
 
     const showEdit = (user : GetUser) => {
         setUser(user);

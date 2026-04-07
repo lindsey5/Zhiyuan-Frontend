@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { SortOption } from "../../types/type";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
@@ -59,19 +59,27 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     const [endDate, setEndDate] = useState('');
     const { getDistributorSales } = useDistributorSale();
 
-    const { data, isFetching } = getDistributorSales(distributorId, {
+    const params = useMemo(() => ({
+        search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,
-        order: sorting.order,
-        startDate,
-        endDate,
-        search: debouncedSearch
-    });
+        order: sorting.order
+    }), [
+        debouncedSearch,
+        pagination.pageSize,
+        pagination.pageIndex,
+        sorting.sortBy,
+        sorting.order
+    ]);
+
+    const debouncedParams = useDebounce(params, 500);
+    const { data, isFetching } = getDistributorSales(distributorId, debouncedParams);
 
     return (
         <>
         <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+            <h1 className="px-5 font-bold text-lg">Distributor Sales</h1>
             <DistributorSalesControls
                 sorting={sorting}
                 setSorting={setSorting}

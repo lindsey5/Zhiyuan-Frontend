@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import { useDebounce } from "../../hooks/useDebounce";
 import {
@@ -130,17 +130,18 @@ export default function Variants () {
     const [showModal, setShowModal] = useState(false);
     const [variant, setVariant] = useState<Variant | null>(null);
 
-    const params = { 
+    const params = useMemo(() => ({
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
         sortBy: sorting.sortBy,
         category: category === 'All' ? undefined : category,
         order: sorting.order,
-    }
+    }), [pagination.pageIndex, pagination.pageSize, debouncedSearch, sorting, category]);
 
+    const debouncedParams = useDebounce(params, 800);
     const { getVariants, deleteVariant } = useVariant();
-    const { data, isFetching } = getVariants(params);
+    const { data, isFetching } = getVariants(debouncedParams);
 
     const handleDelete = (id: string) => {
         const isConfirmed = confirm('Are you sure you want to delete this variant?');

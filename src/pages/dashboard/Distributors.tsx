@@ -3,7 +3,7 @@ import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
@@ -110,13 +110,16 @@ export default function Distributors () {
     const debouncedSearch = useDebounce(search, 500);
     const { getDistributors, deleteDistributor } = useDistributor();
 
-    const { data, isFetching } = getDistributors({
+    const params = useMemo(() => ({
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
-        sortBy: sortBy,
-        order: order
-    });
+        sortBy,
+        order
+    }), [debouncedSearch, pagination.pageSize, pagination.pageIndex, sortBy, order]);
+
+    const debouncedParams = useDebounce(params, 800);
+    const { data, isFetching } = getDistributors(debouncedParams);
 
     const handleDelete = (id : string) => {
         const isConfirmed = confirm('Are you sure you want to delete this distributor?');

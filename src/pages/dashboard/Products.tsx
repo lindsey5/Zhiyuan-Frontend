@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import { useProduct } from "../../hooks/useProduct"
 import { useDebounce } from "../../hooks/useDebounce";
@@ -117,16 +117,17 @@ export default function Products () {
     
     const { getProducts, deleteProduct } = useProduct();
     
-    const params = { 
+    const params = useMemo(() => ({
         page: pagination.pageIndex + 1, 
         limit: pagination.pageSize,
         search: debouncedSearch,
         sortBy: sorting.sortBy,
         category: category === 'All' ? undefined : category,
         order: sorting.order,
-    }
+    }), [pagination.pageIndex, pagination.pageSize, debouncedSearch, sorting, category]);
 
-    const { data, isFetching } = getProducts(params);
+    const debouncedParams = useDebounce(params, 800);
+    const { data, isFetching } = getProducts(debouncedParams);
 
     const deleteExistingProduct = (id: string) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");

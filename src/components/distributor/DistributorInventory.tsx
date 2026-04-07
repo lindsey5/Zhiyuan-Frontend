@@ -4,7 +4,7 @@ import Card from "../ui/Card";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import DistributorStockControls from "./DistributorStockControls";
 import { useDistributorStock } from "../../hooks/useDistributorStock";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { SortOption } from "../../types/type";
 import { useDebounce } from "../../hooks/useDebounce";
 import CustomizedTable from "../ui/Table";
@@ -62,15 +62,24 @@ export default function DistributorInventory ({ distributorId } : { distributorI
     })
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
 
-    const { data, isFetching } = getDistributorStocks(distributorId, {
+    const params = useMemo(() => ({
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,
         order: sorting.order
-    });
+    }), [
+        debouncedSearch,
+        pagination.pageSize,
+        pagination.pageIndex,
+        sorting.sortBy,
+        sorting.order
+    ]);
+
+    const debouncedParams = useDebounce(params, 800);
+    const { data, isFetching } = getDistributorStocks(distributorId, debouncedParams);
 
     return (
         <Card className="p-0 min-h-0 flex-1 flex flex-col gap-3 pt-5">

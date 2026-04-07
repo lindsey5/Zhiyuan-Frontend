@@ -11,6 +11,7 @@ import DistributorSales from "../../components/distributor/DistributorSales";
 import Button from "../../components/ui/Button";
 import DistributorStats from "../../components/distributor/distributorStats/DistributorStats";
 import { cn } from "../../utils/utils";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export default function Distributor () {
     const params = useParams();
@@ -21,6 +22,7 @@ export default function Distributor () {
     const permissions = data?.permissions || [];
     const { hasPermissions } = usePermissions();
     const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW] ,permissions) ? "Inventory" : "Sales");
+    const debouncedSelected = useDebounce(selected, 500);
 
     return (
         <div className={cn(
@@ -59,10 +61,10 @@ export default function Distributor () {
                     ]}
                     defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW] ,permissions) ? 0 : 1}
                 />
-                
-            {selected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
-            {selected === "Sales" && <DistributorSales distributorId={id || ""} />}
-            {selected === 'Stats' && <DistributorStats distributorId={id || ""} />}
+
+            {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
+            {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
+            {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
 
             {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
                 <div className="flex justify-end">

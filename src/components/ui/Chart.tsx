@@ -125,6 +125,10 @@ export default function Chart({ title, labels, values }: ChartProps) {
       y: {
         ticks: {
           color: gold,
+          callback: function (value: any, index: any, ticks: any) {
+            // Hide ticks if screen width <= 425px
+            return window.innerWidth <= 425 ? "" : value;
+          },
         },
         grid: {
           color: gridColor,
@@ -134,12 +138,12 @@ export default function Chart({ title, labels, values }: ChartProps) {
   };
 
   return (
-    <Card className="w-full h-[500px]">
+    <Card className="w-full h-[300px] md:h-[500px]">
       <h2 className="font-sans text-gold text-base sm:text-lg font-bold mb-4 sm:mb-8">
         {title}
       </h2>
 
-      <div className="h-[80%] w-full">
+      <div className="h-[85%] w-full">
         <Line
           key={isDark ? "dark" : "light"} // force re-render on theme change
           data={data}

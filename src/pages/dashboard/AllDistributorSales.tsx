@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import PageContainer from "../../components/ui/PageContainer";
@@ -68,9 +68,8 @@ export default function AllDistributorSales () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const { getAllDistributorSales } = useDistributorSale();
 
-    const { data, isFetching } = getAllDistributorSales({
+    const params = useMemo(() => ({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,
@@ -78,13 +77,17 @@ export default function AllDistributorSales () {
         startDate,
         endDate,
         search: debouncedSearch
-    });
+    }), [pagination.pageSize, pagination.pageIndex, sorting.sortBy, sorting.order, startDate, endDate, debouncedSearch]);
+
+    const debouncedParams = useDebounce(params, 800);
+    const { getAllDistributorSales } = useDistributorSale();
+    const { data, isFetching } = getAllDistributorSales(debouncedParams);
 
     return (
         <PageContainer 
             className="md:max-h-screen" 
-            title="Distributor Sales"
-            description="View distributor sales including sold items and quantities."
+            title="Distributors Sales"
+            description="View distributors sales including sold items and quantities."
         >
             <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
                 <DistributorSalesControls
