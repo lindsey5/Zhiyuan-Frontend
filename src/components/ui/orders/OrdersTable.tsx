@@ -2,15 +2,15 @@
 
 import { useMemo } from 'react';
 import { type ColumnDef, type Row } from '@tanstack/react-table';
-import { Order } from '@/app/orders/data';
-import CustomizedTable from '../ui/Table';
+import { useOrders } from '../../../hooks/useOrders';
+import CustomizedTable from '../Table';
 import { Eye, CreditCard } from 'lucide-react';
-import  Button  from '../ui/Button';
+import  Button  from '../Button';
 
 interface OrdersTableProps {
-  orders: Order[];
-  onViewClick: (order: Order) => void;
-  onMarkAsPaidClick: (order: Order) => void;
+  orders: useOrders[];
+  onViewClick: (order: useOrders) => void;
+  onMarkAsPaidClick: (order: useOrders) => void;
   isLoading?: boolean;
 }
 
@@ -67,7 +67,7 @@ export default function OrdersTable({
 }: OrdersTableProps) {
 
   // ✅ Columns (same concept as Categories)
-  const columns: ColumnDef<Order>[] = useMemo(() => [
+  const columns: ColumnDef<useOrders>[] = useMemo(() => [
     {
       header: "Order ID",
       accessorKey: "id",
@@ -120,7 +120,7 @@ export default function OrdersTable({
     },
     {
       header: "Actions",
-      cell: ({ row }: { row: Row<Order> }) => {
+      cell: ({ row }: { row: Row<useOrder> }) => {
         const order = row.original;
 
         return (

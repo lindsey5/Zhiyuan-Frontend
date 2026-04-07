@@ -20,6 +20,7 @@ import DistributorStock from "../pages/dashboard/DistributorStock";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
 import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
+import Orders from "../pages/dashboard/Orders";
 
 const router = createBrowserRouter([ 
     {
@@ -91,6 +92,17 @@ const router = createBrowserRouter([
                     >
                         <Categories />
                     </ProtectedRoute>
+                )
+            },
+            {
+                path: 'orders',
+                Component: () => (
+                    <ProtectedRoute 
+                        requiredPermissions = {[PERMISSIONS.ORDER_READ_ALL]}
+                        >
+                        <Orders/>
+                    </ProtectedRoute>
+                        
                 )
             },
             {
