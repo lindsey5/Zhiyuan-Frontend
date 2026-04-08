@@ -49,3 +49,10 @@ export interface GetDistributorItemsSoldPerMonthResponse {
     itemsSoldPerMonth: { month: string, totalQuantity: number }[];
     year: number;
 }
+
+
+export interface DownloadDistributorSalesParams extends PaginationParams {
+    startDate?: string;
+    endDate?: string;
+    search?: string;
+}

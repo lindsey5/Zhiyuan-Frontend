@@ -8,6 +8,9 @@ import CustomizedTable from "../ui/Table";
 import DistributorSalesControls from "../distributorSale/DistributorSalesControls";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import type { DistributorSale } from "../../types/distributorSale.type";
+import Button from "../ui/Button";
+import { Download } from "lucide-react";
+import { distributorSaleService } from "../../service/distributorSaleService";
 
 const columns: ColumnDef<DistributorSale>[] = [
     {
@@ -76,10 +79,27 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     const debouncedParams = useDebounce(params, 500);
     const { data, isFetching } = getDistributorSales(distributorId, debouncedParams);
 
+    const downloadDistributorSales = async () => {
+        await distributorSaleService.downloadDistributorSales(distributorId, {
+            limit: pagination.pageSize,
+            page: pagination.pageIndex + 1,
+            endDate,
+            startDate,
+            search
+        });
+    }
+
     return (
         <>
         <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
-            <h1 className="px-5 font-bold text-lg">Distributor Sales</h1>
+            <div className="flex items-center justify-between px-5">
+                <h1 className="font-bold text-lg">Distributor Sales</h1>
+                <Button 
+                    label="Export"
+                    icon={<Download size={20} />}
+                    onClick={downloadDistributorSales}
+                />
+            </div>
             <DistributorSalesControls
                 sorting={sorting}
                 setSorting={setSorting}

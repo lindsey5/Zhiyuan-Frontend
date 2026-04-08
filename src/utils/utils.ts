@@ -63,3 +63,37 @@ export function getKeyByValue(
         )
     })
 }
+
+export function base64ToUint8Array(base64: string) {
+    const binaryString = window.atob(base64.replace(/-/g, '+').replace(/_/g, '/'));
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    return bytes;
+}
+
+export function downloadFile (data : string, filename: string) {
+
+    const byteArray = base64ToUint8Array(data);
+
+    // Create blob
+    const blob = new Blob([byteArray], { 
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+    });
+
+    // Create download link
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // Revoke URL
+    window.URL.revokeObjectURL(url);
+}

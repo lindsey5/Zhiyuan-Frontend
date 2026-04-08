@@ -1,6 +1,8 @@
 
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type GetDistributorMonthlySalesResponse, type GetDistributorItemsSoldResponse, type GetDistributorSalesByPeriodResponse, type GetDistributorSalesParams, type GetDistributorSalesResponse, type Period, type GetDistributorItemsSoldPerMonthResponse } from "../types/distributorSale.type";
+import { type GetDistributorMonthlySalesResponse, type GetDistributorItemsSoldResponse, type GetDistributorSalesByPeriodResponse, type GetDistributorSalesParams, type GetDistributorSalesResponse, type Period, type GetDistributorItemsSoldPerMonthResponse, type DownloadDistributorSalesParams } from "../types/distributorSale.type";
+import { errorToast, promiseToast } from "../utils/sileo";
+import { downloadFile } from "../utils/utils";
 
 export const distributorSaleService = {
     getAllDistributorSales: (params : GetDistributorSalesParams) : Promise<GetDistributorSalesResponse> => (
@@ -63,4 +65,37 @@ export const distributorSaleService = {
             method: HttpMethod.GET
         })
     ),
+
+    downloadDistributorSales: async (id: string, params: DownloadDistributorSalesParams) => {
+        try{
+            const response = await apiAxios<{
+                data: string; // base64 string
+                filename: string;
+            }>(`distributor-sales/download/${id}`, {
+                method: HttpMethod.GET,
+                params,
+            });
+
+            downloadFile(response.data, response.filename);
+        }catch(err : any){
+            errorToast(err.message)
+        }
+
+    },
+
+    downloadAllDistributorSales: async (params: DownloadDistributorSalesParams) => {
+        try{
+            const response = await apiAxios<{
+                data: string; // base64 string
+                filename: string;
+            }>(`distributor-sales/download`, {
+                method: HttpMethod.GET,
+                params,
+            });
+
+            downloadFile(response.data, response.filename);
+        }catch(err : any){
+            errorToast(err.message)
+        }
+    },
 }

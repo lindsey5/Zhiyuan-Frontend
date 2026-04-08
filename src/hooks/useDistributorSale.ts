@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { GetDistributorItemsSoldPerMonthResponse, GetDistributorItemsSoldResponse, GetDistributorMonthlySalesResponse, GetDistributorSalesByPeriodResponse, GetDistributorSalesParams, GetDistributorSalesResponse, Period } from "../types/distributorSale.type"
+import type { DownloadDistributorSalesParams, GetDistributorItemsSoldPerMonthResponse, GetDistributorItemsSoldResponse, GetDistributorMonthlySalesResponse, GetDistributorSalesByPeriodResponse, GetDistributorSalesParams, GetDistributorSalesResponse, Period } from "../types/distributorSale.type"
 import { distributorSaleService } from "../service/distributorSaleService"
 
 export const useDistributorSale = () => {
@@ -59,7 +59,7 @@ export const useDistributorSale = () => {
     )
 
     const getAllDistributorMonthlySales = (year: number = 2024) => (
-            useQuery<GetDistributorMonthlySalesResponse, Error>({
+        useQuery<GetDistributorMonthlySalesResponse, Error>({
             queryKey: [`distributor-sales/monthly`, year],
             queryFn: () => distributorSaleService.getAllDistributorMonthlySales(year),
             placeholderData: (prev) => prev,
@@ -68,7 +68,7 @@ export const useDistributorSale = () => {
     )
 
     const getDistributorMonthlySales = (id: string, year: number = 2024) => (
-            useQuery<GetDistributorMonthlySalesResponse, Error>({
+        useQuery<GetDistributorMonthlySalesResponse, Error>({
             queryKey: [`distributor-sales/monthly/${id}`, year],
             queryFn: () => distributorSaleService.getDistributorMonthlySales(id, year),
             placeholderData: (prev) => prev,
@@ -78,7 +78,7 @@ export const useDistributorSale = () => {
 
     
     const getAllDistributorItemsSoldPerMonth = (year: number = 2024) => (
-            useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
+        useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
             queryKey: [`distributor-sales/items-sold`, year],
             queryFn: () => distributorSaleService.getAllDistributorItemsSoldPerMonth(year),
             placeholderData: (prev) => prev,
@@ -87,7 +87,7 @@ export const useDistributorSale = () => {
     )
 
     const getDistributorItemsSoldPerMonth = (id: string, year: number = 2024) => (
-            useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
+        useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
             queryKey: [`distributor-sales/items-sold/${id}`, year],
             queryFn: () => distributorSaleService.getDistributorItemsSoldPerMonth(id, year),
             placeholderData: (prev) => prev,
@@ -105,6 +105,6 @@ export const useDistributorSale = () => {
         getAllDistributorItemsSoldByPeriod,
         getAllDistributorItemsSoldPerMonth,
         getAllDistributorMonthlySales,
-        getAllDistributorSalesByPeriod
+        getAllDistributorSalesByPeriod,
     }
 }
