@@ -1,8 +1,6 @@
 
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type GetDistributorMonthlySalesResponse, type GetDistributorItemsSoldResponse, type GetDistributorSalesByPeriodResponse, type GetDistributorSalesParams, type GetDistributorSalesResponse, type Period, type GetDistributorItemsSoldPerMonthResponse, type DownloadDistributorSalesParams } from "../types/distributorSale.type";
-import { errorToast } from "../utils/sileo";
-import { downloadFile } from "../utils/utils";
+import { type GetDistributorMonthlySalesResponse, type GetDistributorItemsSoldResponse, type GetDistributorSalesByPeriodResponse, type GetDistributorSalesParams, type GetDistributorSalesResponse, type Period, type GetDistributorItemsSoldPerMonthResponse } from "../types/distributorSale.type";
 
 export const distributorSaleService = {
     getAllDistributorSales: (params : GetDistributorSalesParams) : Promise<GetDistributorSalesResponse> => (
