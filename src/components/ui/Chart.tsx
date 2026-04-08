@@ -13,6 +13,7 @@ import { Line } from "react-chartjs-2";
 import Card from "./Card";
 import { useThemeStore } from "../../lib/store/themeStore";
 import { useEffect, useState } from "react";
+import { formatToPeso as format } from "../../utils/utils";
 
 ChartJS.register(
   LineElement,
@@ -28,9 +29,10 @@ interface ChartProps {
   title: string;
   labels: string[];
   values: number[];
+  formatToPeso: boolean;
 }
 
-export default function Chart({ title, labels, values }: ChartProps) {
+export default function Chart({ title, labels, values, formatToPeso }: ChartProps) {
   const { isDark } = useThemeStore();
   const [gold, setGold] = useState("");
 
@@ -106,7 +108,7 @@ export default function Chart({ title, labels, values }: ChartProps) {
         displayColors: false,
         callbacks: {
           label: function (context: any) {
-            return `Value: ${context.raw}`;
+            return `Value: ${formatToPeso ? format(Number(context.raw)) : context.raw}`;
           },
         },
       },

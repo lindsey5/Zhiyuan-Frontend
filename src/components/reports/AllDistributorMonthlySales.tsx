@@ -22,6 +22,7 @@ export default function AllDistributorMonthlySales () {
                 onChange={setYear}
             />
         <Chart 
+            formatToPeso
             labels={data?.monthlySales.map(sale => sale.month) || []}
             title="Monthly Sales"
             values={data?.monthlySales.map(sale => sale.totalSales) || []}

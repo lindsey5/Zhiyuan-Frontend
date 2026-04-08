@@ -12,6 +12,7 @@ export default function Dashboard() {
             <Metrics />
 
             <DashboardChart
+                formatToPeso
                 title="Monthly Sales"
                 labels={[
                     "Jan", "Feb", "Mar", "Apr", "May", "Jun",

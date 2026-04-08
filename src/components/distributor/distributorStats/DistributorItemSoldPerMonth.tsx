@@ -22,6 +22,7 @@ export default function DistributorItemsSoldPerMonth ({ id } : { id: string }) {
                 onChange={setYear}
             />
             <Chart 
+                formatToPeso={false}
                 labels={data?.itemsSoldPerMonth.map(sale => sale.month) || []}
                 title="Items Sold Per Month"
                 values={data?.itemsSoldPerMonth.map(sale => sale.totalQuantity) || []}

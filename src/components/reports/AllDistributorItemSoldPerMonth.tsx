@@ -24,6 +24,7 @@ export default function AllDistributorItemsSoldPerMonth() {
         />
 
         <Chart
+            formatToPeso={false}
             labels={data?.itemsSoldPerMonth.map((sale) => sale.month) || []}
             title="Items Sold Per Month"
             values={data?.itemsSoldPerMonth.map((sale) => sale.totalQuantity) || []}

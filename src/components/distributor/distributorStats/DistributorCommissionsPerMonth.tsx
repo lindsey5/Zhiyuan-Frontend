@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { useDistributorSale } from "../../../hooks/useDistributorSale";
 import Chart, { ChartSkeleton } from "../../ui/Chart";
-import { yearOptions } from "../../../lib/contants/contants";
 import Dropdown from "../../ui/Dropdown";
+import { yearOptions } from "../../../lib/contants/contants";
+import { useCommissionLog } from "../../../hooks/useCommissionLog";
 
-export default function DistributorMonthlySales ({ id } : { id: string }) {
-    const { getDistributorMonthlySales } = useDistributorSale();
+export default function DistributorCommissionsPerMonth ({ id } : { id: string }) {
+    const { getCommissionsPerMonth } = useCommissionLog();
     const currentYear = new Date().getFullYear();
     const [year, setYear] = useState<string>(currentYear.toString());
-    const { data, isFetching } = getDistributorMonthlySales(id, Number(year));
 
+    const { data, isFetching } = getCommissionsPerMonth(id, Number(year));
+    
     if(isFetching) return <ChartSkeleton />
 
     return (
@@ -22,9 +23,9 @@ export default function DistributorMonthlySales ({ id } : { id: string }) {
             />
             <Chart 
                 formatToPeso
-                labels={data?.monthlySales.map(sale => sale.month) || []}
-                title="Monthly Sales"
-                values={data?.monthlySales.map(sale => sale.totalSales) || []}
+                labels={data?.commissionsPerMonth.map(sale => sale.month) || []}
+                title="Commissions Per Month"
+                values={data?.commissionsPerMonth.map(sale => sale.totalCommission) || []}
             />
         </div>
     )
