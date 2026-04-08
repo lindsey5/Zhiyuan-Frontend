@@ -21,6 +21,8 @@ import { promiseToast } from "../../utils/sileo";
 import EditVariant from "../../components/variants/EditVariant";
 import { useNavigate } from "react-router-dom";
 import type { UseMutationResult } from "@tanstack/react-query";
+import { Download } from "lucide-react";
+import { variantService } from "../../service/variantService";
 
 interface VariantColsParams {
     hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
@@ -169,12 +171,26 @@ export default function Variants () {
         permissions
     })
 
+    const downloadVariants = async () => {
+        await variantService.downloadVariants({
+            category: category === 'All' ? undefined : category,
+            search
+        })
+    }
+
     return (
         <PageContainer 
             className="md:max-h-screen" 
             title="Variants"
             description="View and manage all product variants"
         >
+            <div className="flex justify-end px-5">
+                <Button 
+                    label="Export"
+                    icon={<Download size={20} />}
+                    onClick={downloadVariants}
+                />
+            </div>
             <EditVariant 
                 open={showModal}
                 close={closeModal}

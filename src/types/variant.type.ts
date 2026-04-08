@@ -43,3 +43,8 @@ export interface UpdateVariantPayload {
 export interface UpdateVariantResponse extends ApiResponse {
     variant: Variant;
 }
+
+export interface DownloadVariantsParams {
+    search?: string;
+    category?: string;
+}
