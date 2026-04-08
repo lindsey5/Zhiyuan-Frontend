@@ -50,7 +50,7 @@ export default function StockDistribution () {
             className="relative"
             description="Manage stock transfers from Admin to Distributors"
         >
-            <div className="flex justify-end sticky top-25 z-20">
+            <div className="flex justify-end">
                 <GoldButton 
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}

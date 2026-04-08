@@ -32,6 +32,10 @@ const getColumns = ({
     navigate 
 } : DistributorColsParams) : ColumnDef<Distributor>[] => [
     {
+        header: "ID",
+        accessorKey: "distributor_id"
+    },
+    {
         header: "Name",
         accessorKey: "distributor_name",
         meta: { align: 'left '}

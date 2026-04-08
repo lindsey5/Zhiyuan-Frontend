@@ -7,10 +7,10 @@ interface MetricCardProps {
 
 export default function MetricCard({ title, content }: MetricCardProps) {
     return (
-        <Card>
+        <Card className="p-3 md:p-5">
             <div className="flex flex-col gap-2">
-                <span className="font-sans text-gold text-md font-bold">{title}</span>
-                <h1 className="font-sans text-primary text-lg lg:text-2xl">
+                <span className="text-gold text-sm md:text-md font-bold">{title}</span>
+                <h1 className="ftext-primary text-sm sm:text-lg lg:text-2xl">
                     {content}
                 </h1>
             </div>
@@ -20,7 +20,7 @@ export default function MetricCard({ title, content }: MetricCardProps) {
 
 export function MetricCardSkeleton() {
     return (
-        <Card>
+        <Card className="p-3 md:p-5">
             <div className="flex flex-col gap-5">
                 <div className="w-full h-5 bg-loading animate-pulse"></div>
                 <div className="w-full h-5 bg-loading animate-pulse"></div>

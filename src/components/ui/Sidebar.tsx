@@ -19,6 +19,7 @@ import {
     Repeat,
     FileBarChart,
     BarChartBig,
+    CornerUpRight,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -163,6 +164,7 @@ export default function Sidebar({
                     setOpen={() => setOpenDropdown((prev) => prev === "Distributor Management" ? null : "Distributor Management")}
                     items={[
                         { label: "View Distributors", icon: <Eye size={20} />, path: "/dashboard/distributors" },
+                        { label: "Transfer Stocks", icon: <CornerUpRight size={20} />, path: "/dashboard/distributors/transfer-stocks" },
                         { label: "Distributors Sales", icon: <BarChartBig size={20} />, path: "/dashboard/distributors/sales" },
                         { label: "Reports", icon: <FileBarChart size={20} />, path: "/dashboard/distributors/reports" },
                         { label: "Transfer History", icon: <Repeat size={20} />, path: "/dashboard/distributors/transfer-logs" },

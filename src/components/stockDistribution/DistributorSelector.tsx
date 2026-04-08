@@ -33,9 +33,13 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
 
     const columns: ColumnDef<Distributor>[] = [
         {
+            header: "ID",
+            accessorKey: "distributor_id",
+        },
+        {
             header: "Name",
             accessorKey: "distributor_name",
-            meta: { align: "left" },
+            meta: { align: "center" },
         },
         {
             header: "Email",

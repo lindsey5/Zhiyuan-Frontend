@@ -3,6 +3,7 @@ import type { ApiResponse } from "./type";
 
 export interface Distributor {
     _id: string;
+    distributor_id: string;
     parent_distributor_id?: string;
     parent_distributor: Distributor;
     distributor_name: string;

@@ -98,7 +98,7 @@ export default function TransferLogs () {
     return (
         <PageContainer
             title="Transfer History"
-            description="View the history of transfered stocks from admin to distributors"
+            description="View the history of transferred stocks from admin to distributors"
             className="md:max-h-screen"
         >
             <StockTransferItems 
