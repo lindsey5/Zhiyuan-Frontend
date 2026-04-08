@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDistributorSale } from "../../hooks/useDistributorSale";
-import Chart from "../ui/Chart";
+import Chart, { ChartSkeleton } from "../ui/Chart";
 import Dropdown from "../ui/Dropdown";
 import { yearOptions } from "../../lib/contants/contants";
 
@@ -10,8 +10,9 @@ export default function AllDistributorItemsSoldPerMonth() {
     const currentYear = new Date().getFullYear();
     const [year, setYear] = useState<string>(currentYear.toString());
 
-    const { data } = getAllDistributorItemsSoldPerMonth(Number(year));
+    const { data, isFetching } = getAllDistributorItemsSoldPerMonth(Number(year));
 
+    if(isFetching) return <ChartSkeleton />
 
     return (
         <div className="relative">

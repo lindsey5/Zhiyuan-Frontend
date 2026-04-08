@@ -54,6 +54,11 @@ const columns: ColumnDef<AuditLog>[] = [
         meta: { align: 'center' },
     },
     {
+        header: "IP Address",
+        accessorKey: "ip_address",
+        meta: { align: 'center' },
+    },
+    {
         header: "Severity",
         accessorKey: "severity",
         cell: info => (

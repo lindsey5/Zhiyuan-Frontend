@@ -153,3 +153,12 @@ export default function Chart({ title, labels, values }: ChartProps) {
     </Card>
   );
 }
+
+export const ChartSkeleton =  () => {
+  return (
+    <Card className="flex flex-col gap-5 w-full h-[300px] md:h-[500px] animate-pulse">
+      <div className="w-[40%] h-10 bg-loading rounded-md"></div>
+      <div className="w-full flex-1 bg-loading rounded-md"></div>
+    </Card>
+  )
+}
