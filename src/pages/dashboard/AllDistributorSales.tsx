@@ -9,6 +9,9 @@ import type { SortOption } from "../../types/type";
 import type { DistributorSale } from "../../types/distributorSale.type";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import DistributorSalesControls from "../../components/distributorSale/DistributorSalesControls";
+import { distributorSaleService } from "../../service/distributorSaleService";
+import Button from "../../components/ui/Button";
+import { Download } from "lucide-react";
 
 const columns: ColumnDef<DistributorSale>[] = [
     {
@@ -83,12 +86,30 @@ export default function AllDistributorSales () {
     const { getAllDistributorSales } = useDistributorSale();
     const { data, isFetching } = getAllDistributorSales(debouncedParams);
 
+
+    const downloadDistributorSales = async () => {
+        await distributorSaleService.downloadAllDistributorSales({
+            limit: pagination.pageSize,
+            page: pagination.pageIndex + 1,
+            endDate,
+            startDate,
+            search
+        });
+    }
+
     return (
         <PageContainer 
             className="md:max-h-screen" 
             title="Distributors Sales"
             description="View distributors sales including sold items and quantities."
         >
+            <div className="flex justify-end px-5">
+                <Button 
+                    label="Export"
+                    icon={<Download size={20} />}
+                    onClick={downloadDistributorSales}
+                />
+            </div>
             <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
                 <DistributorSalesControls
                     sorting={sorting}
