@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { DownloadDistributorSalesParams, GetDistributorItemsSoldPerMonthResponse, GetDistributorItemsSoldResponse, GetDistributorMonthlySalesResponse, GetDistributorSalesByPeriodResponse, GetDistributorSalesParams, GetDistributorSalesResponse, Period } from "../types/distributorSale.type"
+import type { GetDistributorItemsSoldPerMonthResponse, GetDistributorItemsSoldResponse, GetDistributorMonthlySalesResponse, GetDistributorSalesByPeriodResponse, GetDistributorSalesParams, GetDistributorSalesResponse, Period } from "../types/distributorSale.type"
 import { distributorSaleService } from "../service/distributorSaleService"
 
 export const useDistributorSale = () => {
