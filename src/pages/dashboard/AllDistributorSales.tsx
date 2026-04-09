@@ -100,8 +100,8 @@ export default function AllDistributorSales () {
     return (
         <PageContainer 
             className="md:max-h-screen" 
-            title="Distributors Sales"
-            description="View distributors sales including sold items and quantities."
+            title="Distributor Sales"
+            description="View distributor sales including sold items and quantities."
         >
             <div className="flex justify-end px-5">
                 <Button 

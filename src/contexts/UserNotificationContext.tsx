@@ -5,17 +5,17 @@ import { useUserNotification } from '../hooks/useUserNotification';
 import type { UserNotification } from '../types/userNotification.type';
 
 interface NotificationContextType extends SocketContextType {
-    setPage: React.Dispatch<SetStateAction<number>> | null;
+    setPage?: React.Dispatch<SetStateAction<number>> | null;
     notifications: UserNotification[];
     unread: number;
     totalPages: number;
     isFetching: boolean;
     page: number;
+    readNotification?: (id: string) => Promise<void>;
 }
 
 export const UserNotificationSocketContext = createContext<NotificationContextType>({
     socket: null,
-    setPage: null,
     notifications: [],
     unread: 0,
     totalPages: 1,
@@ -30,7 +30,7 @@ const UserNotificationSocketContextProvider  = ({ children } : SocketContextProv
     })
     const [notifications, setNotifications] = useState<UserNotification[]>([]);
     const [unread, setUnread] = useState(0);
-    const { getUserNotifications } = useUserNotification();
+    const { getUserNotifications, readNotification } = useUserNotification();
     const [page, setPage] = useState(1);
     const { data, isFetching } = getUserNotifications({ page, limit: 10 });
 
@@ -54,6 +54,15 @@ const UserNotificationSocketContextProvider  = ({ children } : SocketContextProv
         }
     }, [socket, data])
 
+    const handleReadNotification = async (id: string) => {
+        const response = await readNotification.mutateAsync({ id });
+
+        if(response.success){
+            setNotifications(prev => prev.map(notification => notification._id === id ? { ...notification, status: "read"} : notification))
+            setUnread(prev => prev - 1);
+        }
+    }
+
     return (
         <UserNotificationSocketContext.Provider 
             value={{ 
@@ -64,6 +73,7 @@ const UserNotificationSocketContextProvider  = ({ children } : SocketContextProv
                 isFetching, 
                 page, 
                 totalPages: data?.totalPages || 0,  
+                readNotification: handleReadNotification
             }}
         >
         {children}

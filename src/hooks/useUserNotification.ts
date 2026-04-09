@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import type { GetUserNotificationsParams, GetUserNotificationsResponse } from "../types/userNotification.type"
 import { userNotificationService } from "../service/userNotificationService"
 
@@ -12,7 +12,12 @@ export const useUserNotification = () => {
         })
     )
 
+    const readNotification = useMutation({
+        mutationFn: ({ id } : { id: string }) => userNotificationService.readNotifications(id)
+    })
+
     return {
-        getUserNotifications
+        getUserNotifications,
+        readNotification
     }
 }

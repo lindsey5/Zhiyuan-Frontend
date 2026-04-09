@@ -1,4 +1,4 @@
-import { Bell } from "lucide-react";
+import { BarChartBig, Bell } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useContext, useEffect, useState } from "react";
 import { UserNotificationSocketContext } from "../../contexts/UserNotificationContext";
@@ -6,10 +6,30 @@ import Card from "../ui/Card";
 import { useThemeStore } from "../../lib/store/themeStore";
 import { cn, timeAgo } from "../../utils/utils";
 import Button from "../ui/Button";
+import type { UserNotification } from "../../types/userNotification.type";
+import NotificationModal from "./NotificationModal";
+
+function getIcon (notification : UserNotification, isDark : boolean) {
+    if(notification.saleNotification){
+        return (
+            <BarChartBig
+                className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
+    return (
+        <Bell 
+            fill={isDark ? "#313131" : "#fff" } 
+            className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+        />
+    )
+}
 
 export default function NotificationBell () {
     const { isDark } = useThemeStore();
-    const { unread, notifications, setPage, page, totalPages, isFetching } = useContext(UserNotificationSocketContext);
+    const [notification, setNotification] = useState<UserNotification | null>(null);
+    const { unread, notifications, setPage, page, totalPages, isFetching, readNotification } = useContext(UserNotificationSocketContext);
     const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
@@ -20,9 +40,21 @@ export default function NotificationBell () {
 
     }, [])
 
+    const handleReadNotification = async(notification : UserNotification) => {
+        if(!readNotification) return;
+
+        setNotification(notification);
+        
+        if(notification.status === 'unread') await readNotification(notification._id);
+    }
+
     return (
-        <>
-        <div id="notification-bell" className="fixed top-1 lg:top-8 z-20 right-35 lg:right-42">
+        <div id="notification-bell" className="fixed top-1 lg:top-8 z-30 right-35 lg:right-42">
+            <NotificationModal 
+                close={() => setNotification(null)}
+                open={notification !== null}
+                notification={notification}
+            />
             <IconButton
                 icon={(
                     <Bell 
@@ -44,11 +76,12 @@ export default function NotificationBell () {
                     <div className="bg-[var(--border-panel)] mt-3 mb-5 h-[1px]"></div>
                     {!notifications.length && !isFetching && <p className="w-full text-center text-sm">No notifications yet</p>}
                     {notifications.map(notification => (
-                        <button className="relative border border-[var(--border-panel)] rounded-md cursor-pointer w-full p-3 flex gap-3 hover:opacity-70 items-center">
-                            <Bell 
-                                fill={isDark ? "#313131" : "#fff" } 
-                                className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
-                            />
+                        <button 
+                            key={notification._id}
+                            className="relative border border-[var(--border-panel)] rounded-md cursor-pointer w-full p-3 flex gap-3 hover:opacity-70 items-center"
+                            onClick={() => handleReadNotification(notification)}
+                        >
+                            {getIcon(notification, isDark)}
                             <div className="flex flex-col items-start space-y-1">
                                 <p className={cn(
                                     "text-xs break-all",
@@ -76,6 +109,5 @@ export default function NotificationBell () {
                 </Card>
             )}
         </div>
-        </>
     )
 }

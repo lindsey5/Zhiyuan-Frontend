@@ -1,4 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
+import type { ApiResponse } from "../types/type";
 import type { GetUserNotificationsParams, GetUserNotificationsResponse } from "../types/userNotification.type";
 
 export const userNotificationService = {
@@ -6,5 +7,10 @@ export const userNotificationService = {
         apiAxios<GetUserNotificationsResponse>("user-notifications", {
             method: HttpMethod.GET,
             params,
-        })
+        }),
+
+    readNotifications: (id : string) : Promise<ApiResponse> => 
+        apiAxios<ApiResponse>(`user-notifications/${id}`, {
+            method: HttpMethod.PATCH
+    })
 }
