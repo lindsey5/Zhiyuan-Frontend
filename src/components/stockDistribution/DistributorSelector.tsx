@@ -6,8 +6,7 @@ import type { Distributor } from "../../types/distributor.type";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDistributor } from "../../hooks/useDistributor";
 import GoldButton from "../ui/GoldButton";
-import { Search, User } from "lucide-react";
-import TextField from "../ui/TextField";
+import { User } from "lucide-react";
 import DistributorsControls from "../distributors/DistributorsControls";
 
 interface DistributorSelectorProps {
