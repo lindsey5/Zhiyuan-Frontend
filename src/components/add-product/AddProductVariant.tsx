@@ -85,6 +85,11 @@ export default function AddProductVariant ({ errors, register, index, setValue, 
                     label="Stock"
                     placeholder="Stock"
                     type="number"
+                    onKeyDown={(e) => {
+                        if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
+                        e.preventDefault();
+                        }
+                    }}
                     registration={register(`variants.${index}.stock`, {
                         setValueAs: value => Number(value)
                     })}

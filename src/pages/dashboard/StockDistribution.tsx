@@ -5,8 +5,7 @@ import type { VariantWithProduct } from "../../types/variant.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import { ShoppingCart } from "lucide-react";
-import TransferCart from "../../components/stockDistribution/TransferCart";
+import TransferItems from "../../components/stockDistribution/TransferItems";
 import { useSearchParams } from "react-router-dom";
 
 export default function StockDistribution () {
@@ -55,8 +54,7 @@ export default function StockDistribution () {
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}
                 >
-                    <ShoppingCart size={20} />
-                    Transfer Cart
+                    Transfer Items
                     {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
                         {variants.length}
                     </span>}
@@ -71,7 +69,7 @@ export default function StockDistribution () {
                     addVariant={addVariant}
                 />
             </div>
-            <TransferCart 
+            <TransferItems
                 close={() => setShowModal(false)}
                 open={showModal}
                 setVariants={setVariants}

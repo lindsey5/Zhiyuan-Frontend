@@ -78,7 +78,10 @@ export default function NotificationBell () {
                     {notifications.map(notification => (
                         <button 
                             key={notification._id}
-                            className="relative border border-[var(--border-panel)] rounded-md cursor-pointer w-full p-3 flex gap-3 hover:opacity-70 items-center"
+                            className={cn(
+                                "relative border border-[var(--border-panel)] rounded-md cursor-pointer w-full p-3 flex gap-3 hover:opacity-70 items-center",
+                                notification.status === 'read' && 'opacity-60'
+                            )}
                             onClick={() => handleReadNotification(notification)}
                         >
                             {getIcon(notification, isDark)}

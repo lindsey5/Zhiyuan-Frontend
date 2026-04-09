@@ -8,6 +8,7 @@ import { useDistributor } from "../../hooks/useDistributor";
 import GoldButton from "../ui/GoldButton";
 import { Search, User } from "lucide-react";
 import TextField from "../ui/TextField";
+import DistributorsControls from "../distributors/DistributorsControls";
 
 interface DistributorSelectorProps {
     setDistributor: React.Dispatch<SetStateAction<string | null>>;
@@ -16,6 +17,8 @@ interface DistributorSelectorProps {
 
 export default function DistributorSelector({ setDistributor, defaultDistributor } : DistributorSelectorProps) {
     const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
+    const [sortBy, setSortBy] = useState('createdAt');
+    const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
     const { getDistributors } = useDistributor();
@@ -121,14 +124,14 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
             ) : (
                 <>
                 {/* Search */}
-                <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
-                    <h1 className="text-md xl:text-lg font-bold">Select Distributor</h1>
-                    <TextField 
-                        icon={<Search size={20}/>}
-                        placeholder="Search distributor..."
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
+                <h1 className="p-5 text-md xl:text-lg font-bold">Select Distributor</h1>
+                <DistributorsControls 
+                    order={order}
+                    setOrder={setOrder}
+                    setSearch={setSearch}
+                    setSort={setSortBy}
+                    sort={sortBy}
+                />
 
                 {/* Table */}
                 <CustomizedTable

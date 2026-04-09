@@ -67,9 +67,7 @@ export default function AddProduct () {
         formData.append("category", data.category);
         formData.append("thumbnail", data.thumbnail);
         formData.append("variants", JSON.stringify(variants));
-        variant_images.forEach((file) => {
-            formData.append("variant_images", file);
-        });
+        variant_images.forEach((file) => formData.append("variant_images", file));
         const callBack = createProduct.mutateAsync({ formData });
         promiseToast(callBack);
 

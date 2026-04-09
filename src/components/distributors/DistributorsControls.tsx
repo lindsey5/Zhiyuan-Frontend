@@ -36,7 +36,7 @@ export default function DistributorsControls ({
             <TextField 
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
-                placeholder="Search distributor by id, name, email or parent distributor"
+                placeholder="Search distributor by id, name, or email..."
                 onChange={(e) => setSearch(e.target.value)}
             />
             <FiltersMenu className="md:hidden" containerStyle="space-y-3 md:flex gap-3 w-[70vw] md:w-100">

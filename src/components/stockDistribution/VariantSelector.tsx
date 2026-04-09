@@ -1,14 +1,15 @@
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import Card from "../ui/Card";
-import type { VariantWithProduct } from "../../types/variant.type";
+import { type VariantWithProduct } from "../../types/variant.type";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import { useVariant } from "../../hooks/useVariant";
 import { useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import CustomizedTable from "../ui/Table";
 import GoldButton from "../ui/GoldButton";
-import TextField from "../ui/TextField";
-import { Search } from "lucide-react";
+import type { SortOption } from "../../types/type";
+import VariantsTableControls from "../variants/VariantsTableControls";
+import EnterQuantity from "./EnterQuantity";
 
 interface VariantSelectorProps {
     addVariant: (variant: VariantWithProduct, quantity: number) => void;
@@ -17,7 +18,10 @@ interface VariantSelectorProps {
 export default function VariantSelector ({ addVariant } : VariantSelectorProps) {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
+    const [category, setCategory] = useState('All');
+    const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const debouncedSearch = useDebounce(search, 500);
+    const [selectedVariant, setSelectedVariant] = useState<VariantWithProduct | null>(null);
 
     const params = { 
         page: pagination.pageIndex + 1, 
@@ -77,7 +81,7 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
             header: 'Action',
             cell: ({ row }) => (
                 <GoldButton
-                    onClick={() => addVariant(row.original, 1)}
+                    onClick={() => setSelectedVariant(row.original)}
                 >Add</GoldButton>
             )
         }
@@ -85,15 +89,20 @@ export default function VariantSelector ({ addVariant } : VariantSelectorProps) 
 
     return (
         <Card className="p-0 flex flex-col">
-            <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
-                <h1 className="text-md xl:text-lg font-bold">Select Variants</h1>
-                    <TextField 
-                        className="md:max-w-100"
-                        icon={<Search size={20}/>}
-                        placeholder="Search variants..."
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-            </div>
+            <EnterQuantity 
+                addVariant={addVariant}
+                close={() => setSelectedVariant(null)}
+                variant={selectedVariant}
+                open={selectedVariant !== null}
+            />
+            <h1 className="p-5 text-md xl:text-lg font-bold">Select Item to Sell</h1>
+            <VariantsTableControls
+                setSearch={setSearch}
+                setSorting={setSorting}
+                sorting={sorting}
+                category={category}
+                setCategory={setCategory}
+            />
             <CustomizedTable
                 isLoading={isFetching}
                 data={data?.variants || []}
