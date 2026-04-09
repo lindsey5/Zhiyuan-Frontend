@@ -22,13 +22,15 @@ export default function EnterQuantity ({ addVariant, close, open, variant } : En
     const isInvalid = useMemo(() => (quantity || 0) <= 0, [quantity]);
 
     const errorMessage = useMemo(() => {
+        if(!quantity) return ""
+
         return stock === 0 
-        ? "No available stock" 
-        : isInvalid 
-        ? "Quantity must be greater than 0"
-        : isExceedingStock
-        ? "Quantity exceeds available stock"
-        : "";
+            ? "No available stock" 
+            : isInvalid 
+            ? "Quantity must be greater than 0"
+            : isExceedingStock
+            ? "Quantity exceeds available stock"
+            : "";
     }, [isInvalid, isExceedingStock])
     
     
@@ -58,7 +60,7 @@ export default function EnterQuantity ({ addVariant, close, open, variant } : En
                     label="Enter Quantity"
                     placeholder="eg. 1"
                     type="number"
-                    value={quantity ? quantity?.toString() : ""}
+                    value={quantity ? quantity.toString() : ""}
                     onKeyDown={(e) => {
                         if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
                         e.preventDefault();
