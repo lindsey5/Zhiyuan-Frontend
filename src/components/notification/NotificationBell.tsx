@@ -42,7 +42,6 @@ export default function NotificationBell () {
                 <Card className="max-h-100 overflow-y-auto p-4 w-[70vw] space-y-2 md:w-80 absolute -right-20 transform  transform md:right-1">
                     <h1 className="font-bold">Notifications</h1>
                     <div className="bg-[var(--border-panel)] mt-3 mb-5 h-[1px]"></div>
-                    {!notifications.length && isFetching && <p className="w-full text-center text-sm">Loading...</p>}
                     {!notifications.length && !isFetching && <p className="w-full text-center text-sm">No notifications yet</p>}
                     {notifications.map(notification => (
                         <button className="relative border border-[var(--border-panel)] rounded-md cursor-pointer w-full p-3 flex gap-3 hover:opacity-70 items-center">
@@ -60,7 +59,7 @@ export default function NotificationBell () {
                             {notification.status === 'unread' && <span className="bg-red-500 p-[6px] rounded-full absolute left-10 top-3"></span> }
                         </button>
                     ))}
-
+                    {isFetching && <p className="w-full text-center text-sm text-gray">Loading...</p>}
                     <div className={cn(
                         "justify-center mt-2",
                         page < totalPages ? 'flex' : 'hidden'

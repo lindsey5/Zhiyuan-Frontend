@@ -105,17 +105,26 @@ export function minutesAgo(date: Date | string): string {
     const diffMs = now - past;
 
     const diffSecs = Math.floor(diffMs / 1000);
-    if (diffSecs < 60) return `${diffSecs} sec${diffSecs === 1 ? "" : "s"} ago`;
+
+    // seconds ago
+    if (diffSecs === 1) return "1 second ago";
+    if (diffSecs < 60) return `${diffSecs} seconds ago`;
 
     const diffMins = Math.floor(diffSecs / 60);
-    if (diffMins === 1) return `1 minute ago`;
+
+    // minutes ago
+    if (diffMins === 1) return "1 minute ago";
     if (diffMins < 60) return `${diffMins} minutes ago`;
 
     const diffHours = Math.floor(diffMins / 60);
+
+    // hours ago
     if (diffHours === 1) return "1 hour ago";
     if (diffHours < 24) return `${diffHours} hours ago`;
 
     const diffDays = Math.floor(diffHours / 24);
+
+    // days ago
     if (diffDays === 1) return "1 day ago";
     return `${diffDays} days ago`;
 }

@@ -11,7 +11,7 @@ export default function IconButton ({ onClick, icon, className } : IconButtonPro
     return (
         <button
             className={cn(
-                "cursor-pointer p-2 rounded-full hover:opacity-50",
+                "cursor-pointer p-2 rounded-full",
                 className
             )}
             onClick={onClick}
