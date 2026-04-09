@@ -47,7 +47,7 @@ export const useSocket = ({ namespace, events = {} }: UseSocketOptions) => {
                 socket.disconnect();
             }
         };
-    }, [socket, accessToken]);
+    }, []);
 
     return socket;
 };
