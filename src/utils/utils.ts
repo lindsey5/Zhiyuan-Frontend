@@ -98,33 +98,27 @@ export function downloadFile (data : string, filename: string) {
     window.URL.revokeObjectURL(url);
 }
 
-export function minutesAgo(date: Date | string): string {
+export function timeAgo(date: Date | string): string {
     const now = new Date().getTime();
     const past = new Date(date).getTime();
 
-    const diffMs = now - past;
+    let diffMs = now - past;
+    if (diffMs < 0) diffMs = 0; // prevent negative time
 
     const diffSecs = Math.floor(diffMs / 1000);
-
-    // seconds ago
+    if (diffSecs < 1) return "Just now";
     if (diffSecs === 1) return "1 second ago";
     if (diffSecs < 60) return `${diffSecs} seconds ago`;
 
     const diffMins = Math.floor(diffSecs / 60);
-
-    // minutes ago
     if (diffMins === 1) return "1 minute ago";
     if (diffMins < 60) return `${diffMins} minutes ago`;
 
     const diffHours = Math.floor(diffMins / 60);
-
-    // hours ago
     if (diffHours === 1) return "1 hour ago";
     if (diffHours < 24) return `${diffHours} hours ago`;
 
     const diffDays = Math.floor(diffHours / 24);
-
-    // days ago
     if (diffDays === 1) return "1 day ago";
     return `${diffDays} days ago`;
 }

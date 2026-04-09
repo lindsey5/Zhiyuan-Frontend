@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserNotificationSocketContext } from "../../contexts/UserNotificationContext";
 import Card from "../ui/Card";
 import { useThemeStore } from "../../lib/store/themeStore";
-import { cn, minutesAgo } from "../../utils/utils";
+import { cn, timeAgo } from "../../utils/utils";
 import Button from "../ui/Button";
 
 export default function NotificationBell () {
@@ -54,7 +54,7 @@ export default function NotificationBell () {
                                     "text-xs break-all",
                                     notification.status === "unread" && 'font-bold'
                                 )}>{notification.message}</p>
-                                <p className="text-xs text-gray">{minutesAgo(notification.createdAt)}</p>
+                                <p className="text-xs text-gray">{timeAgo(notification.createdAt)}</p>
                             </div>
                             {notification.status === 'unread' && <span className="bg-red-500 p-[6px] rounded-full absolute left-10 top-3"></span> }
                         </button>
