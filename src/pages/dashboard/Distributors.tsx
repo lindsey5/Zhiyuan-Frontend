@@ -52,9 +52,9 @@ const getColumns = ({
         meta: { align: 'center '}
     },
     {
-        header: "Recruit by",
+        header: "Parent Distributor",
         accessorKey: 'parent_distributor',
-        cell: info => info.getValue() ? (info.getValue() as Distributor).parent_distributor.distributor_name : "N/A",
+        cell: info => info.getValue() ? (info.getValue() as Distributor)?.distributor_name : "N/A",
         meta: { align: 'center '}
     },
     {
@@ -140,7 +140,7 @@ export default function Distributors () {
         navigate,
         permissions
     })
-
+    console.log(data)
     return (
         <PageContainer 
             className="md:max-h-screen" 

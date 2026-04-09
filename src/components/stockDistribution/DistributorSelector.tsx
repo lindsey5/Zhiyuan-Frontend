@@ -57,7 +57,7 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
             accessorKey: "parent_distributor",
             cell: (info) =>
                 info.getValue()
-                ? (info.getValue() as Distributor).parent_distributor.distributor_name
+                ? (info.getValue() as Distributor)?.distributor_name
                 : "N/A",
             meta: { align: "center" },
         },

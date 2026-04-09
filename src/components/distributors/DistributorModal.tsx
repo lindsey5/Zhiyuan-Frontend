@@ -65,6 +65,14 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         disabled={createDistributor.isPending}
                     />
 
+                    <TextField
+                        label="Parent Distributor (Optional)"
+                        placeholder="Enter parent distributor ID"
+                        registration={register("parent_distributor_id")}
+                        error={errors.parent_distributor_id?.message}
+                        disabled={createDistributor.isPending}
+                    />
+
                     <div className="flex justify-end gap-3 pt-3">
                         <GoldButton
                             type="submit"
