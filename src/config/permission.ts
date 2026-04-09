@@ -2,7 +2,6 @@
 export const PERMISSIONS = {
     DASHBOARD_VIEW: 'dashboard:view',
     AUDIT_VIEW_ALL: 'audit:view:all',
-    TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
 
     // User management
     USER_CREATE: 'user:create',
@@ -39,17 +38,17 @@ export const PERMISSIONS = {
     DISTRIBUTOR_CREATE: 'distrubutor:create',
     DISTRIBUTOR_DELETE: 'distributor:delete',
     
+    // Distributor Stock Management
+    DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
+    DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
+    TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
+
     // Distributor Sales
     DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
-    
-    // Distributor Stock Management
-    DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
-    DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
+    DISTRIBUTOR_SALES_NOTIFICATION: "distributor-sales:notification",
 
-    // Distributor Stats
+    /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
-
-    // Distributor Reports
     DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view'
 }
 
@@ -67,11 +66,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     Audit: {
         description: "View system audit logs and activity tracking records.",
         AUDIT_VIEW_ALL: "View all audit logs",
-    },
-
-    "Stock Transfer Log": {
-        description: "View stock transfer history and item movement records.",
-        TRANSFER_LOGS_VIEW_ALL: "View all transfer logs",
     },
 
     "User Management": {
@@ -118,11 +112,25 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_READ_ALL: "View all distributors",
         DISTRIBUTOR_CREATE: "Create new distributor accounts",
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
-        DISTRIBUTOR_STOCK_TRANSFER: "Transfer stocks to ditributor",
+    },
+
+    "Distributor Stock": {
+        description: "Manage distributor inventory, stock transfers, and monitor transfer history logs.",
         DISTRIBUTOR_STOCK_VIEW: "View distributor stocks",
-        DISTRIBUTOR_SALES_VIEW: 'View distributor sales',
-        DISTRIBUTOR_STATS_VIEW: 'View distributor\'s stats and analytics',
-        DISTRIBUTOR_REPORTS_VIEW: '"View distributors overall reports and analytics'
+        DISTRIBUTOR_STOCK_TRANSFER: "Transfer stocks to distributor",
+        TRANSFER_LOGS_VIEW_ALL: "View all distributor transfer history",
+    },
+
+    "Distributor Sales": {
+        description: "Monitor distributor sales activity, review detailed sales history, and get alerts when items are sold.",
+        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
+        DISTRIBUTOR_SALES_NOTIFICATION: "Receive notifications when a distributor completes a sale",
+    },
+
+    "Distributor Analytics": {
+        description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
+        DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
+        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
     },
 };
 

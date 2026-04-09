@@ -22,6 +22,7 @@ import StockTransferSocketContextProvider from "../contexts/StockTransferContext
 import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
 import DistributorReports from "../pages/dashboard/Reports";
+import UserNotificationSocketContextProvider from "../contexts/UserNotificationContext";
 
 const router = createBrowserRouter([ 
     {
@@ -32,7 +33,9 @@ const router = createBrowserRouter([
         path: '/dashboard',
         Component: () => (
             <StockTransferSocketContextProvider>
-                <DashboardLayout />
+                <UserNotificationSocketContextProvider>
+                    <DashboardLayout />
+                </UserNotificationSocketContextProvider>
             </StockTransferSocketContextProvider>
         ),
         children: [

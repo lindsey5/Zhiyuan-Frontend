@@ -30,6 +30,7 @@
   --border-panel: var(--border-panel);
   --border-ui: var(--border-ui);
   --toggle-border: var(--toggle-border);
+  --icon-shadow: var(--icon-shadow);
 }
 
 @layer base {
@@ -54,6 +55,7 @@
     --toggle-border: #c4c0be;
     --separator: #a67c52;
 
+    --icon-shadow: #1a1a1a;
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.3);
     --border-panel: #c4c0be;
   }
@@ -78,6 +80,7 @@
     --toggle-border: #b39842;
     --separator: #d4af37;
 
+    --icon-shadow: #837030;
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
     --border-panel: #646464;
   }

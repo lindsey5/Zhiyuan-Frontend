@@ -1,19 +1,18 @@
-import { useThemeStore } from "../../lib/store/themeStore";
 import { cn } from "../../utils/utils";
 
 interface IconButtonProps {
     icon: React.ReactNode;
     onClick: () => void;
+    className?: string
 }
 
-export default function IconButton ({ onClick, icon } : IconButtonProps) {
-    const { isDark } = useThemeStore();
+export default function IconButton ({ onClick, icon, className } : IconButtonProps) {
 
     return (
         <button
             className={cn(
-                "cursor-pointer p-2 rounded-full",
-                isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-300'
+                "cursor-pointer p-2 rounded-full hover:opacity-50",
+                className
             )}
             onClick={onClick}
         >

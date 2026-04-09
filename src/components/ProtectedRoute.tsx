@@ -50,6 +50,6 @@ export const ProtectedRoute = ({
             return <Unauthorized>{children}</Unauthorized>;
         }
     }
-
+    
     return <>{children}</>;
 };
