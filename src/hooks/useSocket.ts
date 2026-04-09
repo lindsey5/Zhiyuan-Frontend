@@ -25,9 +25,9 @@ export const useSocket = ({ namespace, events = {} }: UseSocketOptions) => {
 
                 newSocket.on("connect", () => console.log("Connected to socket"))
                 
-                newSocket.on("connect_error", async (err: any) => {
+                newSocket.on("connect_error", async () => {
                     const data = await authService.refreshAccessToken(refreshToken || "");
-                    setAuth(data.token.accessToken, data.token.refreshToken,);
+                    setAuth(data.token.accessToken, data.token.refreshToken);
                 })
 
                 // Register event listeners
@@ -47,7 +47,7 @@ export const useSocket = ({ namespace, events = {} }: UseSocketOptions) => {
                 socket.disconnect();
             }
         };
-    }, []);
+    }, [socket, accessToken]);
 
     return socket;
 };
