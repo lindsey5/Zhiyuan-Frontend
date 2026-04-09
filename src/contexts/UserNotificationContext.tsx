@@ -32,7 +32,7 @@ const UserNotificationSocketContextProvider  = ({ children } : SocketContextProv
     const [unread, setUnread] = useState(0);
     const { getUserNotifications } = useUserNotification();
     const [page, setPage] = useState(1);
-    const { data, isFetching } = getUserNotifications({ page, limit: 1 });
+    const { data, isFetching } = getUserNotifications({ page, limit: 10 });
 
     useEffect(() => {
         if(data?.userNotifications){
