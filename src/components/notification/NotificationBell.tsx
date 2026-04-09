@@ -101,8 +101,11 @@ export default function NotificationBell () {
                         page < totalPages ? 'flex' : 'hidden'
                     )}>
                         <Button 
-                            className="text-xs"
-                            label={isFetching ? "Loading..." : "See more"}
+                            className={cn(
+                                "text-xs",
+                                isFetching ? "hidden" : "block"
+                            )}
+                            label="See more"
                             disabled={isFetching}
                             onClick={() => {
                                 if(setPage) setPage(prev => prev + 1)
