@@ -1,13 +1,15 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { type ColumnDef, type Row } from "@tanstack/react-table";
 import { useOrders } from "../../hooks/useOrders";
 import CustomizedTable from "../../components/ui/Table";
+import Card from "../../components/ui/Card";
+import PageContainer from "../../components/ui/PageContainer"
 import OrdersFilter from "../../components/ui/orders/OrdersControls";
 import { Eye, CreditCard } from "lucide-react";
 import Button from "../../components/ui/Button";
+import { useDebounce } from "../../hooks/useDebounce"
 
-// 👉 define Order type (adjust if needed)
-type Order = {
+export type Order = {
   order_id: string;
   customer_name: string;
   status: "pending" | "processing" | "completed" | "cancelled";
@@ -27,21 +29,22 @@ type OrderFilters = {
 export default function Orders() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({});
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
+  const debouncedSearch = useDebounce(search, 500);
 
-  const { data, isFetching } = useOrders({
-    search,
+  const { data, isFetching } = useOrders({ 
+    search: debouncedSearch,
     page,
     ...filters,
   });
 
-  const handleView = (order: Order) => {
+  const handleView = useCallback((order: Order) => {
     console.log("View", order);
-  };
-
-  const handleMarkPaid = (order: Order) => {
+  }, []);
+  
+  const handleMarkPaid = useCallback((order: Order) => {
     console.log("Mark Paid", order);
-  };
+  }, []);
 
   const columns: ColumnDef<Order>[] = useMemo(() => [
     {
@@ -121,26 +124,30 @@ export default function Orders() {
       meta: { align: "center" },
     },
   ], [
-      handleView,
-      handleMarkpaid
-    ]);
+    handleMarkPaid,
+    handleView,
+  ]);
 
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-xl font-bold">Orders</h1>
+    <PageContainer 
+                className="md:max-h-screen" 
+                title="Orders"
+                description="Manage all customer orders"
+            >
+      <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5"> 
+        <OrdersFilter 
+          onSearch={setSearch}
+          onFilter={(f: OrderFilters) => setFilters((prev) => ({ ...prev, ...f }))} 
+        />
 
-      <OrdersFilter 
-        onSearch={setSearch}
-        onFilter={(f: OrderFilters) => setFilters((prev) => ({ ...prev, ...f }))}
-      />
-
-      <CustomizedTable 
-        data={data || []}                
-        columns={columns}                
-        isLoading={isFetching}           
-        showPagination={true}
-        noDataMessage="No orders found"                       
-      />
-    </div>
+        <CustomizedTable 
+          data={data || []}                
+          columns={columns}                
+          isLoading={isFetching}           
+          showPagination={true}
+          noDataMessage="No orders found"                      
+        />
+      </Card>
+    </PageContainer>
   );
 }
