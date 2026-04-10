@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { Download } from "lucide-react";
 import { variantService } from "../../service/variantService";
+import Chip from "../../components/ui/Chip";
 
 interface VariantColsParams {
     hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
@@ -42,9 +43,12 @@ const getColumns = ({
     {
         header: "Variant",
         cell: ({ row }) => (
-            <div className="min-w-50 flex items-center gap-3 justify-start">
+            <div className="min-w-60 flex items-center gap-3 justify-start">
                 <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
-                <span className="text-xs xl:text-sm">{row.original.variant_name}</span>
+                <div className="space-y-2 flex flex-col items-start">
+                    <p className="text-xs xl:text-sm">{row.original.product.product_name}</p>
+                    <p className="text-center text-xs bg-gold px-3 py-1 text-inverse rounded-pull rounded-full">{row.original.variant_name}</p>
+                </div>
             </div>
         ),
         meta: { align: 'left' },
