@@ -3,6 +3,7 @@ import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
+import Chip from "../ui/Chip";
 
 interface StockTransferItemsProps {
     open: boolean;
@@ -26,7 +27,7 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
                 {stockTransferLog?.items.map(item => (
                         <div
                             key={item.variant._id}
-                            className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 border-b border-[var(--border-panel)] py-3"
+                            className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3 border-b border-[var(--border-panel)] py-3"
                         >
                             <img
                                 src={item.variant.image_url}
@@ -35,10 +36,11 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
                             />
 
                             <div className="flex-1">
-                                <p className="font-medium text-sm">
-                                    {item.variant.variant_name}
+                                <p className="font-medium text-sm mb-2">
+                                    {item.variant.product.product_name}
                                 </p>
-                                <p className="text-sm text-gray">
+                                <Chip>{item.variant.variant_name}</Chip>
+                                <p className="text-sm text-gray mt-2">
                                     {formatToPeso(item.variant.price)}
                                 </p>
                             </div>

@@ -48,7 +48,7 @@ export default function DistributorSalesControls ({
             <TextField 
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
-                placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by seller, item name, or sku..."}
+                placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by product, variant, seller or sku..."}
                 onChange={(e) => setSearch(e.target.value)}
             />
             <FiltersMenu containerStyle="space-y-3 w-[80vw] md:w-90">

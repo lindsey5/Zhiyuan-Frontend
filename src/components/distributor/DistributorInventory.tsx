@@ -8,32 +8,37 @@ import { useMemo, useState } from "react";
 import type { SortOption } from "../../types/type";
 import { useDebounce } from "../../hooks/useDebounce";
 import CustomizedTable from "../ui/Table";
+import Chip from "../ui/Chip";
 
 const columns: ColumnDef<DistributorStock>[] = [
     {
         header: "Variant",
         accessorKey: "createdAt",
         cell: ({ row }) => (
-            <div className="min-w-30 flex gap-3 items-center">
+            <div className="min-w-50 flex gap-3 items-center">
                 <img 
                     className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
                     src={row.original.variant.image_url} 
-                    alt={row.original.variant.variant_name}
+                    alt={row.original.variant.product.product_name}
                 />
-                <h1>{row.original.variant.variant_name}</h1>
+                <h1>{row.original.variant.product.product_name}</h1>
             </div>
         ),
         meta: { align: 'left' },
     },
     {
-        header: "SKU",
-        accessorKey: 'variant.sku',
+        header: 'Variant',
+        cell: ({ row }) => (
+            <div className="min-w-70">
+                <Chip>{row.original.variant.variant_name}</Chip>
+            </div>
+        ),
         meta: { align: 'center' }
     },
     {
-        header: 'Product name',
-        accessorKey: 'variant.product.product_name',
-        meta: { align: 'center' },
+        header: "SKU",
+        accessorKey: 'variant.sku',
+        meta: { align: 'center' }
     },
     {
         header: "Quantity",

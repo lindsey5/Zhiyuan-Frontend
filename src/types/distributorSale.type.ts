@@ -1,13 +1,15 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
-import type { Variant } from "./variant.type";
+import type { Product } from "./product.type";
+import type { VariantWithProduct } from "./variant.type";
 
 export interface DistributorSale {
     _id: string;
     seller_id: string; 
     seller: Distributor;
     variant_id: string;
-    variant: Variant;
+    product: Product;
+    variant: VariantWithProduct;
     quantity: number;
     total_amount: number;
     createdAt: string;

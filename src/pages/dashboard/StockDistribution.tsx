@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
-import VariantSelector from "../../components/stockDistribution/VariantSelector";
-import type { VariantWithProduct } from "../../types/variant.type";
+import ProductSelectionPanel from "../../components/stockDistribution/ProductSelectionPanel";
+import type { Variant } from "../../types/variant.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
@@ -12,10 +12,10 @@ export default function StockDistribution () {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const [distributorId, setDistributorId] = useState<string | null>(id);
-    const [variants, setVariants] = useState<{ variant: VariantWithProduct, quantity: number }[]>([]);
+    const [variants, setVariants] = useState<{ variant: Variant, quantity: number, product_name: string }[]>([]);
     const [showModal, setShowModal] = useState(false);
 
-    const addVariant = (newVariant: VariantWithProduct, quantity: number) => {
+    const addVariant = (newVariant: Variant, quantity: number, product_name: string) => {
         const existing = variants.find(v => v.variant._id === newVariant._id);
 
         if (existing) {
@@ -37,7 +37,7 @@ export default function StockDistribution () {
             }
 
             // Add new variant
-            setVariants(prev => [...prev, { variant: newVariant, quantity }]);
+            setVariants(prev => [...prev, { variant: newVariant, quantity, product_name }]);
         }
 
         successToast("Success", `${newVariant.variant_name} successfully added`);
@@ -65,9 +65,7 @@ export default function StockDistribution () {
                     setDistributor={setDistributorId}
                     defaultDistributor={id}
                 />
-                <VariantSelector 
-                    addVariant={addVariant}
-                />
+                <ProductSelectionPanel addVariant={addVariant} />
             </div>
             <TransferItems
                 close={() => setShowModal(false)}

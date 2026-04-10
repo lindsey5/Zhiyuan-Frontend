@@ -38,7 +38,7 @@ const getColumns = ({
     {
         header: "Name",
         accessorKey: "distributor_name",
-        meta: { align: 'left '}
+        meta: { align: 'center '}
     },
     {
         header: "Email",
@@ -79,7 +79,7 @@ const getColumns = ({
         {
             header: 'Actions',
             cell: ({ row } : { row : Row<Distributor>}) => (
-                <div className="flex gap-2">
+                <div className="flex justify-center gap-2">
                     {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW], permissions) && (
                         <IconButton 
                             onClick={() => navigate(`${row.original._id}`)}
@@ -93,8 +93,9 @@ const getColumns = ({
                         />
                     )}
                 </div>
-            )
-    }
+            ),
+            meta: { align: 'center '}
+        }
     ]
     : [])
 ]

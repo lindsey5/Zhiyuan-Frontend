@@ -11,20 +11,30 @@ import type { DistributorSale } from "../../types/distributorSale.type";
 import Button from "../ui/Button";
 import { Download } from "lucide-react";
 import { distributorSaleService } from "../../service/distributorSaleService";
+import Chip from "../ui/Chip";
 
 const columns: ColumnDef<DistributorSale>[] = [
     {
         header: "Item",
         cell: ({ row }) => (
-            <div className="min-w-30 flex gap-3 items-center">
+            <div className="min-w-50 flex gap-3 items-center">
                 <img 
                     className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
                     src={row.original.variant.image_url} 
                     alt={row.original.variant.variant_name}
                 />
-                <h1>{row.original.variant.variant_name}</h1>
+                <h1>{row.original.product.product_name}</h1>
             </div>
         ),
+    },
+    {
+        header: 'Variant',
+        cell: ({ row }) => (
+            <div className="min-w-70">
+                <Chip>{row.original.variant.variant_name}</Chip>
+            </div>
+        ),
+        meta: { align: 'center' }
     },
     {
         header: "SKU",

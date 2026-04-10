@@ -12,20 +12,30 @@ import DistributorSalesControls from "../../components/distributorSale/Distribut
 import { distributorSaleService } from "../../service/distributorSaleService";
 import Button from "../../components/ui/Button";
 import { Download } from "lucide-react";
+import Chip from "../../components/ui/Chip";
 
 const columns: ColumnDef<DistributorSale>[] = [
     {
-        header: "Item",
+        header: "Product",
         cell: ({ row }) => (
-            <div className="min-w-30 flex gap-3 items-center">
+            <div className="min-w-40 flex gap-3 items-center">
                 <img 
                     className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
                     src={row.original.variant.image_url} 
                     alt={row.original.variant.variant_name}
                 />
-                <h1>{row.original.variant.variant_name}</h1>
+                <h1>{row.original.product.product_name}</h1>
             </div>
         ),
+    },
+    {
+        header: 'Variant',
+        cell: ({ row }) => (
+            <div className="min-w-80">
+                <Chip>{row.original.variant.variant_name}</Chip>
+            </div>
+        ),
+        meta: { align: 'center' }
     },
     {
         header: 'Seller',
@@ -85,7 +95,6 @@ export default function AllDistributorSales () {
     const debouncedParams = useDebounce(params, 800);
     const { getAllDistributorSales } = useDistributorSale();
     const { data, isFetching } = getAllDistributorSales(debouncedParams);
-
 
     const downloadDistributorSales = async () => {
         await distributorSaleService.downloadAllDistributorSales({

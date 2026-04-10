@@ -1,13 +1,13 @@
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
-import type { Variant } from "./variant.type";
+import type { VariantWithProduct } from "./variant.type";
 
 export interface DistributorStock {
     _id: string;
     distributor_id: string;
     variant_id: string;
     quantity: number;
-    variant: Variant;
+    variant: VariantWithProduct;
     updatedAt: Date;
 }
 

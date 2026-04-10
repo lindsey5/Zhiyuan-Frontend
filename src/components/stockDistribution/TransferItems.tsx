@@ -1,5 +1,5 @@
 import { Minus, Plus, X } from "lucide-react";
-import type { VariantWithProduct } from "../../types/variant.type";
+import type { Variant } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { formatToPeso } from "../../utils/utils";
@@ -7,18 +7,20 @@ import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
 import { useDistributorStock } from "../../hooks/useDistributorStock";
 import { errorToast, promiseToast } from "../../utils/sileo";
+import Chip from "../ui/Chip";
 
 interface CartItem {
-  variant: VariantWithProduct;
-  quantity: number;
+    variant: Variant;
+    quantity: number;
+    product_name: string;
 }
 
 interface TransferItemsProps {
-  variants: CartItem[];
-  distributorId: string | null;
-  open: boolean;
-  close: () => void;
-  setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
+    variants: CartItem[];
+    distributorId: string | null;
+    open: boolean;
+    close: () => void;
+    setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
 }
 
 export default function TransferItems({ 
@@ -103,7 +105,7 @@ export default function TransferItems({
                     variants.map(item => (
                         <div
                             key={item.variant._id}
-                            className="flex items-center gap-3 border-b border-[var(--border-ui)] py-3"
+                            className="flex items-start gap-3 border-b border-[var(--border-ui)] py-3"
                         >
                             <img
                                 src={item.variant.image_url}
@@ -112,11 +114,10 @@ export default function TransferItems({
                             />
 
                             <div className="flex-1">
-                                <p className="font-medium text-sm">
-                                    {item.variant.variant_name}
-                                </p>
-                                <p className="text-sm text-gray">
-                                    Stock: {item.variant.stock}
+                                <p className="text-sm font-bold mb-2">{item.product_name}</p>
+                                <Chip>{item.variant.variant_name}</Chip>
+                                <p className="text-sm text-gray mt-2">
+                                    Available Stock: {item.variant.stock}
                                 </p>
                                 <p className="text-sm text-gray">
                                     {formatToPeso(item.variant.price)}

@@ -11,8 +11,7 @@ export const editVariantSchema = z.object({
         .positive("Price must not be blank, negative or 0"),
 
     stock: z.number()
-        .int("Stock must be a whole number")
-        .positive("Stock must not be blank, negative or 0"),
+        .int("Stock must be a whole number"),
 
     sku: z.string()
         .min(3, "SKU must be at least 3 characters")

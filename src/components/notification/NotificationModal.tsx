@@ -5,6 +5,7 @@ import Modal from "../ui/Modal";
 import { formatToPeso } from "../../utils/utils";
 import { useMemo } from "react";
 import Button from "../ui/Button";
+import Chip from "../ui/Chip";
 
 interface NotificationModalProps {
     open: boolean;
@@ -13,7 +14,6 @@ interface NotificationModalProps {
 }
 
 function SaleDetails ({ saleNotification, close } : { saleNotification: SaleNotification, close: () => void}) {
-
     const totalSales = useMemo(() => {
         return saleNotification.sales.reduce((total, sale) => sale.total_amount + total, 0)
     }, [saleNotification])
@@ -49,10 +49,11 @@ function SaleDetails ({ saleNotification, close } : { saleNotification: SaleNoti
                         />
 
                         <div className="flex-1">
-                            <p className="font-medium text-sm">
-                                {sale.variant.variant_name}
+                            <p className="font-bold text-sm mb-2">
+                                {sale.variant.product.product_name}
                             </p>
-                            <p className="font-medium text-xs md:text-sm">Quantity: {sale.quantity}</p>
+                            <Chip>{sale.variant.variant_name}</Chip>
+                            <p className="font-medium text-xs md:text-sm mt-3">Quantity: {sale.quantity}</p>
                             <p className="font-bold text-xs md:text-sm mt-1">Sales: {formatToPeso(sale.total_amount)}</p>
                         </div>
                     </div>
