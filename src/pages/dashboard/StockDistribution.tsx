@@ -21,7 +21,7 @@ export default function StockDistribution () {
         if (existing) {
             // Check if adding exceeds stock
             if ((existing.quantity + quantity) > existing.variant.stock) {
-                errorToast("Quantity exceeds available stock");
+                errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
@@ -32,7 +32,7 @@ export default function StockDistribution () {
         } else {
             // Check if quantity exceeds stock for new variant
             if (quantity > newVariant.stock) {
-                errorToast("Quantity exceeds available stock");
+                errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
@@ -40,7 +40,7 @@ export default function StockDistribution () {
             setVariants(prev => [...prev, { variant: newVariant, quantity }]);
         }
 
-        successToast(`${newVariant.variant_name} successfully added`);
+        successToast("Success", `${newVariant.variant_name} successfully added`);
     };
 
     return (

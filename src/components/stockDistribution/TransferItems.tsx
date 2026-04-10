@@ -64,7 +64,7 @@ export default function TransferItems({
 
     const transfer = () => {
         if(!distributorId){
-            errorToast("Please select a distributor first.");
+            errorToast("Error", "Please select a distributor first.");
             return;
         }
 
