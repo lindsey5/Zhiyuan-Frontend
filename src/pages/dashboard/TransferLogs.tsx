@@ -113,6 +113,7 @@ export default function TransferLogs () {
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

@@ -119,6 +119,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 setEndDate={setEndDate}
                 setSearch={setSearch}
                 searchPlaceHolder="Search by item name or sku"
+                setPagination={setPagination}
             />
             <CustomizedTable 
                 isLoading={isFetching}

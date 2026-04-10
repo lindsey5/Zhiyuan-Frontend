@@ -86,6 +86,7 @@ export default function SponsoredItems () {
                     setStartDate={setStartDate}
                     endDate={endDate}
                     setEndDate={setEndDate}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     data={data?.sponsoredItems || []}

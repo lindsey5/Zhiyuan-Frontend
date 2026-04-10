@@ -128,6 +128,7 @@ export default function AllDistributorSales () {
                     endDate={endDate}
                     setEndDate={setEndDate}
                     setSearch={setSearch}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

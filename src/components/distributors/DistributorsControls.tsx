@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import Dropdown from "../ui/Dropdown";
 import FiltersMenu from "../ui/FiltersMenu";
 import TextField from "../ui/TextField";
+import type { PaginationState } from "@tanstack/react-table";
 
 const sortOptions = [
     { label: 'Distributor Name', value: 'distributor_name' },
@@ -21,6 +22,7 @@ interface DistributorsControlsProps {
     setSort: React.Dispatch<React.SetStateAction<string>>;
     order: 'asc' | 'desc';
     setOrder: React.Dispatch<React.SetStateAction<'asc' | 'desc'>>;
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
 }
 
 export default function DistributorsControls ({ 
@@ -28,7 +30,8 @@ export default function DistributorsControls ({
     sort,
     setSort,
     order,
-    setOrder
+    setOrder,
+    setPagination
 } : DistributorsControlsProps) {
 
     return (
@@ -37,7 +40,10 @@ export default function DistributorsControls ({
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
                 placeholder="Search distributor by id, name, or email..."
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setPagination(prev => ({...prev, pageIndex: 0}))
+                    setSearch(e.target.value)
+                }}
             />
             <FiltersMenu className="md:hidden" containerStyle="space-y-3 md:flex gap-3 w-[70vw] md:w-100">
                 <h1 className="font-bold text-md md:text-lg">Filter</h1>

@@ -153,6 +153,7 @@ export default function AddSponsoredItems () {
                     setSearch={setSearch}
                     setSorting={setSorting}
                     sorting={sorting}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable
                     isLoading={isFetching}

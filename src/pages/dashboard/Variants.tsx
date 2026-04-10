@@ -207,6 +207,7 @@ export default function Variants () {
                     sorting={sorting}
                     category={category}
                     setCategory={setCategory}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     data={data?.variants || []}

@@ -130,6 +130,7 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
                     setSearch={setSearch}
                     setSort={setSortBy}
                     sort={sortBy}
+                    setPagination={setPagination}
                 />
 
                 {/* Table */}

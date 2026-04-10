@@ -134,6 +134,7 @@ export default function AuditLogs () {
                     setSeverity={setSeverity}
                     order={order}
                     setOrder={setOrder}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

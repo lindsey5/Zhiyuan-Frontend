@@ -165,6 +165,7 @@ export default function Users () {
                     role={role}
                     setRole={setRole}
                     setSearch={setSearch}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     data={data?.users || []}

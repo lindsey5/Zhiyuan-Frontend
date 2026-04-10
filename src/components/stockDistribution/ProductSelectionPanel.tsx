@@ -94,6 +94,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
                 setSearch={setSearch}
                 setSorting={setSorting}
                 sorting={sorting}
+                setPagination={setPagination}
             />
             <CustomizedTable
                 isLoading={isFetching}

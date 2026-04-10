@@ -5,6 +5,7 @@ import Dropdown from "../ui/Dropdown";
 import type { SortOption } from "../../types/type";
 import { getKeyByValue } from "../../utils/utils";
 import TextField from "../ui/TextField";
+import type { PaginationState } from "@tanstack/react-table";
 
 const options: Record<string, SortOption> = {
     'Newest' : { sortBy: 'createdAt', order: 'desc' },
@@ -24,6 +25,7 @@ interface DistributorSalesControlsProps {
     setEndDate: React.Dispatch<React.SetStateAction<string>>;
     sorting: SortOption;
     searchPlaceHolder?: string;
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
 }
 
 export default function DistributorSalesControls ({
@@ -35,6 +37,7 @@ export default function DistributorSalesControls ({
     setEndDate,
     sorting,
     searchPlaceHolder,
+    setPagination
  } : DistributorSalesControlsProps) {
 
     const clear = () => {
@@ -49,7 +52,10 @@ export default function DistributorSalesControls ({
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
                 placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by product, variant, seller or sku..."}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setPagination(prev => ({...prev, pageIndex: 0}))
+                    setSearch(e.target.value)
+                }}
             />
             <FiltersMenu containerStyle="space-y-3 w-[80vw] md:w-90">
                 <h1 className="font-bold text-md md:text-lg">Filter</h1>

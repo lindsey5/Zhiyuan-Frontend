@@ -3,6 +3,7 @@ import Dropdown, { RoleDropdown } from "../ui/Dropdown";
 import DateInput from "../ui/DateInput";
 import FiltersMenu from "../ui/FiltersMenu";
 import { Search } from "lucide-react";
+import type { PaginationState } from "@tanstack/react-table";
 
 interface AuditLogsControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -16,6 +17,7 @@ interface AuditLogsControlsProps {
     setSeverity: React.Dispatch<React.SetStateAction<string>>;
     order: "asc" | "desc";
     setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
 }
 
 export default function AuditLogsControls({
@@ -30,6 +32,7 @@ export default function AuditLogsControls({
     setSeverity,
     order,
     setOrder,
+    setPagination
 }: AuditLogsControlsProps) {
 
     const clear = () => {
@@ -47,7 +50,10 @@ export default function AuditLogsControls({
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
                 placeholder="Search by user or action..."
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setPagination(prev => ({...prev, pageIndex: 0}))
+                    setSearch(e.target.value);
+                }}
             />
 
             <FiltersMenu containerStyle="w-[80vw] md:w-100">

@@ -6,6 +6,7 @@ import FiltersMenu from "../ui/FiltersMenu";
 import { getKeyByValue } from "../../utils/utils";
 import TextField from "../ui/TextField";
 import { Search } from "lucide-react";
+import type { PaginationState } from "@tanstack/react-table";
 
 const options: Record<string, SortOption> = {
     'Newest': { sortBy: 'createdAt', order: 'desc' },
@@ -20,6 +21,7 @@ interface ProductsTableControlsProps {
     sorting: SortOption
     category: string
     setCategory: React.Dispatch<React.SetStateAction<string>>
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
 }
 
 export default function ProductsTableControls ({
@@ -27,7 +29,8 @@ export default function ProductsTableControls ({
     setSorting,
     sorting,
     category,
-    setCategory
+    setCategory,
+    setPagination,
 } : ProductsTableControlsProps) {
 
     return (
@@ -36,7 +39,10 @@ export default function ProductsTableControls ({
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
                 placeholder="Search by product name..."
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setSearch(e.target.value)
+                    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+                }}
             />
             <FiltersMenu className="md:hidden" containerStyle="w-[60vw] md:w-auto space-y-3">
                 <h1 className="font-bold text-md md:text-lg">Filter</h1>

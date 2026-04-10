@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import DateInput from "../ui/DateInput";
 import FiltersMenu from "../ui/FiltersMenu";
 import TextField from "../ui/TextField";
+import type { PaginationState } from "@tanstack/react-table";
 
 interface StockTransferLogsControlsProps {
     startDate: string;
@@ -9,7 +10,8 @@ interface StockTransferLogsControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setStartDate: React.Dispatch<React.SetStateAction<string>>;
     setEndDate: React.Dispatch<React.SetStateAction<string>>;
-    }
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
+}
 
 export default function StockTransferLogsControls({
     startDate,
@@ -17,6 +19,7 @@ export default function StockTransferLogsControls({
     setSearch,
     setStartDate,
     setEndDate,
+    setPagination
 }: StockTransferLogsControlsProps) {
 
     const clear = () => {
@@ -31,7 +34,10 @@ export default function StockTransferLogsControls({
                     className="md:max-w-100"
                     icon={<Search size={20}/>}
                     placeholder="Search by receiver or sender..."
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }))
+                        setSearch(e.target.value);
+                    }}
                 />
                 <div className="hidden md:flex items-center space-x-3 flex-wrap">
                         <DateInput 

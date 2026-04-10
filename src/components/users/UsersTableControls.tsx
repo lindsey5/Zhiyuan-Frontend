@@ -2,17 +2,20 @@ import { Search } from "lucide-react";
 import { RoleDropdown } from "../ui/Dropdown";
 import FiltersMenu from "../ui/FiltersMenu";
 import TextField from "../ui/TextField";
+import type { PaginationState } from "@tanstack/react-table";
 
 interface UsersTableControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     role: string;
     setRole: React.Dispatch<React.SetStateAction<string>>;
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
 }
 
 export default function UsersTableControls({
     setSearch,
     role,
     setRole,
+    setPagination
 }: UsersTableControlsProps) {
 
     return (
@@ -22,7 +25,10 @@ export default function UsersTableControls({
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
                 placeholder="Search by name, email..."
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setPagination(prev => ({...prev, pageIndex: 0}))
+                    setSearch(e.target.value)
+                }}
             />
 
             {/* Role Dropdown */}

@@ -176,6 +176,7 @@ export default function Products () {
                     sorting={sorting}
                     category={category}
                     setCategory={setCategory}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     data={data?.products || []}

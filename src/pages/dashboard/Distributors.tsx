@@ -155,6 +155,7 @@ export default function Distributors () {
                     setSort={setSortBy}
                     order={order}
                     setOrder={setOrder}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}
