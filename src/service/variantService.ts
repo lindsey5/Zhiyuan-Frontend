@@ -34,7 +34,7 @@ export const variantService = {
 
             downloadFile(response.data, response.filename);
         }catch(err : any){
-            errorToast(err.message)
+            errorToast("Error", err.message || "Failed to download")
         }
     },
 }
