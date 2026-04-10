@@ -25,12 +25,12 @@ export default function SidebarItem({
             <span className="text-gold">{icon}</span>
 
             {!collapsed && (
-                <span className="text-xs xl:text-sm">
+                <span className="text-xs md:text-sm">
                     {label}
                 </span>
             )}
             {collapsed && (
-                <span className="pointer-events-none select-none absolute left-full ml-2 px-2 py-1 text-xs xl:text-sm bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
+                <span className="pointer-events-none select-none absolute left-full ml-2 px-2 py-1 text-xs md:text-sm bg-black text-white rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition z-50">
                     {label}
                 </span>
             )}

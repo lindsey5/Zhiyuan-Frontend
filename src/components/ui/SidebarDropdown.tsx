@@ -45,7 +45,7 @@ export default function SidebarDropdown({
             >
                 <div className="flex items-center gap-3">
                     <span className="text-gold">{icon}</span>
-                    {!collapsed && <span className="text-xs xl:text-sm">{title}</span>}
+                    {!collapsed && <span className="text-xs md:text-sm">{title}</span>}
                 </div>
 
                 {!collapsed && (
@@ -72,14 +72,14 @@ export default function SidebarDropdown({
                                 key={i}
                                 onClick={() => navigate(item.path)}
                                 className={cn(
-                                    "flex items-center gap-2 px-2 py-1 rounded cursor-pointer transition",
+                                    "text-start flex items-center gap-2 px-2 py-1 rounded cursor-pointer transition",
                                     isActive
                                         ? "text-gold bg-[rgba(166,124,82,0.2)]"
                                         : "text-muted hover:text-gold hover:bg-[rgba(166,124,82,0.1)]"
                                 )}
                             >
                                 {item.icon}
-                                {!collapsed && <span className="text-xs xl:text-sm">{item.label}</span>}
+                                {!collapsed && <span className="text-xs md:text-sm">{item.label}</span>}
                             </button>
                         );
                     })}

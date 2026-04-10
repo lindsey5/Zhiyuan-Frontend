@@ -22,6 +22,10 @@ export const PERMISSIONS = {
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
 
+    // Sponsored Items
+    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
+    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
+
     // Order management
     ORDER_READ_ALL: 'order:read:all',
     ORDER_READ: 'order:read',
@@ -49,7 +53,7 @@ export const PERMISSIONS = {
 
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
-    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view'
+    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
 }
 
 type PermissionGroup = {
@@ -90,6 +94,12 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         PRODUCT_CREATE: "Create products including variants",
         PRODUCT_UPDATE: "Update products including variants",
         PRODUCT_DELETE: "Delete products including variants",
+    },
+
+    "Sponsored Product Management": {
+        description: "Manage sponsored products including creation and viewing",
+        SPONSORED_PRODUCT_CREATE: 'Add new sponsored product records',
+        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
 
     "Order Management": {

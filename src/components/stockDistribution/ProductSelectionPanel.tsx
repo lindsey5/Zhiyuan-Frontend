@@ -10,7 +10,7 @@ import type { Product } from "../../types/product.type";
 import { useProduct } from "../../hooks/useProduct";
 import ProductsTableControls from "../products/ProductsTableControls";
 import GoldButton from "../ui/GoldButton";
-import ItemSelectorModal from "./ItemSelectorModal";
+import ItemSelectorModal from "../ui/ItemSelectorModal";
 
 interface ProductSelectionPanelProps {
     addVariant: (variant: Variant, quantity: number, product_name: string) => void;
@@ -69,7 +69,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const debouncedSearch = useDebounce(search, 500);
-    const [selectedProduct, setSeletedProduct] = useState<Product | null>(null);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     const params = useMemo(() => ({ 
         page: pagination.pageIndex + 1, 
@@ -83,7 +83,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
     const { getProducts } = useProduct();
     const { data, isFetching } = getProducts(params);
 
-    const columns = getColumns(setSeletedProduct);
+    const columns = getColumns(setSelectedProduct);
 
     return (
         <Card className="p-0 flex flex-col">
@@ -109,7 +109,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
             />
             <ItemSelectorModal 
                 addVariant={addVariant}
-                close={() => setSeletedProduct(null)}
+                close={() => setSelectedProduct(null)}
                 selectedProduct={selectedProduct}
             />
         </Card>

@@ -23,6 +23,8 @@ import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
 import DistributorReports from "../pages/dashboard/Reports";
 import UserNotificationSocketContextProvider from "../contexts/UserNotificationContext";
+import SponsoredItems from "../pages/dashboard/SponsoredItems";
+import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
 
 const router = createBrowserRouter([ 
     {
@@ -113,6 +115,27 @@ const router = createBrowserRouter([
                         <EditProduct />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: 'sponsored-products',
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL]}>
+                                <SponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'create',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_CREATE]}>
+                                <AddSponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]  
             },
             {
                 path: 'roles',

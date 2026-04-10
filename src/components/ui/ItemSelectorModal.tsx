@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import type { Product } from "../../types/product.type";
 import { type Variant } from "../../types/variant.type";
-import Card from "../ui/Card";
-import Modal from "../ui/Modal";
+import Card from "./Card";
+import Modal from "./Modal";
 import { cn, formatToPeso } from "../../utils/utils";
-import TextField from "../ui/TextField";
-import GoldButton from "../ui/GoldButton";
+import TextField from "./TextField";
+import GoldButton from "./GoldButton";
 import { X } from "lucide-react";
 
 interface ItemSelectorModalProps {
@@ -73,7 +73,7 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
                     {selectedProduct?.variants.map(variant => (
                         <button
                             className={cn(
-                                "min-w-30 flex gap-3 items-center text-xs border border-[var(--border-panel)] rounded-full px-2 py-1 cursor-pointer",
+                                "min-w-25 flex gap-3 items-center text-xs border border-[var(--border-panel)] rounded-full pl-2 pr-4 py-1 cursor-pointer",
                                 selectedVariant?._id === variant._id && "bg-gold text-inverse"
                             )}
                             onClick={() => setSelectedVariant(selectedVariant?._id === variant._id ? undefined : variant)}

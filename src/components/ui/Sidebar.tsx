@@ -20,6 +20,7 @@ import {
     FileBarChart,
     BarChartBig,
     CornerUpRight,
+    Star,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -127,6 +128,20 @@ export default function Sidebar({
                         { label: "Add Product", icon: <Plus size={20} />, path: "/dashboard/add-product" },
                         { label: "Variants", icon: <Layers size={20} />, path: "/dashboard/variants" },
                         { label: "Categories", icon: <Tags size={20} />, path: "/dashboard/categories" },
+                    ]}
+                />
+
+                <SidebarDropdown
+                    title="Sponsored Products"
+                    icon={<Star size={24} />}
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    navigate={navigate}
+                    open={openDropdown === "Sponsored Products"}
+                    setOpen={() => setOpenDropdown((prev) => prev === "Sponsored Products" ? null : "Sponsored Products")}
+                    items={[
+                        { label: "View Sponsored Products", icon: <Eye size={20} />, path: "/dashboard/sponsored-products" },
+                        { label: "Add Sponsored Products", icon: <Plus size={20} />, path: "/dashboard/sponsored-products/create" },
                     ]}
                 />
 
