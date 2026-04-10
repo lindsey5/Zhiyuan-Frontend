@@ -20,6 +20,8 @@ import Button from "../../components/ui/Button";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { promiseToast } from "../../utils/sileo";
 import type { UseMutationResult } from "@tanstack/react-query";
+import { variantService } from "../../service/variantService";
+import { Download } from "lucide-react";
 
 interface ProductColsParams extends CreateColumnsParams {
     deleteProduct: UseMutationResult<ApiResponse, Error, {id: string;}, unknown>;
@@ -147,12 +149,26 @@ export default function Products () {
         permissions
     })
 
+    const downloadVariants = async () => {
+        await variantService.downloadVariants({
+            category: category === 'All' ? undefined : category,
+            search
+        })
+    }
+
     return (
         <PageContainer 
             className="md:max-h-screen" 
             title="Products"
             description="View and manage all products"
         >
+            <div className="flex justify-end px-5">
+                <Button 
+                    label="Export"
+                    icon={<Download size={20} />}
+                    onClick={downloadVariants}
+                />
+            </div>
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
                 <ProductsTableControls 
                     setSearch={setSearch}

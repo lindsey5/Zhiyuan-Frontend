@@ -33,3 +33,9 @@ export interface CreateDistributorStocksResponse extends ApiResponse {
 export interface GetDistributorTotalStocksResponse extends ApiResponse {
     totalStocks: number;
 }
+
+export interface DownloadDistributorStocksParams {
+    search?: string;
+    sortBy?: string;
+    order?: "desc" | "asc";
+}

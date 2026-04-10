@@ -9,6 +9,9 @@ import type { SortOption } from "../../types/type";
 import { useDebounce } from "../../hooks/useDebounce";
 import CustomizedTable from "../ui/Table";
 import Chip from "../ui/Chip";
+import { distributorStockService } from "../../service/distributorStockService";
+import Button from "../ui/Button";
+import { Download } from "lucide-react";
 
 const columns: ColumnDef<DistributorStock>[] = [
     {
@@ -86,9 +89,24 @@ export default function DistributorInventory ({ distributorId } : { distributorI
     const debouncedParams = useDebounce(params, 800);
     const { data, isFetching } = getDistributorStocks(distributorId, debouncedParams);
 
+    const downloadInventory = async () => {
+        await distributorStockService.downloadDistributorStocks(distributorId, {
+            order: sorting.order,
+            search: debouncedSearch,
+            sortBy: sorting.sortBy
+        })
+    }
+
     return (
         <Card className="p-0 min-h-0 flex-1 flex flex-col gap-3 pt-5">
             <h1 className="px-5 font-bold text-lg">Distributor Inventory</h1>
+            <div className="flex justify-end px-5">
+                <Button 
+                    label="Export"
+                    icon={<Download size={20} />}
+                    onClick={downloadInventory}
+                />
+            </div>
             <DistributorStockControls 
                 setSearch={setSearch}
                 setSorting={setSorting}

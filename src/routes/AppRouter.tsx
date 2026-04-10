@@ -216,7 +216,7 @@ const router = createBrowserRouter([
                         path: ":id",
                         Component: () => (
                             <ProtectedRoute
-                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]}
+                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_STATS_VIEW]}
                             >
                                 <Distributor />
                             </ProtectedRoute>
