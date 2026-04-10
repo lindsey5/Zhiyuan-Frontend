@@ -23,7 +23,6 @@ import { useNavigate } from "react-router-dom";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { Download } from "lucide-react";
 import { variantService } from "../../service/variantService";
-import Chip from "../../components/ui/Chip";
 
 interface VariantColsParams {
     hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
