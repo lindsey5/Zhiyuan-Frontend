@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { type ColumnDef, type Row } from "@tanstack/react-table";
+import { type ColumnDef, type PaginationState, type Row } from "@tanstack/react-table";
 import { useOrders } from "../../hooks/useOrders";
 import CustomizedTable from "../../components/ui/Table";
 import Card from "../../components/ui/Card";
@@ -27,14 +27,14 @@ type OrderFilters = {
 }
 
 export default function Orders() {
+  const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 200);
   const [filters, setFilters] = useState({});
-  const [page] = useState(1);
-  const debouncedSearch = useDebounce(search, 500);
 
   const { data, isFetching } = useOrders({ 
     search: debouncedSearch,
-    page,
+    page: pagination.pageIndex + 1,
     ...filters,
   });
 
@@ -130,10 +130,10 @@ export default function Orders() {
 
   return (
     <PageContainer 
-                className="md:max-h-screen" 
-                title="Orders"
-                description="Manage all customer orders"
-            >
+      className="md:max-h-screen" 
+      title="Orders"
+      description="Manage all customer orders"
+    >
       <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5"> 
         <OrdersFilter 
           onSearch={setSearch}
@@ -141,11 +141,15 @@ export default function Orders() {
         />
 
         <CustomizedTable 
-          data={data || []}                
-          columns={columns}                
-          isLoading={isFetching}           
-          showPagination={true}
-          noDataMessage="No orders found"                      
+            data={data?.orders || []}
+            columns={columns}
+            pagination={pagination}
+            setPagination={setPagination}
+            totalPages={data?.totalPages || 0}
+            showPagination
+            isLoading={isFetching}
+            noDataMessage="No Products Found"
+            total={data?.total || 0}
         />
       </Card>
     </PageContainer>
