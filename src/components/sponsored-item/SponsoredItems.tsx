@@ -89,7 +89,7 @@ export default function ItemsToSponsor({
                 {/* Body */}
                 <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
-                    <p className="text-sm text-center">No transfer items</p>
+                    <p className="text-sm text-center">No Products Yet</p>
                 ) : (
                     variants.map(item => (
                         <div
