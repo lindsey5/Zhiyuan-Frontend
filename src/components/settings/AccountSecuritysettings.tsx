@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 
 import { changePasswordSchema, type ChangePasswordInput } from "../../schemas/changePasswordSchema";
 import { useUser } from "../../hooks/useUser";
+import GoldButton from "../ui/GoldButton";
 
 export default function AccountSecuritySettings({ onClose }: { onClose: () => void }) {
     const { changePasswordMutate } = useUser();
@@ -23,11 +24,8 @@ export default function AccountSecuritySettings({ onClose }: { onClose: () => vo
     const onSubmit: SubmitHandler<ChangePasswordInput> = (data) => {
         if (!confirm("Are you sure you want to update your password?")) return;
 
-        const mutationPromise = changePasswordMutate
-            .mutateAsync({ payload: data })
-            .then(() => ({ message: "Password updated successfully" }));
-
-        promiseToast(mutationPromise, "top-center", "Security Updated")
+        promiseToast(changePasswordMutate
+            .mutateAsync(data))
             .then(() => onClose());
     };
 
@@ -37,7 +35,7 @@ export default function AccountSecuritySettings({ onClose }: { onClose: () => vo
         <section className="bg-panel rounded-sm border border-panel shadow-panel overflow-hidden mt-6">
             <div className="p-6 flex justify-between items-center bg-black/5 border-b border-panel">
                 <div>
-                    <h2 className="text-gold font-sans font-bold text-lg uppercase tracking-wider">
+                    <h2 className="text-gold font-sans font-bold text-md md:text-lg uppercase tracking-wider">
                         Change Password
                     </h2>
                     <p className="text-muted text-xs xl:text-sm">
@@ -79,20 +77,22 @@ export default function AccountSecuritySettings({ onClose }: { onClose: () => vo
                 </div>
 
                 <div className="flex justify-end mt-8 pt-6 gap-2 border-t border-panel/50">
-                    <Button
+                    <button
                         type="button"
                         disabled={isLoading}
-                        label="Cancel"
                         onClick={onClose}
-                        className="bg-transparent border border-panel font-bold px-8 hover:bg-white/5"
-                    />
+                        className="text-sm px-4 py-2 rounded-md border border-[var(--border-panel)] hover:bg-[rgba(166,124,82,0.1)] transition cursor-pointer"
+                    >
+                        Cancel
+                    </button>
 
-                    <Button
+                    <GoldButton
                         type="submit"
                         disabled={isLoading}
-                        label={isLoading ? "Saving..." : "Update Password"}
-                        className="bg-gold text-black border-none font-bold px-8 hover:opacity-90"
-                    />
+                        className="text-sm"
+                    >
+                        {isLoading ? "Saving..." : "Update Password"}
+                    </GoldButton>
                 </div>
             </form>
         </section>

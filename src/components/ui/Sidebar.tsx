@@ -28,6 +28,7 @@ import SidebarDropdown from "./SidebarDropdown";
 import { cn } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
+import IconButton from "./IconButton";
 
 export default function Sidebar({
   collapsed,
@@ -261,43 +262,42 @@ export default function Sidebar({
 
       <div
         className={cn(
-          "flex items-center gap-3 p-3 mt-auto border-t border-white/10",
-          collapsed ? "justify-center" : "justify-between",
+            "flex items-center gap-3 p-3 mt-auto border-t border-white/10",
+            collapsed ? "justify-center" : "justify-between",
         )}
       >
         {/* Avatar and User Info Group */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="shrink-0 text-xs lg:text-sm text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold uppercase">
-            {user?.firstname?.[0]}
-            {user?.lastname?.[0]}
-          </div>
-
-          {!collapsed && (
-            <div className="flex flex-col min-w-0">
-              <span className="text-xs lg:text-sm font-medium truncate">
-                {user?.firstname} {user?.lastname}
-              </span>
-              <span className="text-[10px] lg:text-xs text-gold/80 capitalize truncate">
-                {user?.role || "No assigned role"}
-              </span>
+            <div className="shrink-0 text-xs lg:text-sm text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold uppercase">
+                {user?.firstname?.[0]}
+                {user?.lastname?.[0]}
             </div>
-          )}
+
+            {!collapsed && (
+                <div className="flex flex-col min-w-0">
+                    <span className="text-xs lg:text-sm font-medium truncate">
+                        {user?.firstname} {user?.lastname}
+                    </span>
+                    <span className="text-[11px] lg:text-xs text-gold/80 capitalize truncate">
+                        {user?.role || "No assigned role"}
+                    </span>
+                </div>
+            )}
         </div>
 
         {/* Logout Action */}
-        <div className={cn(collapsed ? "hidden" : "block")}>
-          <SidebarItem
-            icon={
-              <LogOut
-                size={18}
-                className="text-muted-foreground hover:text-destructive transition-colors"
-              />
-            }
-            label=""
-            collapsed={collapsed}
-            onClick={logout}
-          />
-        </div>
+        {!collapsed && (
+            <IconButton 
+                className="hover:bg-[rgba(166,124,82,0.1)] rounded-md" 
+                icon={(
+                    <LogOut 
+                        size={20} 
+                        className="text-gold hover:"
+                    />
+                )} 
+                onClick={logout}
+            />
+        )}
       </div>
     </aside>
   );
