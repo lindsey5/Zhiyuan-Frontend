@@ -26,6 +26,11 @@ export const useUser = () => {
         onSuccess: (data) => setUser(data.user)
     })
 
+    const changePasswordMutate = useMutation({
+        mutationFn: ({ payload }: { payload: { currentPassword: string; newPassword: string, confirmPassword: string }}) =>
+        userService.changePassword(payload),
+    });
+
     const deleteUser = useMutation({
         mutationFn: ({ id } : { id: string }) => userService.deleteUser(id)
     })
@@ -51,6 +56,7 @@ export const useUser = () => {
         createUser,
         updateUser,
         updateOwn,
+        changePasswordMutate,
         deleteUser,
         getUsers,
         getUsersCount

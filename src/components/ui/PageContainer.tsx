@@ -21,8 +21,8 @@ export default function PageContainer ({
             className
          )}>
             <Card className="space-y-2 p-3 md:p-5">
-                <h1 className="text-gold font-bold text-lg">{title}</h1>
-                <p className="text-sm lg:text-md text-gray">{description}</p>
+                <h1 className="text-gold font-sans font-bold text-2xl uppercase tracking-tight">{title}</h1>
+                <p className="text-muted text-sm lg:text-md">{description}</p>
             </Card>
             {children}
         </div>

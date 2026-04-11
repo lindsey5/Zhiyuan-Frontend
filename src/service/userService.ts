@@ -8,7 +8,7 @@ export const userService = {
             data,
         })
     },
-    
+
     getUsers: (params : GetUsersParams) => {
         return apiAxios<GetUsersResponse>("users", {
             method: HttpMethod.GET,
@@ -33,6 +33,13 @@ export const userService = {
         return apiAxios<UpdateUserResponse>(`users/${id}`, {
             method: HttpMethod.PUT,
             data
+        })
+    },
+
+    changePassword: (data: any) => {
+        return apiAxios<void>("users/change-password", {
+            method: HttpMethod.PATCH,
+            data,
         })
     },
 
