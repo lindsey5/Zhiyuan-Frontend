@@ -1,9 +1,7 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { promiseToast } from "../../utils/sileo";
-
 import TextField from "../ui/TextField";
-import Button from "../ui/Button";
 
 import { changePasswordSchema, type ChangePasswordInput } from "../../schemas/changePasswordSchema";
 import { useUser } from "../../hooks/useUser";
