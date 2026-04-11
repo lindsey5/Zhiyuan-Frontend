@@ -42,16 +42,21 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
         }
     }
 
+    const handleClose = () => {
+        setSelectedVariant(undefined);
+        close();
+    }
+
     return (
         <Modal
             open={selectedProduct !== null}
-            onClose={close}
+            onClose={handleClose}
         >
             <Card>
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="font-bold text-md md:text-lg">Select Item</h1>
                     <button
-                        onClick={close}
+                        onClick={handleClose}
                         className="cursor-pointer hover:opacity-50"
                     >
                         <X />
