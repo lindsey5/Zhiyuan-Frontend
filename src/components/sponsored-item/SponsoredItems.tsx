@@ -2,12 +2,13 @@ import { Minus, Plus, X } from "lucide-react";
 import type { Variant } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
-import { formatToPeso } from "../../utils/utils";
+import { cn, formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
 import { promiseToast } from "../../utils/sileo";
 import Chip from "../ui/Chip";
 import { useSponsoredItem } from "../../hooks/useSponsoredItem";
+import { useMemo } from "react";
 
 interface CartItem {
     variant: Variant;
@@ -72,6 +73,21 @@ export default function ItemsToSponsor({
         }))
     }
 
+    const handleQuantity = (quantity : number, variant: CartItem) => {
+
+        if(quantity <= variant.variant.stock){
+            setVariants(prev => 
+                prev.map(item => 
+                    item.variant._id === variant.variant._id ? ({...item, quantity }) :item
+                )
+            )
+        }
+    }
+
+    const isValidItems = useMemo(() => {
+        return variants.every(variant => variant.quantity)
+    }, [variants])
+
     return (
         <Modal open={open} onClose={close}>
             <Card>
@@ -124,9 +140,14 @@ export default function ItemsToSponsor({
                                         <Minus size={16} />
                                     </button>
 
-                                    <span className="w-6 text-sm text-center font-semibold">
-                                        {item.quantity}
-                                    </span>
+                                    <input 
+                                        className={cn(
+                                            "w-15 text-center border border-[var(--border-panel)] rounded-md outline-none",
+                                            !item.quantity && "border-red-500 border-2" 
+                                        )}
+                                        value={item.quantity ? item.quantity : ""}
+                                        onChange={(e) => handleQuantity(Number(e.target.value), item)}
+                                    />
 
                                     <button
                                         onClick={() => addQty(item.variant._id)}
@@ -157,7 +178,7 @@ export default function ItemsToSponsor({
                     <GoldButton
                         className="text-xs xl:text-sm md:px-4 lg:py-3"
                         onClick={sponsorItems}
-                        disabled={variants.length === 0 || createSponsoredItems.isPending}
+                        disabled={variants.length === 0 || createSponsoredItems.isPending || !isValidItems}
                     >Sponsor Items</GoldButton>
                 </div>
             </Card>
