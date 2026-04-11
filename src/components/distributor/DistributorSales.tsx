@@ -15,7 +15,7 @@ import Chip from "../ui/Chip";
 
 const columns: ColumnDef<DistributorSale>[] = [
     {
-        header: "Item",
+        header: "Product",
         cell: ({ row }) => (
             <div className="min-w-50 flex gap-3 items-center">
                 <img 
@@ -118,7 +118,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 endDate={endDate}
                 setEndDate={setEndDate}
                 setSearch={setSearch}
-                searchPlaceHolder="Search by item name or sku"
+                searchPlaceHolder="Search by product, variant or sku"
                 setPagination={setPagination}
             />
             <CustomizedTable 

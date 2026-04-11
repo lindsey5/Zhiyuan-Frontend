@@ -105,7 +105,7 @@ export default function AllDistributorSales () {
             search
         });
     }
-
+    console.log(data)
     return (
         <PageContainer 
             className="md:max-h-screen" 
