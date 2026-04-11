@@ -115,7 +115,7 @@ export default function AddSponsoredItems () {
             setVariants(prev => [...prev, { variant: newVariant, quantity, product_name }]);
         }
 
-        successToast("Success", `${newVariant.variant_name} successfully added`);
+        successToast("Success", `${product_name}-${newVariant.variant_name} successfully added`);
     };
 
     return (

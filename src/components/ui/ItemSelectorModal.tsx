@@ -37,6 +37,7 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
 
     const handleAddItem = () => {
         if(selectedVariant) {
+            setQuantity(0);
             addVariant(selectedVariant, quantity, selectedProduct?.product_name || "");
             close();
         }
@@ -44,6 +45,7 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
 
     const handleClose = () => {
         setSelectedVariant(undefined);
+        setQuantity(0);
         close();
     }
 
