@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { userService } from "../service/userService"
 import { useAuthStore } from "../lib/store/authStore"
-import type { CreateUserPayload, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload } from "../types/user.type";
+import type { ChangePasswordPayload, CreateUserPayload, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload } from "../types/user.type";
 
 export const useUser = () => {
     const { setUser } = useAuthStore();
@@ -27,7 +27,7 @@ export const useUser = () => {
     })
 
     const changePasswordMutate = useMutation({
-        mutationFn: ({ payload }: { payload: { currentPassword: string; newPassword: string, confirmPassword: string }}) =>
+        mutationFn: (payload: ChangePasswordPayload) =>
         userService.changePassword(payload),
     });
 

@@ -56,21 +56,20 @@ export default function AccountSettingsForm () {
                 </h2>
 
                 <div className="flex gap-2">
-                    {!editMode && (
-                        <Button 
-                            label="Edit"
-                            onClick={() => setEditMode(true)}
-                            className="text-gold text-sm xl:text-md border-none"
-                            icon={<Edit size={20} />}
-                        />
-                    )}
-
                     {!showSecurity && (
                         <Button 
                             label="Change Password"
                             onClick={() => setShowSecurity(true)}
                             className="text-gold text-sm xl:text-md border-none"
                             icon={<Lock size={20} />}
+                        />
+                    )}
+                    {!editMode && (
+                        <Button 
+                            label="Edit"
+                            onClick={() => setEditMode(true)}
+                            className="text-gold text-sm xl:text-md border-none"
+                            icon={<Edit size={20} />}
                         />
                     )}
                 </div>

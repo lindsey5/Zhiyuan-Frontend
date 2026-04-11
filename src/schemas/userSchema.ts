@@ -40,7 +40,7 @@ export const CreateUserSchema = z.object({
         .regex(/[^A-Za-z0-9]/, "Must include at least 1 special character"),
 
     confirmPassword: z.string()
-        .min(1, "Confirm password is required"),
+        .min(1, "Please confirm password"),
 
     role_id: z.string().min(1, "Role is required")
 })
