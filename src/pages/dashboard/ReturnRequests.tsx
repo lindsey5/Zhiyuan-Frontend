@@ -40,7 +40,7 @@ const getColumns = (setReturnRequest : React.Dispatch<SetStateAction<ReturnReque
         meta: { align: 'center' }
     },
     {
-        header: 'Pending Requests',
+        header: 'Pending Items',
         cell: ({ row }) => row.original.items.map(item => item.status === 'pending' ? item : null).filter(item => item).length || 'N/A',
         meta: { align: 'center' }
     },

@@ -30,6 +30,8 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
+        sortBy,
+        order,
         id: defaultDistributor || undefined
     });
 
