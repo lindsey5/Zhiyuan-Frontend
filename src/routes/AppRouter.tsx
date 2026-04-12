@@ -195,7 +195,10 @@ const router = createBrowserRouter([
                                 anyPermissions={[
                                     PERMISSIONS.DISTRIBUTOR_CREATE,
                                     PERMISSIONS.DISTRIBUTOR_READ_ALL,
-                                    PERMISSIONS.DISTRIBUTOR_DELETE
+                                    PERMISSIONS.DISTRIBUTOR_DELETE,
+                                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STATS_VIEW
                                 ]}
                             >
                                 <Distributors />
@@ -250,7 +253,11 @@ const router = createBrowserRouter([
                         path: ":id",
                         Component: () => (
                             <ProtectedRoute
-                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_STATS_VIEW]}
+                                anyPermissions={[
+                                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STATS_VIEW
+                                ]}
                             >
                                 <Distributor />
                             </ProtectedRoute>

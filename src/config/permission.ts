@@ -129,15 +129,9 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
 
     "Distributor Stock": {
         description: "Manage distributor inventory, stock transfers, and monitor transfer history logs.",
-        DISTRIBUTOR_STOCK_VIEW: "View distributor stocks",
-        DISTRIBUTOR_STOCK_TRANSFER: "Transfer stocks to distributor",
-        TRANSFER_LOGS_VIEW_ALL: "View all distributor transfer history",
-    },
-
-    "Distributor Sales": {
-        description: "Monitor distributor sales activity, review detailed sales history, and get alerts when items are sold.",
-        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
-        DISTRIBUTOR_SALES_NOTIFICATION: "Receive notifications when a distributor completes a sale",
+        DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
+        DISTRIBUTOR_STOCK_TRANSFER: "Allow transferring stock to distributors",
+        TRANSFER_LOGS_VIEW_ALL: "View stock transfer history",
     },
 
     "Distributor Return Requests": {
@@ -148,6 +142,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
 
     "Distributor Analytics": {
         description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
+        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
         DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
         DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
     },
