@@ -60,7 +60,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                 <p className="text-xs md:text-sm text-gray">{returnRequest.distributor.email}</p>
                 <p className="text-xs md:text-sm font-bold">ID: {returnRequest.distributor.distributor_id}</p>
             </div>
-            <div className="space-y-3 max-h-[20vh] overflow-y-auto">
+            <div className="space-y-3 max-h-[40vh] overflow-y-auto">
                 <h1 className="font-bold">Items to Return:</h1>
                 {returnRequest.items.map(item => (
                     <div
@@ -79,8 +79,8 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                             </p>
                             <Chip>{item.variant.variant_name}</Chip>
                             <p className="font-medium text-xs md:text-sm mt-3">Quantity to return: {item.quantity}</p>
-                            <div className="flex justify-end gap-3">
-                            {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) ? 
+                            <div className="flex mt-3 gap-3">
+                            {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) &&
                                 <>
                                     <button 
                                         className="text-sm bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
@@ -91,8 +91,11 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                                         onClick={() => handleUpdateItem('accepted', item.variant_id)}
                                     >Accept</button>
                                 </>
-                            : <ReturnRequestStatusChip status={item.status} />}
+                            }
                             </div> 
+                        </div>
+                        <div className="self-start">
+                            <ReturnRequestStatusChip status={item.status} />
                         </div>
                     </div>
                 ))}

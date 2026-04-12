@@ -27,7 +27,7 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
                 <p className="text-xs md:text-sm text-gray">{saleNotification.sold_by.email}</p>
                 <p className="text-xs md:text-sm font-bold">ID: {saleNotification.sold_by.distributor_id}</p>
             </div>
-            <div className="space-y-3 max-h-[20vh] overflow-y-auto">
+            <div className="space-y-3 max-h-[40vh] overflow-y-auto">
                 <p className="font-bold text-sm md:text-base">Sold Items:</p>
                 {saleNotification.sales.map(sale => (
                     <div
