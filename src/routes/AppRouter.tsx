@@ -240,7 +240,7 @@ const router = createBrowserRouter([
                         path: 'return-requests',
                         Component: () => (
                             <ProtectedRoute
-                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]}
+                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]}
                             >
                                 <ReturnRequests />
                             </ProtectedRoute>
