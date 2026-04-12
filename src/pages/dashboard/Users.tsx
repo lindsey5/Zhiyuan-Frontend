@@ -115,7 +115,7 @@ export default function Users () {
         role
     }), [debouncedSearch, pagination.pageIndex, pagination.pageSize, role]);
 
-    const debouncedParams = useDebounce(params, 800);
+    const debouncedParams = useDebounce(params, 500);
 
     const { getUsers, deleteUser } = useUser();
     const { data, isFetching } = getUsers(debouncedParams);

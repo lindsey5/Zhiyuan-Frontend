@@ -92,7 +92,7 @@ export default function AllDistributorSales () {
         search: debouncedSearch
     }), [pagination.pageSize, pagination.pageIndex, sorting.sortBy, sorting.order, startDate, endDate, debouncedSearch]);
 
-    const debouncedParams = useDebounce(params, 800);
+    const debouncedParams = useDebounce(params, 500);
     const { getAllDistributorSales } = useDistributorSale();
     const { data, isFetching } = getAllDistributorSales(debouncedParams);
 

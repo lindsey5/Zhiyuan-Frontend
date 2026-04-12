@@ -123,7 +123,7 @@ export default function Distributors () {
         order
     }), [debouncedSearch, pagination.pageSize, pagination.pageIndex, sortBy, order]);
 
-    const debouncedParams = useDebounce(params, 800);
+    const debouncedParams = useDebounce(params, 500);
     const { data, isFetching } = getDistributors(debouncedParams);
 
     const handleDelete = (id : string) => {

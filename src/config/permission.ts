@@ -140,6 +140,12 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_SALES_NOTIFICATION: "Receive notifications when a distributor completes a sale",
     },
 
+    "Distributor Return Requests": {
+        description: "Manage distributor return requests including viewing and updating request statuses.",
+        DISTRIBUTOR_RETURN_REQUEST_VIEW: "View distributor return requests",
+        DISTRIBUTOR_RETURN_REQUEST_UPDATE: "Update distributor return request status",
+    },
+
     "Distributor Analytics": {
         description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
         DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",

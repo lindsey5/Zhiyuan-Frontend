@@ -111,7 +111,7 @@ export default function AuditLogs () {
         order
     ]);
 
-    const debouncedParams = useDebounce(params, 800);
+    const debouncedParams = useDebounce(params, 500);
     const { getAuditLogs } = useAudit();
     const { data, isFetching } = getAuditLogs(debouncedParams);
 

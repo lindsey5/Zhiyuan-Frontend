@@ -25,6 +25,7 @@ import DistributorReports from "../pages/dashboard/Reports";
 import UserNotificationSocketContextProvider from "../contexts/UserNotificationContext";
 import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
+import ReturnRequests from "../pages/dashboard/ReturnRequests";
 
 const router = createBrowserRouter([ 
     {
@@ -232,6 +233,16 @@ const router = createBrowserRouter([
                                 requiredPermissions={[PERMISSIONS.TRANSFER_LOGS_VIEW_ALL]}
                             >
                                 <TransferLogs />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'return-requests',
+                        Component: () => (
+                            <ProtectedRoute
+                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]}
+                            >
+                                <ReturnRequests />
                             </ProtectedRoute>
                         )
                     },
