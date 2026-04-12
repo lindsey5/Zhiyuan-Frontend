@@ -58,16 +58,6 @@ const getColumns = ({
         meta: { align: 'center' },
     },
     {
-        header: 'Product name',
-        accessorKey: 'product.product_name',
-        cell: info => (
-            <div className="md:min-w-50">
-                {info.getValue() as string}
-            </div>
-        ),
-        meta: { align: 'center' },
-    },
-    {
         header: "Category",
         accessorKey: "product.category",
         

@@ -1,4 +1,4 @@
-import { BarChartBig, Bell } from "lucide-react";
+import { BarChartBig, Bell, RefreshCcw } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useContext, useEffect, useState } from "react";
 import { UserNotificationSocketContext } from "../../contexts/UserNotificationContext";
@@ -13,6 +13,14 @@ function getIcon (notification : UserNotification, isDark : boolean) {
     if(notification.saleNotification){
         return (
             <BarChartBig
+                className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
+    if(notification.returnNotification){
+        return (
+            <RefreshCcw
                 className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
             />
         )
@@ -87,7 +95,7 @@ export default function NotificationBell () {
                             {getIcon(notification, isDark)}
                             <div className="flex flex-col items-start space-y-1">
                                 <p className={cn(
-                                    "text-xs break-all",
+                                    "text-xs break-words text-start",
                                     notification.status === "unread" && 'font-bold'
                                 )}>{notification.message}</p>
                                 <p className="text-xs text-gray">{timeAgo(notification.createdAt)}</p>

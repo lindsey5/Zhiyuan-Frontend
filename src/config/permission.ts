@@ -49,7 +49,10 @@ export const PERMISSIONS = {
 
     // Distributor Sales
     DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
-    DISTRIBUTOR_SALES_NOTIFICATION: "distributor-sales:notification",
+
+    // Distributor Return Requests
+    DISTRIBUTOR_RETURN_REQUEST_VIEW: 'distributor-return:view',
+    DISTRIBUTOR_RETURN_REQUEST_UPDATE: 'distributor-return:update',
 
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',

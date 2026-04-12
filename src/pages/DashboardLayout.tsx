@@ -6,11 +6,17 @@ import { useThemeStore } from "../lib/store/themeStore";
 import ToggleButton from "../components/ui/ToggleButton";
 import Header from "../components/ui/Header";
 import NotificationBell from "../components/notification/NotificationBell";
+import usePermissions from "../hooks/usePermissions";
+import { useRole } from "../hooks/useRole";
+import { PERMISSIONS } from "../config/permission";
 
 export default function DashboardLayout() {
     const { isDark } = useThemeStore();    
     const [collapsed, setCollapsed] = useState(false);
-
+    const { hasAnyPermissions } = usePermissions();
+    const { getOwnRole } = useRole();
+    const { data, isLoading } = getOwnRole();
+    const permissions = data?.permissions || []
     useEffect(() => {
         const handleResize = () => setCollapsed(window.innerWidth < 1024);
 

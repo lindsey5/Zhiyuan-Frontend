@@ -18,7 +18,7 @@ import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
-import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
+import DistributorNotificationSocketContextProvider from "../contexts/DistributorNotificationContext";
 import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
 import DistributorReports from "../pages/dashboard/Reports";
@@ -34,11 +34,11 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <StockTransferSocketContextProvider>
+            <DistributorNotificationSocketContextProvider>
                 <UserNotificationSocketContextProvider>
                     <DashboardLayout />
                 </UserNotificationSocketContextProvider>
-            </StockTransferSocketContextProvider>
+            </DistributorNotificationSocketContextProvider>
         ),
         children: [
             {

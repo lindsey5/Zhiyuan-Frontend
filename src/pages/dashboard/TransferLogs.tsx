@@ -18,7 +18,7 @@ interface StockTransferLogColsParams{
 
 const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<StockTransferLog>[] => [
     {
-        header: "Receiver",
+        header: "Received By",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
@@ -28,7 +28,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         meta: { align: 'left' },
     },
     {
-        header: "Sender",
+        header: "Transferred By",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
@@ -98,7 +98,7 @@ export default function TransferLogs () {
     return (
         <PageContainer
             title="Transfer History"
-            description="View the history of transferred stocks from admin to distributors"
+            description="View the history of transferred stocks"
             className="md:max-h-screen"
         >
             <StockTransferItems 

@@ -1,0 +1,107 @@
+import { X } from "lucide-react";
+import type { ReturnNotification } from "../../types/userNotification.type";
+import Button from "../ui/Button";
+import Chip from "../ui/Chip";
+import GoldButton from "../ui/GoldButton";
+import { useReturnRequest } from "../../hooks/useReturnRequest";
+import { promiseToast } from "../../utils/sileo";
+import usePermissions from "../../hooks/usePermissions";
+import { useRole } from "../../hooks/useRole";
+import { PERMISSIONS } from "../../config/permission";
+import ReturnRequestStatusChip from "../return-request/ReturnRequestStatusChip";
+
+export default function ReturnDetails ({ returnNotification, close } : { returnNotification : ReturnNotification, close: () => void }) {
+    const { updateAllReturnRequestItems } = useReturnRequest();
+    const { hasPermissions } = usePermissions();
+    const { getOwnRole } = useRole();
+    const permissions = getOwnRole().data?.permissions || [];
+
+    const handleUpdateItems = async (status: 'accepted' | 'rejected') => {
+        const isConfirmed = confirm(`Are you sure you want ${status === 'accepted' ? 'accept' : 'reject'} all items?`);
+
+        if(!isConfirmed) return;
+
+        await promiseToast(updateAllReturnRequestItems.mutateAsync({
+            status, 
+            distributor_id: returnNotification.returnRequest.distributor_id,
+            return_id: returnNotification.returnRequest._id
+        }))
+
+    }
+
+    return (
+        <div className="space-y-5">
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-md md:text-lg font-bold">Return Request Details</h2>
+                <button
+                    onClick={close}
+                    className="cursor-pointer hover:opacity-50"
+                >
+                    <X />
+                </button>
+            </div>
+            <div className="border-y border-[var(--border-panel)] py-4">
+                <h1 className="font-bold">Distributor</h1>
+                <p className="text-xs md:text-sm">{returnNotification.returnRequest.distributor.distributor_name}</p>
+                <p className="text-xs md:text-sm text-gray">{returnNotification.returnRequest.distributor.email}</p>
+                <p className="text-xs md:text-sm font-bold">ID: {returnNotification.returnRequest.distributor.distributor_id}</p>
+            </div>
+            <div className="space-y-3 max-h-[20vh] overflow-y-auto">
+                <h1 className="font-bold">Items to Return:</h1>
+                {returnNotification.returnRequest.items.map(item => (
+                    <div
+                        key={item.variant_id}
+                        className="flex items-center gap-3 border-b border-[var(--border-panel)] py-3"
+                    >
+                        <img
+                            src={item.variant.image_url}
+                            alt={item.variant.variant_name}
+                            className="w-14 h-14 object-cover rounded"
+                        />
+
+                        <div className="flex-1">
+                            <p className="font-bold text-sm mb-2">
+                                {item.variant.product.product_name}
+                            </p>
+                            <Chip>{item.variant.variant_name}</Chip>
+                            <p className="font-medium text-xs md:text-sm mt-3">Quantity to return: {item.quantity}</p>
+                            <div className="flex justify-end gap-3">
+                            {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) ? 
+                                <>
+                                    <button className="text-sm bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer hover:opacity-70">Reject</button>
+                                    <button className="text-sm text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70">Accept</button>
+                                </>
+                            : <ReturnRequestStatusChip status={item.status} />}
+                            </div> 
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="space-y-2">
+                <h1 className="font-bold text-sm">Reason:</h1>
+                <p className="text-break-all px-2 py-3 bg-black/10 max-h-20 overflow-y-auto">{returnNotification.returnRequest.reason}</p>
+            </div>
+            <div className="flex justify-end gap-3">
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) && returnNotification.returnRequest.items.some(item => item.status === 'pending') ? (
+                <>
+                <Button
+                    className="md:px-4 lg:py-3 bg-red-600 text-white borde-none"
+                    label="Reject All"   
+                    onClick={() => handleUpdateItems('rejected')}  
+                />
+                <GoldButton 
+                    className="text-sm"
+                    onClick={() => handleUpdateItems('accepted')}
+                >Accept All</GoldButton>
+                </>
+            ) : (
+                <Button
+                    className="md:px-4 lg:py-3"
+                    label="Close"   
+                    onClick={close}  
+                />
+            )}
+            </div>
+        </div>
+    )
+}
