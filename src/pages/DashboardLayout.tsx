@@ -30,8 +30,10 @@ export default function DashboardLayout() {
                 collapsed={collapsed} 
                 setCollapsed={setCollapsed}
             />
-            <NotificationBell />
-            <ToggleButton className="fixed z-20 top-3 right-3 lg:top-10 lg:right-10" /> 
+            <div className="flex fixed gap-3 items-center z-20 top-1 right-3 lg:top-10 lg:right-10">
+                        <NotificationBell />
+                <ToggleButton className="hidden md:flex" /> 
+            </div>
             <Outlet />
         </div>
     );

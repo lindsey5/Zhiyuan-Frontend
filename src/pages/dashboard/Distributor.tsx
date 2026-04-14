@@ -4,7 +4,6 @@ import DistributorInventory from "../../components/distributor/DistributorInvent
 import { useState } from "react";
 import Tabs from "../../components/ui/Tabs";
 import { BarChartBig, FileBarChart, Package } from "lucide-react";
-import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorSales from "../../components/distributor/DistributorSales";
@@ -17,11 +16,8 @@ export default function Distributor () {
     const params = useParams();
     const id = params.id;
     const navigate = useNavigate();
-    const { getOwnRole } = useRole();
-    const { data } = getOwnRole();
-    const permissions = data?.permissions || [];
     const { hasPermissions } = usePermissions();
-    const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW] ,permissions) ? "Inventory" : "Sales");
+    const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? "Inventory" : "Sales");
     const debouncedSelected = useDebounce(selected, 500);
 
     return (
@@ -33,7 +29,7 @@ export default function Distributor () {
                 <Tabs
                     items={[
                         // Inventory tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW], permissions)
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])
                         ? [{
                             label: "Inventory",
                             icon: <Package size={20} />,
@@ -42,7 +38,7 @@ export default function Distributor () {
                         : []),
 
                         // Sales tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW], permissions)
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])
                         ? [{
                             label: "Sales",
                             icon: <BarChartBig size={20} />,
@@ -51,7 +47,7 @@ export default function Distributor () {
                         : []),
 
                         // Stats tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW], permissions)
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])
                         ? [{
                             label: "Stats",
                             icon: <FileBarChart size={20} />,
@@ -59,14 +55,14 @@ export default function Distributor () {
                             }]
                         : []),
                     ]}
-                    defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW] ,permissions) ? 0 : 1}
+                    defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
                 />
 
             {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
             {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
             {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
 
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
                 <div className="flex justify-end">
                     <Button 
                         label="Transfer Stocks"

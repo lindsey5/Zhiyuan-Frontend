@@ -5,7 +5,6 @@ import GoldButton from "../ui/GoldButton";
 import { useReturnRequest } from "../../hooks/useReturnRequest";
 import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
-import { useRole } from "../../hooks/useRole";
 import { PERMISSIONS } from "../../config/permission";
 import ReturnRequestStatusChip from "./ReturnRequestStatusChip";
 import type { ReturnRequest } from "../../types/returnRequest.type";
@@ -13,8 +12,6 @@ import type { ReturnRequest } from "../../types/returnRequest.type";
 export default function ReturnDetails ({ returnRequest, close } : { returnRequest: ReturnRequest, close: () => void }) {
     const { updateAllReturnRequestItems, updateReturnRequestItem } = useReturnRequest(); 
     const { hasPermissions } = usePermissions();
-    const { getOwnRole } = useRole();
-    const permissions = getOwnRole().data?.permissions || [];
 
     const handleUpdateItems = async (status: 'accepted' | 'rejected') => {
         const isConfirmed = confirm(`Are you sure you want ${status === 'accepted' ? 'accept' : 'reject'} all items?`);
@@ -57,7 +54,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
             <div className="border-y border-[var(--border-panel)] py-4">
                 <h1 className="font-bold">Request by:</h1>
                 <p className="text-xs md:text-sm">{returnRequest.distributor.distributor_name}</p>
-                <p className="text-xs md:text-sm text-gray">{returnRequest.distributor.email}</p>
+                <p className="text-xs md:text-sm">{returnRequest.distributor.email}</p>
                 <p className="text-xs md:text-sm font-bold">ID: {returnRequest.distributor.distributor_id}</p>
             </div>
             <div className="space-y-3 max-h-[40vh] overflow-y-auto">
@@ -80,7 +77,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                             <Chip>{item.variant.variant_name}</Chip>
                             <p className="font-medium text-xs md:text-sm mt-3">Quantity to return: {item.quantity}</p>
                             <div className="flex mt-3 gap-3">
-                            {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) &&
+                            {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) &&
                                 <>
                                     <button 
                                         className="text-sm bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
@@ -105,7 +102,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                 <p className="text-break-all px-2 py-3 bg-black/10 max-h-20 overflow-y-auto">{returnRequest.reason}</p>
             </div>
             <div className="flex justify-end gap-3">
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE], permissions) && returnRequest.items.some(item => item.status === 'pending') ? (
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && returnRequest.items.some(item => item.status === 'pending') ? (
                 <>
                 <Button
                     className="md:px-4 lg:py-3 bg-red-600 text-white borde-none"

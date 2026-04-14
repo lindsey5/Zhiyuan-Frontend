@@ -4,7 +4,7 @@ import { useAuthStore } from "../lib/store/authStore";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
-  const { setAuth, setUser, logout } = useAuthStore();
+  const { setAuth, setUser, logout, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   const login = useMutation({
@@ -25,6 +25,7 @@ export const useAuth = () => {
   });
 
   return {
+    isAuthenticated,
     login,
     logoutMutate,
   };

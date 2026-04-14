@@ -1,4 +1,4 @@
-import { BarChartBig, Bell, RefreshCcw } from "lucide-react";
+import { BarChartBig, Bell, Undo2 } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useContext, useEffect, useState } from "react";
 import { UserNotificationSocketContext } from "../../contexts/UserNotificationContext";
@@ -20,7 +20,7 @@ function getIcon (notification : UserNotification, isDark : boolean) {
 
     if(notification.returnNotification){
         return (
-            <RefreshCcw
+            <Undo2
                 className="text-inverse bg-gold rounded-full w-10 h-10 p-2" 
             />
         )
@@ -57,7 +57,7 @@ export default function NotificationBell () {
     }
 
     return (
-        <div id="notification-bell" className="fixed top-1 lg:top-8 z-30 right-35 lg:right-42">
+        <div id="notification-bell" className="relative">
             <NotificationModal 
                 close={() => setNotification(null)}
                 open={notification !== null}

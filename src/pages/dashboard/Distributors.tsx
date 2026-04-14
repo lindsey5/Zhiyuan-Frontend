@@ -12,7 +12,6 @@ import DistributorModal from "../../components/distributors/DistributorModal";
 import { Eye, Trash } from "lucide-react";
 import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
-import { useRole } from "../../hooks/useRole";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorControls from "../../components/distributors/DistributorsControls";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
@@ -27,7 +26,6 @@ interface DistributorColsParams extends CreateColumnsParams {
 const getColumns = ({ 
     hasAnyPermissions, 
     hasPermissions, 
-    permissions, 
     handleDelete, 
     navigate 
 } : DistributorColsParams) : ColumnDef<Distributor>[] => [
@@ -74,19 +72,19 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center '}
     },
-        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_DELETE], permissions)
+        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_DELETE])
         ? [
         {
             header: 'Actions',
             cell: ({ row } : { row : Row<Distributor>}) => (
                 <div className="flex justify-center gap-2">
-                    {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW], permissions) && (
+                    {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) && (
                         <IconButton 
                             onClick={() => navigate(`${row.original._id}`)}
                             icon={<Eye className="text-gold" size={20} />}
                         />
                     )}
-                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE], permissions) && (
+                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE]) && (
                         <IconButton 
                             icon={<Trash color='red' size={20} />}
                                 onClick={() => handleDelete(row.original._id)}
@@ -105,8 +103,6 @@ export default function Distributors () {
     const [showModal, setShowModal] = useState(false);
 
     const { hasAnyPermissions, hasPermissions } = usePermissions();
-    const { getOwnRole } = useRole();
-    const permissions = getOwnRole().data?.permissions || [];
 
     const [sortBy, setSortBy] = useState('createdAt');
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
@@ -139,9 +135,8 @@ export default function Distributors () {
         hasPermissions,
         handleDelete,
         navigate,
-        permissions
     })
-    console.log(data)
+
     return (
         <PageContainer 
             className="md:max-h-screen" 

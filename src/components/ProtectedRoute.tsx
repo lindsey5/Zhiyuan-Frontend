@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { type ReactNode } from 'react';
 import usePermissions from '../hooks/usePermissions';
-import { useRole } from '../hooks/useRole';
 import Unauthorized from './Unauthorized';
 import LoadingScreen from './ui/LoadingScreen';
+import { useAuthStore } from '../lib/store/authStore';
 
 type ProtectedRouteProps = {
     children: ReactNode;
@@ -21,13 +21,11 @@ export const ProtectedRoute = ({
     redirectTo = '/',
 }: ProtectedRouteProps) => {
     const {
-        isAuthenticated,
+        isLoading,
         hasPermissions,
         hasAnyPermissions
     } = usePermissions();
-    const { getOwnRole } = useRole();
-    const { data, isLoading } = getOwnRole();
-    const permissions = data?.permissions || []
+    const { isAuthenticated } = useAuthStore();
 
     if(isLoading) return <LoadingScreen />
     
@@ -36,7 +34,7 @@ export const ProtectedRoute = ({
     }
 
     if (requiredPermissions.length > 0) {
-        const hasRequiredPermissions = hasPermissions(requiredPermissions, permissions);
+        const hasRequiredPermissions = hasPermissions(requiredPermissions);
 
         if (!hasRequiredPermissions) {
             return <Unauthorized>{children}</Unauthorized>
@@ -44,7 +42,7 @@ export const ProtectedRoute = ({
     }
 
     if (anyPermissions.length > 0) {
-        const hasAnyPermission = hasAnyPermissions(anyPermissions, permissions);
+        const hasAnyPermission = hasAnyPermissions(anyPermissions);
 
         if (!hasAnyPermission) {
             return <Unauthorized>{children}</Unauthorized>;

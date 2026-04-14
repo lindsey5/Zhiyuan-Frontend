@@ -30,6 +30,7 @@ import { cn } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
 import IconButton from "./IconButton";
+import ToggleButton from "./ToggleButton";
 
 export default function Sidebar({
     collapsed,
@@ -265,7 +266,6 @@ export default function Sidebar({
                 onClick={logout}
                 /> */}
             </nav>
-
             <div
                 className={cn(
                     "flex items-center gap-3 p-3 mt-auto border-t border-white/10",
@@ -305,6 +305,7 @@ export default function Sidebar({
                     />
                 )}
             </div>
+            <ToggleButton className="self-center my-2 md:hidden"/>
         </aside>
     );
 }

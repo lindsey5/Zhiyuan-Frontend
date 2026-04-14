@@ -13,7 +13,6 @@ import { formatDate } from "../../utils/utils";
 import type { ApiResponse, CreateColumnsParams, SortOption } from "../../types/type";
 import ProductsTableControls from "../../components/products/ProductsTableControls";
 import PageContainer from "../../components/ui/PageContainer";
-import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
@@ -34,7 +33,6 @@ const getColumns = ({
     deleteProduct, 
     hasAnyPermissions, 
     hasPermissions, 
-    permissions, 
     navigate
 } : ProductColsParams) : ColumnDef<Product>[] => [
     {
@@ -72,13 +70,13 @@ const getColumns = ({
         cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
-    ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE], permissions)
+    ...(hasAnyPermissions([ PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE])
         ? [
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Product> }) => (
                     <div className="flex flex-col lg:flex-row gap-3 justify-center">
-                        {hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions) && (
+                        {hasPermissions([PERMISSIONS.PRODUCT_UPDATE]) && (
                             <Button
                                 label="Edit"
                                 className="p-1 lg:p-3 text-xs xl:text-sm"
@@ -87,7 +85,7 @@ const getColumns = ({
                             />
                         )}
 
-                        {hasPermissions([PERMISSIONS.PRODUCT_DELETE], permissions) && (
+                        {hasPermissions([PERMISSIONS.PRODUCT_DELETE]) && (
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
@@ -105,10 +103,6 @@ const getColumns = ({
 
 export default function Products () {
     const navigate = useNavigate();
-
-    const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
-    const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -146,7 +140,6 @@ export default function Products () {
         hasAnyPermissions,
         hasPermissions,
         navigate,
-        permissions
     })
 
     const downloadVariants = async () => {
@@ -191,7 +184,7 @@ export default function Products () {
                 />
             </Card>
             
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
                 <div className="flex justify-end">
                     <Button 
                         label="Transfer Stocks"

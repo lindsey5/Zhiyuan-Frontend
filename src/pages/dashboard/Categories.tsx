@@ -9,7 +9,6 @@ import { useState, type SetStateAction } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import CategoriesControls from "../../components/categories/CategoriesControls";
 import Button from "../../components/ui/Button";
-import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import { promiseToast } from "../../utils/sileo";
@@ -24,7 +23,6 @@ interface CategoryColsParams extends CreateColumnsParams {
 const getColumns = ({ 
     hasAnyPermissions, 
     hasPermissions, 
-    permissions, 
     deleteExistingCategory, 
     setCategory, 
     setShowModal
@@ -39,13 +37,13 @@ const getColumns = ({
         cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
-    ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE], permissions)
+    ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE],)
         ? [
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Category> }) => (
                     <div className="flex gap-3 md:justify-center">
-                        {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
+                        {hasPermissions([PERMISSIONS.CATEGORY_UPDATE]) && (
                             <Button
                                 label="Edit"
                                 className="p-2 md:p-3 text-xs xl:text-sm"
@@ -56,7 +54,7 @@ const getColumns = ({
                             />
                         )}
 
-                        {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
+                        {hasPermissions([PERMISSIONS.CATEGORY_DELETE]) && (
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white p-2 md:p-3 text-xs xl:text-sm"
@@ -72,10 +70,6 @@ const getColumns = ({
 ];
 
 export default function Categories () {
-
-    const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
-    const permissions =  role?.permissions || [];
     const { hasPermissions, hasAnyPermissions } = usePermissions();
 
     const [category, setCategory] = useState<Category>();
@@ -96,7 +90,6 @@ export default function Categories () {
     const columns = getColumns({
         hasPermissions,
         hasAnyPermissions,
-        permissions,
         setShowModal,
         deleteExistingCategory,
         setCategory
@@ -115,7 +108,6 @@ export default function Categories () {
                     setCategory={setCategory}
                     setShowModal={setShowModal}
                     showModal={showModal}
-                    permissions={permissions}
                 />
                 <CustomizedTable  
                     data={data?.categories || []}

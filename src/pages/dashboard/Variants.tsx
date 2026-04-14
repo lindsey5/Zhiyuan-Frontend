@@ -10,7 +10,6 @@ import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import type { ApiResponse, SortOption } from "../../types/type";
 import PageContainer from "../../components/ui/PageContainer";
-import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import Button from "../../components/ui/Button";
@@ -25,8 +24,7 @@ import { Download } from "lucide-react";
 import { variantService } from "../../service/variantService";
 
 interface VariantColsParams {
-    hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
-    permissions: string[];
+    hasPermissions: (requiredPermissions: string[]) => boolean;
     deleteVariant: UseMutationResult<ApiResponse, Error, { id: string }, unknown>;
     handleDelete: (id: string) => void;
     handleEdit: (variant : Variant) => void;
@@ -34,7 +32,6 @@ interface VariantColsParams {
 
 const getColumns = ({
     hasPermissions,
-    permissions,
     deleteVariant,
     handleDelete,
     handleEdit
@@ -81,7 +78,7 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center' },
     },
-    ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE], permissions)
+    ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE])
         ? [
             {
                 header: "Action",
@@ -112,9 +109,6 @@ const getColumns = ({
 
 export default function Variants () {
     const navigate = useNavigate();
-    const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
-    const permissions =  role?.permissions || [];
     const { hasPermissions } = usePermissions();
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -160,8 +154,7 @@ export default function Variants () {
         deleteVariant,
         handleDelete,
         handleEdit,
-        hasPermissions,
-        permissions
+        hasPermissions
     })
 
     const downloadVariants = async () => {
@@ -211,7 +204,7 @@ export default function Variants () {
                     total={data?.total || 0}
                 />
             </Card>
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER], permissions) && (
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
                 <div className="flex justify-end">
                     <Button 
                         label="Transfer Stocks"

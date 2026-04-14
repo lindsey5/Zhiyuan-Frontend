@@ -9,7 +9,6 @@ export interface ApiResponse {
 }
 
 export interface CreateColumnsParams {
-    hasPermissions: (requiredPermissions: string[], permissions: string[]) => boolean;
-    hasAnyPermissions: (anyPermissions: string[], permissions: string[]) => boolean;
-    permissions: string[];
+    hasPermissions: (requiredPermissions: string[]) => boolean;
+    hasAnyPermissions: (anyPermissions: string[]) => boolean;
 }

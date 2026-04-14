@@ -26,6 +26,7 @@ import UserNotificationSocketContextProvider from "../contexts/UserNotificationC
 import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
+import Orders from "../pages/dashboard/Orders";
 
 const router = createBrowserRouter([ 
     {
@@ -182,6 +183,14 @@ const router = createBrowserRouter([
                 Component: () => (
                     <ProtectedRoute anyPermissions={[PERMISSIONS.USER_CREATE, PERMISSIONS.USER_DELETE, PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_READ_ALL]}>
                         <Users />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: 'orders',
+                Component: () => (
+                    <ProtectedRoute anyPermissions={[PERMISSIONS.ORDER_READ_ALL, PERMISSIONS.ORDER_UPDATE]}>
+                        <Orders />
                     </ProtectedRoute>
                 )
             },

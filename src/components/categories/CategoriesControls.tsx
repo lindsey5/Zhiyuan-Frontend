@@ -12,7 +12,6 @@ interface CategoriesControlsProps {
     setCategory: React.Dispatch<React.SetStateAction<Category | undefined>>
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-    permissions: string[]
 }
 
 export default function CategoriesControls ({ 
@@ -21,7 +20,6 @@ export default function CategoriesControls ({
     setCategory,
     setShowModal, 
     showModal,
-    permissions
 } : CategoriesControlsProps) {
     const { hasPermissions } = usePermissions();
     const onClose = () =>{
@@ -42,7 +40,7 @@ export default function CategoriesControls ({
                 placeholder="Search category..."
                 onChange={(e) => setSearch(e.target.value)}
             />
-            {hasPermissions([PERMISSIONS.CATEGORY_CREATE], permissions) && (
+            {hasPermissions([PERMISSIONS.CATEGORY_CREATE]) && (
                 <Button 
                     className="text-xs lg:text-sm"
                     icon={<Plus size={18}/>}

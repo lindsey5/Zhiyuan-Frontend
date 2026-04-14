@@ -205,9 +205,7 @@ const CustomizedTable = <T,>({
                 {noDataMessage}
             </div> :
             isLoading ? 
-                <>
-                    <TableSkeleton columns={cols}/>
-                </>
+                <TableSkeleton columns={cols}/>
             : 
                 <>
                 <div className="overflow-auto flex-grow relative">

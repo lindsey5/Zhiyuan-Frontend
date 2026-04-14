@@ -10,7 +10,6 @@ import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
-import { useRole } from "../../hooks/useRole";
 import Button from "../../components/ui/Button";
 import UsersTableControls from "../../components/users/UsersTableControls";
 import UsersCount from "../../components/users/UsersCount";
@@ -27,7 +26,6 @@ interface UserColsParams extends CreateColumnsParams{
 const getColumns = ({
     hasAnyPermissions,
     hasPermissions,
-    permissions,
     handleDelete,
     showEdit
 } : UserColsParams) : ColumnDef<GetUser>[] => [
@@ -37,13 +35,13 @@ const getColumns = ({
             const { firstname, lastname, email } = row.original;
 
             return (
-                <div className="">
+                <div>
                     <h1 className="font-semibold">{`${firstname} ${lastname}`}</h1>
                     <p>{email}</p>
                 </div>
             )
         },
-        meta: { align: 'center' }
+        meta: { align: 'left' }
     },
     {
         header: "Role",
@@ -66,13 +64,13 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center' },
     },
-    ...(hasAnyPermissions([ PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_DELETE], permissions)
+    ...(hasAnyPermissions([ PERMISSIONS.USER_UPDATE, PERMISSIONS.USER_DELETE])
         ? [
             {
                 header: "Action",
                 cell: ({ row } : { row: Row<GetUser> }) => (
                     <div className="flex gap-3 md:justify-center">
-                        {hasPermissions([PERMISSIONS.USER_UPDATE], permissions) && (
+                        {hasPermissions([PERMISSIONS.USER_UPDATE]) && (
                             <Button
                                 label="Edit"
                                 className="p-2 lg:p-3 text-xs"
@@ -80,7 +78,7 @@ const getColumns = ({
                             />
                         )}
 
-                        {hasPermissions([PERMISSIONS.USER_DELETE], permissions) && (
+                        {hasPermissions([PERMISSIONS.USER_DELETE]) && (
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white p-2 lg:p-3 text-xs"
@@ -100,9 +98,6 @@ export default function Users () {
     const [showModal, setShowModal] = useState(false);
 
     const { hasAnyPermissions, hasPermissions } = usePermissions();
-    const { getOwnRole } = useRole();
-    const { data : roleData } = getOwnRole();
-    const permissions = roleData?.permissions || [];
 
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
@@ -143,7 +138,6 @@ export default function Users () {
         handleDelete,
         hasAnyPermissions,
         hasPermissions,
-        permissions,
         showEdit,
     })
 
