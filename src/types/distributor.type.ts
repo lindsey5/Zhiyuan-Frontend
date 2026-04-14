@@ -18,6 +18,7 @@ export interface Distributor {
 export interface CreateDistributorDTO {
     distributor_name: string;
     email: string;
+    distributor_id?: string;
 }
 
 export interface CreateDistributorResponse extends ApiResponse {
