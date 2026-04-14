@@ -1,15 +1,19 @@
+import type { PaginationParams, PaginationResponse } from "./pagination.type";
+
 export interface Order {
     _id: string;
     order_id: string;
     customer_name: string;
-    status: "pending" | "processing" | "completed" | "cancelled";
+    status: "pending" | "processing" | "completed" | "cancelled" | "refunded";
     total_amount: number;
     delivery_type: "pickup" | "delivery";
-    payment_method: "COD" | "GCash" | "Card";
+    payment_method: "COD" | "GCash" | "Card" | "Paymaya";
     payment_status: "paid" | "unpaid";
+    order_items: OrderItem[]
+    createdAt: string;
 }
 
-export interface OrderItemAttributes {
+export interface OrderItem {
     _id: string;
     order: Order;
     order_id: string;
@@ -17,4 +21,18 @@ export interface OrderItemAttributes {
     quantity: number;
     amount: number;
     price: number;
+}
+
+export interface GetOrdersParams extends PaginationParams{
+    search?: string;
+    status?: string;
+    paymentMethod?: string;
+    paymentStatus?: string;
+    deliveryType?: string;
+    startDate?: string;
+    endDate?: string;
+}
+
+export interface GetOrdersResponse extends PaginationResponse {
+    orders: Order[];
 }

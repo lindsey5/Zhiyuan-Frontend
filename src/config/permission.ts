@@ -28,7 +28,6 @@ export const PERMISSIONS = {
 
     // Order management
     ORDER_READ_ALL: 'order:read:all',
-    ORDER_READ: 'order:read',
     ORDER_UPDATE: 'order:update',
 
     //Category management
@@ -108,7 +107,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     "Order Management": {
         description: "Manage customer orders including viewing and updating order status.",
         ORDER_READ_ALL: "View all orders",
-        ORDER_READ: "View specific order",
         ORDER_UPDATE: "Update order status",
     },
 
