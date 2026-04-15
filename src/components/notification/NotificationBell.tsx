@@ -1,7 +1,7 @@
 import { BarChartBig, Bell, Undo2 } from "lucide-react";
 import IconButton from "../ui/IconButton";
-import { useContext, useEffect, useState } from "react";
-import { UserNotificationSocketContext } from "../../contexts/UserNotificationContext";
+import { useEffect, useState } from "react";
+import useNotifications from "../../hooks/useNotifications";
 import Card from "../ui/Card";
 import { useThemeStore } from "../../lib/store/themeStore";
 import { cn, timeAgo } from "../../utils/utils";
@@ -37,7 +37,7 @@ function getIcon (notification : UserNotification, isDark : boolean) {
 export default function NotificationBell () {
     const { isDark } = useThemeStore();
     const [notification, setNotification] = useState<UserNotification | null>(null);
-    const { unread, notifications, setPage, page, totalPages, isFetching, readNotification } = useContext(UserNotificationSocketContext);
+    const { unread, notifications, setPage, page, totalPages, isFetching, readNotification } = useNotifications();
     const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {

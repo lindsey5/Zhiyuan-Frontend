@@ -8,6 +8,7 @@ import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import ReturnRequestStatusChip from "./ReturnRequestStatusChip";
 import type { ReturnRequest } from "../../types/returnRequest.type";
+import { formatDate } from "../../utils/utils";
 
 export default function ReturnDetails ({ returnRequest, close } : { returnRequest: ReturnRequest, close: () => void }) {
     const { updateAllReturnRequestItems, updateReturnRequestItem } = useReturnRequest(); 
@@ -97,6 +98,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                     </div>
                 ))}
             </div>
+            <p className="text-xs md:text-sm">Date Requested: {formatDate(returnRequest?.createdAt)}</p>
             <div className="space-y-2">
                 <h1 className="font-bold text-sm">Reason:</h1>
                 <p className="text-break-all px-2 py-3 bg-black/10 max-h-20 overflow-y-auto">{returnRequest.reason}</p>

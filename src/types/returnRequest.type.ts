@@ -15,6 +15,7 @@ export interface ReturnRequest {
         status: 'pending' | 'rejected' | 'expired' | 'insufficient stock'
     }[];
     reason: string;
+    createdAt: string;
 }
 
 export interface UpdateReturnRequestItemsResponse extends ApiResponse {

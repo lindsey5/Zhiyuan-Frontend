@@ -1,29 +1,9 @@
-import { useSocket } from '../hooks/useSocket';
-import { createContext, useEffect, useState, type SetStateAction } from 'react';
-import type { SocketContextProviderProps, SocketContextType } from './context.type';
-import { useUserNotification } from '../hooks/useUserNotification';
+import { useSocket } from './useSocket';
+import { useEffect, useState } from 'react';
+import { useUserNotification } from './useUserNotification';
 import type { UserNotification } from '../types/userNotification.type';
 
-interface NotificationContextType extends SocketContextType {
-    setPage?: React.Dispatch<SetStateAction<number>> | null;
-    notifications: UserNotification[];
-    unread: number;
-    totalPages: number;
-    isFetching: boolean;
-    page: number;
-    readNotification?: (id: string) => Promise<void>;
-}
-
-export const UserNotificationSocketContext = createContext<NotificationContextType>({
-    socket: null,
-    notifications: [],
-    unread: 0,
-    totalPages: 1,
-    isFetching: false,
-    page: 1,
-});
-
-const UserNotificationSocketContextProvider  = ({ children } : SocketContextProviderProps) => {
+const useNotifications  = () => {
     const socket = useSocket({
         namespace: "/notification",
         events: {}
@@ -63,22 +43,16 @@ const UserNotificationSocketContextProvider  = ({ children } : SocketContextProv
         }
     }
 
-    return (
-        <UserNotificationSocketContext.Provider 
-            value={{ 
-                socket, 
-                setPage, 
-                unread, 
-                notifications, 
-                isFetching, 
-                page, 
-                totalPages: data?.totalPages || 0,  
-                readNotification: handleReadNotification
-            }}
-        >
-        {children}
-        </UserNotificationSocketContext.Provider>
-    );
+    return { 
+        socket, 
+        setPage, 
+        unread, 
+        notifications, 
+        isFetching, 
+        page, 
+        totalPages: data?.totalPages || 0,  
+        readNotification: handleReadNotification
+    }
 };
 
-export default UserNotificationSocketContextProvider
+export default useNotifications

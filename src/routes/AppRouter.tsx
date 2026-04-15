@@ -18,11 +18,9 @@ import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
-import DistributorNotificationSocketContextProvider from "../contexts/DistributorNotificationContext";
 import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
 import DistributorReports from "../pages/dashboard/Reports";
-import UserNotificationSocketContextProvider from "../contexts/UserNotificationContext";
 import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
@@ -36,11 +34,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <DistributorNotificationSocketContextProvider>
-                <UserNotificationSocketContextProvider>
-                    <DashboardLayout />
-                </UserNotificationSocketContextProvider>
-            </DistributorNotificationSocketContextProvider>
+            <DashboardLayout />
         ),
         children: [
             {

@@ -9,6 +9,7 @@ import { useDistributorStock } from "../../hooks/useDistributorStock";
 import { errorToast, promiseToast } from "../../utils/sileo";
 import Chip from "../ui/Chip";
 import { useMemo } from "react";
+import { useSocket } from "../../hooks/useSocket";
 
 interface CartItem {
     variant: Variant;
@@ -31,7 +32,7 @@ export default function TransferItems({
     setVariants, 
     distributorId
 }: TransferItemsProps) {
-
+    useSocket({ namespace: '/distributor-notification' })
     const { createDistributorStocks } = useDistributorStock();
     
     const addQty = (id: string) => {
