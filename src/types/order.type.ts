@@ -4,7 +4,7 @@ export interface Order {
     _id: string;
     order_id: string;
     customer_name: string;
-    status: "pending" | "processing" | "completed" | "cancelled" | "refunded";
+    status: "pending" | "processing" | "delivered" |"completed" | "cancelled" | "refunded";
     total_amount: number;
     delivery_type: "pickup" | "delivery";
     payment_method: "COD" | "GCash" | "Card" | "Paymaya";
