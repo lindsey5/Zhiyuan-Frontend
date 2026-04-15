@@ -51,7 +51,7 @@ export default function Sidebar({
     return (
         <aside
             className={cn(
-                "z-30 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all ease-in-out duration-300",
+                "z-20 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all ease-in-out duration-300",
                 collapsed
                 ? "w-0 opacity-0 pointer-events-none lg:opacity-100 lg:w-20 lg:pointer-events-auto lg:flex"
                 : "w-64",

@@ -40,12 +40,6 @@ const getColumns = () : ColumnDef<Order>[] => [
         meta: { align: 'center' },
     },
     {
-        header: "Total Amount",
-        accessorKey: 'total_amount',
-        cell: info => formatToPeso(Number(info.getValue())),
-        meta: { align: 'center' },
-    },
-    {
         header: 'Delivery Status',
         accessorKey: 'status',
         cell: ({ row }) => (
@@ -53,6 +47,12 @@ const getColumns = () : ColumnDef<Order>[] => [
                 <OrderStatusChip status={row.original.status}/>
             </div>
         ),
+        meta: { align: 'center' },
+    },
+    {
+        header: "Total Amount",
+        accessorKey: 'total_amount',
+        cell: info => formatToPeso(Number(info.getValue())),
         meta: { align: 'center' },
     },
     {
