@@ -133,9 +133,6 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 total={data?.total || 0}
             />
         </Card>
-        <div className="flex justify-end">
-            <h1 className="font-bold mt-2 text-md md:text-lg">Total Sales: {formatToPeso(data?.totalSales || 0)}</h1>
-        </div>
         </>
     )
 }

@@ -20,6 +20,7 @@ export interface SaleNotification{
     sale_ids: string;
     sold_by: Distributor;
     sales: DistributorSale[];
+    createdAt: string;
 }
 
 export interface ReturnNotification {

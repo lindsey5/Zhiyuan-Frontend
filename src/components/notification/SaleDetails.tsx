@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import type { SaleNotification } from "../../types/userNotification.type";
-import { formatToPeso } from "../../utils/utils";
+import { formatDate, formatToPeso } from "../../utils/utils";
 import { useMemo } from "react";
 import Button from "../ui/Button";
 import Chip from "../ui/Chip";
@@ -51,7 +51,10 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
                     </div>
                 ))}
             </div>
-            <p className="font-bold text-sm md:text-base">Total Sales: {formatToPeso(totalSales)}</p>
+            <div className="space-y-1">
+                <p className="text-xs md:text-sm">Date: {formatDate(saleNotification?.createdAt)}</p>
+                <p className="font-bold text-sm md:text-base">Total Sales: {formatToPeso(totalSales)}</p>
+            </div>
             <div className="flex justify-end">
                 <Button
                     className="md:px-4 lg:py-3"
