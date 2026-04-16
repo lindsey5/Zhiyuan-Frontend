@@ -2,7 +2,6 @@
 export const PERMISSIONS = {
     DASHBOARD_VIEW: 'dashboard:view',
     AUDIT_VIEW_ALL: 'audit:view:all',
-    TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
 
     // User management
     USER_CREATE: 'user:create',
@@ -23,9 +22,12 @@ export const PERMISSIONS = {
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
 
+    // Sponsored Items
+    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
+    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
+
     // Order management
     ORDER_READ_ALL: 'order:read:all',
-    ORDER_READ: 'order:read',
     ORDER_UPDATE: 'order:update',
 
     //Category management
@@ -40,8 +42,20 @@ export const PERMISSIONS = {
     DISTRIBUTOR_DELETE: 'distributor:delete',
     
     // Distributor Stock Management
-    DISTRIBUTOR_STOCK_CREATE: 'distributor-stock:create',
-    DISTRIBUTOR_STOCK_READ: 'distributor-stock:read'
+    DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
+    DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
+    TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
+
+    // Distributor Sales
+    DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
+
+    // Distributor Return Requests
+    DISTRIBUTOR_RETURN_REQUEST_VIEW: 'distributor-return:view',
+    DISTRIBUTOR_RETURN_REQUEST_UPDATE: 'distributor-return:update',
+
+    /* Distributor Analytics */
+    DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
+    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
 }
 
 type PermissionGroup = {
@@ -58,11 +72,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     Audit: {
         description: "View system audit logs and activity tracking records.",
         AUDIT_VIEW_ALL: "View all audit logs",
-    },
-
-    "Stock Transfer Log": {
-        description: "View stock transfer history and item movement records.",
-        TRANSFER_LOGS_VIEW_ALL: "View all transfer logs",
     },
 
     "User Management": {
@@ -89,10 +98,15 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         PRODUCT_DELETE: "Delete products including variants",
     },
 
+    "Sponsored Product Management": {
+        description: "Manage sponsored products including creation and viewing",
+        SPONSORED_PRODUCT_CREATE: 'Add new sponsored product records',
+        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
+    },
+
     "Order Management": {
         description: "Manage customer orders including viewing and updating order status.",
         ORDER_READ_ALL: "View all orders",
-        ORDER_READ: "View specific order",
         ORDER_UPDATE: "Update order status",
     },
 
@@ -109,8 +123,26 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_READ_ALL: "View all distributors",
         DISTRIBUTOR_CREATE: "Create new distributor accounts",
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
-        DISTRIBUTOR_STOCK_CREATE: "Add or update distributor stock inventory",
-        DISTRIBUTOR_STOCK_READ: "View distributor stock inventory",
+    },
+
+    "Distributor Stock": {
+        description: "Manage distributor inventory, stock transfers, and monitor transfer history logs.",
+        DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
+        DISTRIBUTOR_STOCK_TRANSFER: "Allow transferring stock to distributors",
+        TRANSFER_LOGS_VIEW_ALL: "View stock transfer history",
+    },
+
+    "Distributor Return Requests": {
+        description: "Manage distributor return requests including viewing and updating request statuses.",
+        DISTRIBUTOR_RETURN_REQUEST_VIEW: "View distributor return requests",
+        DISTRIBUTOR_RETURN_REQUEST_UPDATE: "Update distributor return request status",
+    },
+
+    "Distributor Analytics": {
+        description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
+        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
+        DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
+        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
     },
 };
 

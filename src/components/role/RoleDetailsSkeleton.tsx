@@ -16,8 +16,8 @@ export default function RoleDetailsSkeleton () {
                 <div className="bg-loading w-full h-5 animate-pulse"></div>
                 <div className="w-full h-[2px] my-5 bg-loading animate-pulse"></div>
 
-                {Object.entries(PERMISSION_DESCRIPTIONS).map(() => (
-                    <div className="mb-8">
+                {Object.entries(PERMISSION_DESCRIPTIONS).map((_, i) => (
+                    <div key={i} className="mb-8">
                         <div className="bg-loading w-full h-5 animate-pulse"></div>
                         <div className="bg-loading w-full h-8 mt-3 animate-pulse"></div>
                         <div className="w-full h-[2px] my-5 bg-loading animate-pulse"></div>

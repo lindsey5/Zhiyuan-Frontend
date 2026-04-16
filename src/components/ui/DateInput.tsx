@@ -14,6 +14,6 @@ export default function DateInput ({ value, onChange, label } : DateInputProps) 
                 className="text-xs xl:text-sm border border-[var(--border-ui)] bg-panel text-primary px-3 py-2 rounded-md"
                 onChange={(e) => onChange(e.target.value)}
             />
-    </div>
+        </div>
     )
 }

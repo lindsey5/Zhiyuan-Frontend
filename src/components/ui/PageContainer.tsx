@@ -20,9 +20,9 @@ export default function PageContainer ({
             "w-full p-3 lg:p-6 flex flex-col space-y-3 md:space-y-6 relative",
             className
          )}>
-            <Card className="space-y-2">
-                <h1 className="text-gold font-bold text-lg">{title}</h1>
-                <p className="text-sm lg:text-md text-gray">{description}</p>
+            <Card className="space-y-2 p-3 md:p-5">
+                <h1 className="text-gold font-bold text-md md:text-lg uppercase tracking-tight">{title}</h1>
+                <p className="text-muted text-sm lg:text-md">{description}</p>
             </Card>
             {children}
         </div>

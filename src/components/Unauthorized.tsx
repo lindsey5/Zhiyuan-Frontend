@@ -2,7 +2,7 @@ import Card from "./ui/Card";
 import { Lock } from "lucide-react";
 
 export default function Unauthorized ({ children } : { children : React.ReactNode }) {
-
+    
     return (
         <div className='relative w-full h-screen'>
             <div className="z-1 absolute inset-0 flex items-center justify-center">

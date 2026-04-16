@@ -84,7 +84,7 @@ export default function RichTextEditor({ onChange, label, error, value }: RichTe
         <EditorContent
             editor={editor}
             className={cn(
-            "border border-[var(--border-ui)] rounded p-3 min-h-50 max-h-100 overflow-y-auto",
+            "border border-[var(--border-ui)] bg-input-ui rounded p-3 min-h-50 max-h-100 overflow-y-auto",
             error && "border-red-500"
             )}
         />

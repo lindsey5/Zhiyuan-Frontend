@@ -16,10 +16,14 @@ import Roles from "../pages/dashboard/Roles";
 import Role from "../pages/dashboard/Role";
 import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
-import DistributorStock from "../pages/dashboard/DistributorStock";
 import StockDistribution from "../pages/dashboard/StockDistribution";
 import TransferLogs from "../pages/dashboard/TransferLogs";
-import StockTransferSocketContextProvider from "../contexts/StockTransferContext";
+import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
+import Distributor from "../pages/dashboard/Distributor";
+import DistributorReports from "../pages/dashboard/Reports";
+import SponsoredItems from "../pages/dashboard/SponsoredItems";
+import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
+import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
 
 const router = createBrowserRouter([ 
@@ -30,11 +34,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: () => (
-            <ProtectedRoute requireAuthentication>
-                <StockTransferSocketContextProvider>
-                    <DashboardLayout />
-                </StockTransferSocketContextProvider>
-            </ProtectedRoute>
+            <DashboardLayout />
         ),
         children: [
             {
@@ -124,6 +124,27 @@ const router = createBrowserRouter([
                 )
             },
             {
+                path: 'sponsored-products',
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL]}>
+                                <SponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'create',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_CREATE]}>
+                                <AddSponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]  
+            },
+            {
                 path: 'roles',
                 Component: () => (
                     <ProtectedRoute anyPermissions={
@@ -171,6 +192,14 @@ const router = createBrowserRouter([
                 )
             },
             {
+                path: 'orders',
+                Component: () => (
+                    <ProtectedRoute anyPermissions={[PERMISSIONS.ORDER_READ_ALL, PERMISSIONS.ORDER_UPDATE]}>
+                        <Orders />
+                    </ProtectedRoute>
+                )
+            },
+            {
                 path: 'distributors',
                 children: [
                     {
@@ -180,7 +209,10 @@ const router = createBrowserRouter([
                                 anyPermissions={[
                                     PERMISSIONS.DISTRIBUTOR_CREATE,
                                     PERMISSIONS.DISTRIBUTOR_READ_ALL,
-                                    PERMISSIONS.DISTRIBUTOR_DELETE
+                                    PERMISSIONS.DISTRIBUTOR_DELETE,
+                                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STATS_VIEW
                                 ]}
                             >
                                 <Distributors />
@@ -188,20 +220,26 @@ const router = createBrowserRouter([
                         )
                     },
                     {
-                        path: ":id",
+                        path: "sales",
                         Component: () => (
-                            <ProtectedRoute
-                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_READ]}
-                            >
-                                <DistributorStock />
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW]}>
+                                <AllDistributorSales />
                             </ProtectedRoute>
                         )
                     },
                     {
-                        path: 'distribute',
+                        path: 'transfer-stocks',
                         Component: () => (
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_CREATE]}>
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]}>
                                 <StockDistribution />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'reports',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]}>
+                                <DistributorReports />
                             </ProtectedRoute>
                         )
                     },
@@ -214,7 +252,31 @@ const router = createBrowserRouter([
                                 <TransferLogs />
                             </ProtectedRoute>
                         )
-                    }
+                    },
+                    {
+                        path: 'return-requests',
+                        Component: () => (
+                            <ProtectedRoute
+                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]}
+                            >
+                                <ReturnRequests />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: ":id",
+                        Component: () => (
+                            <ProtectedRoute
+                                anyPermissions={[
+                                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                                    PERMISSIONS.DISTRIBUTOR_STATS_VIEW
+                                ]}
+                            >
+                                <Distributor />
+                            </ProtectedRoute>
+                        )
+                    },
                 ]
             }
         ]

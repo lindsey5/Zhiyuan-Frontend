@@ -1,9 +1,12 @@
 import type React from "react";
 import type { SortOption } from "../../types/type";
 import Dropdown from "../ui/Dropdown";
-import { SearchField } from "../ui/TextField";
 import CategoryDropdown from "../ui/CategoryDropdown";
 import FiltersMenu from "../ui/FiltersMenu";
+import { getKeyByValue } from "../../utils/utils";
+import TextField from "../ui/TextField";
+import { Search } from "lucide-react";
+import type { PaginationState } from "@tanstack/react-table";
 
 const options: Record<string, SortOption> = {
     'Newest': { sortBy: 'createdAt', order: 'desc' },
@@ -12,25 +15,13 @@ const options: Record<string, SortOption> = {
     'Z-A': { sortBy: 'variant_name', order: 'desc' },
 };
 
-function getKeyByValue(
-    obj: Record<string, SortOption>,
-    target: SortOption
-) {
-    return Object.keys(obj).find(key => {
-        const value = obj[key]
-        return (
-            value.sortBy === target.sortBy &&
-            value.order === target.order
-        )
-    })
-}
-
 interface VariantsTableControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setSorting: React.Dispatch<React.SetStateAction<SortOption>>
     sorting: SortOption
     category: string
     setCategory: React.Dispatch<React.SetStateAction<string>>
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
 }
 
 export default function VariantsTableControls ({
@@ -38,20 +29,25 @@ export default function VariantsTableControls ({
     setSorting,
     sorting,
     category,
-    setCategory
+    setCategory,
+    setPagination
 } : VariantsTableControlsProps) {
     
     return (
         <div className="px-5 flex items-center justify-between gap-5">
-            <div className="w-full md:max-w-100">
-                <SearchField 
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search by variant, product or sku..."
-                />
-            </div>
-            <FiltersMenu className="md:hidden">
+            <TextField 
+                className="md:max-w-100"
+                icon={<Search size={20}/>}
+                placeholder="Search by variant, product name or sku..."
+                onChange={(e) => {
+                    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+                    setSearch(e.target.value);
+                }}
+            />
+            <FiltersMenu className="md:hidden" containerStyle="space-y-3 w-[60vw]">
+                <h1 className="font-bold text-md md:text-lg">Filter</h1>
                 <Dropdown 
-                    title="Sort"
+                    label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
                         setSorting(options[value])
@@ -66,7 +62,7 @@ export default function VariantsTableControls ({
             <div className="max-w-100 w-[40%] hidden md:flex items-center space-x-3">
                 <Dropdown 
                     className="flex-1"
-                    title="Sort"
+                    label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
                     onChange={(value) => 
                         setSorting(options[value])

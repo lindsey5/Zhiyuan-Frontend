@@ -4,7 +4,7 @@ import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
 import type { AuditLog } from "../../types/audit.type";
 import { formatDate } from "../../utils/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAudit } from "../../hooks/useAudit";
 import AuditLogsControls from "../../components/audits/AuditLogsControls";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -54,6 +54,11 @@ const columns: ColumnDef<AuditLog>[] = [
         meta: { align: 'center' },
     },
     {
+        header: "IP Address",
+        accessorKey: "ip_address",
+        meta: { align: 'center' },
+    },
+    {
         header: "Severity",
         accessorKey: "severity",
         cell: info => (
@@ -77,7 +82,7 @@ export default function AuditLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
 
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
+    const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -86,20 +91,29 @@ export default function AuditLogs () {
     const [severity, setSeverity] = useState("");
     const [order, setOrder] = useState<"asc" | "desc">("desc");
 
-    const { getAuditLogs } = useAudit();
-
-    const params = {
+    const params = useMemo(() => ({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         search: debouncedSearch,
         startDate: startDate ? formatDate(startDate) : undefined,
         endDate: endDate ? formatDate(endDate) : undefined,
-        role: role,
-        severity: severity,
-        order: order
-    }
+        role,
+        severity,
+        order
+    }), [
+        pagination.pageSize,
+        pagination.pageIndex,
+        debouncedSearch,
+        startDate,
+        endDate,
+        role,
+        severity,
+        order
+    ]);
 
-    const { data, isFetching } = getAuditLogs(params)
+    const debouncedParams = useDebounce(params, 500);
+    const { getAuditLogs } = useAudit();
+    const { data, isFetching } = getAuditLogs(debouncedParams);
 
     return (
         <PageContainer 
@@ -109,6 +123,8 @@ export default function AuditLogs () {
         >
             <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
                 <AuditLogsControls
+                    startDate={startDate}
+                    endDate={endDate}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
@@ -118,6 +134,7 @@ export default function AuditLogs () {
                     setSeverity={setSeverity}
                     order={order}
                     setOrder={setOrder}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

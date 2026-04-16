@@ -1,25 +1,27 @@
 import { useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
-import VariantSelector from "../../components/stockDistribution/VariantSelector";
-import type { VariantWithProduct } from "../../types/variant.type";
+import ProductSelectionPanel from "../../components/stockDistribution/ProductSelectionPanel";
+import type { Variant } from "../../types/variant.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import { ShoppingCart } from "lucide-react";
-import TransferCart from "../../components/stockDistribution/TransferCart";
+import TransferItems from "../../components/stockDistribution/TransferItems";
+import { useSearchParams } from "react-router-dom";
 
 export default function StockDistribution () {
-    const [distributorId, setDistributorId] = useState<string | null>(null);
-    const [variants, setVariants] = useState<{ variant: VariantWithProduct, quantity: number }[]>([]);
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+    const [distributorId, setDistributorId] = useState<string | null>(id);
+    const [variants, setVariants] = useState<{ variant: Variant, quantity: number, product_name: string }[]>([]);
     const [showModal, setShowModal] = useState(false);
 
-    const addVariant = (newVariant: VariantWithProduct, quantity: number) => {
+    const addVariant = (newVariant: Variant, quantity: number, product_name: string) => {
         const existing = variants.find(v => v.variant._id === newVariant._id);
 
         if (existing) {
             // Check if adding exceeds stock
             if ((existing.quantity + quantity) > existing.variant.stock) {
-                errorToast("Quantity exceeds available stock");
+                errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
@@ -30,15 +32,15 @@ export default function StockDistribution () {
         } else {
             // Check if quantity exceeds stock for new variant
             if (quantity > newVariant.stock) {
-                errorToast("Quantity exceeds available stock");
+                errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
             // Add new variant
-            setVariants(prev => [...prev, { variant: newVariant, quantity }]);
+            setVariants(prev => [...prev, { variant: newVariant, quantity, product_name }]);
         }
 
-        successToast(`${newVariant.variant_name} successfully added`);
+        successToast("Success", `${product_name}-${newVariant.variant_name} successfully added`);
     };
 
     return (
@@ -47,13 +49,12 @@ export default function StockDistribution () {
             className="relative"
             description="Manage stock transfers from Admin to Distributors"
         >
-            <div className="flex justify-end sticky top-20">
+            <div className="flex justify-end">
                 <GoldButton 
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}
                 >
-                    <ShoppingCart size={20} />
-                    Transfer Cart
+                    Transfer Items
                     {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
                         {variants.length}
                     </span>}
@@ -62,12 +63,11 @@ export default function StockDistribution () {
             <div className="flex flex-col gap-5">
                 <DistributorSelector 
                     setDistributor={setDistributorId}
+                    defaultDistributor={id}
                 />
-                <VariantSelector 
-                    addVariant={addVariant}
-                />
+                <ProductSelectionPanel addVariant={addVariant} />
             </div>
-            <TransferCart 
+            <TransferItems
                 close={() => setShowModal(false)}
                 open={showModal}
                 setVariants={setVariants}

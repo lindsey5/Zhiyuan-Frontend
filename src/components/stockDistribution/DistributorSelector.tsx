@@ -1,22 +1,25 @@
-import { useState, type SetStateAction } from "react";
+import { useEffect, useState, type SetStateAction } from "react";
 import Card from "../ui/Card";
 import CustomizedTable from "../ui/Table";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Distributor } from "../../types/distributor.type";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDistributor } from "../../hooks/useDistributor";
-import { SearchField } from "../ui/TextField";
 import GoldButton from "../ui/GoldButton";
 import { User } from "lucide-react";
+import DistributorsControls from "../distributors/DistributorsControls";
 
 interface DistributorSelectorProps {
     setDistributor: React.Dispatch<SetStateAction<string | null>>;
+    defaultDistributor: string | null;
 }
 
-export default function DistributorSelector({ setDistributor } : DistributorSelectorProps) {
+export default function DistributorSelector({ setDistributor, defaultDistributor } : DistributorSelectorProps) {
     const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
+    const [sortBy, setSortBy] = useState('createdAt');
+    const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
+    const debouncedSearch = useDebounce(search, 500);
     const { getDistributors } = useDistributor();
     const [pagination, setPagination] = useState<PaginationState>({
         pageSize: 50,
@@ -27,13 +30,20 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
         search: debouncedSearch,
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
+        sortBy,
+        order,
+        id: defaultDistributor || undefined
     });
 
     const columns: ColumnDef<Distributor>[] = [
         {
+            header: "ID",
+            accessorKey: "distributor_id",
+        },
+        {
             header: "Name",
             accessorKey: "distributor_name",
-            meta: { align: "left" },
+            meta: { align: "center" },
         },
         {
             header: "Email",
@@ -51,7 +61,7 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
             accessorKey: "parent_distributor",
             cell: (info) =>
                 info.getValue()
-                ? (info.getValue() as Distributor).parent_distributor.distributor_name
+                ? (info.getValue() as Distributor)?.distributor_name
                 : "N/A",
             meta: { align: "center" },
         },
@@ -74,6 +84,10 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
             meta: { align: "center" },
         },
     ];
+
+    useEffect(() => {
+        if(defaultDistributor) setSelectedDistributor(data?.distributors[0] || null);
+    }, [data])
 
     return (
         <Card className="p-0 flex flex-col">
@@ -98,28 +112,28 @@ export default function DistributorSelector({ setDistributor } : DistributorSele
                     </div>
                 </div>
 
-                <div className="gap-3">
-                    <GoldButton 
-                        onClick={() => {
-                            setSelectedDistributor(null)
-                            setDistributor(null)
-                        }}
-                        className="text-xs xl:text-sm"
-                    >
-                    Change Distributor
-                    </GoldButton>
-                </div>
+                {!defaultDistributor && <GoldButton 
+                    onClick={() => {
+                        setSelectedDistributor(null)
+                        setDistributor(null)
+                    }}
+                    className="text-xs xl:text-sm"
+                >
+                Change Distributor
+                </GoldButton>}
                 </div>
             ) : (
                 <>
                 {/* Search */}
-                <div className="max-w-80 mt-5 mx-5 space-y-2 mb-5">
-                    <h1 className="text-md xl:text-lg font-bold">Select Distributor</h1>
-                    <SearchField
-                    placeholder="Search distributor"
-                    onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
+                <h1 className="p-5 text-md xl:text-lg font-bold">Select Distributor</h1>
+                <DistributorsControls 
+                    order={order}
+                    setOrder={setOrder}
+                    setSearch={setSearch}
+                    setSort={setSortBy}
+                    sort={sortBy}
+                    setPagination={setPagination}
+                />
 
                 {/* Table */}
                 <CustomizedTable

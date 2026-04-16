@@ -5,38 +5,28 @@ import CustomizedTable from "../../components/ui/Table";
 import { useCategory } from "../../hooks/useCategory";
 import type { Category } from "../../types/category.type";
 import { formatDate } from "../../utils/utils";
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import CategoriesControls from "../../components/categories/CategoriesControls";
 import Button from "../../components/ui/Button";
-import { useRole } from "../../hooks/useRole";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import { promiseToast } from "../../utils/sileo";
+import type { CreateColumnsParams } from "../../types/type";
 
-export default function Categories () {
+interface CategoryColsParams extends CreateColumnsParams {
+    setShowModal: React.Dispatch<SetStateAction<boolean>>,
+    deleteExistingCategory: (id: string) => void,
+    setCategory: React.Dispatch<SetStateAction<Category | undefined>>
+}
 
-    const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
-    const permissions =  role?.permissions || [];
-    const { hasPermissions, hasAnyPermissions } = usePermissions();
-
-    const [category, setCategory] = useState<Category>();
-    const [showModal, setShowModal] = useState(false);
-    const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 200);
-
-    const { getCategories, deleteCategory } = useCategory();
-    const { data, isFetching } = getCategories({ search: debouncedSearch });
-
-    const deleteExistingCategory = (id: string) => {
-        const isConfirmed = window.confirm("Are you sure you want to delete this category?");
-        if (!isConfirmed) return;
-
-        promiseToast(deleteCategory.mutateAsync({ id }), "top-center", "Category succesfully deleted.")
-    };
-
-    const columns: ColumnDef<Category>[] = [
+const getColumns = ({ 
+    hasAnyPermissions, 
+    hasPermissions, 
+    deleteExistingCategory, 
+    setCategory, 
+    setShowModal
+} : CategoryColsParams) : ColumnDef<Category>[] => [
     {
         header: "Category",
         accessorKey: "name",
@@ -47,13 +37,13 @@ export default function Categories () {
         cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
-    ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE], permissions)
+    ...(hasAnyPermissions([ PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_UPDATE],)
         ? [
             {
                 header: "Action",
                 cell: ({ row }: { row: Row<Category> }) => (
                     <div className="flex gap-3 md:justify-center">
-                        {hasPermissions([PERMISSIONS.CATEGORY_UPDATE], permissions) && (
+                        {hasPermissions([PERMISSIONS.CATEGORY_UPDATE]) && (
                             <Button
                                 label="Edit"
                                 className="p-2 md:p-3 text-xs xl:text-sm"
@@ -64,7 +54,7 @@ export default function Categories () {
                             />
                         )}
 
-                        {hasPermissions([PERMISSIONS.CATEGORY_DELETE], permissions) && (
+                        {hasPermissions([PERMISSIONS.CATEGORY_DELETE]) && (
                             <Button
                                 label="Delete"
                                 className="bg-red-600 text-white p-2 md:p-3 text-xs xl:text-sm"
@@ -76,8 +66,34 @@ export default function Categories () {
                 meta: { align: 'center' },
             },
         ]
-        : []),
-    ];
+    : []),
+];
+
+export default function Categories () {
+    const { hasPermissions, hasAnyPermissions } = usePermissions();
+
+    const [category, setCategory] = useState<Category>();
+    const [showModal, setShowModal] = useState(false);
+    const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 500);
+
+    const { getCategories, deleteCategory } = useCategory();
+    const { data, isFetching } = getCategories({ search: debouncedSearch });
+
+    const deleteExistingCategory = (id: string) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this category?");
+        if (!isConfirmed) return;
+
+        promiseToast(deleteCategory.mutateAsync({ id }), "top-center", "Category succesfully deleted.")
+    };
+
+    const columns = getColumns({
+        hasPermissions,
+        hasAnyPermissions,
+        setShowModal,
+        deleteExistingCategory,
+        setCategory
+    });
 
     return (
         <PageContainer 
@@ -92,7 +108,6 @@ export default function Categories () {
                     setCategory={setCategory}
                     setShowModal={setShowModal}
                     showModal={showModal}
-                    permissions={permissions}
                 />
                 <CustomizedTable  
                     data={data?.categories || []}

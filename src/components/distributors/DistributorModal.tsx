@@ -30,10 +30,8 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
     }
 
     const onSubmit : SubmitHandler<DistributorFormData> = async (data) => {
-
         promiseToast(createDistributor.mutateAsync({ data})) 
     }
-    
 
     return (
         <Modal
@@ -64,6 +62,14 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         placeholder="Enter distributor Email"
                         registration={register("email")}
                         error={errors.email?.message}
+                        disabled={createDistributor.isPending}
+                    />
+
+                    <TextField
+                        label="Parent Distributor (Optional)"
+                        placeholder="Enter parent distributor ID"
+                        registration={register("parent_distributor_id")}
+                        error={errors.parent_distributor_id?.message}
                         disabled={createDistributor.isPending}
                     />
 

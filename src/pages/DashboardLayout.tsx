@@ -5,6 +5,7 @@ import { cn } from "../utils/utils";
 import { useThemeStore } from "../lib/store/themeStore";
 import ToggleButton from "../components/ui/ToggleButton";
 import Header from "../components/ui/Header";
+import NotificationBell from "../components/notification/NotificationBell";
 
 export default function DashboardLayout() {
     const { isDark } = useThemeStore();    
@@ -29,7 +30,10 @@ export default function DashboardLayout() {
                 collapsed={collapsed} 
                 setCollapsed={setCollapsed}
             />
-            <ToggleButton className="fixed z-20 top-3 right-3 lg:top-10 lg:right-10" /> 
+            <div className="flex fixed gap-3 items-center z-20 top-1 right-3 lg:top-10 lg:right-10">
+                        <NotificationBell />
+                <ToggleButton className="hidden md:flex" /> 
+            </div>
             <Outlet />
         </div>
     );

@@ -34,7 +34,7 @@ axiosClient.interceptors.response.use(
                 );
 
                 setUser(data.user)
-
+                    
                 originalRequest.headers.Authorization = `Bearer ${data.token.accessToken}`;
 
                 return axiosClient(originalRequest);
@@ -44,6 +44,7 @@ axiosClient.interceptors.response.use(
             }
         }
         const message = error.response?.data?.message || error.response?.data?.error || error.message;
+        
         return Promise.reject(new Error(message));
     }
 );

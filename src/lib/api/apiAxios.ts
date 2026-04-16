@@ -32,5 +32,6 @@ export async function apiAxios<T>(endpoint: string, options?: ApiOptions): Promi
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
     },
   });
+  
   return res.data;
 }

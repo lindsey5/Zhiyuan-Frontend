@@ -151,6 +151,11 @@ export default function EditVariant ({ variant, open, close } : EditVariantProps
                             label="Stock"
                             placeholder="Stock"
                             type="number"
+                            onKeyDown={(e) => {
+                                if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
+                                e.preventDefault();
+                                }
+                            }}
                             registration={register('stock', {
                                 setValueAs: value => Number(value)
                             })}

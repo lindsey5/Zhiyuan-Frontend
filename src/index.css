@@ -30,6 +30,7 @@
   --border-panel: var(--border-panel);
   --border-ui: var(--border-ui);
   --toggle-border: var(--toggle-border);
+  --icon-shadow: var(--icon-shadow);
 }
 
 @layer base {
@@ -54,6 +55,7 @@
     --toggle-border: #c4c0be;
     --separator: #a67c52;
 
+    --icon-shadow: #1a1a1a;
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.3);
     --border-panel: #c4c0be;
   }
@@ -63,9 +65,9 @@
     --bg-input: #313131;
     --bg-toggle: #2a2624;
     --bg-toggle-inner: #000000;
-    --bg-panel: #313131;
-    --bg-table-row-odd: #313131;
-    --bg-table-row-even: #292929;
+    --bg-panel: #252525;
+    --bg-table-row-odd: #252525;
+    --bg-table-row-even: #313131;
     --bg-loading: #53535366;
 
     --text-primary: #e0e0e0;
@@ -78,6 +80,7 @@
     --toggle-border: #b39842;
     --separator: #d4af37;
 
+    --icon-shadow: #837030;
     --shadow-panel: 0 4px 12px rgba(0, 0, 0, 0.5);
     --border-panel: #646464;
   }

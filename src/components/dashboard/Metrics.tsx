@@ -1,4 +1,4 @@
-import MetricCard from "./MetricCard";
+import MetricCard from "../ui/MetricCard";
 
 export default function Metrics () {
     return (

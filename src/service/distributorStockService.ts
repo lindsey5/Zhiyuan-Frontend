@@ -1,5 +1,7 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse } from "../types/distributor-stock.type";
+import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorTotalStocksResponse, type DownloadDistributorStocksParams } from "../types/distributor-stock.type";
+import { errorToast } from "../utils/sileo";
+import { downloadFile } from "../utils/utils";
 
 export const distributorStockService = {
     getDistributorStocks: (id: string, params: GetDistributorStocksParams): Promise<GetDistributorStocksResponse> => (
@@ -14,5 +16,26 @@ export const distributorStockService = {
             method: HttpMethod.POST,
             data
         })
-    )
+    ),
+
+    getDistributorTotalStocks: (id: string) => (
+        apiAxios<GetDistributorTotalStocksResponse>(`distributor-stocks/stock/${id}`, {
+            method: HttpMethod.GET
+        })
+    ),
+    downloadDistributorStocks: async (id: string, params: DownloadDistributorStocksParams) => {
+        try{
+            const response = await apiAxios<{
+                data: string; // base64 string
+                filename: string;
+            }>(`distributor-stocks/download/${id}`, {
+                method: HttpMethod.GET,
+                params,
+            });
+
+            downloadFile(response.data, response.filename);
+        }catch(err : any){
+            errorToast("Error", err.message || "Failed to download")
+        }
+    },
 };

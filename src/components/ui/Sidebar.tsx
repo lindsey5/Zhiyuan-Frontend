@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import {
-    LayoutDashboard,
-    Package,
-    ClipboardList,
-    Settings,
-    UserCog,
-    FileText,
-    Eye,
-    Plus,
-    LogOut,
-    Shield,
-    ChevronRight,
-    ChevronLeft,
-    Tags,
-    Layers,
-    User,
-    Network,
-    TrendingUp,
-    BarChart,
-    Forward,
+  LayoutDashboard,
+  Package,
+  ClipboardList,
+  Settings,
+  UserCog,
+  FileText,
+  Eye,
+  Plus,
+  LogOut,
+  Shield,
+  ChevronRight,
+  ChevronLeft,
+  Tags,
+  Layers,
+  User,
+  Network,
+  Repeat,
+  FileBarChart,
+  BarChartBig,
+  CornerUpRight,
+  Star,
+  Undo2,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -26,6 +29,8 @@ import SidebarDropdown from "./SidebarDropdown";
 import { cn } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
+import IconButton from "./IconButton";
+import ToggleButton from "./ToggleButton";
 
 export default function Sidebar({
     collapsed,
@@ -46,65 +51,48 @@ export default function Sidebar({
     return (
         <aside
             className={cn(
-                "z-30 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all ease-in-out duration-300",
+                "z-20 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all ease-in-out duration-300",
                 collapsed
-                    ? "w-0 opacity-0 pointer-events-none lg:opacity-100 lg:w-20 lg:pointer-events-auto lg:flex"
-                    : "w-64"
+                ? "w-0 opacity-0 pointer-events-none lg:opacity-100 lg:w-20 lg:pointer-events-auto lg:flex"
+                : "w-64",
             )}
         >
             {/* Header / Toggle */}
             <div
                 className={cn(
                     "p-2 flex items-center justify-between border-b border-[var(--border-panel)]",
-                    collapsed && "justify-center"
+                    collapsed && "justify-center",
                 )}
             >
                 {!collapsed && (
-                    <div className="flex gap-3 items-center">
-                        <img
-                            src={isDark ? "/light-logo.png" : "/dark-logo.png"}
-                            alt="Logo"
-                            className="w-14 h-14 lg:w-16 lg:h-16 object-contain transition-opacity duration-500"
-                        />
-                        <div>
-                            <h1 className="text-xs font-medium">Zhiyuan Enterprise</h1>
-                            <p className="text-gold text-sm font-bold">Group Inc.</p>
-                        </div>
+                <div className="flex gap-3 items-center">
+                    <img
+                        src={isDark ? "/light-logo.png" : "/dark-logo.png"}
+                        alt="Logo"
+                        className="w-14 h-14 lg:w-16 lg:h-16 object-contain transition-opacity duration-500"
+                    />
+                    <div>
+                        <h1 className="text-xs font-medium">Zhiyuan Enterprise</h1>
+                        <p className="text-gold text-sm font-bold">Group Inc.</p>
                     </div>
+                </div>
                 )}
 
                 <button
                     onClick={() => setCollapsed(!collapsed)}
                     className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md cursor-pointer"
                 >
-                    {!collapsed ? <ChevronLeft /> : <ChevronRight />}
+                {!collapsed ? <ChevronLeft /> : <ChevronRight />}
                 </button>
             </div>
 
-            {/* Avatar & User Info */}
-            <div className={cn("flex items-center gap-3 p-3", collapsed && "justify-center")}>
-                <div className="text-xs lg:text-sm text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold">
-                    {user?.firstname.charAt(0)}
-                    {user?.lastname.charAt(0)}
-                </div>
-
-                {!collapsed && (
-                    <div className="flex flex-col">
-                        <span className="text-xs lg:text-sm font-medium">
-                            {user?.firstname} {user?.lastname}
-                        </span>
-                        <span className="text-xs text-gold capitalize">
-                            {user?.role || "No assigned role"}
-                        </span>
-                    </div>
-                )}
-            </div>
-
             {/* Menu */}
-            <nav className={cn(
+            <nav
+                className={cn(
                 "flex-1 p-2 flex flex-col gap-2 overflow-y-auto overflow-x-hidden",
-                collapsed && 'items-center'
-            )}>
+                collapsed && "items-center",
+                )}
+            >
                 <SidebarItem
                     icon={<LayoutDashboard size={24} />}
                     label="Dashboard"
@@ -120,12 +108,58 @@ export default function Sidebar({
                     setCollapsed={setCollapsed}
                     navigate={navigate}
                     open={openDropdown === "Product Management"}
-                    setOpen={() => setOpenDropdown((prev) => prev === "Product Management" ? null : "Product Management")}
+                    setOpen={() =>
+                        setOpenDropdown((prev) =>
+                        prev === "Product Management" ? null : "Product Management",
+                        )
+                    }
                     items={[
-                        { label: "View Products", icon: <Eye size={20} />, path: "/dashboard/products" },
-                        { label: "Add Product", icon: <Plus size={20} />, path: "/dashboard/add-product" },
-                        { label: "Variants", icon: <Layers size={20} />, path: "/dashboard/variants" },
-                        { label: "Categories", icon: <Tags size={20} />, path: "/dashboard/categories" },
+                        {
+                            label: "View Products",
+                            icon: <Eye size={20} />,
+                            path: "/dashboard/products",
+                        },
+                        {
+                            label: "Add Product",
+                            icon: <Plus size={20} />,
+                            path: "/dashboard/add-product",
+                        },
+                        {
+                            label: "Variants",
+                            icon: <Layers size={20} />,
+                            path: "/dashboard/variants",
+                        },
+                        {
+                            label: "Categories",
+                            icon: <Tags size={20} />,
+                            path: "/dashboard/categories",
+                        },
+                    ]}
+                />
+
+                <SidebarDropdown
+                    title="Sponsored Products"
+                    icon={<Star size={24} />}
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    navigate={navigate}
+                    open={openDropdown === "Sponsored Products"}
+                    setOpen={() =>
+                        setOpenDropdown((prev) =>
+                        prev === "Sponsored Products" ? null : "Sponsored Products",
+                        )
+                    }
+                    items={[
+                        {
+                        label: "View Sponsored Products",
+                        icon: <Eye size={20} />,
+                        path: "/dashboard/sponsored-products",
+                        },
+                        {
+                        label: "Add Sponsored Products",
+                        icon: <Plus size={20} />,
+                        path: "/dashboard/sponsored-products/create",
+                        },
                     ]}
                 />
 
@@ -160,13 +194,44 @@ export default function Sidebar({
                     setCollapsed={setCollapsed}
                     navigate={navigate}
                     open={openDropdown === "Distributor Management"}
-                    setOpen={() => setOpenDropdown((prev) => prev === "Distributor Management" ? null : "Distributor Management")}
+                    setOpen={() =>
+                        setOpenDropdown((prev) =>
+                        prev === "Distributor Management"
+                            ? null
+                            : "Distributor Management",
+                        )
+                    }
                     items={[
-                        { label: "View Distributors", icon: <Eye size={20} />, path: "/dashboard/distributors" },
-                        { label: "Distribute Stocks", icon: <Forward size={20} />, path: "/dashboard/distributors/distribute" },
-                        { label: "Distributor Sales", icon: <TrendingUp size={20} />, path: "/dashboard/distributors/sales" },
-                        { label: "Reports", icon: <BarChart size={20} />, path: "/dashboard/distributors/reports" },
-                        { label: "Transfer Logs", icon: <FileText size={20} />, path: "/dashboard/distributors/transfer-logs" },
+                        {
+                            label: "View Distributors",
+                            icon: <Eye size={20} />,
+                            path: "/dashboard/distributors",
+                        },
+                        {
+                            label: "Transfer Stocks",
+                            icon: <CornerUpRight size={20} />,
+                            path: "/dashboard/distributors/transfer-stocks",
+                        },
+                        {
+                            label: "Distributors Sale",
+                            icon: <BarChartBig size={20} />,
+                            path: "/dashboard/distributors/sales",
+                        },
+                        {
+                            label: "Reports",
+                            icon: <FileBarChart size={20} />,
+                            path: "/dashboard/distributors/reports",
+                        },
+                        {
+                            label: "Transfer History",
+                            icon: <Repeat size={20} />,
+                            path: "/dashboard/distributors/transfer-logs",
+                        },
+                        {
+                            label: "Return Requests",
+                            icon: <Undo2 size={20} />,
+                            path: "/dashboard/distributors/return-requests",
+                        },
                     ]}
                 />
 
@@ -181,18 +246,66 @@ export default function Sidebar({
                         setOpenDropdown((prev) => (prev === "Settings" ? null : "Settings"))
                     }
                     items={[
-                        { label: "Account Settings", icon: <UserCog size={20} />, path: "/dashboard/account" },
-                        { label: "Audit Logs", icon: <FileText size={20} />, path: "/dashboard/audit-logs" },
+                        {
+                            label: "Account Settings",
+                            icon: <UserCog size={20} />,
+                            path: "/dashboard/account",
+                        },
+                        {
+                            label: "Audit Logs",
+                            icon: <FileText size={20} />,
+                            path: "/dashboard/audit-logs",
+                        },
                     ]}
                 />
 
-                <SidebarItem
-                    icon={<LogOut size={24} />}
-                    label="Log out"
-                    collapsed={collapsed}
-                    onClick={logout}
-                />
+                {/* <SidebarItem
+                icon={<LogOut size={24} />}
+                label="Log out"
+                collapsed={collapsed}
+                onClick={logout}
+                /> */}
             </nav>
+            <div
+                className={cn(
+                    "flex items-center gap-3 p-3 mt-auto border-t border-white/10",
+                    collapsed ? "justify-center" : "justify-between",
+                )}
+            >
+                {/* Avatar and User Info Group */}
+                <div className="flex items-center gap-3 min-w-0">
+                    <div className="shrink-0 text-xs lg:text-sm text-inverse w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gold flex items-center justify-center font-semibold uppercase">
+                        {user?.firstname?.[0]}
+                        {user?.lastname?.[0]}
+                    </div>
+
+                    {!collapsed && (
+                        <div className="flex flex-col min-w-0">
+                            <span className="text-xs lg:text-sm font-medium truncate">
+                                {user?.firstname} {user?.lastname}
+                            </span>
+                            <span className="text-[11px] lg:text-xs text-gold/80 capitalize truncate">
+                                {user?.role || "No assigned role"}
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Logout Action */}
+                {!collapsed && (
+                    <IconButton 
+                        className="hover:bg-[rgba(166,124,82,0.1)] rounded-md" 
+                        icon={(
+                            <LogOut 
+                                size={20} 
+                                className="text-gold hover:"
+                            />
+                        )} 
+                        onClick={logout}
+                    />
+                )}
+            </div>
+            <ToggleButton className="self-center my-2 md:hidden"/>
         </aside>
     );
 }

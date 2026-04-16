@@ -13,7 +13,7 @@ const TableRow = <T,>({ row }: TableRowProps<T>) => {
             return (
             <td
                 key={cell.id}
-                className={`min-w-30 p-5 border-b border-[var(--border-panel)] text-${align}`}
+                className={`min-w-30 p-3 border-b border-[var(--border-panel)] text-${align}`}
             >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>
@@ -41,7 +41,7 @@ const TableColumns = <T,>({ table }: { table: Table<T> }) => {
                 return (
                 <th
                     key={header.id}
-                    className={`text-gold border-b p-5 font-bold sticky top-0 bg-panel z-5`}
+                    className={`text-gold border-b p-3 font-bold sticky top-0 bg-panel z-5`}
                     style={{ textAlign: align }}
                 >
                     {flexRender(header.column.columnDef.header, header.getContext())}
@@ -61,7 +61,7 @@ type TableSkeletonProps = {
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10 }) => {
     return (
-        <div className="hidden min-h-0 flex-grow md:flex flex-col animate-pulse">
+        <div className="min-h-0 flex-grow flex flex-col animate-pulse">
             <div className="overflow-auto flex-grow">
                 <table className="w-full text-sm border-collapse">
                     {/* Table Head */}
@@ -205,22 +205,14 @@ const CustomizedTable = <T,>({
                 {noDataMessage}
             </div> :
             isLoading ? 
-                <>
-                    <TableSkeleton columns={cols}/>
-                    <TableCardSkeleton />
-                </>
+                <TableSkeleton columns={cols}/>
             : 
                 <>
-                <div className="overflow-auto flex-grow hidden md:block relative">
+                <div className="overflow-auto flex-grow relative">
                     <table className="w-full text-xs xl:text-sm">
                         <TableColumns table={table} />
                         <TableRows table={table} />
                     </table>
-                </div>
-                <div className="flex-grow overflow-auto flex flex-col gap-2 md:hidden">
-                {rows.map(row => (
-                    <TableCard key={row.id} row={row}/>
-                ))}
                 </div>
                 {showPagination && rows.length > 0 && <PaginationControls total={total || 0} table={table} />}
                 </>

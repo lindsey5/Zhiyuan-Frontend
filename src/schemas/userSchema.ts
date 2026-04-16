@@ -32,22 +32,21 @@ export const CreateUserSchema = z.object({
         .max(100, "Email must not exceed 100 characters"),
     
     password: z.string()
-        .min(6, "Password must be at least 6 characters")
-        .max(100, "Password must not exceed 100 characters"),
+        .min(12, "Password must be at least 12 characters")
+        .max(100, "Password must not exceed 100 characters")
+        .regex(/[A-Z]/, "Must include at least 1 uppercase letter")
+        .regex(/[a-z]/, "Must include at least 1 lowercase letter")
+        .regex(/[0-9]/, "Must include at least 1 number")
+        .regex(/[^A-Za-z0-9]/, "Must include at least 1 special character"),
 
     confirmPassword: z.string()
-        .min(1, "Confirm password is required"),
+        .min(1, "Please confirm password"),
 
     role_id: z.string().min(1, "Role is required")
 })
-.superRefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    });
-  }
+.refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 
 export type CreateUserFormData = z.infer<typeof CreateUserSchema>;
@@ -63,8 +62,23 @@ export const UpdateUserSchema = z.object({
         .string()
         .transform((val) => (val === "" ? undefined : val))
         .optional()
-        .refine((val) => !val || val.length >= 6, {
-        message: "Password must be at least 6 characters",
+        .refine((val) => !val || val.length >= 12, {
+            message: "Password must be at least 12 characters",
+        })
+        .refine((val) => !val || val.length <= 100, {
+            message: "Password must not exceed 100 characters",
+        })
+        .refine((val) => !val || /[A-Z]/.test(val), {
+            message: "Must include at least 1 uppercase letter",
+        })
+        .refine((val) => !val || /[a-z]/.test(val), {
+            message: "Must include at least 1 lowercase letter",
+        })
+        .refine((val) => !val || /[0-9]/.test(val), {
+            message: "Must include at least 1 number",
+        })
+        .refine((val) => !val || /[^A-Za-z0-9]/.test(val), {
+            message: "Must include at least 1 special character",
         }),
 
     confirmPassword: z
@@ -74,16 +88,9 @@ export const UpdateUserSchema = z.object({
 
     role_id: z.string().min(1, "Role is required"),
 })
-.superRefine((data, ctx) => {
-    if (data.password || data.confirmPassword) {
-        if (data.password !== data.confirmPassword) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "Passwords do not match",
-                path: ["confirmPassword"],
-            });
-        }
-    }
+.refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 
 export type UpdateUserFormData = z.infer<typeof UpdateUserSchema>;

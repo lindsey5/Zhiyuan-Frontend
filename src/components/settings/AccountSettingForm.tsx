@@ -9,11 +9,13 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { promiseToast } from "../../utils/sileo";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
-import { Edit } from "lucide-react";
+import AccountSecuritySettings from "./AccountSecuritysettings";
+import { Edit, Lock } from "lucide-react";
 
 export default function AccountSettingsForm () {
     const { user } = useAuthStore();
     const [editMode, setEditMode] = useState(false);
+    const [showSecurity, setShowSecurity] = useState(false);
     const { updateOwn } = useUser();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({
         resolver: zodResolver(UserSchema),
@@ -52,14 +54,25 @@ export default function AccountSettingsForm () {
                 <h2 className="text-md xl:text-lg text-gold font-semibold">
                     Profile Information
                 </h2>
-                {!editMode && (
-                    <Button 
-                        label="Edit"
-                        onClick={() => setEditMode(true)}
-                        className="text-gold text-sm xl:text-md border-none"
-                        icon={<Edit size={20} />}
-                    />
-                )}
+
+                <div className="flex gap-2">
+                    {!showSecurity && (
+                        <Button 
+                            label="Change Password"
+                            onClick={() => setShowSecurity(true)}
+                            className="text-gold text-sm xl:text-md border-none"
+                            icon={<Lock size={20} />}
+                        />
+                    )}
+                    {!editMode && (
+                        <Button 
+                            label="Edit"
+                            onClick={() => setEditMode(true)}
+                            className="text-gold text-sm xl:text-md border-none"
+                            icon={<Edit size={20} />}
+                        />
+                    )}
+                </div>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -112,6 +125,10 @@ export default function AccountSettingsForm () {
                     >{updateOwn.isPending ? 'Saving...' : 'Save Changes'}</GoldButton>
                 </div>}
             </form>
+
+            {showSecurity && (
+                <AccountSecuritySettings onClose={() => setShowSecurity(false)} />
+            )}
         </Card>
     )
 }

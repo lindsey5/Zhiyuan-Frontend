@@ -1,34 +1,38 @@
 import { Minus, Plus, X } from "lucide-react";
-import type { VariantWithProduct } from "../../types/variant.type";
+import type { Variant } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
-import { formatToPeso } from "../../utils/utils";
+import { cn, formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
 import { useDistributorStock } from "../../hooks/useDistributorStock";
-import { promiseToast } from "../../utils/sileo";
+import { errorToast, promiseToast } from "../../utils/sileo";
+import Chip from "../ui/Chip";
+import { useMemo } from "react";
+import { useSocket } from "../../hooks/useSocket";
 
 interface CartItem {
-  variant: VariantWithProduct;
-  quantity: number;
+    variant: Variant;
+    quantity: number;
+    product_name: string;
 }
 
-interface TransferCartProps {
-  variants: CartItem[];
-  distributorId: string | null;
-  open: boolean;
-  close: () => void;
-  setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
+interface TransferItemsProps {
+    variants: CartItem[];
+    distributorId: string | null;
+    open: boolean;
+    close: () => void;
+    setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
 }
 
-export default function TransferCart({ 
+export default function TransferItems({ 
     variants, 
     open, 
     close, 
     setVariants, 
     distributorId
-}: TransferCartProps) {
-
+}: TransferItemsProps) {
+    useSocket({ namespace: '/distributor-notification' })
     const { createDistributorStocks } = useDistributorStock();
     
     const addQty = (id: string) => {
@@ -63,6 +67,11 @@ export default function TransferCart({
     }
 
     const transfer = () => {
+        if(!distributorId){
+            errorToast("Error", "Please select a distributor first.");
+            return;
+        }
+
         const isConfirmed = confirm("Are you sure you want to transfer these items to the distributor's stock?");
 
         if(!isConfirmed) return;
@@ -76,12 +85,27 @@ export default function TransferCart({
         }))
     }
 
+    const handleQuantity = (quantity : number, variant: CartItem) => {
+
+        if(quantity <= variant.variant.stock){
+            setVariants(prev => 
+                prev.map(item => 
+                    item.variant._id === variant.variant._id ? ({...item, quantity }) :item
+                )
+            )
+        }
+    }
+
+    const isValidItems = useMemo(() => {
+        return variants.every(variant => variant.quantity)
+    }, [variants])
+
     return (
         <Modal open={open} onClose={close}>
             <Card>
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-md xl:text-lg font-bold">Transfer Cart</h2>
+                    <h2 className="text-md xl:text-lg font-bold">Transfer Items</h2>
                     <button
                         onClick={close}
                         className="cursor-pointer hover:opacity-50"
@@ -93,14 +117,12 @@ export default function TransferCart({
                 {/* Body */}
                 <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
-                    <p className="text-sm text-center">
-                    No items in cart.
-                    </p>
+                    <p className="text-sm text-center">No transfer items</p>
                 ) : (
                     variants.map(item => (
                         <div
                             key={item.variant._id}
-                            className="flex items-center gap-3 border-b border-[var(--border-ui)] py-3"
+                            className="flex items-start gap-3 border-b border-[var(--border-ui)] py-3"
                         >
                             <img
                                 src={item.variant.image_url}
@@ -109,11 +131,10 @@ export default function TransferCart({
                             />
 
                             <div className="flex-1">
-                                <p className="font-medium text-sm">
-                                    {item.variant.variant_name}
-                                </p>
-                                <p className="text-sm text-gray">
-                                    Stock: {item.variant.stock}
+                                <p className="text-sm font-bold mb-2">{item.product_name}</p>
+                                <Chip>{item.variant.variant_name}</Chip>
+                                <p className="text-sm text-gray mt-2">
+                                    Available Stock: {item.variant.stock}
                                 </p>
                                 <p className="text-sm text-gray">
                                     {formatToPeso(item.variant.price)}
@@ -131,9 +152,14 @@ export default function TransferCart({
                                         <Minus size={16} />
                                     </button>
 
-                                    <span className="w-6 text-sm text-center font-semibold">
-                                        {item.quantity}
-                                    </span>
+                                    <input 
+                                        className={cn(
+                                            "w-15 text-center border border-[var(--border-panel)] rounded-md outline-none",
+                                            !item.quantity && "border-red-500 border-2" 
+                                        )}
+                                        value={item.quantity ? item.quantity : ""}
+                                        onChange={(e) => handleQuantity(Number(e.target.value), item)}
+                                    />
 
                                     <button
                                         onClick={() => addQty(item.variant._id)}
@@ -153,7 +179,6 @@ export default function TransferCart({
                     ))
                 )}
                 </div>
-
                 {/* Footer */}
                 <div className="flex justify-end gap-2 mt-4">
                     <Button
@@ -165,7 +190,7 @@ export default function TransferCart({
                     <GoldButton
                         className="text-xs xl:text-sm md:px-4 lg:py-3"
                         onClick={transfer}
-                        disabled={!distributorId || variants.length === 0 || createDistributorStocks.isPending}
+                        disabled={variants.length === 0 || createDistributorStocks.isPending || !isValidItems}
                     >Transfer</GoldButton>
                 </div>
             </Card>

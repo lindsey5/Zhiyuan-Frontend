@@ -1,10 +1,10 @@
-import { Plus } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import Button from "../ui/Button";
-import { SearchField } from "../ui/TextField";
 import CategoryModal from "./CategoryModal";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import type { Category } from "../../types/category.type";
+import TextField from "../ui/TextField";
 
 interface CategoriesControlsProps {
     setSearch: React.Dispatch<React.SetStateAction<string>>
@@ -12,7 +12,6 @@ interface CategoriesControlsProps {
     setCategory: React.Dispatch<React.SetStateAction<Category | undefined>>
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-    permissions: string[]
 }
 
 export default function CategoriesControls ({ 
@@ -21,7 +20,6 @@ export default function CategoriesControls ({
     setCategory,
     setShowModal, 
     showModal,
-    permissions
 } : CategoriesControlsProps) {
     const { hasPermissions } = usePermissions();
     const onClose = () =>{
@@ -36,13 +34,13 @@ export default function CategoriesControls ({
                 open={showModal}
                 category={category}
             />
-            <div className="w-full lg:max-w-100">
-                <SearchField 
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search category..."
-                />
-            </div>
-            {hasPermissions([PERMISSIONS.CATEGORY_CREATE], permissions) && (
+            <TextField 
+                className="md:max-w-100"
+                icon={<Search size={20}/>}
+                placeholder="Search category..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
+            {hasPermissions([PERMISSIONS.CATEGORY_CREATE]) && (
                 <Button 
                     className="text-xs lg:text-sm"
                     icon={<Plus size={18}/>}

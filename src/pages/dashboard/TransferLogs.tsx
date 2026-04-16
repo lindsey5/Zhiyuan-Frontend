@@ -12,11 +12,60 @@ import StockTransferItems from "../../components/stockTransferLog/StockTransferI
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
 
+interface StockTransferLogColsParams{
+    openModal: (transferLog : StockTransferLog) => void;
+}
+
+const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<StockTransferLog>[] => [
+    {
+        header: "Received By",
+        cell: ({ row }) => (
+            <div>
+                <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
+                <p className="text-gray">{row.original.receiver.email}</p>
+            </div>
+        ),
+        meta: { align: 'left' },
+    },
+    {
+        header: "Transferred By",
+        cell: ({ row }) => (
+            <div>
+                <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
+                <p className="text-gray">{row.original.sender.email}</p>
+            </div>
+        ),
+        meta: { align: 'left' },
+    },
+    {
+        header: "Description",
+        accessorKey: "description",
+        cell: ({ row }) => `${row.original.receiver.distributor_name} receives ${row.original.items.reduce((acc, item) => acc + item.quantity, 0)} stocks`,
+        meta: { align: 'left' },
+    },
+    {
+        header: "Date",
+        accessorKey: "createdAt",
+        cell: info => formatDate(info.getValue() as string),
+        meta: { align: 'left' },
+    },
+    {
+        header: 'Action',
+        cell: ({ row }) => (
+            <IconButton
+                onClick={() => openModal(row.original)}
+                icon={<Eye className="text-gold"/>}
+            />
+        ),
+        meta: { align: 'center' }
+    }
+];
+
 export default function TransferLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
+    const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -44,56 +93,13 @@ export default function TransferLogs () {
         setStockTransferLog(transferLog)
     }
 
-    const columns: ColumnDef<StockTransferLog>[] = [
-        {
-            header: "Receiver",
-            cell: ({ row }) => (
-                <div>
-                    <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
-                    <p>{row.original.receiver.email}</p>
-                </div>
-            ),
-            meta: { align: 'left' },
-        },
-        {
-            header: "Sender",
-            cell: ({ row }) => (
-                <div>
-                    <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
-                    <p>{row.original.sender.email}</p>
-                </div>
-            ),
-            meta: { align: 'left' },
-        },
-        {
-            header: "Description",
-            accessorKey: "description",
-            cell: ({ row }) => `${row.original.receiver.distributor_name} receives ${row.original.items.reduce((acc, item) => acc + item.quantity, 0)} stocks`,
-            meta: { align: 'left' },
-        },
-        {
-            header: "Date",
-            accessorKey: "createdAt",
-            cell: info => formatDate(info.getValue() as string),
-            meta: { align: 'left' },
-        },
-        {
-            header: 'Action',
-            cell: ({ row }) => (
-                <IconButton
-                    onClick={() => openModal(row.original)}
-                    icon={<Eye className="text-gold"/>}
-                />
-            ),
-            meta: { align: 'center' }
-        }
-    ];
-
+    const columns = getColumns({ openModal });
 
     return (
         <PageContainer
-            title="Transfer Logs"
-            description="View the history of stock transfers form admin to distributors"
+            title="Transfer History"
+            description="View the history of transferred stocks"
+            className="md:max-h-screen"
         >
             <StockTransferItems 
                 open={showModal}
@@ -102,9 +108,12 @@ export default function TransferLogs () {
             />
             <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
                 <StockTransferLogsControls 
+                    startDate={startDate}
+                    endDate={endDate}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
+                    setPagination={setPagination}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

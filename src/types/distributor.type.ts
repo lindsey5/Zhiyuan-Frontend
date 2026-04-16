@@ -3,8 +3,9 @@ import type { ApiResponse } from "./type";
 
 export interface Distributor {
     _id: string;
+    distributor_id: string;
     parent_distributor_id?: string;
-    parent_distributor: Distributor;
+    parent_distributor?: Distributor;
     distributor_name: string;
     commission_rate: number;
     wallet_balance: number;
@@ -17,6 +18,7 @@ export interface Distributor {
 export interface CreateDistributorDTO {
     distributor_name: string;
     email: string;
+    distributor_id?: string;
 }
 
 export interface CreateDistributorResponse extends ApiResponse {
@@ -35,6 +37,7 @@ export interface GetDistributorsParams extends PaginationParams {
     search?: string;
     sortBy?: string;
     order?: "asc" | "desc"
+    id?: string;
 }
 
 export interface GetDistributorsResponse extends PaginationResponse {

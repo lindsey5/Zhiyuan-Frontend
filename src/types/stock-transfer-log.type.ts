@@ -1,7 +1,7 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { User } from "./user.type";
-import type { Variant } from "./variant.type";
+import type { VariantWithProduct } from "./variant.type";
 
 export interface StockTransferLog {
     _id: string;
@@ -18,7 +18,7 @@ export interface StockTransferItem {
     transfer_id: string;
     quantity: number;
     variant_id: string;
-    variant: Variant;
+    variant: VariantWithProduct;
 }
 
 export interface GetStockTransferLogsResponse extends PaginationResponse {

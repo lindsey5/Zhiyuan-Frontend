@@ -15,7 +15,7 @@ export default function CategoryDropdown ({ className, category, setCategory } :
     return (
         <Dropdown 
             className={className}
-            title="Category"
+            label="Category"
             value={category}
             onChange={setCategory}
             options={

@@ -3,7 +3,6 @@ import Card from "../ui/Card";
 import { useDistributor } from "../../hooks/useDistributor";
 import { formatToPeso } from "../../utils/utils";
 
-
 export default function DistributorInfo ({ id, showBalance = true } : { id : string, showBalance?: boolean }) {
     const { getDistributorById } = useDistributor();
     const { data : distributorData, isFetching } = getDistributorById(id || "");

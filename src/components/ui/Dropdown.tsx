@@ -9,7 +9,7 @@ type Option = {
 }
 
 type DropdownProps = {
-    title?: string
+    label?: string
     options: Option[]
     value: string
     onChange: (value: string) => void
@@ -18,7 +18,7 @@ type DropdownProps = {
 }
 
 export default function Dropdown({
-    title,
+    label,
     options,
     value,
     onChange,
@@ -34,10 +34,10 @@ export default function Dropdown({
             "flex flex-col space-y-1",
             className
         )}>
-            {/* Title */}
-            {title && (
+            {/* Label */}
+            {label && (
                 <span className="text-xs xl:text-sm text-muted px-1">
-                    {title}
+                    {label}
                 </span>
             )}
 
@@ -47,7 +47,7 @@ export default function Dropdown({
                     type="button"
                     onClick={() => setOpen(prev => !prev)}
                     className={cn(
-                        "w-full h-full flex items-center justify-between px-4 py-2 bg-panel border border-[var(--border-ui)] rounded-sm text-xs xl:text-sm text-primary",
+                        "w-full h-full flex items-center justify-between px-4 py-2 bg-input-ui border border-[var(--border-ui)] rounded-sm text-xs xl:text-sm text-primary",
                         error && "border-red-500"
                     )}
                 >
@@ -57,7 +57,7 @@ export default function Dropdown({
 
                 {/* Dropdown */}
                 {open && (
-                    <div className="overflow-y-auto absolute mt-2 w-full bg-panel border border-[var(--border-ui)] rounded-sm z-10">
+                    <div className="overflow-y-auto absolute mt-2 w-full bg-input-ui border border-[var(--border-ui)] rounded-sm z-10">
                         {options.map(option => (
                             <div
                                 key={option.value}
@@ -97,7 +97,7 @@ export function RoleDropdown ({value, onChange,}: RoleDropdownProps) {
 
     return (
         <Dropdown 
-            title="Role"
+            label="Role"
             options={options}
             value={value}
             onChange={onChange}

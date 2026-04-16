@@ -39,12 +39,8 @@ function CategorizedPermissions () {
 export default function Role ({ title, description } : { title : string, description : string}) {
      const params = useParams();
     const id = params.id;
-
-    const { getOwnRole } = useRole();
-    const { data : role } = getOwnRole();
-    const permissions = role?.permissions || [];
-    const { hasPermissions } = usePermissions();
-    const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE], permissions);
+    const { hasPermissions, hasAnyPermissions } = usePermissions();
+    const hasDeletePermission = hasPermissions([PERMISSIONS.ROLE_DELETE])
     
     const { createRole,  getRoleById, updateRole, deleteRole } =  useRole();
     const { data, isSuccess, isFetching } = getRoleById(id || "");
@@ -140,9 +136,11 @@ export default function Role ({ title, description } : { title : string, descrip
                             onClick={handleDelete}
                         />
                     )}
-                    <GoldButton type="submit">
-                        {id ? 'Update Role' : 'Create Role'}
-                    </GoldButton>
+                    {hasAnyPermissions([PERMISSIONS.ROLE_UPDATE, PERMISSIONS.ROLE_CREATE]) && (
+                        <GoldButton type="submit">
+                            {id ? 'Update Role' : 'Create Role'}
+                        </GoldButton>
+                    )}
                 </div>
             </form>}
         </PageContainer>

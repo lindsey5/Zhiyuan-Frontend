@@ -9,6 +9,9 @@ export const distributorSchema = z.object({
         .string()
         .email('Invalid email address')
         .max(100, "Email must not exceed 100 characters"),
+    parent_distributor_id: z
+        .string()
+        .optional()
 });
 
 export type DistributorFormData = z.infer<typeof distributorSchema>;

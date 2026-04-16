@@ -71,3 +71,9 @@ export interface GetUsersParams extends PaginationParams {
 export interface GetUsersResponse extends PaginationResponse {
   users: GetUser[]
 }
+
+export interface ChangePasswordPayload { 
+  currentPassword: string; 
+  newPassword: string;
+  confirmPassword: string;
+}

@@ -10,9 +10,10 @@ import {
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
-import Card from "../ui/Card";
+import Card from "./Card";
 import { useThemeStore } from "../../lib/store/themeStore";
 import { useEffect, useState } from "react";
+import { formatToPeso as format } from "../../utils/utils";
 
 ChartJS.register(
   LineElement,
@@ -28,9 +29,10 @@ interface ChartProps {
   title: string;
   labels: string[];
   values: number[];
+  formatToPeso: boolean;
 }
 
-export default function DashboardChart({ title, labels, values }: ChartProps) {
+export default function Chart({ title, labels, values, formatToPeso }: ChartProps) {
   const { isDark } = useThemeStore();
   const [gold, setGold] = useState("");
 
@@ -106,7 +108,7 @@ export default function DashboardChart({ title, labels, values }: ChartProps) {
         displayColors: false,
         callbacks: {
           label: function (context: any) {
-            return `Value: ${context.raw}`;
+            return `Value: ${formatToPeso ? format(Number(context.raw)) : context.raw}`;
           },
         },
       },
@@ -125,6 +127,10 @@ export default function DashboardChart({ title, labels, values }: ChartProps) {
       y: {
         ticks: {
           color: gold,
+          callback: function (value: any) {
+            // Hide ticks if screen width <= 425px
+            return window.innerWidth <= 425 ? "" : value;
+          },
         },
         grid: {
           color: gridColor,
@@ -134,12 +140,12 @@ export default function DashboardChart({ title, labels, values }: ChartProps) {
   };
 
   return (
-    <Card className="w-full h-[280px] sm:h-[350px] md:h-[450px]">
+    <Card className="w-full h-[300px] md:h-[500px]">
       <h2 className="font-sans text-gold text-base sm:text-lg font-bold mb-4 sm:mb-8">
         {title}
       </h2>
 
-      <div className="h-[80%] w-full">
+      <div className="h-[85%] w-full">
         <Line
           key={isDark ? "dark" : "light"} // force re-render on theme change
           data={data}
@@ -148,4 +154,13 @@ export default function DashboardChart({ title, labels, values }: ChartProps) {
       </div>
     </Card>
   );
+}
+
+export const ChartSkeleton =  () => {
+  return (
+    <Card className="flex flex-col gap-5 w-full h-[300px] md:h-[500px] animate-pulse">
+      <div className="w-[40%] h-10 bg-loading rounded-md"></div>
+      <div className="w-full flex-1 bg-loading rounded-md"></div>
+    </Card>
+  )
 }
