@@ -1,7 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { apiAxios } from "../lib/api/apiAxios"; 
 import type { Order } from "../pages/dashboard/Orders";
+import type { PaginationResponse } from "../types/pagination.type";
 
 export interface OrderQueryParams {
   search?: string;
@@ -11,21 +11,20 @@ export interface OrderQueryParams {
   delivery_type?: "pickup" | "delivery";
 }
 
-type OrdersResponse = {
-  data: Order[];
-};
+
+interface OrdersResponse extends PaginationResponse{
+  orders: Order[]
+}
+
 
 export const useOrders = (params: OrderQueryParams) => {
-  return useQuery<Order[]>({
+  return useQuery<OrdersResponse, Error>({
     queryKey: ["orders", params],
-    queryFn: async () => {
-      const res = await apiAxios<OrdersResponse>("/orders", {
+    queryFn: async () => apiAxios<OrdersResponse>("/orders", {
         method: "GET",
         params,
-      });
-
-      return res.data; 
-    },
-    keepPreviousData: true,
-  } as UseQueryOptions<Order[], Error>);
+    }),
+    placeholderData: (prev) => prev,
+    refetchOnWindowFocus: false,
+  });
 };
