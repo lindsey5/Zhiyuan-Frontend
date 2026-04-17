@@ -22,10 +22,6 @@ export const PERMISSIONS = {
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
 
-    // Sponsored Items
-    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
-    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
-
     // Order management
     ORDER_READ_ALL: 'order:read:all',
     ORDER_UPDATE: 'order:update',
@@ -56,6 +52,10 @@ export const PERMISSIONS = {
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
     DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
+
+    // Sponsored Items
+    SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
+    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 }
 
 type PermissionGroup = {
@@ -98,12 +98,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         PRODUCT_DELETE: "Delete products including variants",
     },
 
-    "Sponsored Product Management": {
-        description: "Manage sponsored products including creation and viewing",
-        SPONSORED_PRODUCT_CREATE: 'Add new sponsored product records',
-        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
-    },
-
     "Order Management": {
         description: "Manage customer orders including viewing and updating order status.",
         ORDER_READ_ALL: "View all orders",
@@ -143,6 +137,12 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
         DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
         DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
+    },
+
+    "Sponsored Product Management": {
+        description: "Manage sponsored products including updating and viewing",
+        SPONSORED_PRODUCT_UPDATE: 'Update sponsored products status (accepted or rejected)',
+        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
 };
 

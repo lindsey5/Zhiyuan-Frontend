@@ -151,7 +151,6 @@ export default function Products () {
 
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Products"
             description="View and manage all products"
         >
@@ -162,7 +161,7 @@ export default function Products () {
                     onClick={downloadVariants}
                 />
             </div>
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <ProductsTableControls 
                     setSearch={setSearch}
                     setSorting={setSorting}

@@ -139,11 +139,10 @@ export default function Distributors () {
 
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Distributor Management"
             description="View and manage distributors"
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen pt-5">
                 <DistributorControls 
                     setSearch={setSearch}
                     sort={sortBy}

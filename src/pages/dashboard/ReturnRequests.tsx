@@ -94,7 +94,6 @@ export default function ReturnRequests () {
 
     return (
         <PageContainer
-            className="md:max-h-screen" 
             title="Return Requests"
             description="Manage and review all product return requests submitted by distributors."
         >
@@ -103,7 +102,7 @@ export default function ReturnRequests () {
                 open={returnRequest !== null}
                 returnRequest={returnRequest}
             />
-            <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
+            <Card className="p-0 flex flex-col max-h-screen pt-10">
                 <ReturnRequestControls 
                     startDate={startDate}
                     setStartDate={setStartDate}

@@ -101,7 +101,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
 
     return (
         <>
-        <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+        <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
             <div className="flex items-center justify-between px-5">
                 <h1 className="font-bold text-lg">Distributor Sales</h1>
                 <Button 

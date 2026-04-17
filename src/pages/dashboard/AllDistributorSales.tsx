@@ -108,7 +108,6 @@ export default function AllDistributorSales () {
     console.log(data)
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Distributor Sales"
             description="View distributor sales including sold items and quantities."
         >
@@ -119,7 +118,7 @@ export default function AllDistributorSales () {
                     onClick={downloadDistributorSales}
                 />
             </div>
-            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+            <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <DistributorSalesControls
                     sorting={sorting}
                     setSorting={setSorting}

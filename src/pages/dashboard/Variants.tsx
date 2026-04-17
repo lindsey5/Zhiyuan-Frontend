@@ -166,7 +166,6 @@ export default function Variants () {
 
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Variants"
             description="View and manage all product variants"
         >
@@ -183,7 +182,7 @@ export default function Variants () {
                 variant={variant}
             />
 
-            <Card className="p-0 flex flex-col min-h-0 flex-grow space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <VariantsTableControls
                     setSearch={setSearch}
                     setSorting={setSorting}

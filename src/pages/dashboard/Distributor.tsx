@@ -23,7 +23,6 @@ export default function Distributor () {
     return (
         <div className={cn(
             "flex flex-col gap-3 p-2 lg:p-6",
-            selected !== 'Stats' && 'md:max-h-screen'
         )}>
             <DistributorInfo id={id || ""} />
                 <Tabs

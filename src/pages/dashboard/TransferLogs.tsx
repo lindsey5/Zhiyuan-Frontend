@@ -99,14 +99,13 @@ export default function TransferLogs () {
         <PageContainer
             title="Transfer History"
             description="View the history of transferred stocks"
-            className="md:max-h-screen"
         >
             <StockTransferItems 
                 open={showModal}
                 close={closeModal}
                 stockTransferLog={(stockTransferLog)}
             />
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-10">
                 <StockTransferLogsControls 
                     startDate={startDate}
                     endDate={endDate}

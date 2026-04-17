@@ -31,6 +31,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/authStore";
 import IconButton from "./IconButton";
 import ToggleButton from "./ToggleButton";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 function SidebarSection({
     title,
@@ -60,6 +62,7 @@ export default function Sidebar({
     const { logout, user } = useAuthStore();
     const location = useLocation();
     const pathname = location.pathname;
+    const { hasAnyPermissions, hasPermissions }  = usePermissions();
 
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -94,8 +97,8 @@ export default function Sidebar({
             )}
 
             <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md cursor-pointer"
+                onClick={() => setCollapsed(!collapsed)}
+                className="text-gold hover:bg-[rgba(166,124,82,0.1)] p-2 rounded-md cursor-pointer"
             >
             {!collapsed ? <ChevronLeft /> : <ChevronRight />}
             </button>
@@ -108,194 +111,271 @@ export default function Sidebar({
             collapsed && "items-center"
             )}
         >
-            {/* Walk-in Orders*/}
+
             <SidebarSection title="Main" collapsed={collapsed} />
             <SidebarItem
-            icon={<LayoutDashboard size={24} />}
-            label="Dashboard"
-            collapsed={collapsed}
-            onClick={() => navigate("/dashboard")}
-            isActive={pathname === "/dashboard"}
-            />
-
-            {/* Walk-in Orders*/}
-            <SidebarSection title="Walk-in Orders" collapsed={collapsed} />
-
-            <SidebarItem
-            icon={<ClipboardList size={24} />}
-            label="Orders"
-            collapsed={collapsed}
-            onClick={() => navigate("/dashboard/orders")}
-            isActive={pathname === "/dashboard/orders"}
-            />
-
-            <SidebarItem
-            icon={<BarChartBig size={24} />}
-            label="Sales"
-            collapsed={collapsed}
-            onClick={() => navigate("/dashboard/orders/sales")}
-            isActive={pathname === "/dashboard/orders/sales"}
+                icon={<LayoutDashboard size={24} />}
+                label="Dashboard"
+                collapsed={collapsed}
+                onClick={() => navigate("/dashboard")}
+                isActive={pathname === "/dashboard"}
             />
 
             {/* PRODUCT */}
-            <SidebarSection title="Product" collapsed={collapsed} />
+            {hasAnyPermissions([
+                PERMISSIONS.PRODUCT_CREATE, 
+                PERMISSIONS.PRODUCT_DELETE, 
+                PERMISSIONS.PRODUCT_UPDATE, 
+                PERMISSIONS.PRODUCT_READ_ALL, 
+                PERMISSIONS.CATEGORY_CREATE, 
+                PERMISSIONS.CATEGORY_DELETE, 
+                PERMISSIONS.CATEGORY_READ_ALL, 
+                PERMISSIONS.CATEGORY_UPDATE
+            ]) && (
+                <>
+                <SidebarSection title="Product" collapsed={collapsed} />
 
-            <SidebarDropdown
-            title="Product Management"
-            icon={<Package size={24} />}
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navigate={navigate}
-            open={openDropdown === "Product Management"}
-            setOpen={() =>
-                setOpenDropdown((prev) =>
-                prev === "Product Management" ? null : "Product Management"
-                )
-            }
-            items={[
-                {
-                label: "View Products",
-                icon: <Eye size={20} />,
-                path: "/dashboard/products",
-                },
-                {
-                label: "Add Product",
-                icon: <Plus size={20} />,
-                path: "/dashboard/add-product",
-                },
-                {
-                label: "Variants",
-                icon: <Layers size={20} />,
-                path: "/dashboard/variants",
-                },
-                {
-                label: "Categories",
-                icon: <Tags size={20} />,
-                path: "/dashboard/categories",
-                },
-            ]}
-            />
+                <SidebarDropdown
+                    title="Product Management"
+                    icon={<Package size={24} />}
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    navigate={navigate}
+                    open={openDropdown === "Product Management"}
+                    setOpen={() =>
+                        setOpenDropdown((prev) =>
+                        prev === "Product Management" ? null : "Product Management"
+                        )
+                    }
+                    items={[
+                        ...(hasAnyPermissions([PERMISSIONS.PRODUCT_DELETE, PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_READ_ALL]) ? [
+                            {
+                                label: "View Products",
+                                icon: <Eye size={20} />,
+                                path: "/dashboard/products",
+                            }
+                        ]: []),
+                        ...(hasPermissions([PERMISSIONS.PRODUCT_CREATE]) ? [
+                            {
+                                label: "Add Product",
+                                icon: <Plus size={20} />,
+                                path: "/dashboard/add-product",
+                            }
+                        ] : []),
+                        ...(hasAnyPermissions([PERMISSIONS.PRODUCT_DELETE, PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_READ_ALL]) ? [
+                            {
+                                label: "Variants",
+                                icon: <Layers size={20} />,
+                                path: "/dashboard/variants",
+                            },
+                        ]: []),
+                        ...(hasAnyPermissions([PERMISSIONS.CATEGORY_CREATE, PERMISSIONS.CATEGORY_DELETE, PERMISSIONS.CATEGORY_READ_ALL, PERMISSIONS.CATEGORY_UPDATE]) ? [
+                            {
+                                label: "Categories",
+                                icon: <Tags size={20} />,
+                                path: "/dashboard/categories",
+                            },
+                        ]: []),
+                    ]}
+                />
+                </>
+            )}
 
-            {/* DISTRIBUTOR */}
-            <SidebarSection title="Distributor" collapsed={collapsed} />
+            {hasAnyPermissions([
+                PERMISSIONS.DISTRIBUTOR_CREATE,
+                PERMISSIONS.DISTRIBUTOR_READ_ALL,
+                PERMISSIONS.DISTRIBUTOR_DELETE,
+                PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER,
+                PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
+                PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
+                PERMISSIONS.TRANSFER_LOGS_VIEW_ALL,
+                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
+                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
+                PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL,
+                PERMISSIONS.SPONSORED_PRODUCT_UPDATE
+            ]) && (
+                <>
+                {/* DISTRIBUTOR */}
+                <SidebarSection title="Distributor" collapsed={collapsed} />
 
-            <SidebarDropdown
-            title="Distributor Management"
-            icon={<Network size={24} />}
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navigate={navigate}
-            open={openDropdown === "Distributor Management"}
-            setOpen={() =>
-                setOpenDropdown((prev) =>
-                prev === "Distributor Management"
-                    ? null
-                    : "Distributor Management"
-                )
-            }
-            items={[
-                {
-                label: "View Distributors",
-                icon: <Eye size={20} />,
-                path: "/dashboard/distributors",
-                },
-                {
-                label: "Transfer Stocks",
-                icon: <CornerUpRight size={20} />,
-                path: "/dashboard/distributors/transfer-stocks",
-                },
-                {
-                label: "Distributor Sales",
-                icon: <BarChartBig size={20} />,
-                path: "/dashboard/distributors/sales",
-                },
-                {
-                label: "Reports",
-                icon: <FileBarChart size={20} />,
-                path: "/dashboard/distributors/reports",
-                },
-                {
-                label: "Transfer History",
-                icon: <Repeat size={20} />,
-                path: "/dashboard/distributors/transfer-logs",
-                },
-                {
-                label: "Return Requests",
-                icon: <Undo2 size={20} />,
-                path: "/dashboard/distributors/return-requests",
-                },
-            ]}
-            />
+                <SidebarDropdown
+                    title="Distributor Management"
+                    icon={<Network size={24} />}
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    navigate={navigate}
+                    open={openDropdown === "Distributor Management"}
+                    setOpen={() =>
+                        setOpenDropdown((prev) =>
+                        prev === "Distributor Management"
+                            ? null
+                            : "Distributor Management"
+                        )
+                    }
+                    items={[
+                        ...(hasAnyPermissions([
+                            PERMISSIONS.DISTRIBUTOR_CREATE,
+                            PERMISSIONS.DISTRIBUTOR_READ_ALL,
+                            PERMISSIONS.DISTRIBUTOR_DELETE,
+                            PERMISSIONS.DISTRIBUTOR_SALES_VIEW,
+                            PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                            PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
+                        ]) ? [
+                            {
+                                label: "View Distributors",
+                                icon: <Eye size={20} />,
+                                path: "/dashboard/distributors",
+                            },
+                        ] : []),
 
-                    <SidebarDropdown
-            title="Sponsored Products"
-            icon={<Star size={24} />}
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navigate={navigate}
-            open={openDropdown === "Sponsored Products"}
-            setOpen={() =>
-                setOpenDropdown((prev) =>
-                prev === "Sponsored Products" ? null : "Sponsored Products"
-                )
-            }
-            items={[
-                {
-                label: "View Sponsored Products",
-                icon: <Eye size={20} />,
-                path: "/dashboard/sponsored-products",
-                },
-                {
-                label: "Add Sponsored Products",
-                icon: <Plus size={20} />,
-                path: "/dashboard/sponsored-products/create",
-                },
-            ]}
-            />
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) ? [
+                            {
+                            label: "Transfer Stocks",
+                            icon: <CornerUpRight size={20} />,
+                            path: "/dashboard/distributors/transfer-stocks",
+                        }] : []),
 
-            <SidebarSection title="Roles & Users" collapsed={collapsed} />
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW]) ? [                        
+                        {
+                            label: "Distributor Sales",
+                            icon: <BarChartBig size={20} />,
+                            path: "/dashboard/distributors/sales",
+                        }] : []),
 
-            <SidebarItem
-            icon={<Shield size={24} />}
-            label="Role Management"
-            collapsed={collapsed}
-            onClick={() => navigate("/dashboard/roles")}
-            isActive={pathname === "/dashboard/roles"}
-            />
+                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]) ? [                        
+                        {
+                            label: "Reports",
+                            icon: <FileBarChart size={20} />,
+                            path: "/dashboard/distributors/reports",
+                        },] : []),
 
-            <SidebarItem
-            label="User Management"
-            icon={<User size={24} />}
-            collapsed={collapsed}
-            onClick={() => navigate("/dashboard/users")}
-            isActive={pathname === "/dashboard/users"}
-            />
+                        ...(hasPermissions([PERMISSIONS.TRANSFER_LOGS_VIEW_ALL]) ? [                        
+                        {
+                            label: "Transfer History",
+                            icon: <Repeat size={20} />,
+                            path: "/dashboard/distributors/transfer-logs",
+                        }] : []),
+                        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) ? [
+                            {
+                                label: "Return Requests",
+                                icon: <Undo2 size={20} />,
+                                path: "/dashboard/distributors/return-requests",
+                            }
+                        ] : []),
+                    ]}
+                />
+                {hasAnyPermissions([PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) && (
+                    <SidebarItem
+                        icon={<Star size={24} />}
+                        label="Sponsored Products"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/sponsored-products")}
+                        isActive={pathname === "/dashboard/sponsored-products"}
+                    />
+                )}
+                </>
+            )}
+
+            {hasAnyPermissions([
+                PERMISSIONS.ROLE_CREATE, 
+                PERMISSIONS.ROLE_READ_ALL, 
+                PERMISSIONS.ROLE_UPDATE, 
+                PERMISSIONS.ROLE_DELETE,
+                PERMISSIONS.USER_CREATE, 
+                PERMISSIONS.USER_DELETE, 
+                PERMISSIONS.USER_UPDATE, 
+                PERMISSIONS.USER_READ_ALL
+            ]) && (
+                <>
+                <SidebarSection title="Roles & Users" collapsed={collapsed} />
+
+                {hasPermissions([
+                    PERMISSIONS.ROLE_CREATE, 
+                    PERMISSIONS.ROLE_READ_ALL, 
+                    PERMISSIONS.ROLE_UPDATE, 
+                    PERMISSIONS.ROLE_DELETE,
+                ]) && (
+                    <SidebarItem
+                        icon={<Shield size={24} />}
+                        label="Role Management"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/roles")}
+                        isActive={pathname === "/dashboard/roles"}
+                    />
+                )}
+
+                {hasAnyPermissions([
+                    PERMISSIONS.USER_CREATE, 
+                    PERMISSIONS.USER_DELETE, 
+                    PERMISSIONS.USER_UPDATE, 
+                    PERMISSIONS.USER_READ_ALL
+                ]) && (
+                    <SidebarItem
+                        label="User Management"
+                        icon={<User size={24} />}
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/users")}
+                        isActive={pathname === "/dashboard/users"}
+                    />
+                )}
+                </>
+            )}
+
+            {hasAnyPermissions([
+                PERMISSIONS.ORDER_READ_ALL, 
+                PERMISSIONS.ORDER_UPDATE
+            ]) && (
+                <>
+                {/* Walk-in Orders*/}
+                <SidebarSection title="Walk-in Orders" collapsed={collapsed} />
+
+                {hasAnyPermissions([PERMISSIONS.ORDER_READ_ALL, PERMISSIONS.ORDER_UPDATE]) && (
+                    <SidebarItem
+                        icon={<ClipboardList size={24} />}
+                        label="Orders"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/orders")}
+                        isActive={pathname === "/dashboard/orders"}
+                    />
+                )}
+
+                <SidebarItem
+                    icon={<BarChartBig size={24} />}
+                    label="Sales"
+                    collapsed={collapsed}
+                    onClick={() => navigate("/dashboard/orders/sales")}
+                    isActive={pathname === "/dashboard/orders/sales"}
+                />
+                </>
+            )}
 
             {/* SETTINGS */}
             <SidebarSection title="Settings" collapsed={collapsed} />
 
             <SidebarDropdown
-            title="Settings"
-            icon={<Settings size={24} />}
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navigate={navigate}
-            open={openDropdown === "Settings"}
-            setOpen={() =>
-                setOpenDropdown((prev) => (prev === "Settings" ? null : "Settings"))
-            }
-            items={[
-                {
-                label: "Account Settings",
-                icon: <UserCog size={20} />,
-                path: "/dashboard/account",
-                },
-                {
-                label: "Audit Logs",
-                icon: <FileText size={20} />,
-                path: "/dashboard/audit-logs",
-                },
-            ]}
+                title="Settings"
+                icon={<Settings size={24} />}
+                collapsed={collapsed}
+                setCollapsed={setCollapsed}
+                navigate={navigate}
+                open={openDropdown === "Settings"}
+                setOpen={() =>
+                    setOpenDropdown((prev) => (prev === "Settings" ? null : "Settings"))
+                }
+                items={[
+                    {
+                        label: "Account Settings",
+                        icon: <UserCog size={20} />,
+                        path: "/dashboard/account",
+                    },
+                    ...(hasPermissions([PERMISSIONS.AUDIT_VIEW_ALL]) ? [{
+                        label: "Audit Logs",
+                        icon: <FileText size={20} />,
+                        path: "/dashboard/audit-logs",
+                    }] : [] )
+                ]}
             />
         </nav>
 

@@ -74,10 +74,9 @@ export default function SponsoredItems () {
     return (
         <PageContainer
             title="Sponsored Products"
-            className="md:max-h-screen" 
             description="View sponsored products"
         >
-            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+            <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
                     setSearch={setSearch}
                     setSorting={setSorting}

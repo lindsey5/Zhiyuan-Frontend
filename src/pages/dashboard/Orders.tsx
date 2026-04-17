@@ -105,11 +105,10 @@ export default function Orders () {
 
     return (
         <PageContainer
-            className="md:max-h-screen" 
             title="Orders"
             description="View and manage customer orders, track order status, and review transaction details."
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <OrderControls 
                     startDate={startDate}
                     endDate={endDate}
