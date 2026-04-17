@@ -8,6 +8,7 @@ const useNotifications  = () => {
         namespace: "/notification",
         events: {}
     })
+    const orderSocket = useSocket({ namespace: '/orders' })
     const [notifications, setNotifications] = useState<UserNotification[]>([]);
     const [unread, setUnread] = useState(0);
     const { getUserNotifications, readNotification } = useUserNotification();
@@ -24,6 +25,15 @@ const useNotifications  = () => {
 
         if(socket){
             socket.on("receive-notification", (data) => {
+                console.log(data)
+                setNotifications(prev => [data.userNotification, ...prev]);
+                setUnread(prev => prev + 1);
+            })
+        }
+
+        if(orderSocket){
+            orderSocket.on("receive-notification", (data) => {
+                console.log(data)
                 setNotifications(prev => [data.userNotification, ...prev]);
                 setUnread(prev => prev + 1);
             })
@@ -31,8 +41,9 @@ const useNotifications  = () => {
 
         return () => {
             if(socket) socket.off('receive-notification');
+            if(orderSocket) orderSocket.off('receive-notification');
         }
-    }, [socket, data])
+    }, [socket, orderSocket, data])
 
     const handleReadNotification = async (id: string) => {
         const response = await readNotification.mutateAsync({ id });

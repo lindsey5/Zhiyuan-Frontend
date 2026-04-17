@@ -31,6 +31,7 @@ const getColumns = () : ColumnDef<Order>[] => [
     {
         header: 'Payment Method',
         accessorKey: 'payment_method',
+        cell: info => info.getValue() || 'N/A',
         meta: { align: 'center' },
     },
     {
