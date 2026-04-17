@@ -8,10 +8,10 @@ import Card from "../../components/ui/Card";
 import CustomizedTable from "../../components/ui/Table";
 import { formatToPeso } from "../../utils/utils";
 import Chip from "../../components/ui/Chip";
-import OrderStatusChip from "../../components/order/OrderStatusChip";
+import OrderStatusChip from "../../components/orders/OrderStatusChip";
 import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
-import OrderControls from "../../components/order/OrderControls";
+import OrderControls from "../../components/orders/OrderControls";
 
 const getColumns = () : ColumnDef<Order>[] => [
     {
