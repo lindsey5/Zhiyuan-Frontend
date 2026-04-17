@@ -213,7 +213,7 @@ export default function Sidebar({
                             path: "/dashboard/distributors/transfer-stocks",
                         },
                         {
-                            label: "Distributors Sale",
+                            label: "Distributor Sales",
                             icon: <BarChartBig size={20} />,
                             path: "/dashboard/distributors/sales",
                         },

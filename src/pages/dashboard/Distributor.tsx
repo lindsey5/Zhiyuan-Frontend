@@ -3,7 +3,7 @@ import DistributorInfo from "../../components/distributors/DistributorInfo";
 import DistributorInventory from "../../components/distributor/DistributorInventory";
 import { useState } from "react";
 import Tabs from "../../components/ui/Tabs";
-import { BarChartBig, FileBarChart, Package } from "lucide-react";
+import { BarChartBig, FileBarChart, HandCoins, Package } from "lucide-react";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorSales from "../../components/distributor/DistributorSales";
@@ -54,6 +54,12 @@ export default function Distributor () {
                             onClick: () => setSelected("Stats"),
                             }]
                         : []),
+
+                        {
+                        label: "Commissions",
+                        icon: <HandCoins size={20} />,
+                        onClick: () => setSelected("Commissions"),
+                        }
                     ]}
                     defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
                 />

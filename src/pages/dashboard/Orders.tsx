@@ -105,6 +105,7 @@ export default function Orders () {
 
     return (
         <PageContainer
+            className="md:max-h-screen" 
             title="Orders"
             description="View and manage customer orders, track order status, and review transaction details."
         >
