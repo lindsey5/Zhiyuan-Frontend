@@ -85,6 +85,10 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
 
     const columns = getColumns(setSelectedProduct);
 
+    const onRowClick = (row : Product) => {
+        setSelectedProduct(row)
+    }
+
     return (
         <Card className="p-0 flex flex-col">
             <h1 className="p-5 text-md xl:text-lg font-bold">Select Items to Transfer</h1>
@@ -107,6 +111,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
                 noDataMessage="No Variants Found"
                 total={data?.total || 0}
                 className="max-h-[70vh]"
+                onRowClick={onRowClick}
             />
             <ItemSelectorModal 
                 addVariant={addVariant}
