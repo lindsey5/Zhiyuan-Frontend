@@ -164,6 +164,10 @@ export default function Variants () {
         })
     }
 
+    const onRowClick = (row : Variant) => {
+        if(hasPermissions([PERMISSIONS.PRODUCT_UPDATE])) handleEdit(row);
+    }
+
     return (
         <PageContainer 
             title="Variants"
@@ -201,6 +205,7 @@ export default function Variants () {
                     showPagination
                     noDataMessage="No Variants Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
             {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (

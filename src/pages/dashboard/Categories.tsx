@@ -95,6 +95,13 @@ export default function Categories () {
         setCategory
     });
 
+    const onRowClick = (row : Category) => {
+        if(hasPermissions([PERMISSIONS.CATEGORY_UPDATE])) {
+            setCategory(row);
+            setShowModal(true);
+        }
+    }
+
     return (
         <PageContainer 
             title="Categories"
@@ -114,6 +121,7 @@ export default function Categories () {
                     showPagination={false} 
                     isLoading={isFetching}
                     noDataMessage="No Categories Found"
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

@@ -95,6 +95,10 @@ export default function TransferLogs () {
 
     const columns = getColumns({ openModal });
 
+    const onRowClick = (row : StockTransferLog) => {
+        openModal(row);
+    }
+
     return (
         <PageContainer
             title="Transfer History"
@@ -124,6 +128,7 @@ export default function TransferLogs () {
                     showPagination
                     noDataMessage="No Transfer Logs Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

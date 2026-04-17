@@ -51,9 +51,12 @@ export default function NotificationBell () {
     const handleReadNotification = async(notification : UserNotification) => {
         if(!readNotification) return;
 
-        setNotification(notification);
-        
         if(notification.status === 'unread') await readNotification(notification._id);
+
+        if(notification.orderNotification) {
+            window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`
+        }else setNotification(notification);
+        
     }
 
     return (

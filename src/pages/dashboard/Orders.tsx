@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
 import { useOrder } from "../../hooks/useOrder";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -12,6 +12,7 @@ import OrderStatusChip from "../../components/orders/OrderStatusChip";
 import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
 import OrderControls from "../../components/orders/OrderControls";
+import { useSearchParams } from "react-router-dom";
 
 const getColumns = () : ColumnDef<Order>[] => [
     {
@@ -65,9 +66,13 @@ const getColumns = () : ColumnDef<Order>[] => [
 ]
 
 export default function Orders () {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const order_id = searchParams.get("order_id");
+
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(order_id || "");
     const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
@@ -104,6 +109,16 @@ export default function Orders () {
 
     const columns = getColumns();
 
+    useEffect(() => {
+        const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+
+        const isReload = navEntry?.type === "reload";
+
+        if (isReload && order_id) {
+            setSearchParams({}, { replace: true });
+        }
+    }, [order_id]);
+
     return (
         <PageContainer
             title="Orders"
@@ -113,6 +128,7 @@ export default function Orders () {
                 <OrderControls 
                     startDate={startDate}
                     endDate={endDate}
+                    search={search}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}

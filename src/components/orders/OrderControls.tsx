@@ -8,6 +8,7 @@ import type { SetStateAction } from "react";
 import type React from "react";
 
 interface OrderControlsProps {
+    search: string;
     setSearch: React.Dispatch<SetStateAction<string>>;
     startDate: string;
     setStartDate: React.Dispatch<SetStateAction<string>>;
@@ -56,6 +57,7 @@ const deliveryTypeOptions = [
 export default function OrderControls({
     startDate,
     endDate,
+    search,
     setSearch,
     setStartDate,
     setEndDate,
@@ -86,6 +88,7 @@ export default function OrderControls({
                     setPagination(prev => ({...prev, pageIndex: 0}))
                     setSearch(e.target.value);
                 }}
+                value={search}
             />
 
             <FiltersMenu containerStyle="w-[80vw] md:w-100">

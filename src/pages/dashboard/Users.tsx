@@ -134,6 +134,10 @@ export default function Users () {
         promiseToast(deleteUser.mutateAsync({ id }));
     }
 
+    const onRowClick = (row : GetUser) => {
+        if(hasPermissions([PERMISSIONS.USER_UPDATE])) showEdit(row);
+    }
+
     const columns = getColumns({
         handleDelete,
         hasAnyPermissions,
@@ -170,6 +174,7 @@ export default function Users () {
                     isLoading={isFetching}
                     noDataMessage="No Users Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
             <UserModal 

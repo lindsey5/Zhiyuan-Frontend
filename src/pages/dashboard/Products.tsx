@@ -142,6 +142,10 @@ export default function Products () {
         navigate,
     })
 
+    const onRowClick = (row : Product) => {
+        if(hasPermissions([PERMISSIONS.PRODUCT_DELETE])) navigate(`/dashboard/edit-product/${row._id}`);
+    }
+
     const downloadVariants = async () => {
         await variantService.downloadVariants({
             category: category === 'All' ? undefined : category,
@@ -180,6 +184,7 @@ export default function Products () {
                     isLoading={isFetching}
                     noDataMessage="No Products Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
             

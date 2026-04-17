@@ -91,6 +91,9 @@ export default function ReturnRequests () {
     const { getReturnRequests } = useReturnRequest();
     const { data, isFetching } = getReturnRequests(debouncedParams);
 
+    const onRowClick = (row : ReturnRequest) => {
+        setReturnRequest(row)
+    }
 
     return (
         <PageContainer
@@ -123,6 +126,7 @@ export default function ReturnRequests () {
                     showPagination
                     noDataMessage="No Return Requests Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>
