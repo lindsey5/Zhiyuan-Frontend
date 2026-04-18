@@ -41,7 +41,7 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
         <Modal open={open} onClose={close}>
             <Card className="max-h-[80vh] md:max-h-[70vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-md md:text-lg font-bold">Transfer Details</h2>
+                    <h2 className="text-md md:text-lg font-bold">Distribution Details</h2>
                     <button
                         onClick={close}
                         className="cursor-pointer hover:opacity-50"
@@ -50,14 +50,16 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
                     </button>
                 </div>
                 <div className="flex flex-col items-start text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
-                    <p>Transferred by: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
-                    <p>Received by: {stockTransferLog?.receiver.distributor_name}</p>
+                    <p>Receiver:</p>
+                    <p>{stockTransferLog?.receiver.distributor_name}</p>
+                    <p className="font-semibold mb-3">{stockTransferLog?.receiver.distributor_id}</p>
+                    <p>Sender: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
                     <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
                     <div className="mt-3">
                          <StockTransferStatusChip status={stockTransferLog?.status || ""} />
                     </div>
                 </div>
-                <h2 className="text-md font-semibold my-3">Transfered Items</h2>
+                <h2 className="text-md font-semibold my-3">Items to Distribute</h2>
                 <div className="space-y-3">
                 {stockTransferLog?.items.map(item => (
                         <div

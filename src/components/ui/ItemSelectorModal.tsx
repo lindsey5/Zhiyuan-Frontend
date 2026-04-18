@@ -91,7 +91,7 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
                     ))}
                 </div>
                 <TextField
-                    label="Enter Quantity to Transfer"
+                    label="Enter Quantity to Distribute"
                     placeholder="eg. 1"
                     type="number"
                     value={quantity ? quantity.toString() : ""}

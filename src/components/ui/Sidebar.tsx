@@ -190,7 +190,8 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
                 PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
-                PERMISSIONS.TRANSFER_LOGS_VIEW_ALL,
+                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
+                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
                 PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL,
@@ -232,7 +233,7 @@ export default function Sidebar({
 
                         ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) ? [
                             {
-                            label: "Transfer Stocks",
+                            label: "Distribute Stocks",
                             icon: <CornerUpRight size={20} />,
                             path: "/dashboard/distributors/transfer-stocks",
                         }] : []),
@@ -251,9 +252,9 @@ export default function Sidebar({
                             path: "/dashboard/distributors/reports",
                         },] : []),
 
-                        ...(hasPermissions([PERMISSIONS.TRANSFER_LOGS_VIEW_ALL]) ? [                        
+                        ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
                         {
-                            label: "Transfer History",
+                            label: "Distribution History",
                             icon: <Repeat size={20} />,
                             path: "/dashboard/distributors/transfer-logs",
                         }] : []),

@@ -5,7 +5,7 @@ import type { Variant } from "../../types/variant.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import TransferItems from "../../components/stockDistribution/TransferItems";
+import TransferItems from "../../components/stockDistribution/ItemsToDistribute";
 import { useSearchParams } from "react-router-dom";
 
 export default function StockDistribution () {
@@ -45,16 +45,16 @@ export default function StockDistribution () {
 
     return (
         <PageContainer
-            title="Stock Distribution"
+            title="Distribute Stocks"
             className="relative"
-            description="Manage stock transfers from Admin to Distributors"
+            description="Distribute stocks to Distributor"
         >
             <div className="flex justify-end">
                 <GoldButton 
                     className="text-sm relative" 
                     onClick={() => setShowModal(true)}
                 >
-                    Transfer Items
+                    Items to Distribute
                     {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
                         {variants.length}
                     </span>}

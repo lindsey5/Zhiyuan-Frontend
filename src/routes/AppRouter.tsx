@@ -17,7 +17,7 @@ import Role from "../pages/dashboard/Role";
 import Users from "../pages/dashboard/Users";
 import Distributors from "../pages/dashboard/Distributors";
 import StockDistribution from "../pages/dashboard/StockDistribution";
-import TransferLogs from "../pages/dashboard/TransferLogs";
+import DistributionHistory from "../pages/dashboard/DistributionHistory";
 import AllDistributorSales from "../pages/dashboard/AllDistributorSales";
 import Distributor from "../pages/dashboard/Distributor";
 import DistributorReports from "../pages/dashboard/Reports";
@@ -214,9 +214,9 @@ const router = createBrowserRouter([
                         path: 'transfer-logs',
                         Component: () => (
                             <ProtectedRoute
-                                requiredPermissions={[PERMISSIONS.TRANSFER_LOGS_VIEW_ALL]}
+                                requiredPermissions={[PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE]}
                             >
-                                <TransferLogs />
+                                <DistributionHistory />
                             </ProtectedRoute>
                         )
                     },

@@ -33,7 +33,7 @@ export default function StockTransferLogsControls({
                 <TextField 
                     className="md:max-w-100"
                     icon={<Search size={20}/>}
-                    placeholder="Search by receiver or transferrer..."
+                    placeholder="Search by receiver or sender..."
                     onChange={(e) => {
                         setPagination(prev => ({ ...prev, pageIndex: 0 }))
                         setSearch(e.target.value);

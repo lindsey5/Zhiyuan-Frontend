@@ -13,13 +13,13 @@ import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
 import StockTransferStatusChip from "../../components/stockTransferLog/StockTransferStatusChip";
 
-interface StockTransferLogColsParams{
+interface DistributionHistoryColsParams{
     openModal: (transferLog : StockTransferLog) => void;
 }
 
-const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<StockTransferLog>[] => [
+const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
     {
-        header: "Received By",
+        header: "Receiver",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
@@ -29,7 +29,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         meta: { align: 'left' },
     },
     {
-        header: "Transferred By",
+        header: "Sender",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
@@ -64,7 +64,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
     }
 ];
 
-export default function TransferLogs () {
+export default function DistributionHistory () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
@@ -103,8 +103,8 @@ export default function TransferLogs () {
 
     return (
         <PageContainer
-            title="Transfer History"
-            description="View the history of transferred stocks"
+            title="Distribution History"
+            description="View and manage the complete history of stock distributions"
         >
             <StockTransferItems 
                 open={showModal}

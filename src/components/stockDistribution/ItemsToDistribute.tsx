@@ -17,7 +17,7 @@ interface CartItem {
     product_name: string;
 }
 
-interface TransferItemsProps {
+interface ItemsToDistributeProps {
     variants: CartItem[];
     distributorId: string | null;
     open: boolean;
@@ -25,13 +25,13 @@ interface TransferItemsProps {
     setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
 }
 
-export default function TransferItems({ 
+export default function ItemsToDistribute({ 
     variants, 
     open, 
     close, 
     setVariants, 
     distributorId
-}: TransferItemsProps) {
+}: ItemsToDistributeProps) {
     useSocket({ namespace: '/distributor-notification' })
     const { createDistributorStocks } = useDistributorStock();
     
@@ -105,7 +105,7 @@ export default function TransferItems({
             <Card>
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-md xl:text-lg font-bold">Transfer Items</h2>
+                    <h2 className="text-md xl:text-lg font-bold">Items to Distribute</h2>
                     <button
                         onClick={close}
                         className="cursor-pointer hover:opacity-50"
@@ -117,7 +117,7 @@ export default function TransferItems({
                 {/* Body */}
                 <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
-                    <p className="text-sm text-center">No transfer items</p>
+                    <p className="text-sm text-center">No items</p>
                 ) : (
                     variants.map(item => (
                         <div
