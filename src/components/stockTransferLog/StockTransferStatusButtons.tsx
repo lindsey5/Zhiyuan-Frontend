@@ -7,7 +7,7 @@ const STATUS_FLOW: Record<string, string[]> = {
     pending: ["rejected", "cancelled", "approved",],
     approved: ["processing", "cancelled"],
     processing: ["delivered", "cancelled"],
-    delivered: [],
+    delivered: ["failed"],
     received: [],
     rejected: [],
     cancelled: [],
@@ -33,7 +33,7 @@ export default function StockTransferStatusButtons({
         <div className="flex justify-end flex-wrap gap-2 mt-5">
         {actions.map((status) => (
             <>
-            {status === 'cancelled' || status === 'rejected' ? (
+            {status === 'cancelled' || status === 'rejected' || status === 'failed' ? (
                 <Button
                     key={status}
                     onClick={() => onChangeStatus(status)}

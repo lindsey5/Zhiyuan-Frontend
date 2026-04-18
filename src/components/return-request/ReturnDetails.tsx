@@ -27,7 +27,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
 
     }
 
-    const handleUpdateItem = async (status : 'accepted' | 'rejected', variant_id: string ) => {
+    const handleUpdateItem = async (status : string, variant_id: string ) => {
         const variant = returnRequest.items.find(item => item.variant_id === variant_id);
         const isConfirmed = confirm(`Are you sure you want ${status === 'accepted' ? 'accept' : 'reject'} ${variant?.variant.product.product_name}-${variant?.variant.variant_name}?`);
 
@@ -90,6 +90,14 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                                     >Accept</button>
                                 </>
                             }
+                            {item.status === 'delivered' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && (
+                                <>
+                                <button 
+                                    className="text-sm text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
+                                    onClick={() => handleUpdateItem('received', item.variant_id)}
+                                >Mark as Received</button>
+                                </>
+                            )}
                             </div> 
                         </div>
                         <div className="self-start">
