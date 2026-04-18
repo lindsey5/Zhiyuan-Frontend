@@ -42,6 +42,7 @@ export default function StockTransferLogsControls({
     const clear = () => {
         setStartDate('');
         setEndDate('');
+        setStatus('');
     }
 
     return (
