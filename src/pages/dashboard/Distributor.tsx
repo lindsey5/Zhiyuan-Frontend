@@ -7,7 +7,6 @@ import { BarChartBig, FileBarChart, HandCoins, Package } from "lucide-react";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorSales from "../../components/distributor/DistributorSales";
-import Button from "../../components/ui/Button";
 import DistributorStats from "../../components/distributor/distributorStats/DistributorStats";
 import { cn } from "../../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
