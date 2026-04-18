@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { GetStockTransferLogsParams, GetStockTransferLogsResponse, StockTransferLog } from "../types/stock-transfer-log.type";
+import type { GetStockTransferLogsParams, GetStockTransferLogsResponse } from "../types/stock-transfer-log.type";
 import type { ApiResponse } from "../types/type";
 
 export const stockTransferLogService = {
