@@ -3,7 +3,6 @@ import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import ReturnDetails from "../return-request/ReturnDetails";
 import SaleDetails from "./SaleDetails";
-import StockTransferItems from "../stockTransferLog/StockTransferItems";
 
 interface NotificationModalProps {
     open: boolean;
