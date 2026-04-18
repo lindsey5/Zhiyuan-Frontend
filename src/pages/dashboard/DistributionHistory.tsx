@@ -69,6 +69,8 @@ export default function DistributionHistory () {
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
 
+    const [status, setStatus] = useState("");
+
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -78,6 +80,7 @@ export default function DistributionHistory () {
         search: debouncedSearch,
         startDate: startDate ? formatDate(startDate) :"",
         endDate: endDate ? formatDate(endDate) : "",
+        status,
     }
     const { getStockTransferLogs } = useStockTransfer();
     const { data, isFetching } = getStockTransferLogs(params);
@@ -119,6 +122,8 @@ export default function DistributionHistory () {
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     setPagination={setPagination}
+                    status={status}
+                    setStatus={setStatus}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}
@@ -128,7 +133,7 @@ export default function DistributionHistory () {
                     setPagination={setPagination}
                     totalPages={data?.totalPages || 0}
                     showPagination
-                    noDataMessage="No Transfer Logs Found"
+                    noDataMessage="No Data"
                     total={data?.total || 0}
                     onRowClick={onRowClick}
                 />
