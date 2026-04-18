@@ -11,6 +11,7 @@ export interface StockTransferLog {
     receiver: Distributor;
     sender: User;
     items: StockTransferItem[];
+    status: 'pending'| 'approved'| 'processing' | 'delivered' | 'received' |  'cancelled' | 'rejected'
 }
 
 export interface StockTransferItem {

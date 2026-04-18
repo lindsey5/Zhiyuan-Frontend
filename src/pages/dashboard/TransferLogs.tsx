@@ -11,6 +11,7 @@ import StockTransferLogsControls from "../../components/stockTransferLog/StockTr
 import StockTransferItems from "../../components/stockTransferLog/StockTransferItems";
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
+import StockTransferStatusChip from "../../components/stockTransferLog/StockTransferStatusChip";
 
 interface StockTransferLogColsParams{
     openModal: (transferLog : StockTransferLog) => void;
@@ -38,10 +39,12 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         meta: { align: 'left' },
     },
     {
-        header: "Description",
-        accessorKey: "description",
-        cell: ({ row }) => `${row.original.receiver.distributor_name} receives ${row.original.items.reduce((acc, item) => acc + item.quantity, 0)} stocks`,
-        meta: { align: 'left' },
+        header: "Status",
+        accessorKey: "status",
+        cell: info => <div className="flex justify-center">
+            <StockTransferStatusChip status={info.getValue() as string}/>
+        </div>,
+        meta: { align: 'center' },
     },
     {
         header: "Date",

@@ -40,7 +40,10 @@ export const PERMISSIONS = {
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
     DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
+
+    // Transfer Logs
     TRANSFER_LOGS_VIEW_ALL: 'tranfer-logs:view:all',
+    TRANSFER_LOGS_UPDATE: 'transfer-logs:update',
 
     // Distributor Sales
     DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
@@ -54,6 +57,7 @@ export const PERMISSIONS = {
     DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
 
     // Sponsored Items
+    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
     SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
     SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 }
@@ -123,6 +127,11 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         description: "Manage distributor inventory, stock transfers, and monitor transfer history logs.",
         DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
         DISTRIBUTOR_STOCK_TRANSFER: "Allow transferring stock to distributors",
+    },
+
+    "Transfer History": {
+        description: "Manage and monitor stock transfer records, including tracking status updates and viewing transfer history.",
+        TRANSFER_LOGS_UPDATE: "Update stock transfer history status",
         TRANSFER_LOGS_VIEW_ALL: "View stock transfer history",
     },
 
@@ -141,6 +150,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
 
     "Sponsored Product Management": {
         description: "Manage sponsored products including updating and viewing",
+        SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
         SPONSORED_PRODUCT_UPDATE: 'Update sponsored products status (accepted or rejected)',
         SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
