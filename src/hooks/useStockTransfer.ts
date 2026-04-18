@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import type { GetStockTransferLogsParams, GetStockTransferLogsResponse, StockTransferLog } from "../types/stock-transfer-log.type";
+import type { GetStockTransferLogsParams, GetStockTransferLogsResponse } from "../types/stock-transfer-log.type";
 import { stockTransferLogService } from "../service/stockTransferLogService";
 
 export const useStockTransfer = () => {
