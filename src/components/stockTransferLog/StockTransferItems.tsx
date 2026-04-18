@@ -21,7 +21,7 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
     useSocket({ namespace: '/distributor-notification' })
 
     const updateStatus = async (status: string) => {
-        if (!stockTransferLog) return;
+        if (!stockTransferLog || updateStockTransferLogStatus.isPending) return;
 
         const isConfirmed = confirm(
             `Are you sure you want to mark this as "${status}"?`

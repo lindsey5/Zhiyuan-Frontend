@@ -81,10 +81,12 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                             {item.status === 'pending' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) &&
                                 <>
                                     <button 
+                                        disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
                                         className="text-sm bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
                                         onClick={() => handleUpdateItem('rejected', item.variant_id)}
                                     >Reject</button>
                                     <button 
+                                        disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
                                         className="text-sm text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
                                         onClick={() => handleUpdateItem('accepted', item.variant_id)}
                                     >Accept</button>
@@ -93,6 +95,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                             {item.status === 'delivered' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && (
                                 <>
                                 <button 
+                                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
                                     className="text-sm text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
                                     onClick={() => handleUpdateItem('received', item.variant_id)}
                                 >Mark as Received</button>
@@ -117,11 +120,13 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                 <Button
                     className="md:px-4 lg:py-3 bg-red-600 text-white borde-none"
                     label="Reject All"   
+                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
                     onClick={() => handleUpdateItems('rejected')}  
                 />
                 <GoldButton 
                     className="text-sm"
                     onClick={() => handleUpdateItems('accepted')}
+                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
                 >Accept All</GoldButton>
                 </>
             ) : (
