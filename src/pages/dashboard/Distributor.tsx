@@ -11,6 +11,7 @@ import Button from "../../components/ui/Button";
 import DistributorStats from "../../components/distributor/distributorStats/DistributorStats";
 import { cn } from "../../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
+import GoldButton from "../../components/ui/GoldButton";
 
 export default function Distributor () {
     const params = useParams();
@@ -24,14 +25,6 @@ export default function Distributor () {
         <div className={cn(
             "flex flex-col gap-3 p-2 lg:p-6",
         )}>
-            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
-                <div className="flex justify-end">
-                    <Button 
-                        label="Distribute Stocks"
-                        onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${id}`)}
-                    />
-                </div>
-            )}
             <DistributorInfo id={id || ""} />
                 <Tabs
                     items={[
@@ -70,7 +63,16 @@ export default function Distributor () {
                     ]}
                     defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
                 />
-
+            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
+                <div className="flex justify-end">
+                    <GoldButton
+                        className="text-sm"
+                        onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${id}`)}
+                    >
+                        Distribute Stocks
+                    </GoldButton>
+                </div>
+            )}
             {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
             {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
             {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
