@@ -66,14 +66,14 @@ export default function NotificationBell () {
         
         if(notification.status === 'unread') await readNotification(notification._id);
     }
-    console.log(notifications)
+
     return (
         <div id="notification-bell" className="relative">
             {notification?.stockTransferNotification ? (
                 <StockTransferItems 
                     close={() => setNotification(null)}
                     open={notification && notification.stockTransferNotification !== undefined}
-                    stockTransferLog={notification.stockTransferNotification.stock_transfer}
+                    stockTransferLog={notification.stockTransferNotification.stockTransfer}
                 />
             ) : (
                 <NotificationModal 

@@ -45,7 +45,7 @@ export interface StockTransferNotification{
     _id: string;
     notification_id: string;
     stock_transfer_id: string;
-    stock_transfer: StockTransferLog;
+    stockTransfer: StockTransferLog;
     
 }
 
