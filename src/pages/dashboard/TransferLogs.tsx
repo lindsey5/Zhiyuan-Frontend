@@ -66,7 +66,6 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
 
 export default function TransferLogs () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
 

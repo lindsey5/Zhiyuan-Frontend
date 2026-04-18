@@ -8,6 +8,7 @@ import StockTransferStatusButtons from "./StockTransferStatusButtons";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import { promiseToast } from "../../utils/sileo";
 import StockTransferStatusChip from "./StockTransferStatusChip";
+import { useSocket } from "../../hooks/useSocket";
 
 interface StockTransferItemsProps {
     open: boolean;
@@ -17,8 +18,9 @@ interface StockTransferItemsProps {
 
 export default function StockTransferItems ({ open, close, stockTransferLog } : StockTransferItemsProps) {
     const { updateStockTransferLogStatus } = useStockTransfer();
+    useSocket({ namespace: '/distributor-notification' })
 
-    const updateStatus = (status: string) => {
+    const updateStatus = async (status: string) => {
         if (!stockTransferLog) return;
 
         const isConfirmed = confirm(
@@ -27,7 +29,7 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
 
         if (!isConfirmed) return;
 
-        promiseToast(
+        await promiseToast(
             updateStockTransferLogStatus.mutateAsync({
                 id: stockTransferLog._id,
                 status,
