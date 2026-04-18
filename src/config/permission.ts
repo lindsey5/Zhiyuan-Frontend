@@ -39,10 +39,10 @@ export const PERMISSIONS = {
     
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
-    DISTRIBUTOR_STOCK_TRANSFER: 'distributor-stock:transfer',
 
     // Stock Distribution History
     STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: 'tranfer-logs:view:all',
+    STOCK_DISTRIBUTION_CREATE: 'distributor-stock:transfer',
     STOCK_DISTRIBUTION_HISTORY_UPDATE: 'transfer-logs:update',
 
     // Distributor Sales
@@ -124,14 +124,14 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     },
 
     "Distributor Stock": {
-        description: "Manage distributor inventory, stock transfers, and monitor transfer history logs.",
+        description: "Monitor distributor's inventory / stocks.",
         DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
-        DISTRIBUTOR_STOCK_TRANSFER: "Allow transferring stock to distributors",
     },
 
     "Stock Distribution History": {
         description: "Manage and monitor stock distribution records, including tracking status updates and viewing history.",
         STOCK_DISTRIBUTION_HISTORY_UPDATE: "Update stock distribution status",
+        STOCK_DISTRIBUTION_CREATE: 'Distribute stock to distributors',
         STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: "View stock distribution history",
     },
 

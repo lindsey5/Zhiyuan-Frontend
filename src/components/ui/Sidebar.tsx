@@ -185,11 +185,11 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_CREATE,
                 PERMISSIONS.DISTRIBUTOR_READ_ALL,
                 PERMISSIONS.DISTRIBUTOR_DELETE,
-                PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER,
                 PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
                 PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
+                PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                 PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
                 PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
@@ -231,7 +231,7 @@ export default function Sidebar({
                             },
                         ] : []),
 
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) ? [
+                        ...(hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) ? [
                             {
                             label: "Distribute Stocks",
                             icon: <CornerUpRight size={20} />,

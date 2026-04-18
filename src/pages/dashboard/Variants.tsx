@@ -208,7 +208,7 @@ export default function Variants () {
                     onRowClick={onRowClick}
                 />
             </Card>
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
+            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
                 <div className="flex justify-end">
                     <Button 
                         label="Transfer Stocks"
