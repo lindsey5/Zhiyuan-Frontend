@@ -187,15 +187,6 @@ export default function Products () {
                     onRowClick={onRowClick}
                 />
             </Card>
-            
-            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
-                <div className="flex justify-end">
-                    <Button 
-                        label="Transfer Stocks"
-                        onClick={() => navigate('/dashboard/distributors/transfer-stocks')}
-                    />
-                </div>
-            )}
         </PageContainer>
     )
 }

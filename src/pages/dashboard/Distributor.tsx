@@ -24,6 +24,14 @@ export default function Distributor () {
         <div className={cn(
             "flex flex-col gap-3 p-2 lg:p-6",
         )}>
+            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
+                <div className="flex justify-end">
+                    <Button 
+                        label="Distribute Stocks"
+                        onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${id}`)}
+                    />
+                </div>
+            )}
             <DistributorInfo id={id || ""} />
                 <Tabs
                     items={[
@@ -66,15 +74,6 @@ export default function Distributor () {
             {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
             {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
             {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
-
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
-                <div className="flex justify-end">
-                    <Button 
-                        label="Transfer Stocks"
-                        onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${id}`)}
-                    />
-                </div>
-            )}
         </div>
     )
 }
