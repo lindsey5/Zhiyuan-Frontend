@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import type { ColumnDef, PaginationState, Row } from "@tanstack/react-table";
+import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { SortOption } from "../../types/type";
 import { useSponsoredItem } from "../../hooks/useSponsoredItem";
@@ -13,9 +13,10 @@ import SponsoredItemControls from "../../components/sponsored-item/SponsoredItem
 import SponsoredItemStatusChip from "../../components/sponsored-item/SponsoredItemStatusChip";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
-import Button from "../../components/ui/Button";
+import GoldButton from "../../components/ui/GoldButton";
+import { useNavigate } from "react-router-dom";
 
-const getColumns = (hasPermissions : (permissions : string[]) => boolean) : ColumnDef<SponsoredItem>[] => [
+const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
         header: "Product",
         accessorKey: "product_name",
@@ -57,31 +58,10 @@ const getColumns = (hasPermissions : (permissions : string[]) => boolean) : Colu
         cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
-    ...(hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) ? [
-        {
-            header: 'Action',
-            cell: ({ row } :{ row: Row<SponsoredItem>}) => (
-                <>
-                    {row.original.status === 'pending' && (
-                        <SponsoredItemActionButtons />
-                    )}
-                </>
-            ),
-            meta: { align: 'center' },
-        }
-    ] : [])
 ];
 
-function SponsoredItemActionButtons () {
-    return (
-        <div className="flex gap-2 items-center">
-            <Button className="text-xs py-1 bg-red-600 text-white border-none" label="Reject"/>
-            <Button className="text-xs py-1 bg-green-600 text-white border-none" label="Accept" />
-        </div>
-    )
-}
-
 export default function SponsoredItems () {
+    const navigate = useNavigate();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
@@ -106,13 +86,21 @@ export default function SponsoredItems () {
     const debouncedParams = useDebounce(params, 800);
     const { data, isFetching } = getSponsoredItems(debouncedParams);
 
-    const columns = getColumns(hasPermissions);
+    const columns = getColumns();
     
     return (
         <PageContainer
             title="Sponsored Products"
             description="View sponsored products"
         >
+            {hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_CREATE]) && (
+                <div className="flex justify-end">
+                    <GoldButton
+                        className="text-sm"
+                        onClick={() => navigate('/dashboard/sponsored-products/add')}
+                    >Add Sponsored Products</GoldButton>
+                </div>
+            )}
             <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
                     setSearch={setSearch}

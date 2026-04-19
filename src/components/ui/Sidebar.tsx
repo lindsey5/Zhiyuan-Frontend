@@ -130,7 +130,9 @@ export default function Sidebar({
                 PERMISSIONS.CATEGORY_CREATE, 
                 PERMISSIONS.CATEGORY_DELETE, 
                 PERMISSIONS.CATEGORY_READ_ALL, 
-                PERMISSIONS.CATEGORY_UPDATE
+                PERMISSIONS.CATEGORY_UPDATE,
+                PERMISSIONS.SPONSORED_PRODUCT_CREATE,
+                PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL
             ]) && (
                 <>
                 <SidebarSection title="Product" collapsed={collapsed} />
@@ -178,6 +180,15 @@ export default function Sidebar({
                         ]: []),
                     ]}
                 />
+                {hasAnyPermissions([PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_CREATE]) && (
+                    <SidebarItem
+                        icon={<Star size={24} />}
+                        label="Sponsored Products"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/sponsored-products")}
+                        isActive={pathname === "/dashboard/sponsored-products"}
+                    />
+                )}
                 </>
             )}
 
@@ -194,8 +205,6 @@ export default function Sidebar({
                 PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
-                PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL,
-                PERMISSIONS.SPONSORED_PRODUCT_UPDATE
             ]) && (
                 <>
                 {/* DISTRIBUTOR */}
@@ -267,15 +276,6 @@ export default function Sidebar({
                         ] : []),
                     ]}
                 />
-                {hasAnyPermissions([PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) && (
-                    <SidebarItem
-                        icon={<Star size={24} />}
-                        label="Sponsored Products"
-                        collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/sponsored-products")}
-                        isActive={pathname === "/dashboard/sponsored-products"}
-                    />
-                )}
                 </>
             )}
 

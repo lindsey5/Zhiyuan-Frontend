@@ -24,6 +24,7 @@ import DistributorReports from "../pages/dashboard/Reports";
 import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
+import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
 
 const router = createBrowserRouter([ 
     {
@@ -249,11 +250,24 @@ const router = createBrowserRouter([
             },
             {
                 path: 'sponsored-products',
-                Component: () => (
-                    <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL]}>
-                        <SponsoredItems />
-                    </ProtectedRoute>
-                )
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL]}>
+                                <SponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'add',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_CREATE]}>
+                                <AddSponsoredItems />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]
             },
         ]
     },

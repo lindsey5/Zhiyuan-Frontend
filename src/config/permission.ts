@@ -58,7 +58,6 @@ export const PERMISSIONS = {
 
     // Sponsored Items
     SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
-    SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
     SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 }
 
@@ -151,7 +150,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     "Sponsored Product Management": {
         description: "Manage sponsored products including updating and viewing",
         SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
-        SPONSORED_PRODUCT_UPDATE: 'Update sponsored products status (accepted or rejected)',
         SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
 };
