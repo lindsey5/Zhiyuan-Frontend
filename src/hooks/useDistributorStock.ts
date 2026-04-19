@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { type GetDistributorTotalStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse } from "../types/distributor-stock.type";
+import { type GetDistributorTotalStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorStockResponse } from "../types/distributor-stock.type";
 import { distributorStockService } from "../service/distributorStockService";
 
 export const useDistributorStock = () => {
@@ -21,6 +21,14 @@ export const useDistributorStock = () => {
         })
     )
 
+    const getDistributorStock = (variant_id: string, distributor_id: string) => (
+        useQuery<GetDistributorStockResponse, Error>({
+            queryKey: [`distributor-stocks-${variant_id}-${distributor_id}`],
+            queryFn: () => distributorStockService.getDistributorStock(variant_id, distributor_id),
+            placeholderData: (prev) => prev,
+        })
+    )
+
     const createDistributorStocks = useMutation({
         mutationFn: ({ id, data } : { id: string, data: CreateDistributorStockPayload[] }) => distributorStockService.createDistributorStocks(id, data),
     })
@@ -28,7 +36,8 @@ export const useDistributorStock = () => {
     return {
        getDistributorStocks,
        createDistributorStocks,
-       getDistributorTotalStocks
+       getDistributorTotalStocks,
+       getDistributorStock
     }
 
 }

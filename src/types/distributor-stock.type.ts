@@ -39,3 +39,7 @@ export interface DownloadDistributorStocksParams {
     sortBy?: string;
     order?: "desc" | "asc";
 }
+
+export interface GetDistributorStockResponse extends ApiResponse {
+    distributorStock: DistributorStock;
+}
