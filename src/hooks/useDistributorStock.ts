@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { type GetDistributorTotalStocksResponse, type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorStockResponse } from "../types/distributor-stock.type";
 import { distributorStockService } from "../service/distributorStockService";
 
@@ -28,7 +28,6 @@ export const useDistributorStock = () => {
             placeholderData: (prev) => prev,
         })
     )
-
 
     return {
        getDistributorStocks,
