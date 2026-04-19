@@ -214,7 +214,7 @@ const router = createBrowserRouter([
                         path: 'transfer-logs',
                         Component: () => (
                             <ProtectedRoute
-                                anyPermissions={[PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE]}
+                                anyPermissions={[PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_UPDATE]}
                             >
                                 <DistributionHistory />
                             </ProtectedRoute>

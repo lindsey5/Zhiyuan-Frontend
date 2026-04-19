@@ -9,8 +9,15 @@ export const userNotificationService = {
             params,
         }),
 
-    readNotifications: (id : string) : Promise<ApiResponse> => 
+    readNotification: (id : string) : Promise<ApiResponse> => 
         apiAxios<ApiResponse>(`user-notifications/${id}`, {
             method: HttpMethod.PATCH
-    })
+    }),
+
+    readAllNotifications: () => 
+        apiAxios<ApiResponse>(`user-notifications`, {
+            method: HttpMethod.PATCH
+        })
+
+
 }

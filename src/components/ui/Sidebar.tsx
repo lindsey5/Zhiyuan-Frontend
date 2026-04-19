@@ -191,7 +191,7 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
                 PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                 PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
-                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE,
+                PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
                 PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL,
@@ -252,7 +252,7 @@ export default function Sidebar({
                             path: "/dashboard/distributors/reports",
                         },] : []),
 
-                        ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
+                        ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
                         {
                             label: "Distribution History",
                             icon: <Repeat size={20} />,

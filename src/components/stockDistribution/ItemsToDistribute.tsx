@@ -5,11 +5,11 @@ import Modal from "../ui/Modal";
 import { cn, formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
-import { useDistributorStock } from "../../hooks/useDistributorStock";
 import { errorToast, promiseToast } from "../../utils/sileo";
 import Chip from "../ui/Chip";
 import { useMemo } from "react";
 import { useSocket } from "../../hooks/useSocket";
+import { useStockTransfer } from "../../hooks/useStockTransfer";
 
 interface CartItem {
     variant: Variant;
@@ -33,7 +33,7 @@ export default function ItemsToDistribute({
     distributorId
 }: ItemsToDistributeProps) {
     useSocket({ namespace: '/distributor-notification' })
-    const { createDistributorStocks } = useDistributorStock();
+    const { createStockTransferLog } = useStockTransfer();
     
     const addQty = (id: string) => {
         setVariants(prev =>
@@ -76,7 +76,7 @@ export default function ItemsToDistribute({
 
         if(!isConfirmed) return;
 
-        promiseToast(createDistributorStocks.mutateAsync({
+        promiseToast(createStockTransferLog.mutateAsync({
             id: distributorId || "",
             data: variants.map(variant => ({
                 variant_id: variant.variant._id,
@@ -190,8 +190,8 @@ export default function ItemsToDistribute({
                     <GoldButton
                         className="text-xs xl:text-sm md:px-4 lg:py-3"
                         onClick={transfer}
-                        disabled={variants.length === 0 || createDistributorStocks.isPending || !isValidItems}
-                    >Transfer</GoldButton>
+                        disabled={variants.length === 0 || createStockTransferLog.isPending || !isValidItems}
+                    >Distribute</GoldButton>
                 </div>
             </Card>
         </Modal>

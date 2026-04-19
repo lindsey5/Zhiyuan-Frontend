@@ -11,7 +11,7 @@ const useNotifications  = () => {
     const orderSocket = useSocket({ namespace: '/orders' })
     const [notifications, setNotifications] = useState<UserNotification[]>([]);
     const [unread, setUnread] = useState(0);
-    const { getUserNotifications, readNotification } = useUserNotification();
+    const { getUserNotifications, readNotification, readAllNotifications } = useUserNotification();
     const [page, setPage] = useState(1);
     const { data, isFetching } = getUserNotifications({ page, limit: 10 });
 
@@ -54,6 +54,15 @@ const useNotifications  = () => {
         }
     }
 
+    const handleReadAllNotifications = async () => {
+        const response = await readAllNotifications.mutateAsync();
+
+        if(response.success){
+            setNotifications(prev => prev.map(notification => ({ ...notification, status: 'read' })));
+            setUnread(0);
+        }
+    }
+
     return { 
         socket, 
         setPage, 
@@ -62,7 +71,8 @@ const useNotifications  = () => {
         isFetching, 
         page, 
         totalPages: data?.totalPages || 0,  
-        readNotification: handleReadNotification
+        readNotification: handleReadNotification,
+        readAllNotifications: handleReadAllNotifications
     }
 };
 

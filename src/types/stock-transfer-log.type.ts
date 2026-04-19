@@ -1,5 +1,6 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
+import type { ApiResponse } from "./type";
 import type { User } from "./user.type";
 import type { VariantWithProduct } from "./variant.type";
 
@@ -31,4 +32,13 @@ export interface GetStockTransferLogsParams extends PaginationParams {
     startDate: string;
     endDate: string;
     status: string;
+}
+
+export interface CreateStockTransferLogPayload {
+    variant_id: string;
+    quantity: number;
+}
+
+export interface CreateStockTransferLogResponse extends ApiResponse {
+    stockTransfer: StockTransferLog;
 }

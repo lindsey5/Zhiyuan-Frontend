@@ -13,11 +13,16 @@ export const useUserNotification = () => {
     )
 
     const readNotification = useMutation({
-        mutationFn: ({ id } : { id: string }) => userNotificationService.readNotifications(id)
+        mutationFn: ({ id } : { id: string }) => userNotificationService.readNotification(id)
+    })
+
+    const readAllNotifications = useMutation({
+        mutationFn: () => userNotificationService.readAllNotifications()
     })
 
     return {
         getUserNotifications,
-        readNotification
+        readNotification,
+        readAllNotifications
     }
 }

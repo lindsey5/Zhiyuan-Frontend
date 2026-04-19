@@ -27,7 +27,7 @@ export default function StockTransferStatusButtons({
 
     if (actions.length === 0) return null;
 
-    if(!hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_UPDATE])) return null
+    if(!hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE])) return null
 
     return (
         <div className="flex justify-end flex-wrap gap-2 mt-5">

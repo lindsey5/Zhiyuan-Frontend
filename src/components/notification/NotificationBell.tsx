@@ -46,7 +46,7 @@ function getIcon (notification : UserNotification, isDark : boolean) {
 export default function NotificationBell () {
     const { isDark } = useThemeStore();
     const [notification, setNotification] = useState<UserNotification | null>(null);
-    const { unread, notifications, setPage, page, totalPages, isFetching, readNotification } = useNotifications();
+    const { unread, notifications, setPage, page, totalPages, isFetching, readNotification, readAllNotifications } = useNotifications();
     const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
@@ -98,8 +98,11 @@ export default function NotificationBell () {
                 </span>
             )}
             {showDropdown && (
-                <Card className="max-h-100 overflow-y-auto p-4 w-[70vw] space-y-2 md:w-80 absolute -right-20 transform  transform md:right-1">
-                    <h1 className="font-bold">Notifications</h1>
+                <Card className="max-h-100 overflow-y-auto p-4 w-[70vw] space-y-2 md:w-80 absolute right-0 transform  transform md:right-1">
+                    <div className="flex items-center justify-between">
+                        <h1 className="font-bold">Notifications</h1>
+                        <button className="text-sm text-gold cursor-pointer" onClick={readAllNotifications}>Mark all as Read</button>
+                    </div>
                     <div className="bg-[var(--border-panel)] mt-3 mb-5 h-[1px]"></div>
                     {!notifications.length && !isFetching && <p className="w-full text-center text-sm">No notifications yet</p>}
                     {notifications.map(notification => (

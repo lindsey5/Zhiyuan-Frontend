@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type CreateDistributorStocksResponse, type CreateDistributorStockPayload, type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorTotalStocksResponse, type DownloadDistributorStocksParams, type GetDistributorStockResponse } from "../types/distributor-stock.type";
+import { type GetDistributorStocksParams, type GetDistributorStocksResponse, type GetDistributorTotalStocksResponse, type DownloadDistributorStocksParams, type GetDistributorStockResponse } from "../types/distributor-stock.type";
 import { errorToast } from "../utils/sileo";
 import { downloadFile } from "../utils/utils";
 
@@ -8,13 +8,6 @@ export const distributorStockService = {
         apiAxios<GetDistributorStocksResponse>(`distributor-stocks/${id}`,{
             method: HttpMethod.GET,
             params
-        })
-    ),
-
-    createDistributorStocks: (id: string, data: CreateDistributorStockPayload[]) => (
-        apiAxios<CreateDistributorStocksResponse>(`distributor-stocks/${id}`, {
-            method: HttpMethod.POST,
-            data
         })
     ),
 
