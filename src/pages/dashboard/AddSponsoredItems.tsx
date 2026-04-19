@@ -165,6 +165,7 @@ export default function AddSponsoredItems () {
                     noDataMessage="No Variants Found"
                     total={data?.total || 0}
                     className="max-h-[70vh]"
+                    onRowClick={(row) => setSelectedProduct(row)}
                 />
             </Card>
         </PageContainer>
