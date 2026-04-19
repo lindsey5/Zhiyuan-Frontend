@@ -40,7 +40,11 @@ const columns: ColumnDef<AuditLog>[] = [
     {
         header: "Role",
         accessorKey: "role",
-        cell: info => <Chip className="font-semibold">{info.getValue() as string}</Chip>,
+        cell: info => (
+            <div className="min-w-50">
+                <Chip className="font-semibold">{info.getValue() as string}</Chip>
+            </div>
+        ),
         meta: { align: 'center' },
     },
     {
@@ -117,11 +121,10 @@ export default function AuditLogs () {
 
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Audit Logs"
             description="View all system activity and changes"
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
+            <Card className="p-0 flex flex-col max-h-screen pt-10">
                 <AuditLogsControls
                     startDate={startDate}
                     endDate={endDate}

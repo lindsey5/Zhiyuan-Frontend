@@ -22,6 +22,7 @@ export const errorToast = (title : string, description : string, position: Sileo
 export const promiseToast = <T extends { message?: string}>(
     promise: Promise<T>,
     position: SileoPosition = "top-center",
+    onSuccess?: () => void,
     successMessage?: string,
 ) => {
     return sileo.promise(promise, {
@@ -36,7 +37,7 @@ export const promiseToast = <T extends { message?: string}>(
         },
         success: (data: T) => {
             setTimeout(() => {
-                window.location.reload()
+                onSuccess ? onSuccess() : window.location.reload()
             }, 1000)
             return ({
                 title: "Success",

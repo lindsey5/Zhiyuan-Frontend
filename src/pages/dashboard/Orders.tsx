@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
 import { useOrder } from "../../hooks/useOrder";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -8,10 +8,11 @@ import Card from "../../components/ui/Card";
 import CustomizedTable from "../../components/ui/Table";
 import { formatToPeso } from "../../utils/utils";
 import Chip from "../../components/ui/Chip";
-import OrderStatusChip from "../../components/order/OrderStatusChip";
+import OrderStatusChip from "../../components/orders/OrderStatusChip";
 import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
-import OrderControls from "../../components/order/OrderControls";
+import OrderControls from "../../components/orders/OrderControls";
+import { useSearchParams } from "react-router-dom";
 
 const getColumns = () : ColumnDef<Order>[] => [
     {
@@ -31,6 +32,7 @@ const getColumns = () : ColumnDef<Order>[] => [
     {
         header: 'Payment Method',
         accessorKey: 'payment_method',
+        cell: info => info.getValue() || 'N/A',
         meta: { align: 'center' },
     },
     {
@@ -64,9 +66,13 @@ const getColumns = () : ColumnDef<Order>[] => [
 ]
 
 export default function Orders () {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const order_id = searchParams.get("order_id");
+
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(order_id || "");
     const debouncedSearch = useDebounce(search, 500);
 
     const [startDate, setStartDate] = useState("");
@@ -103,15 +109,26 @@ export default function Orders () {
 
     const columns = getColumns();
 
+    useEffect(() => {
+        const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+
+        const isReload = navEntry?.type === "reload";
+
+        if (isReload && order_id) {
+            setSearchParams({}, { replace: true });
+        }
+    }, [order_id]);
+
     return (
         <PageContainer
             title="Orders"
             description="View and manage customer orders, track order status, and review transaction details."
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <OrderControls 
                     startDate={startDate}
                     endDate={endDate}
+                    search={search}
                     setSearch={setSearch}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}

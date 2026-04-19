@@ -11,14 +11,15 @@ import StockTransferLogsControls from "../../components/stockTransferLog/StockTr
 import StockTransferItems from "../../components/stockTransferLog/StockTransferItems";
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
+import StockTransferStatusChip from "../../components/stockTransferLog/StockTransferStatusChip";
 
-interface StockTransferLogColsParams{
+interface DistributionHistoryColsParams{
     openModal: (transferLog : StockTransferLog) => void;
 }
 
-const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<StockTransferLog>[] => [
+const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
     {
-        header: "Received By",
+        header: "Receiver",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{row.original.receiver.distributor_name}</h3>
@@ -28,7 +29,7 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         meta: { align: 'left' },
     },
     {
-        header: "Transferred By",
+        header: "Sender",
         cell: ({ row }) => (
             <div>
                 <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
@@ -38,10 +39,12 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
         meta: { align: 'left' },
     },
     {
-        header: "Description",
-        accessorKey: "description",
-        cell: ({ row }) => `${row.original.receiver.distributor_name} receives ${row.original.items.reduce((acc, item) => acc + item.quantity, 0)} stocks`,
-        meta: { align: 'left' },
+        header: "Status",
+        accessorKey: "status",
+        cell: info => <div className="flex justify-center">
+            <StockTransferStatusChip status={info.getValue() as string}/>
+        </div>,
+        meta: { align: 'center' },
     },
     {
         header: "Date",
@@ -61,11 +64,12 @@ const getColumns = ({ openModal } : StockTransferLogColsParams) : ColumnDef<Stoc
     }
 ];
 
-export default function TransferLogs () {
+export default function DistributionHistory () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
+
+    const [status, setStatus] = useState("");
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -76,6 +80,7 @@ export default function TransferLogs () {
         search: debouncedSearch,
         startDate: startDate ? formatDate(startDate) :"",
         endDate: endDate ? formatDate(endDate) : "",
+        status,
     }
     const { getStockTransferLogs } = useStockTransfer();
     const { data, isFetching } = getStockTransferLogs(params);
@@ -95,18 +100,21 @@ export default function TransferLogs () {
 
     const columns = getColumns({ openModal });
 
+    const onRowClick = (row : StockTransferLog) => {
+        openModal(row);
+    }
+
     return (
         <PageContainer
-            title="Transfer History"
-            description="View the history of transferred stocks"
-            className="md:max-h-screen"
+            title="Distribution History"
+            description="View and manage the complete history of stock distributions"
         >
             <StockTransferItems 
                 open={showModal}
                 close={closeModal}
                 stockTransferLog={(stockTransferLog)}
             />
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-10">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-10">
                 <StockTransferLogsControls 
                     startDate={startDate}
                     endDate={endDate}
@@ -114,6 +122,8 @@ export default function TransferLogs () {
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     setPagination={setPagination}
+                    status={status}
+                    setStatus={setStatus}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}
@@ -123,8 +133,9 @@ export default function TransferLogs () {
                     setPagination={setPagination}
                     totalPages={data?.totalPages || 0}
                     showPagination
-                    noDataMessage="No Transfer Logs Found"
+                    noDataMessage="No Data"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

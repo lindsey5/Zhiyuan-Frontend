@@ -64,7 +64,6 @@ const getColumns = (setSelectedProduct : React.Dispatch<SetStateAction<Product |
     }
 ];
 
-
 export default function AddSponsoredItems () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");

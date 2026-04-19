@@ -111,7 +111,7 @@ export default function UserModal ({ open, user, onClose } : UserModalProps) {
             open={open}
             className="w-[90%] md:max-w-150"
         >
-            <Card className="w-full max-h-[90vh] relative overflow-y-auto">
+            <Card className="w-full">
                 <div className="flex items-center justify-between mb-5">
                     <h2 className="text-lg font-semibold font-sans">{user ? 'Edit' : 'Add'} User</h2>
                     <Button 

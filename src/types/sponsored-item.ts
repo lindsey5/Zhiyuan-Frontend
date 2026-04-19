@@ -10,6 +10,7 @@ export interface SponsoredItem {
     variant: Variant;
     quantity: number;
     createdAt: string;
+    status: 'pending' | 'accepted' | 'rejected';
 }
 
 export interface GetSponsoredItemsParams extends PaginationParams{

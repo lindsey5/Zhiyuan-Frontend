@@ -134,6 +134,10 @@ export default function Users () {
         promiseToast(deleteUser.mutateAsync({ id }));
     }
 
+    const onRowClick = (row : GetUser) => {
+        if(hasPermissions([PERMISSIONS.USER_UPDATE])) showEdit(row);
+    }
+
     const columns = getColumns({
         handleDelete,
         hasAnyPermissions,
@@ -145,7 +149,6 @@ export default function Users () {
         <PageContainer 
             title="User Management"
             description="View and manage all users"
-            className="md:max-h-screen"
         >
             <UsersCount  />
             <div className="w-full justify-end flex md:hidden">
@@ -154,7 +157,7 @@ export default function Users () {
                     onClick={handleShow}
                 >Create User</GoldButton>
             </div>
-            <Card className="p-0 flex flex-col min-h-0 flex-grow space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <UsersTableControls 
                     role={role}
                     setRole={setRole}
@@ -171,6 +174,7 @@ export default function Users () {
                     isLoading={isFetching}
                     noDataMessage="No Users Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
             <UserModal 

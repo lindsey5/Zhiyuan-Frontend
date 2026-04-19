@@ -41,7 +41,7 @@ const getColumns = (setReturnRequest : React.Dispatch<SetStateAction<ReturnReque
     },
     {
         header: 'Pending Items',
-        cell: ({ row }) => row.original.items.map(item => item.status === 'pending' ? item : null).filter(item => item).length || 'N/A',
+        cell: ({ row }) => row.original.items.map(item => ['pending', 'accepted'].includes(item.status) ? item : null).filter(item => item).length || 'N/A',
         meta: { align: 'center' }
     },
     {
@@ -91,10 +91,12 @@ export default function ReturnRequests () {
     const { getReturnRequests } = useReturnRequest();
     const { data, isFetching } = getReturnRequests(debouncedParams);
 
+    const onRowClick = (row : ReturnRequest) => {
+        setReturnRequest(row)
+    }
 
     return (
         <PageContainer
-            className="md:max-h-screen" 
             title="Return Requests"
             description="Manage and review all product return requests submitted by distributors."
         >
@@ -103,7 +105,7 @@ export default function ReturnRequests () {
                 open={returnRequest !== null}
                 returnRequest={returnRequest}
             />
-            <Card className="p-0 flex flex-col flex-1 min-h-0 pt-10">
+            <Card className="p-0 flex flex-col max-h-screen pt-10">
                 <ReturnRequestControls 
                     startDate={startDate}
                     setStartDate={setStartDate}
@@ -124,6 +126,7 @@ export default function ReturnRequests () {
                     showPagination
                     noDataMessage="No Return Requests Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

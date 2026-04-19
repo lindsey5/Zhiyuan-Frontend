@@ -8,9 +8,10 @@ const useNotifications  = () => {
         namespace: "/notification",
         events: {}
     })
+    const orderSocket = useSocket({ namespace: '/orders' })
     const [notifications, setNotifications] = useState<UserNotification[]>([]);
     const [unread, setUnread] = useState(0);
-    const { getUserNotifications, readNotification } = useUserNotification();
+    const { getUserNotifications, readNotification, readAllNotifications } = useUserNotification();
     const [page, setPage] = useState(1);
     const { data, isFetching } = getUserNotifications({ page, limit: 10 });
 
@@ -24,6 +25,15 @@ const useNotifications  = () => {
 
         if(socket){
             socket.on("receive-notification", (data) => {
+                console.log(data)
+                setNotifications(prev => [data.userNotification, ...prev]);
+                setUnread(prev => prev + 1);
+            })
+        }
+
+        if(orderSocket){
+            orderSocket.on("receive-notification", (data) => {
+                console.log(data)
                 setNotifications(prev => [data.userNotification, ...prev]);
                 setUnread(prev => prev + 1);
             })
@@ -31,8 +41,9 @@ const useNotifications  = () => {
 
         return () => {
             if(socket) socket.off('receive-notification');
+            if(orderSocket) orderSocket.off('receive-notification');
         }
-    }, [socket, data])
+    }, [socket, orderSocket, data])
 
     const handleReadNotification = async (id: string) => {
         const response = await readNotification.mutateAsync({ id });
@@ -40,6 +51,15 @@ const useNotifications  = () => {
         if(response.success){
             setNotifications(prev => prev.map(notification => notification._id === id ? { ...notification, status: "read"} : notification))
             setUnread(prev => prev - 1);
+        }
+    }
+
+    const handleReadAllNotifications = async () => {
+        const response = await readAllNotifications.mutateAsync();
+
+        if(response.success){
+            setNotifications(prev => prev.map(notification => ({ ...notification, status: 'read' })));
+            setUnread(0);
         }
     }
 
@@ -51,7 +71,8 @@ const useNotifications  = () => {
         isFetching, 
         page, 
         totalPages: data?.totalPages || 0,  
-        readNotification: handleReadNotification
+        readNotification: handleReadNotification,
+        readAllNotifications: handleReadAllNotifications
     }
 };
 

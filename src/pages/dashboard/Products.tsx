@@ -131,7 +131,7 @@ export default function Products () {
 
         promiseToast(deleteProduct.mutateAsync({ 
             id, 
-        }), "top-center", "Product succesfully deleted.")
+        }), "top-center")
     };
 
     const columns = getColumns({
@@ -142,6 +142,10 @@ export default function Products () {
         navigate,
     })
 
+    const onRowClick = (row : Product) => {
+        if(hasPermissions([PERMISSIONS.PRODUCT_DELETE])) navigate(`/dashboard/edit-product/${row._id}`);
+    }
+
     const downloadVariants = async () => {
         await variantService.downloadVariants({
             category: category === 'All' ? undefined : category,
@@ -151,7 +155,6 @@ export default function Products () {
 
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Products"
             description="View and manage all products"
         >
@@ -162,7 +165,7 @@ export default function Products () {
                     onClick={downloadVariants}
                 />
             </div>
-            <Card className="p-0 flex flex-col flex-1 min-h-0 space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <ProductsTableControls 
                     setSearch={setSearch}
                     setSorting={setSorting}
@@ -181,17 +184,9 @@ export default function Products () {
                     isLoading={isFetching}
                     noDataMessage="No Products Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
-            
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
-                <div className="flex justify-end">
-                    <Button 
-                        label="Transfer Stocks"
-                        onClick={() => navigate('/dashboard/distributors/transfer-stocks')}
-                    />
-                </div>
-            )}
         </PageContainer>
     )
 }

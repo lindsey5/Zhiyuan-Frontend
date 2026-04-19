@@ -84,7 +84,7 @@ export default function Categories () {
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
         if (!isConfirmed) return;
 
-        promiseToast(deleteCategory.mutateAsync({ id }), "top-center", "Category succesfully deleted.")
+        promiseToast(deleteCategory.mutateAsync({ id }), "top-center")
     };
 
     const columns = getColumns({
@@ -95,13 +95,19 @@ export default function Categories () {
         setCategory
     });
 
+    const onRowClick = (row : Category) => {
+        if(hasPermissions([PERMISSIONS.CATEGORY_UPDATE])) {
+            setCategory(row);
+            setShowModal(true);
+        }
+    }
+
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Categories"
             description="Manage all product categories"
         >
-            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+            <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <CategoriesControls 
                     setSearch={setSearch} 
                     category={category}
@@ -115,6 +121,7 @@ export default function Categories () {
                     showPagination={false} 
                     isLoading={isFetching}
                     noDataMessage="No Categories Found"
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

@@ -85,6 +85,11 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
         },
     ];
 
+    const onRowClick = (row : Distributor) => {
+        setSelectedDistributor(row); 
+        setDistributor(row._id);
+    }
+
     useEffect(() => {
         if(defaultDistributor) setSelectedDistributor(data?.distributors[0] || null);
     }, [data])
@@ -147,6 +152,7 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
                     noDataMessage="No Distributors Found"
                     total={data?.total || 0}
                     className="max-h-[70vh]"
+                    onRowClick={onRowClick}
                 />
                 </>
             )}

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
-import type { ColumnDef, PaginationState } from "@tanstack/react-table";
+import type { ColumnDef, PaginationState, Row } from "@tanstack/react-table";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { SortOption } from "../../types/type";
 import { useSponsoredItem } from "../../hooks/useSponsoredItem";
@@ -10,8 +10,12 @@ import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
+import SponsoredItemStatusChip from "../../components/sponsored-item/SponsoredItemStatusChip";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
+import Button from "../../components/ui/Button";
 
-const getColumns = () : ColumnDef<SponsoredItem>[] => [
+const getColumns = (hasPermissions : (permissions : string[]) => boolean) : ColumnDef<SponsoredItem>[] => [
     {
         header: "Product",
         accessorKey: "product_name",
@@ -39,12 +43,43 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         meta: { align: 'center' },
     },
     {
+        header: "Status",
+        accessorKey: "status",
+        cell: info => (
+            <div className="flex justify-center">
+                <SponsoredItemStatusChip status={info.getValue() as string} />
+            </div>
+        ),
+        meta: { align: 'center' },
+    },
+    {
         header: "Created At",
         cell: ({ row }) => formatDate(row.original.createdAt),
         meta: { align: 'center' },
     },
+    ...(hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) ? [
+        {
+            header: 'Action',
+            cell: ({ row } :{ row: Row<SponsoredItem>}) => (
+                <>
+                    {row.original.status === 'pending' && (
+                        <SponsoredItemActionButtons />
+                    )}
+                </>
+            ),
+            meta: { align: 'center' },
+        }
+    ] : [])
 ];
 
+function SponsoredItemActionButtons () {
+    return (
+        <div className="flex gap-2 items-center">
+            <Button className="text-xs py-1 bg-red-600 text-white border-none" label="Reject"/>
+            <Button className="text-xs py-1 bg-green-600 text-white border-none" label="Accept" />
+        </div>
+    )
+}
 
 export default function SponsoredItems () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -53,6 +88,8 @@ export default function SponsoredItems () {
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+
+    const { hasPermissions } = usePermissions();
 
     const { getSponsoredItems } = useSponsoredItem();
     
@@ -69,15 +106,14 @@ export default function SponsoredItems () {
     const debouncedParams = useDebounce(params, 800);
     const { data, isFetching } = getSponsoredItems(debouncedParams);
 
-    const columns = getColumns();
+    const columns = getColumns(hasPermissions);
     
     return (
         <PageContainer
             title="Sponsored Products"
-            className="md:max-h-screen" 
             description="View sponsored products"
         >
-            <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+            <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
                     setSearch={setSearch}
                     setSorting={setSorting}

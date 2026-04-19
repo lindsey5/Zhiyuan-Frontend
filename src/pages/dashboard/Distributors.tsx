@@ -78,7 +78,7 @@ const getColumns = ({
             header: 'Actions',
             cell: ({ row } : { row : Row<Distributor>}) => (
                 <div className="flex justify-center gap-2">
-                    {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) && (
+                    {hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STATS_VIEW]) && (
                         <IconButton 
                             onClick={() => navigate(`${row.original._id}`)}
                             icon={<Eye className="text-gold" size={20} />}
@@ -87,7 +87,7 @@ const getColumns = ({
                     {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE]) && (
                         <IconButton 
                             icon={<Trash color='red' size={20} />}
-                                onClick={() => handleDelete(row.original._id)}
+                            onClick={() => handleDelete(row.original._id)}
                         />
                     )}
                 </div>
@@ -137,13 +137,18 @@ export default function Distributors () {
         navigate,
     })
 
+    const onRowClick = (row : Distributor) => {
+        if(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_STATS_VIEW])){
+            navigate(`${row._id}`)
+        }
+    }
+
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Distributor Management"
             description="View and manage distributors"
         >
-            <Card className="p-0 flex flex-col flex-1 min-h-0 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen pt-5">
                 <DistributorControls 
                     setSearch={setSearch}
                     sort={sortBy}
@@ -162,6 +167,7 @@ export default function Distributors () {
                     showPagination
                     noDataMessage="No Distributors Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
             <DistributorModal 

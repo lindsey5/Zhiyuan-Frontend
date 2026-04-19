@@ -5,11 +5,11 @@ import Modal from "../ui/Modal";
 import { cn, formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
-import { useDistributorStock } from "../../hooks/useDistributorStock";
 import { errorToast, promiseToast } from "../../utils/sileo";
 import Chip from "../ui/Chip";
 import { useMemo } from "react";
 import { useSocket } from "../../hooks/useSocket";
+import { useStockTransfer } from "../../hooks/useStockTransfer";
 
 interface CartItem {
     variant: Variant;
@@ -17,7 +17,7 @@ interface CartItem {
     product_name: string;
 }
 
-interface TransferItemsProps {
+interface ItemsToDistributeProps {
     variants: CartItem[];
     distributorId: string | null;
     open: boolean;
@@ -25,15 +25,15 @@ interface TransferItemsProps {
     setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
 }
 
-export default function TransferItems({ 
+export default function ItemsToDistribute({ 
     variants, 
     open, 
     close, 
     setVariants, 
     distributorId
-}: TransferItemsProps) {
+}: ItemsToDistributeProps) {
     useSocket({ namespace: '/distributor-notification' })
-    const { createDistributorStocks } = useDistributorStock();
+    const { createStockTransferLog } = useStockTransfer();
     
     const addQty = (id: string) => {
         setVariants(prev =>
@@ -76,13 +76,13 @@ export default function TransferItems({
 
         if(!isConfirmed) return;
 
-        promiseToast(createDistributorStocks.mutateAsync({
+        promiseToast(createStockTransferLog.mutateAsync({
             id: distributorId || "",
             data: variants.map(variant => ({
                 variant_id: variant.variant._id,
                 quantity: variant.quantity
             }))
-        }))
+        }), 'top-center', () => window.location.href = '/dashboard/distributors/transfer-logs')
     }
 
     const handleQuantity = (quantity : number, variant: CartItem) => {
@@ -105,7 +105,7 @@ export default function TransferItems({
             <Card>
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-md xl:text-lg font-bold">Transfer Items</h2>
+                    <h2 className="text-md xl:text-lg font-bold">Items to Distribute</h2>
                     <button
                         onClick={close}
                         className="cursor-pointer hover:opacity-50"
@@ -117,7 +117,7 @@ export default function TransferItems({
                 {/* Body */}
                 <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
-                    <p className="text-sm text-center">No transfer items</p>
+                    <p className="text-sm text-center">No items</p>
                 ) : (
                     variants.map(item => (
                         <div
@@ -190,8 +190,8 @@ export default function TransferItems({
                     <GoldButton
                         className="text-xs xl:text-sm md:px-4 lg:py-3"
                         onClick={transfer}
-                        disabled={variants.length === 0 || createDistributorStocks.isPending || !isValidItems}
-                    >Transfer</GoldButton>
+                        disabled={variants.length === 0 || createStockTransferLog.isPending || !isValidItems}
+                    >Distribute</GoldButton>
                 </div>
             </Card>
         </Modal>

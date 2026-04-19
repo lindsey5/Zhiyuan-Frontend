@@ -18,7 +18,6 @@ import type { Variant, VariantWithProduct } from "../../types/variant.type";
 import VariantsTableControls from "../../components/variants/VariantsTableControls";
 import { promiseToast } from "../../utils/sileo";
 import EditVariant from "../../components/variants/EditVariant";
-import { useNavigate } from "react-router-dom";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { Download } from "lucide-react";
 import { variantService } from "../../service/variantService";
@@ -108,7 +107,6 @@ const getColumns = ({
 ];
 
 export default function Variants () {
-    const navigate = useNavigate();
     const { hasPermissions } = usePermissions();
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
@@ -164,9 +162,12 @@ export default function Variants () {
         })
     }
 
+    const onRowClick = (row : Variant) => {
+        if(hasPermissions([PERMISSIONS.PRODUCT_UPDATE])) handleEdit(row);
+    }
+
     return (
         <PageContainer 
-            className="md:max-h-screen" 
             title="Variants"
             description="View and manage all product variants"
         >
@@ -183,7 +184,7 @@ export default function Variants () {
                 variant={variant}
             />
 
-            <Card className="p-0 flex flex-col min-h-0 flex-grow space-y-5 pt-5">
+            <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <VariantsTableControls
                     setSearch={setSearch}
                     setSorting={setSorting}
@@ -202,16 +203,9 @@ export default function Variants () {
                     showPagination
                     noDataMessage="No Variants Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_TRANSFER]) && (
-                <div className="flex justify-end">
-                    <Button 
-                        label="Transfer Stocks"
-                        onClick={() => navigate('/dashboard/distributors/transfer-stocks')}
-                    />
-                </div>
-            )}
         </PageContainer>
     )
 }

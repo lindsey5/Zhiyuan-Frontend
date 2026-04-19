@@ -2,8 +2,13 @@ import type { StockTransferLog } from "../../types/stock-transfer-log.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { formatDate, formatToPeso } from "../../utils/utils";
-import GoldButton from "../ui/GoldButton";
 import Chip from "../ui/Chip";
+import { X } from "lucide-react";
+import StockTransferStatusButtons from "./StockTransferStatusButtons";
+import { useStockTransfer } from "../../hooks/useStockTransfer";
+import { promiseToast } from "../../utils/sileo";
+import StockTransferStatusChip from "./StockTransferStatusChip";
+import { useSocket } from "../../hooks/useSocket";
 
 interface StockTransferItemsProps {
     open: boolean;
@@ -12,17 +17,49 @@ interface StockTransferItemsProps {
 }
 
 export default function StockTransferItems ({ open, close, stockTransferLog } : StockTransferItemsProps) {
+    const { updateStockTransferLogStatus } = useStockTransfer();
+    useSocket({ namespace: '/distributor-notification' })
+
+    const updateStatus = async (status: string) => {
+        if (!stockTransferLog || updateStockTransferLogStatus.isPending) return;
+
+        const isConfirmed = confirm(
+            `Are you sure you want to mark this as "${status}"?`
+        );
+
+        if (!isConfirmed) return;
+
+        await promiseToast(
+            updateStockTransferLogStatus.mutateAsync({
+                id: stockTransferLog._id,
+                status,
+            })
+        );
+    };
 
     return (
         <Modal open={open} onClose={close}>
             <Card className="max-h-[80vh] md:max-h-[70vh] overflow-y-auto">
-                <h2 className="text-md font-semibold mb-3">Transfer Details</h2>
-                <div className="text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
-                    <p>Sent by: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
-                    <p>Received by: {stockTransferLog?.receiver.distributor_name}</p>
-                    <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-md md:text-lg font-bold">Distribution Details</h2>
+                    <button
+                        onClick={close}
+                        className="cursor-pointer hover:opacity-50"
+                    >
+                        <X />
+                    </button>
                 </div>
-                <h2 className="text-md font-semibold my-3">Transfered Items</h2>
+                <div className="flex flex-col items-start text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
+                    <p>Receiver:</p>
+                    <p>{stockTransferLog?.receiver.distributor_name}</p>
+                    <p className="font-semibold mb-3">{stockTransferLog?.receiver.distributor_id}</p>
+                    <p>Sender: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
+                    <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
+                    <div className="mt-3">
+                         <StockTransferStatusChip status={stockTransferLog?.status || ""} />
+                    </div>
+                </div>
+                <h2 className="text-md font-semibold my-3">Items to Distribute</h2>
                 <div className="space-y-3">
                 {stockTransferLog?.items.map(item => (
                         <div
@@ -50,12 +87,10 @@ export default function StockTransferItems ({ open, close, stockTransferLog } : 
                         </div>
                 ))}
                 </div>
-                <div className="flex justify-end mt-4">
-                    <GoldButton
-                        className="text-sm"
-                        onClick={close}
-                    >Close</GoldButton>
-                </div>
+                <StockTransferStatusButtons 
+                    currentStatus={stockTransferLog?.status || ""}
+                    onChangeStatus={updateStatus}
+                />
             </Card>
         </Modal>
     )

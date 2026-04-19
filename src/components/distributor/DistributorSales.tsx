@@ -9,56 +9,11 @@ import DistributorSalesControls from "../distributorSale/DistributorSalesControl
 import { formatDate, formatToPeso } from "../../utils/utils";
 import type { DistributorSale } from "../../types/distributorSale.type";
 import Button from "../ui/Button";
-import { Download } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { distributorSaleService } from "../../service/distributorSaleService";
 import Chip from "../ui/Chip";
-
-const columns: ColumnDef<DistributorSale>[] = [
-    {
-        header: "Product",
-        cell: ({ row }) => (
-            <div className="min-w-50 flex gap-3 items-center">
-                <img 
-                    className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
-                    src={row.original.variant.image_url} 
-                    alt={row.original.variant.variant_name}
-                />
-                <h1>{row.original.product.product_name}</h1>
-            </div>
-        ),
-    },
-    {
-        header: 'Variant',
-        cell: ({ row }) => (
-            <div className="min-w-70">
-                <Chip>{row.original.variant.variant_name}</Chip>
-            </div>
-        ),
-        meta: { align: 'center' }
-    },
-    {
-        header: "SKU",
-        accessorKey: 'variant.sku',
-        meta: { align: 'center' }
-    },
-    {
-        header: "Quantity",
-        accessorKey: 'quantity',
-        meta: { align: 'center' }
-    },
-    {
-        header: 'Date',
-        accessorKey: 'createdAt',
-        cell: (info) => formatDate(info.getValue() as string),
-        meta: { align: 'center' }
-    },
-    {
-        header: "Sales",
-        accessorKey: 'total_amount',
-        cell: info => <span className="font-bold">{formatToPeso(info.getValue() as number)}</span>,
-        meta: { align: 'center' }
-    },
-];
+import IconButton from "../ui/IconButton";
+import DistributorSalesModal from "../distributorSale/DistributorSalesModal";
 
 export default function DistributorSales ({ distributorId } : { distributorId: string }) {
     const [sorting, setSorting] = useState<SortOption>({
@@ -70,6 +25,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [distributorSale, setDistributorSale] = useState<DistributorSale | null>(null);
     const { getDistributorSales } = useDistributorSale();
 
     const params = useMemo(() => ({
@@ -99,9 +55,69 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
         });
     }
 
+    const columns: ColumnDef<DistributorSale>[] = [
+        {
+            header: "Product",
+            cell: ({ row }) => (
+                <div className="min-w-50 flex gap-3 items-center">
+                    <img 
+                        className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
+                        src={row.original.variant.image_url} 
+                        alt={row.original.variant.variant_name}
+                    />
+                    <h1>{row.original.product.product_name}</h1>
+                </div>
+            ),
+        },
+        {
+            header: 'Variant',
+            cell: ({ row }) => (
+                <div className="min-w-70">
+                    <Chip>{row.original.variant.variant_name}</Chip>
+                </div>
+            ),
+            meta: { align: 'center' }
+        },
+        {
+            header: "SKU",
+            accessorKey: 'variant.sku',
+            meta: { align: 'center' }
+        },
+        {
+            header: "Quantity",
+            accessorKey: 'quantity',
+            meta: { align: 'center' }
+        },
+        {
+            header: 'Date',
+            accessorKey: 'createdAt',
+            cell: (info) => formatDate(info.getValue() as string),
+            meta: { align: 'center' }
+        },
+        {
+            header: "Sales",
+            accessorKey: 'total_amount',
+            cell: info => <span className="font-bold">{formatToPeso(info.getValue() as number)}</span>,
+            meta: { align: 'center' }
+        },
+        {
+            header: 'Action',
+            cell: ({ row })  => (
+                <IconButton 
+                    icon={<Eye size={20}/>}
+                    onClick={() => setDistributorSale(row.original)}
+                />
+            )
+        }
+    ];
+
     return (
         <>
-        <Card className="flex flex-col flex-1 min-h-0 space-y-5 p-0 pt-5">
+        <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
+            <DistributorSalesModal 
+                close={() => setDistributorSale(null)}
+                distributorSale={distributorSale}
+            />
             <div className="flex items-center justify-between px-5">
                 <h1 className="font-bold text-lg">Distributor Sales</h1>
                 <Button 
@@ -131,6 +147,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 showPagination
                 noDataMessage="No Sales Found"
                 total={data?.total || 0}
+                onRowClick={(row) => setDistributorSale(row)}
             />
         </Card>
         </>
