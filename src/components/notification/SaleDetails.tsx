@@ -19,7 +19,7 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
     }, [totalSales])
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-md md:text-lg font-bold">Sale Details</h2>
                 <button
