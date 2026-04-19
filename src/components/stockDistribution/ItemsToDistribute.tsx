@@ -82,7 +82,7 @@ export default function ItemsToDistribute({
                 variant_id: variant.variant._id,
                 quantity: variant.quantity
             }))
-        }))
+        }), 'top-center', () => window.location.href = '/dashboard/distributors/transfer-logs')
     }
 
     const handleQuantity = (quantity : number, variant: CartItem) => {

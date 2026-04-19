@@ -12,7 +12,7 @@ export interface ReturnRequest {
         variant_id: string;
         quantity: number;
         variant: VariantWithProduct;
-        status: 'pending' | 'accepted' | 'processing' | 'delivered' | 'received' | 'rejected' | 'expired' | 'insufficient stock'
+        status: 'pending' | 'accepted' | 'processing' | 'delivered' | 'received' | 'cancelled' |'rejected' | 'expired' | 'insufficient stock'
     }[];
     reason: string;
     createdAt: string;

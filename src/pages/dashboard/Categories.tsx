@@ -84,7 +84,7 @@ export default function Categories () {
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
         if (!isConfirmed) return;
 
-        promiseToast(deleteCategory.mutateAsync({ id }), "top-center", "Category succesfully deleted.")
+        promiseToast(deleteCategory.mutateAsync({ id }), "top-center")
     };
 
     const columns = getColumns({

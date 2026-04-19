@@ -14,8 +14,8 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
     const { updateAllReturnRequestItems, updateReturnRequestItem } = useReturnRequest(); 
     const { hasPermissions } = usePermissions();
 
-    const handleUpdateItems = async (status: 'accepted' | 'rejected') => {
-        const isConfirmed = confirm(`Are you sure you want ${status === 'accepted' ? 'accept' : 'reject'} all items?`);
+    const handleUpdateItems = async (status: string) => {
+        const isConfirmed = confirm(`Are you sure you want to mark all items as ${status}?`);
 
         if(!isConfirmed) return;
 
@@ -29,7 +29,7 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
 
     const handleUpdateItem = async (status : string, variant_id: string ) => {
         const variant = returnRequest.items.find(item => item.variant_id === variant_id);
-        const isConfirmed = confirm(`Are you sure you want ${status === 'accepted' ? 'accept' : 'reject'} ${variant?.variant.product.product_name}-${variant?.variant.variant_name}?`);
+        const isConfirmed = confirm(`Are you sure you want to mark ${variant?.variant.product.product_name}-${variant?.variant.variant_name} as ${status}?`);
 
         if(!isConfirmed) return;
 
@@ -92,11 +92,16 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                                     >Accept</button>
                                 </>
                             }
-                            {item.status === 'delivered' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && (
+                            {item.status === 'accepted' && hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && (
                                 <>
                                 <button 
                                     disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
-                                    className="text-sm text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
+                                    className="border border-gray-400 text-xs px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
+                                    onClick={() => handleUpdateItem('cancelled', item.variant_id)}
+                                >Mark as Cancelled</button>
+                                <button 
+                                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
+                                    className="text-xs text-inverse bg-gold px-2 py-1 rounded-md cursor-pointer hover:opacity-70"
                                     onClick={() => handleUpdateItem('received', item.variant_id)}
                                 >Mark as Received</button>
                                 </>
@@ -115,27 +120,51 @@ export default function ReturnDetails ({ returnRequest, close } : { returnReques
                 <p className="text-break-all px-2 py-3 bg-black/10 max-h-20 overflow-y-auto">{returnRequest.reason}</p>
             </div>
             <div className="flex justify-end gap-3">
-            {hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) && returnRequest.items.some(item => item.status === 'pending') ? (
-                <>
-                <Button
-                    className="md:px-4 lg:py-3 bg-red-600 text-white borde-none"
-                    label="Reject All"   
-                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
-                    onClick={() => handleUpdateItems('rejected')}  
-                />
-                <GoldButton 
-                    className="text-sm"
-                    onClick={() => handleUpdateItems('accepted')}
-                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
-                >Accept All</GoldButton>
-                </>
-            ) : (
-                <Button
-                    className="md:px-4 lg:py-3"
-                    label="Close"   
-                    onClick={close}  
-                />
-            )}
+                {hasPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) ? (
+                    <>
+                        {returnRequest.items.some(item => item.status === "pending") && (
+                            <>
+                                <Button
+                                    className="md:px-4 lg:py-3 bg-red-600 text-white borde-none"
+                                    label="Reject All"
+                                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
+                                    onClick={() => handleUpdateItems("rejected")}
+                                />
+
+                                <GoldButton
+                                    className="text-sm"
+                                    onClick={() => handleUpdateItems("accepted")}
+                                    disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
+                                >
+                                    Accept All
+                                </GoldButton>
+                            </>
+                        )}
+
+                        {returnRequest.items.some(item => item.status === "accepted") && (
+                            <>
+                            <Button 
+                                className="text-xs"
+                                label="Mark All as Cancelled"
+                                onClick={() => handleUpdateItems("cancelled")}
+                            />
+                            <GoldButton
+                                className="text-xs"
+                                onClick={() => handleUpdateItems("received")}
+                                disabled={updateAllReturnRequestItems.isPending || updateReturnRequestItem.isPending}
+                            >
+                                Mark All as Received
+                            </GoldButton>
+                            </>
+                        )}
+
+                        {!returnRequest.items.some(item => item.status === "pending" || item.status === "accepted") && (
+                            <Button className="md:px-4 lg:py-3" label="Close" onClick={close} />
+                        )}
+                    </>
+                ) : (
+                    <Button className="md:px-4 lg:py-3" label="Close" onClick={close} />
+                )}
             </div>
         </div>
     )

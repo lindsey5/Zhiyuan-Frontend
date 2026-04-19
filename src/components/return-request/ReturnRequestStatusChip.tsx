@@ -34,6 +34,14 @@ const ReturnRequestStatusChip = ({ status } : { status: string }) => {
             </Chip>
         );
 
+        case "cancelled":
+        return (
+            <Chip className="flex items-center gap-2 capitalize">
+                <span className="w-2 h-2 rounded-full bg-gray-500"></span>
+                Cancelled
+            </Chip>
+        );
+
         default:
         return (
             <Chip className="flex items-center gap-2 capitalize">

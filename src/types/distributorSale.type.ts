@@ -13,6 +13,7 @@ export interface DistributorSale {
     quantity: number;
     total_amount: number;
     createdAt: string;
+    parent_distributor?: Distributor;
 }
 
 export interface GetDistributorSalesParams extends PaginationParams {

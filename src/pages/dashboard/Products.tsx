@@ -131,7 +131,7 @@ export default function Products () {
 
         promiseToast(deleteProduct.mutateAsync({ 
             id, 
-        }), "top-center", "Product succesfully deleted.")
+        }), "top-center")
     };
 
     const columns = getColumns({
