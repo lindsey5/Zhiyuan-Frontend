@@ -31,7 +31,7 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
         header: "Variant",
         cell: ({ row }) => (
-            <div className="min-w-30">
+            <div className="min-w-60">
                 <Chip>{row.original.variant.variant_name}</Chip>
             </div>
         ),
@@ -47,7 +47,7 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         header: "Status",
         accessorKey: "status",
         cell: info => (
-            <div className="flex justify-center">
+            <div className="flex justify-center min-w-30">
                 <SponsoredItemStatusChip status={info.getValue() as string} />
             </div>
         ),
