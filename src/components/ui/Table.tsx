@@ -9,7 +9,13 @@ type TableRowProps<T> = {
 
 const TableRow = <T,>({ row, onRowClick }: TableRowProps<T>) => {
     return (
-        <tr onClick={() => onRowClick?.(row.original)} className={onRowClick && 'cursor-pointer'}>
+        <tr 
+            onClick={(e) => {
+                e.stopPropagation();
+                onRowClick?.(row.original)
+            }} 
+            className={onRowClick && 'cursor-pointer'}
+        >
         {row.getVisibleCells().map(cell => {
             const align = (cell.column.columnDef.meta as any)?.align || 'left';
             return (

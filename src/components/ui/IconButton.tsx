@@ -14,7 +14,10 @@ export default function IconButton ({ onClick, icon, className } : IconButtonPro
                 "cursor-pointer p-2 rounded-full",
                 className
             )}
-            onClick={onClick}
+            onClick={(e) =>{
+                e.stopPropagation();
+                onClick()
+            }}
         >
             {icon}
         </button>

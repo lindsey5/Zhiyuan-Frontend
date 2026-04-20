@@ -42,23 +42,16 @@ const StockTransferItemsSkeleton = () => {
             <div className="h-5 w-44 rounded bg-loading"></div>
 
             {/* Items Skeleton List */}
-            <div className="space-y-3">
-                {[1, 2, 3].map((_, i) => (
-                <div
-                    key={i}
-                    className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3 border-b border-[var(--border-panel)] py-3"
-                >
-                    <div className="w-14 h-14 rounded bg-loading"></div>
+            <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3 border-b border-[var(--border-panel)] py-3">
+                <div className="w-14 h-14 rounded bg-loading"></div>
 
-                    <div className="flex-1 space-y-2">
+                <div className="flex-1 space-y-2">
                     <div className="h-4 w-52 rounded bg-loading"></div>
                     <div className="h-5 w-28 rounded bg-loading"></div>
                     <div className="h-4 w-20 rounded bg-loading"></div>
-                    </div>
-
-                    <div className="h-4 w-24 rounded bg-loading"></div>
                 </div>
-                ))}
+
+                <div className="h-4 w-24 rounded bg-loading"></div>
             </div>
         </div>
     )

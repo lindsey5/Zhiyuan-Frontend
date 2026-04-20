@@ -30,22 +30,16 @@ const ReturnDetailsSkeleton = () => {
             {/* Items Skeleton */}
             <div className="space-y-3 max-h-[40vh] overflow-y-auto">
             <div className="h-4 w-32 rounded bg-loading"></div>
+                <div className="border border-[var(--border-panel)] rounded-lg p-3 space-y-3">
+                    <div className="h-4 w-56 rounded bg-loading"></div>
+                    <div className="h-4 w-40 rounded bg-loading"></div>
+                    <div className="h-4 w-24 rounded bg-loading"></div>
 
-            {[1, 2, 3].map((_, i) => (
-                <div
-                key={i}
-                className="border border-[var(--border-panel)] rounded-lg p-3 space-y-3"
-                >
-                <div className="h-4 w-56 rounded bg-loading"></div>
-                <div className="h-4 w-40 rounded bg-loading"></div>
-                <div className="h-4 w-24 rounded bg-loading"></div>
-
-                <div className="flex gap-2">
-                    <div className="h-8 w-20 rounded bg-loading"></div>
-                    <div className="h-8 w-20 rounded bg-loading"></div>
+                    <div className="flex gap-2">
+                        <div className="h-8 w-20 rounded bg-loading"></div>
+                        <div className="h-8 w-20 rounded bg-loading"></div>
+                    </div>
                 </div>
-                </div>
-            ))}
             </div>
 
             {/* Date Skeleton */}
@@ -188,7 +182,7 @@ export default function ReturnDetails ({ return_id, close } : { return_id: strin
                                 </>
                             )}
 
-                            {returnDetails?.items.some(item => item.status === "accepted") && (
+                            {returnDetails?.items.every(item => item.status === "accepted") && (
                                 <>
                                 <Button 
                                     className="text-xs"
@@ -205,7 +199,7 @@ export default function ReturnDetails ({ return_id, close } : { return_id: strin
                                 </>
                             )}
 
-                            {!returnDetails?.items.some(item => item.status === "pending" || item.status === "accepted") && (
+                            {!returnDetails?.items.every(item => item.status === "pending" || item.status === "accepted") && (
                                 <Button className="md:px-4 lg:py-3" label="Close" onClick={close} />
                             )}
                         </>

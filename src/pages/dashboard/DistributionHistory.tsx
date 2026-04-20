@@ -50,7 +50,7 @@ const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<S
         header: "Date",
         accessorKey: "createdAt",
         cell: info => formatDate(info.getValue() as string),
-        meta: { align: 'left' },
+        meta: { align: 'center' },
     },
     {
         header: 'Action',

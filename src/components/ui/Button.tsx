@@ -6,7 +6,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: string
 }
 
-export default function Button({ icon, label, className, ...props }: ButtonProps) {
+export default function Button({ icon, label, className, onClick, ...props }: ButtonProps) {
     return (
         <button
             {...props}
@@ -14,6 +14,10 @@ export default function Button({ icon, label, className, ...props }: ButtonProps
                 "bg-input-ui md:px-4 px-3 py-2 rounded-sm border border-[var(--border-panel)] text-primary transition flex items-center justify-center gap-2 text-sm cursor-pointer hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed",
                 className
             )}
+            onClick={(e) => {
+                e.stopPropagation();
+                onClick?.(e);
+            }}
         >
             {icon}
             {label && <span>{label}</span>}
