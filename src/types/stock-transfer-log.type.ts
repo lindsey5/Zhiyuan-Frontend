@@ -11,10 +11,11 @@ export interface StockTransferLog {
     receiver_id: string;
     sender_id: string;
     createdAt: string;
+    updatedAt: string;
     receiver: Distributor;
     sender: User;
     items: StockTransferItem[];
-    status: StockTransferStatus
+    status: StockTransferStatus;
 }
 
 export interface StockTransferItem {

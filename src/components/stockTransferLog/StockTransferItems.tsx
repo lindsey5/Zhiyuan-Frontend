@@ -115,7 +115,10 @@ export default function StockTransferItems ({ open, close, transfer_id } : Stock
                         <p>{stockTransferLog?.receiver.distributor_name}</p>
                         <p className="font-semibold mb-3">{stockTransferLog?.receiver.distributor_id}</p>
                         <p>Sender: {`${stockTransferLog?.sender.firstname} ${stockTransferLog?.sender.lastname}`}</p>
-                        <p>Date: {formatDate(stockTransferLog?.createdAt)}</p>
+                        <p>Date Requested: {formatDate(stockTransferLog?.createdAt)}</p>
+                        {stockTransferLog?.status === 'received' && (
+                            <p className="text-sm">Date Received: {formatDate(stockTransferLog.updatedAt)}</p>
+                        )}
                         <div className="mt-3">
                             <StockTransferStatusChip status={stockTransferLog?.status || ""} />
                         </div>
