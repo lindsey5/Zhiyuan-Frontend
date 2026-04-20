@@ -8,7 +8,6 @@ export const useProduct = () => {
         useQuery<GetProductsResponse, Error>({
             queryKey: ['products', params],
             queryFn: () => productService.getProducts(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

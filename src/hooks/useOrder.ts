@@ -7,7 +7,6 @@ export const useOrder = () => {
         useQuery<GetOrdersResponse, Error>({
             queryKey: ["orders", params],
             queryFn: () => orderService.getOrders(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

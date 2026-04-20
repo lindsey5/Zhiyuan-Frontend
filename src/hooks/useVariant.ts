@@ -9,7 +9,6 @@ export const useVariant = () => {
         useQuery<GetVariantsResponse, Error>({
             queryKey: ['variants', params],
             queryFn: () => variantService.getVariants(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

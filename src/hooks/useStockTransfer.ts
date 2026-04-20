@@ -8,7 +8,6 @@ export const useStockTransfer = () => {
         useQuery<GetStockTransferLogsResponse, Error>({
             queryKey: ['stock-transfer-logs', params],
             queryFn: () => stockTransferLogService.getStockTransferLogs({ params }),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -17,7 +16,6 @@ export const useStockTransfer = () => {
         useQuery<StockTransferLogResponse, Error>({
             queryKey: [`stock-transfer-logs/${id}`],
             queryFn: () => stockTransferLogService.getStockTransferLogById(id),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

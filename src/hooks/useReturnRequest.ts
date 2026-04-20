@@ -15,7 +15,6 @@ export const useReturnRequest = () => {
         useQuery<GetReturnRequestsResponse, Error>({
             queryKey: ['return-requests', params],
             queryFn: () => returnRequestService.getReturnRequests(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -24,7 +23,6 @@ export const useReturnRequest = () => {
         useQuery<GetReturnRequestByIdResponse, Error>({
             queryKey: [`return-requests/${id}`],
             queryFn: () => returnRequestService.getReturnRequestById(id),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

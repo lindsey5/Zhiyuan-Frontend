@@ -8,7 +8,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorSalesResponse, Error>({
             queryKey: ['distributor-sales', params],
             queryFn: () => distributorSaleService.getAllDistributorSales(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -17,7 +16,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorSalesResponse, Error>({
             queryKey: ['distributor-sales', params],
             queryFn: () => distributorSaleService.getDistributorSales(id, params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -26,7 +24,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorSalesByPeriodResponse, Error>({
             queryKey: [`distributor-sales/${period}`],
             queryFn: () => distributorSaleService.getAllDistributorSalesByPeriod(period),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -35,7 +32,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorSalesByPeriodResponse, Error>({
             queryKey: [`distributor-sales/${period}/${id}`],
             queryFn: () => distributorSaleService.getDistributorSalesByPeriod(id, period),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -44,7 +40,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorItemsSoldResponse, Error>({
             queryKey: [`distributor-sales/${period}/items`],
             queryFn: () => distributorSaleService.getAllDistributorItemsSoldByPeriod(period),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -53,7 +48,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorItemsSoldResponse, Error>({
             queryKey: [`distributor-sales/${period}/items/${id}`],
             queryFn: () => distributorSaleService.getDistributorItemsSoldByPeriod(id, period),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -62,7 +56,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorMonthlySalesResponse, Error>({
             queryKey: [`distributor-sales/monthly`, year],
             queryFn: () => distributorSaleService.getAllDistributorMonthlySales(year),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -71,7 +64,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorMonthlySalesResponse, Error>({
             queryKey: [`distributor-sales/monthly/${id}`, year],
             queryFn: () => distributorSaleService.getDistributorMonthlySales(id, year),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -81,7 +73,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
             queryKey: [`distributor-sales/items-sold`, year],
             queryFn: () => distributorSaleService.getAllDistributorItemsSoldPerMonth(year),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -90,7 +81,6 @@ export const useDistributorSale = () => {
         useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({
             queryKey: [`distributor-sales/items-sold/${id}`, year],
             queryFn: () => distributorSaleService.getDistributorItemsSoldPerMonth(id, year),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

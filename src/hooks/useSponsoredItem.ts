@@ -8,7 +8,6 @@ export const useSponsoredItem = () => {
         useQuery<GetSponsoredItemsResponse, Error>({
             queryKey: ['sponsored-items', params],
             queryFn: () => sponsoredItemService.getSponsoredItems(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
