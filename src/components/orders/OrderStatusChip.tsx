@@ -43,6 +43,14 @@ export default function OrderStatusChip({ status }: { status: Order["status"] })
             </Chip>
         );
 
+        case "expired":
+        return (
+            <Chip className="capitalize flex items-center gap-2 bg-gray-200 text-gray-700">
+                <span className="h-2 w-2 rounded-full bg-gray-500"></span>
+                Expired
+            </Chip>
+        );
+
         default:
         return <Chip>{status}</Chip>;
     }
