@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { GetReturnRequestsResponse, UpdateReturnRequestItemsResponse } from "../types/returnRequest.type";
+import type { GetReturnRequestByIdResponse, GetReturnRequestsResponse, UpdateReturnRequestItemsResponse } from "../types/returnRequest.type";
 import type { GetSponsoredItemsParams } from "../types/sponsored-item";
 
 export const returnRequestService = {
@@ -18,6 +18,10 @@ export const returnRequestService = {
         apiAxios<GetReturnRequestsResponse>('return-requests', {
             method: HttpMethod.GET,
             params
+        }),
+    getReturnRequestById: (id: string) => 
+        apiAxios<GetReturnRequestByIdResponse>(`return-requests/${id}`, {
+            method: HttpMethod.GET,
         })
 
 }

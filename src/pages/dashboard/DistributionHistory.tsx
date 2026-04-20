@@ -112,7 +112,7 @@ export default function DistributionHistory () {
             <StockTransferItems 
                 open={showModal}
                 close={closeModal}
-                stockTransferLog={(stockTransferLog)}
+                transfer_id={stockTransferLog?._id || null}
             />
             <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-10">
                 <StockTransferLogsControls 

@@ -19,7 +19,7 @@ export default function NotificationModal ({ open, close, notification } : Notif
         >
             <Card>
                 {notification?.saleNotification && <SaleDetails close={close} saleNotification={notification.saleNotification}/>}
-                {notification?.returnNotification && <ReturnDetails close={close} returnRequest={notification.returnNotification.returnRequest}/>}
+                {notification?.returnNotification && <ReturnDetails close={close} return_id={notification.returnNotification.returnRequest._id}/>}
             </Card>
         </Modal>
     )

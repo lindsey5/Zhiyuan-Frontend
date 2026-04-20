@@ -73,7 +73,7 @@ export default function NotificationBell () {
                 <StockTransferItems 
                     close={() => setNotification(null)}
                     open={notification && notification.stockTransferNotification !== undefined}
-                    stockTransferLog={notification.stockTransferNotification.stockTransfer}
+                    transfer_id={notification.stockTransferNotification.stock_transfer_id}
                 />
             ) : (
                 <NotificationModal 

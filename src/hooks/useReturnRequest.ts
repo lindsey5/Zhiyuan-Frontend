@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { returnRequestService } from "../service/returnRequestService";
-import type { GetReturnRequestsParams, GetReturnRequestsResponse } from "../types/returnRequest.type";
+import type { GetReturnRequestByIdResponse, GetReturnRequestsParams, GetReturnRequestsResponse } from "../types/returnRequest.type";
 
 export const useReturnRequest = () => {
     const updateAllReturnRequestItems = useMutation({
@@ -20,9 +20,19 @@ export const useReturnRequest = () => {
         })
     )
 
+    const getReturnRequestById = (id : string) => (
+        useQuery<GetReturnRequestByIdResponse, Error>({
+            queryKey: [`return-requests/${id}`],
+            queryFn: () => returnRequestService.getReturnRequestById(id),
+            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
+        })
+    )
+
     return {
         updateAllReturnRequestItems,
         updateReturnRequestItem,
-        getReturnRequests
+        getReturnRequests,
+        getReturnRequestById
     };
 };

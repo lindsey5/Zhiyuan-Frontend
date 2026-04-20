@@ -39,6 +39,7 @@ export const promiseToast = <T extends { message?: string}>(
             setTimeout(() => {
                 onSuccess ? onSuccess() : window.location.reload()
             }, 1000)
+            
             return ({
                 title: "Success",
                 description: data?.message || successMessage,

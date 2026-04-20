@@ -103,7 +103,7 @@ export default function ReturnRequests () {
             <ReturnRequestModal 
                 close={() => setReturnRequest(null)}
                 open={returnRequest !== null}
-                returnRequest={returnRequest}
+                return_id={returnRequest?._id || null}
             />
             <Card className="p-0 flex flex-col max-h-screen pt-10">
                 <ReturnRequestControls 
