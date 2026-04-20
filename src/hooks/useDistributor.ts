@@ -8,7 +8,6 @@ export const useDistributor = () => {
         useQuery<GetDistributorsResponse, Error>({
             queryKey: ['distributors', params],
             queryFn: () => distributorService.getDistributors(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -17,7 +16,6 @@ export const useDistributor = () => {
         useQuery<GetDistributorResponse, Error>({
             queryKey: [`distributors/${id}`],
             queryFn: () => distributorService.getDistributorById(id),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

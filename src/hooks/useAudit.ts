@@ -8,7 +8,6 @@ export const useAudit = () => {
         useQuery<GetAuditLogsResponse, Error>({
             queryKey: ['audit_logs', params],
             queryFn: () => auditService.getAuditLogs({ params }),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

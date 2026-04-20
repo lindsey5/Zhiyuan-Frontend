@@ -72,7 +72,7 @@ export default function ItemsToDistribute({
             return;
         }
 
-        const isConfirmed = confirm("Are you sure you want to transfer these items to the distributor's stock?");
+        const isConfirmed = confirm("Are you sure you want to distribute these items to the distributor's stock?");
 
         if(!isConfirmed) return;
 

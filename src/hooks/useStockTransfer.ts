@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import type { CreateStockTransferLogPayload, GetStockTransferLogsParams, GetStockTransferLogsResponse } from "../types/stock-transfer-log.type";
+import type { CreateStockTransferLogPayload, GetStockTransferLogsParams, GetStockTransferLogsResponse, StockTransferLogResponse } from "../types/stock-transfer-log.type";
 import { stockTransferLogService } from "../service/stockTransferLogService";
 
 export const useStockTransfer = () => {
@@ -8,7 +8,14 @@ export const useStockTransfer = () => {
         useQuery<GetStockTransferLogsResponse, Error>({
             queryKey: ['stock-transfer-logs', params],
             queryFn: () => stockTransferLogService.getStockTransferLogs({ params }),
-            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
+        })
+    )
+
+    const getStockTransferLogById = (id: string) => (
+        useQuery<StockTransferLogResponse, Error>({
+            queryKey: [`stock-transfer-logs/${id}`],
+            queryFn: () => stockTransferLogService.getStockTransferLogById(id),
             refetchOnWindowFocus: false,
         })
     )
@@ -24,6 +31,7 @@ export const useStockTransfer = () => {
     return {
         getStockTransferLogs,
         updateStockTransferLogStatus,
-        createStockTransferLog
+        createStockTransferLog,
+        getStockTransferLogById
     }
 }

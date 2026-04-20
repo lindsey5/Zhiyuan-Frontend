@@ -39,7 +39,6 @@ export const useUser = () => {
         useQuery<GetUsersResponse, Error>({
             queryKey: ['users', params],
             queryFn: () => userService.getUsers(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

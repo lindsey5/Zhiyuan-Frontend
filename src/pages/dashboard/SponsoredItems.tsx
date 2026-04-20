@@ -10,7 +10,6 @@ import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
-import SponsoredItemStatusChip from "../../components/sponsored-item/SponsoredItemStatusChip";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import GoldButton from "../../components/ui/GoldButton";
@@ -31,7 +30,7 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
         header: "Variant",
         cell: ({ row }) => (
-            <div className="min-w-30">
+            <div className="min-w-60">
                 <Chip>{row.original.variant.variant_name}</Chip>
             </div>
         ),
@@ -41,16 +40,6 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         header: "Quantity",
         accessorKey: "quantity",
         cell: info => info.getValue(),
-        meta: { align: 'center' },
-    },
-    {
-        header: "Status",
-        accessorKey: "status",
-        cell: info => (
-            <div className="flex justify-center">
-                <SponsoredItemStatusChip status={info.getValue() as string} />
-            </div>
-        ),
         meta: { align: 'center' },
     },
     {

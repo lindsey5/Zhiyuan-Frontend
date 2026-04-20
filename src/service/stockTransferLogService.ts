@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { CreateStockTransferLogPayload, CreateStockTransferLogResponse, GetStockTransferLogsParams, GetStockTransferLogsResponse } from "../types/stock-transfer-log.type";
+import type { CreateStockTransferLogPayload, StockTransferLogResponse, GetStockTransferLogsParams, GetStockTransferLogsResponse } from "../types/stock-transfer-log.type";
 import type { ApiResponse } from "../types/type";
 
 export const stockTransferLogService = {
@@ -7,6 +7,12 @@ export const stockTransferLogService = {
         return apiAxios<GetStockTransferLogsResponse>("stock-transfer-logs", {
             method: HttpMethod.GET,
             params,
+        })
+    },
+
+    getStockTransferLogById: (id: string) => {
+        return apiAxios<StockTransferLogResponse>(`stock-transfer-logs/${id}`, {
+            method: HttpMethod.GET,
         })
     },
 
@@ -18,7 +24,7 @@ export const stockTransferLogService = {
     },
 
     createStockTransferLog: (id: string, data: CreateStockTransferLogPayload[]) => (
-        apiAxios<CreateStockTransferLogResponse>(`stock-transfer-logs/${id}`, {
+        apiAxios<StockTransferLogResponse>(`stock-transfer-logs/${id}`, {
             method: HttpMethod.POST,
             data
         })

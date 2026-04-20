@@ -8,7 +8,6 @@ export const useCategory = () => {
         useQuery<GetCategoryResponse, Error>({
             queryKey: ['categories', params],
             queryFn: () => categoryService.getCategories(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

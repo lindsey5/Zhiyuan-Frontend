@@ -148,7 +148,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     },
 
     "Sponsored Product Management": {
-        description: "Manage sponsored products including updating and viewing",
+        description: "Manage sponsored products including adding and viewing",
         SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
         SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },

@@ -8,7 +8,6 @@ export const useDistributorStock = () => {
         useQuery<GetDistributorStocksResponse, Error>({
             queryKey: ['distributor-stocks', params],
             queryFn: () => distributorStockService.getDistributorStocks(id, params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )
@@ -17,7 +16,7 @@ export const useDistributorStock = () => {
         useQuery<GetDistributorTotalStocksResponse, Error>({
             queryKey: [`distributor-stocks-${id}`],
             queryFn: () => distributorStockService.getDistributorTotalStocks(id),
-            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
     )
 
@@ -25,7 +24,7 @@ export const useDistributorStock = () => {
         useQuery<GetDistributorStockResponse, Error>({
             queryKey: [`distributor-stocks-${variant_id}-${distributor_id}`],
             queryFn: () => distributorStockService.getDistributorStock(variant_id, distributor_id),
-            placeholderData: (prev) => prev,
+            refetchOnWindowFocus: false,
         })
     )
 

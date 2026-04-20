@@ -7,7 +7,6 @@ export const useUserNotification = () => {
         useQuery<GetUserNotificationsResponse, Error>({
             queryKey: ['user-notifications', params],
             queryFn: () => userNotificationService.getUserNotifications(params),
-            placeholderData: (prev) => prev,
             refetchOnWindowFocus: false,
         })
     )

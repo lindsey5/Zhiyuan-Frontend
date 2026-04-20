@@ -36,3 +36,7 @@ export interface GetReturnRequestsParams extends PaginationParams {
 export interface GetReturnRequestsResponse extends PaginationResponse {
     returnRequests: ReturnRequest[];
 }
+
+export interface GetReturnRequestByIdResponse extends ApiResponse {
+    returnRequest: ReturnRequest
+}

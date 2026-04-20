@@ -4,15 +4,18 @@ import type { ApiResponse } from "./type";
 import type { User } from "./user.type";
 import type { VariantWithProduct } from "./variant.type";
 
+export type StockTransferStatus = 'pending'| 'approved'| 'processing' | 'delivered' | 'received' |  'cancelled' | 'rejected';
+
 export interface StockTransferLog {
     _id: string;
     receiver_id: string;
     sender_id: string;
     createdAt: string;
+    updatedAt: string;
     receiver: Distributor;
     sender: User;
     items: StockTransferItem[];
-    status: 'pending'| 'approved'| 'processing' | 'delivered' | 'received' |  'cancelled' | 'rejected'
+    status: StockTransferStatus;
 }
 
 export interface StockTransferItem {
@@ -39,6 +42,6 @@ export interface CreateStockTransferLogPayload {
     quantity: number;
 }
 
-export interface CreateStockTransferLogResponse extends ApiResponse {
+export interface StockTransferLogResponse extends ApiResponse {
     stockTransfer: StockTransferLog;
 }
