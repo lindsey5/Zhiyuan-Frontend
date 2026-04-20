@@ -13,8 +13,57 @@ import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
 import OrderControls from "../../components/orders/OrderControls";
 import { useSearchParams } from "react-router-dom";
+import OrderDetailsModal from "../../components/orders/OrdersModal";
 
-const getColumns = () : ColumnDef<Order>[] => [
+export default function Orders () {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const order_id = searchParams.get("order_id");
+
+    const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
+    
+    const [search, setSearch] = useState(order_id || "");
+    const debouncedSearch = useDebounce(search, 500);
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [paymentStatus, setPaymentStatus] = useState("");
+    const [deliveryType, setDeliveryType] = useState("");
+    const [status, setStatus] = useState("");
+
+    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const params = useMemo(() => ({
+        page: pagination.pageIndex + 1,
+        limit: pagination.pageSize,
+        search: debouncedSearch,
+        startDate,
+        endDate,
+        paymentMethod,
+        paymentStatus,
+        status,
+        deliveryType,
+        setSelectedOrder,
+        setIsModalOpen
+    }), [
+        pagination,
+        debouncedSearch,
+        startDate,
+        endDate,
+        paymentMethod,
+        paymentStatus,
+        status,
+        deliveryType
+    ])
+
+
+const getColumns = (
+    setSelectedOrder: (order: Order) => void,
+    setIsModalOpen: (open: boolean) => void
+) : ColumnDef<Order>[] => [
     {
         header: "Order ID",
         accessorKey: 'order_id'
@@ -59,55 +108,24 @@ const getColumns = () : ColumnDef<Order>[] => [
     },
     {
         header: 'Action',
-        cell: () => <IconButton icon={<Eye size={20}/>} onClick={() => console.log()}/>,
+        cell: ({row}) => ( 
+            <IconButton 
+                icon={<Eye size={20}/>} 
+                onClick={() => {
+                    setSelectedOrder(row.original);
+                    setIsModalOpen(true);
+                }}
+            />
+        ),
         meta: { align: 'center' },
-    },
+    }
     
 ]
-
-export default function Orders () {
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const order_id = searchParams.get("order_id");
-
-    const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    
-    const [search, setSearch] = useState(order_id || "");
-    const debouncedSearch = useDebounce(search, 500);
-
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-
-    const [paymentMethod, setPaymentMethod] = useState("");
-    const [paymentStatus, setPaymentStatus] = useState("");
-    const [deliveryType, setDeliveryType] = useState("");
-    const [status, setStatus] = useState("");
-
-    const params = useMemo(() => ({
-        page: pagination.pageIndex + 1,
-        limit: pagination.pageSize,
-        search: debouncedSearch,
-        startDate,
-        endDate,
-        paymentMethod,
-        paymentStatus,
-        status,
-        deliveryType
-    }), [
-        pagination,
-        debouncedSearch,
-        startDate,
-        endDate,
-        paymentMethod,
-        paymentStatus,
-        status,
-        deliveryType
-    ])
 
     const { getOrders } = useOrder();
     const { data, isFetching } = getOrders(params);
 
-    const columns = getColumns();
+    const columns = getColumns(setSelectedOrder, setIsModalOpen);
 
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -152,6 +170,11 @@ export default function Orders () {
                     isLoading={isFetching}
                     noDataMessage="No Orders Found"
                     total={data?.total || 0}
+                />
+                <OrderDetailsModal
+                    order={selectedOrder}
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
                 />
             </Card>
         </PageContainer>
