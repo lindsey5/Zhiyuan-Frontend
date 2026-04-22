@@ -51,14 +51,20 @@ export default function DistributorsControls ({
                     className="md:flex-1"
                     label="Sort by"
                     options={sortOptions.map(opt => opt)}
-                    onChange={(value) => setSort(value)}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setSort(value)
+                    }}
                     value={sort}
                 />
                 <Dropdown 
                     className="md:flex-1"
                     label="Order"
                     options={orderOptions.map(opt => opt)}
-                    onChange={(value) => setOrder(value as 'asc' | 'desc')}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setOrder(value as 'asc' | 'desc')
+                    }}
                     value={order}
                 />
             </FiltersMenu>
@@ -67,14 +73,20 @@ export default function DistributorsControls ({
                     className="flex-1"
                     label="Sort by"
                     options={sortOptions.map(opt => opt)}
-                    onChange={(value) => setSort(value)}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setSort(value)
+                    }}
                     value={sort}
                 />
                 <Dropdown 
                     className="flex-1"
                     label="Order"
                     options={orderOptions.map(opt => opt)}
-                    onChange={(value) => setOrder(value as 'asc' | 'desc')}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setOrder(value as 'asc' | 'desc')
+                    }}
                     value={order}
                 />
 

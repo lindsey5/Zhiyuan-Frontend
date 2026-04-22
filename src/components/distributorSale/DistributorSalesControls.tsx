@@ -62,18 +62,27 @@ export default function DistributorSalesControls ({
                 <div className="grid grid-cols-2 gap-3 ">
                     <DateInput 
                         label="From"
-                        onChange={setStartDate}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStartDate(value);
+                        }}
                         value={startDate}
                     />
                     <DateInput 
                         label="To"
-                        onChange={setEndDate}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}));
+                            setEndDate(value);
+                        }}
                         value={endDate}
                     />
                     <Dropdown 
                         label="Sort"
                         options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
-                        onChange={(value) => setSorting(options[value]) }
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setSorting(options[value]) 
+                        }}
                         value={getKeyByValue(options, sorting) || ""}
                     />
                 </div>

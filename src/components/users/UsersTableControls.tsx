@@ -34,7 +34,10 @@ export default function UsersTableControls({
             {/* Role Dropdown */}
             <div className="hidden md:block w-48">
                 <RoleDropdown 
-                    onChange={setRole}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setRole(value);
+                    }}
                     value={role}
                 />
             </div>
@@ -43,7 +46,10 @@ export default function UsersTableControls({
             <FiltersMenu className="md:hidden" containerStyle="w-[60vw] space-y-3">
                 <h1 className="font-bold text-md md:text-lg">Filter</h1>
                 <RoleDropdown 
-                    onChange={setRole}
+                    onChange={(value) => {
+                        setPagination(prev => ({...prev, pageIndex: 0}))
+                        setRole(value);
+                    }}
                     value={role}
                 />
             </FiltersMenu>

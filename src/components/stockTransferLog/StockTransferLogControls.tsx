@@ -62,18 +62,27 @@ export default function StockTransferLogsControls({
                     <div className="grid md:grid-cols-2 gap-5 mt-4">
                         <DateInput 
                             label="From"
-                            onChange={(value) => setStartDate(value)}
+                            onChange={(value) => {
+                                setPagination(prev => ({...prev, pageIndex: 0}))
+                                setStartDate(value)
+                            }}
                             value={startDate}
                         />
 
                         <DateInput 
                             label="To"
-                            onChange={(value) => setEndDate(value)}
+                            onChange={(value) => {
+                                setPagination(prev => ({...prev, pageIndex: 0}))
+                                setEndDate(value)
+                            }}
                             value={endDate}
                         />
 
                         <Dropdown 
-                            onChange={setStatus}
+                            onChange={(value) => {
+                                setPagination(prev => ({...prev, pageIndex: 0}))
+                                setStatus(value)
+                            }}
                             label="Status"
                             options={stockTransferStatus.map(s => ({
                                 label: s.label,

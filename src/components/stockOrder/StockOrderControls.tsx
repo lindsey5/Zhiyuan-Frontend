@@ -67,20 +67,29 @@ export default function StockOrderControls({
                 <div className="flex flex-col gap-3 grid md:grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
                         label="From"
-                        onChange={(value) => setStartDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStartDate(value)
+                        }}
                         value={startDate}
                     />
 
                     <DateInput 
                         label="To"
-                        onChange={(value) => setEndDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setEndDate(value)
+                        }}
                         value={endDate}
                     />
 
                     <Dropdown
                         label="Status"
                         value={status}
-                        onChange={(value) => setStatus(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStatus(value)
+                        }}
                         options={statusOptions}
                     />
                 </div>

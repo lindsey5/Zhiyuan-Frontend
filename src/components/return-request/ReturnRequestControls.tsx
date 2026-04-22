@@ -51,20 +51,29 @@ export default function ReturnRequestControls({
                 <div className="flex flex-col gap-3 grid md:grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
                         label="From"
-                        onChange={(value) => setStartDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStartDate(value)
+                        }}
                         value={startDate}
                     />
 
                     <DateInput 
                         label="To"
-                        onChange={(value) => setEndDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setEndDate(value)
+                        }}
                         value={endDate}
                     />
 
                     <Dropdown 
                         label="Sort"
                         value={order}
-                        onChange={(value) => setOrder(value as "asc" | "desc")}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setOrder(value as "asc" | "desc")
+                        }}
                         options={[
                             { label: 'NEWEST', value: 'desc' },
                             { label: 'OLDEST', value: 'asc' },

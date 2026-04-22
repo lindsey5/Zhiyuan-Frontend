@@ -96,41 +96,59 @@ export default function OrderControls({
                 <div className="flex flex-col gap-3 grid md:grid-cols-2 md:gap-5 mt-4">
                     <DateInput 
                         label="From"
-                        onChange={(value) => setStartDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStartDate(value)
+                        }}
                         value={startDate}
                     />
 
                     <DateInput 
                         label="To"
-                        onChange={(value) => setEndDate(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setEndDate(value)
+                        }}
                         value={endDate}
                     />
 
                     <Dropdown
                         label="Payment Method"
                         value={paymentMethod}
-                        onChange={(value) => setPaymentMethod(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setPaymentMethod(value)
+                        }}
                         options={paymentMethodOptions}
                     />
 
                     <Dropdown
                         label="Payment Status"
                         value={paymentStatus}
-                        onChange={(value) => setPaymentStatus(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setPaymentStatus(value)
+                        }}
                         options={paymentStatusOptions}
                     />
 
                     <Dropdown
                         label="Status"
                         value={status}
-                        onChange={(value) => setStatus(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setStatus(value)
+                        }}
                         options={statusOptions}
                     />
 
                     <Dropdown
                         label="Delivery Type"
                         value={deliveryType}
-                        onChange={(value) => setDeliveryType(value)}
+                        onChange={(value) => {
+                            setPagination(prev => ({...prev, pageIndex: 0}))
+                            setDeliveryType(value)
+                        }}
                         options={deliveryTypeOptions}
                     />
                 </div>

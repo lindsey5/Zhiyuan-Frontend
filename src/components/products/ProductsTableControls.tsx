@@ -49,14 +49,18 @@ export default function ProductsTableControls ({
                 <Dropdown 
                     label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
-                    onChange={(value) => 
+                    onChange={(value) => {
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }))  
                         setSorting(options[value])
-                    }
+                    }}
                     value={getKeyByValue(options, sorting) || ""}
                 />
                 <CategoryDropdown 
                     category={category}
-                    setCategory={setCategory}
+                    setCategory={(value) => {
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }))
+                        setCategory(value);
+                    }}
                 />
             </FiltersMenu>
             <div className="max-w-100 w-[40%] hidden md:flex items-center space-x-3 flex-wrap">
@@ -64,15 +68,19 @@ export default function ProductsTableControls ({
                     className="flex-1"
                     label="Sort"
                     options={Object.keys(options).map(opt => ({ label: opt, value: opt }))}
-                    onChange={(value) => 
+                    onChange={(value) =>{ 
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }))
                         setSorting(options[value])
-                    }
+                    }}
                     value={getKeyByValue(options, sorting) || ""}
                 />
                 <CategoryDropdown 
                     className="flex-1"
                     category={category}
-                    setCategory={setCategory}
+                    setCategory={(value) => {
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }))
+                        setCategory(value);
+                    }}
                 />
 
             </div>
