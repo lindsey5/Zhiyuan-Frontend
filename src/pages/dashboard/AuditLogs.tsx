@@ -21,7 +21,11 @@ const columns: ColumnDef<AuditLog>[] = [
     {
         header: "Date",
         accessorKey: "createdAt",
-        cell: info => formatDate(info.getValue() as string),
+        cell: info => (
+            <div className="min-w-60">
+                {formatDate(info.getValue() as string)}
+            </div>
+        ),
         meta: { align: 'left' },
     },
     {
@@ -55,6 +59,11 @@ const columns: ColumnDef<AuditLog>[] = [
     {
         header: "Description",
         accessorKey: "description",
+        cell: info => (
+            <div className="min-w-80">
+                <p>{info.getValue() as string}</p>
+            </div>
+        ),
         meta: { align: 'center' },
     },
     {
@@ -78,6 +87,11 @@ const columns: ColumnDef<AuditLog>[] = [
     {
         header: "Device Info",
         accessorKey: "user_agent",
+        cell: info => (
+            <div className="min-w-80">
+                <p>{info.getValue() as string}</p>
+            </div>
+        ),
         meta: { align: 'center' },
     }
 ];
