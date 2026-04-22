@@ -126,7 +126,7 @@ export default function Variants () {
         order: sorting.order,
     }), [pagination.pageIndex, pagination.pageSize, debouncedSearch, sorting, category]);
 
-    const debouncedParams = useDebounce(params, 500);
+    const debouncedParams = useDebounce(params, 800);
     const { getVariants, deleteVariant } = useVariant();
     const { data, isFetching } = getVariants(debouncedParams);
 

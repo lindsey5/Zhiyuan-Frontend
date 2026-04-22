@@ -11,13 +11,18 @@ import StockTransferLogsControls from "../../components/stockTransferLog/StockTr
 import StockTransferItems from "../../components/stockTransferLog/StockTransferItems";
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
-import StockTransferStatusChip from "../../components/stockTransferLog/StockTransferStatusChip";
+import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 
 interface DistributionHistoryColsParams{
     openModal: (transferLog : StockTransferLog) => void;
 }
 
 const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
+    {
+        header: "Transfer No.",
+        accessorKey: "transfer_no",
+        meta: { align: 'left' },
+    },
     {
         header: "Receiver",
         cell: ({ row }) => (
@@ -42,7 +47,7 @@ const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<S
         header: "Status",
         accessorKey: "status",
         cell: info => <div className="flex justify-center">
-            <StockTransferStatusChip status={info.getValue() as string}/>
+            <DeliveryStatusChip status={info.getValue() as string}/>
         </div>,
         meta: { align: 'center' },
     },
@@ -67,7 +72,7 @@ const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<S
 export default function DistributionHistory () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
 
     const [status, setStatus] = useState("");
 

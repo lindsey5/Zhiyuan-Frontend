@@ -7,10 +7,10 @@ import { X } from "lucide-react";
 import StockTransferStatusButtons from "./StockTransferStatusButtons";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import { promiseToast } from "../../utils/sileo";
-import StockTransferStatusChip from "./StockTransferStatusChip";
 import { useSocket } from "../../hooks/useSocket";
 import { useAuthStore } from "../../lib/store/authStore";
 import { useEffect, useState } from "react";
+import DeliveryStatusChip from "../ui/DeliveryStatusChip";
 
 interface StockTransferItemsProps {
     open: boolean;
@@ -60,7 +60,7 @@ const StockTransferItemsSkeleton = () => {
 export default function StockTransferItems ({ open, close, transfer_id } : StockTransferItemsProps) {
     const { updateStockTransferLogStatus } = useStockTransfer();
     const { user } = useAuthStore();
-    const id = user?._id;
+    const id = user?.id;
     useSocket({ namespace: '/distributor-notification' })
     const { getStockTransferLogById } = useStockTransfer();
     const { data, isFetching } = getStockTransferLogById(transfer_id || "");
@@ -93,7 +93,6 @@ export default function StockTransferItems ({ open, close, transfer_id } : Stock
         if(data?.stockTransfer) setStockTransferLog(data.stockTransfer);
     }, [data])
 
-
     return (
         <Modal open={open} onClose={close}>
             <Card className="max-h-[80vh] md:max-h-[70vh] overflow-y-auto">
@@ -120,7 +119,7 @@ export default function StockTransferItems ({ open, close, transfer_id } : Stock
                             <p className="text-sm">Date Received: {formatDate(stockTransferLog.updatedAt)}</p>
                         )}
                         <div className="mt-3">
-                            <StockTransferStatusChip status={stockTransferLog?.status || ""} />
+                            <DeliveryStatusChip status={stockTransferLog?.status || ""} />
                         </div>
                     </div>
                     <h2 className="text-md font-semibold my-3">Items to Distribute</h2>

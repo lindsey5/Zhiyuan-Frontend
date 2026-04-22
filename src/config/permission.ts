@@ -22,9 +22,9 @@ export const PERMISSIONS = {
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
 
-    // Order management
-    ORDER_READ_ALL: 'order:read:all',
-    ORDER_UPDATE: 'order:update',
+    // Sponsored Items
+    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
+    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 
     //Category management
     CATEGORY_READ_ALL: 'category:read:all',
@@ -36,29 +36,33 @@ export const PERMISSIONS = {
     DISTRIBUTOR_READ_ALL: 'distributor:read:all',
     DISTRIBUTOR_CREATE: 'distrubutor:create',
     DISTRIBUTOR_DELETE: 'distributor:delete',
+
+    // Distributor Sales
+    DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
+
+    /* Distributor Analytics */
+    DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
+    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
     
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
+
+    // Stock Orders
+    STOCK_ORDERS_VIEW_ALL: 'stock-orders:view:all',
+    STOCK_ORDERS_UPDATE: 'stock-orders:update',
 
     // Stock Distribution History
     STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: 'tranfer-logs:view:all',
     STOCK_DISTRIBUTION_CREATE: 'distributor-stock:transfer',
     STOCK_DISTRIBUTION_UPDATE: 'transfer-logs:update',
 
-    // Distributor Sales
-    DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
-
     // Distributor Return Requests
     DISTRIBUTOR_RETURN_REQUEST_VIEW: 'distributor-return:view',
     DISTRIBUTOR_RETURN_REQUEST_UPDATE: 'distributor-return:update',
 
-    /* Distributor Analytics */
-    DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
-    DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
-
-    // Sponsored Items
-    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
-    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
+    // Order management
+    ORDER_READ_ALL: 'order:read:all',
+    ORDER_UPDATE: 'order:update',
 }
 
 type PermissionGroup = {
@@ -101,18 +105,18 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         PRODUCT_DELETE: "Delete products including variants",
     },
 
-    "Order Management": {
-        description: "Manage customer orders including viewing and updating order status.",
-        ORDER_READ_ALL: "View all orders",
-        ORDER_UPDATE: "Update order status",
-    },
-
     "Category Management": {
         description: "Manage product categories including creation, updates, and deletion.",
         CATEGORY_READ_ALL: "View all categories",
         CATEGORY_CREATE: "Create categories",
         CATEGORY_UPDATE: "Update categories",
         CATEGORY_DELETE: "Delete categories",
+    },
+
+    "Sponsored Product Management": {
+        description: "Manage sponsored products including adding and viewing",
+        SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
+        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
 
     "Distributor Management": {
@@ -122,9 +126,22 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
     },
 
+    "Distributor Analytics": {
+        description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
+        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
+        DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
+        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
+    },
+
     "Distributor Stock": {
         description: "Monitor distributor's inventory / stocks.",
         DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
+    },
+
+    "Stock Orders": {
+        description: "Manage and monitor distributor's stock orders, including viewing all orders and updating order status.",
+        STOCK_ORDERS_VIEW_ALL: "View all distributor's stock orders",
+        STOCK_ORDERS_UPDATE: "Update distributor's stock order status",
     },
 
     "Stock Distribution History": {
@@ -140,17 +157,10 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_RETURN_REQUEST_UPDATE: "Update distributor return request status",
     },
 
-    "Distributor Analytics": {
-        description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
-        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
-        DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
-        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
-    },
-
-    "Sponsored Product Management": {
-        description: "Manage sponsored products including adding and viewing",
-        SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
-        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
+    "Order Management": {
+        description: "Manage customer walk-in orders including viewing and updating order status.",
+        ORDER_READ_ALL: "View all walk-in orders",
+        ORDER_UPDATE: "Update walk-in order status",
     },
 };
 

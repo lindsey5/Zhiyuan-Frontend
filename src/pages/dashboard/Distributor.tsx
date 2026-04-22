@@ -18,7 +18,7 @@ export default function Distributor () {
     const navigate = useNavigate();
     const { hasPermissions } = usePermissions();
     const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? "Inventory" : "Sales");
-    const debouncedSelected = useDebounce(selected, 500);
+    const debouncedSelected = useDebounce(selected, 800);
 
     return (
         <div className={cn(

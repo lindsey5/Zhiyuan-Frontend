@@ -69,7 +69,7 @@ export default function AddSponsoredItems () {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState('All');
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [showModal, setShowModal] = useState(false);
 

@@ -122,7 +122,7 @@ export default function Products () {
         order: sorting.order,
     }), [pagination.pageIndex, pagination.pageSize, debouncedSearch, sorting, category]);
 
-    const debouncedParams = useDebounce(params, 500);
+    const debouncedParams = useDebounce(params, 800);
     const { data, isFetching } = getProducts(debouncedParams);
 
     const deleteExistingProduct = (id: string) => {

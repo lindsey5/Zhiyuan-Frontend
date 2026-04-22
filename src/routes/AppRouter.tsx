@@ -25,6 +25,7 @@ import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
 import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
+import StockOrders from "../pages/dashboard/StockOrders";
 
 const router = createBrowserRouter([ 
     {
@@ -208,6 +209,14 @@ const router = createBrowserRouter([
                         Component: () => (
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]}>
                                 <DistributorReports />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'stock-orders',
+                        Component: () => (
+                            <ProtectedRoute anyPermissions={[PERMISSIONS.STOCK_ORDERS_UPDATE, PERMISSIONS.STOCK_ORDERS_VIEW_ALL]}>
+                                <StockOrders />
                             </ProtectedRoute>
                         )
                     },

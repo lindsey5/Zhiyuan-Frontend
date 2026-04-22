@@ -2,7 +2,7 @@ import type { PaginationResponse, PaginationParams } from "./pagination.type";
 import type { Role } from "./role.type";
 
 export interface User {
-  _id: string;
+  id: string;
   firstname: string;
   lastname: string;
   email: string;

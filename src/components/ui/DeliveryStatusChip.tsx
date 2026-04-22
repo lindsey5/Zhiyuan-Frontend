@@ -1,6 +1,6 @@
-import Chip from "../ui/Chip";
+import Chip from "./Chip";
 
-const StockTransferStatusChip = ({ status }: { status: string }) => {
+const DeliveryStatusChip = ({ status }: { status: string }) => {
     switch (status) {
         case "pending":
             return (
@@ -76,4 +76,4 @@ const StockTransferStatusChip = ({ status }: { status: string }) => {
     }
 };
 
-export default StockTransferStatusChip;
+export default DeliveryStatusChip;

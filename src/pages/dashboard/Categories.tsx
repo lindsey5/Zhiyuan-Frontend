@@ -75,7 +75,7 @@ export default function Categories () {
     const [category, setCategory] = useState<Category>();
     const [showModal, setShowModal] = useState(false);
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
 
     const { getCategories, deleteCategory } = useCategory();
     const { data, isFetching } = getCategories({ search: debouncedSearch });

@@ -53,7 +53,7 @@ export default function SponsoredItems () {
     const navigate = useNavigate();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');

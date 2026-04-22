@@ -62,7 +62,11 @@ export default function NotificationBell () {
 
         if(notification.orderNotification) {
             window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`
-        }else setNotification(notification);
+        }else if(notification.stockOrderNotification){
+             window.location.href = `/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`
+        }
+        
+        else setNotification(notification);
         
         if(notification.status === 'unread') await readNotification(notification._id);
     }

@@ -8,6 +8,7 @@ export type StockTransferStatus = 'pending'| 'approved'| 'processing' | 'deliver
 
 export interface StockTransferLog {
     _id: string;
+    transfer_no: string;
     receiver_id: string;
     sender_id: string;
     createdAt: string;

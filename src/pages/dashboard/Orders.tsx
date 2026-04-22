@@ -73,7 +73,7 @@ export default function Orders () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     
     const [search, setSearch] = useState(order_id || "");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");

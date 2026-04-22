@@ -22,7 +22,7 @@ export default function AllDistributorSales () {
         sortBy: 'createdAt'
     });
     const [search, setSearch] = useState('');
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');

@@ -65,7 +65,7 @@ const getColumns = (setReturnRequest : React.Dispatch<SetStateAction<ReturnReque
 export default function ReturnRequests () {
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [order, setOrder] = useState<"asc" | "desc">("desc");

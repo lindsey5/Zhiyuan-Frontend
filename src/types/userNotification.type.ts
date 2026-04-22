@@ -3,6 +3,7 @@ import type { DistributorSale } from "./distributorSale.type";
 import type { Order } from "./order.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ReturnRequest } from "./returnRequest.type";
+import type { StockOrder } from "./stock-order.type";
 import type { StockTransferLog } from "./stock-transfer-log.type";
 
 export interface UserNotification {
@@ -14,6 +15,7 @@ export interface UserNotification {
     returnNotification?: ReturnNotification;
     orderNotification?: OrderNotification;
     stockTransferNotification?: StockTransferNotification;
+    stockOrderNotification?: StockOrderNotification;
     createdAt: string;
 }
 
@@ -46,7 +48,13 @@ export interface StockTransferNotification{
     notification_id: string;
     stock_transfer_id: string;
     stockTransfer: StockTransferLog;
-    
+}
+
+export interface StockOrderNotification {
+    _id: string;
+    notification_id: string;
+    order_id: string;
+    stockOrder: StockOrder;
 }
 
 export interface GetUserNotificationsParams extends PaginationParams{}

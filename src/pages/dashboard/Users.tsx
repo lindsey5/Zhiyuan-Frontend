@@ -100,7 +100,7 @@ export default function Users () {
     const { hasAnyPermissions, hasPermissions } = usePermissions();
 
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const [role, setRole] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const params = useMemo(() => ({

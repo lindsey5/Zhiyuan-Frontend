@@ -108,7 +108,7 @@ export default function Distributors () {
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
+    const debouncedSearch = useDebounce(search, 800);
     const { getDistributors, deleteDistributor } = useDistributor();
 
     const params = useMemo(() => ({
