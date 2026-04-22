@@ -58,11 +58,10 @@ const StockTransferItemsSkeleton = () => {
 }
 
 export default function StockTransferItems ({ open, close, transfer_id } : StockTransferItemsProps) {
-    const { updateStockTransferLogStatus } = useStockTransfer();
+    const { updateStockTransferLogStatus, getStockTransferLogById } = useStockTransfer();
     const { user } = useAuthStore();
     const id = user?.id;
     useSocket({ namespace: '/distributor-notification' })
-    const { getStockTransferLogById } = useStockTransfer();
     const { data, isFetching } = getStockTransferLogById(transfer_id || "");
     const [stockTransferLog, setStockTransferLog] = useState<StockTransferLog | null>(null);
 

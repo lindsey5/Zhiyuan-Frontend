@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -12,11 +12,13 @@ import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 import { formatDate } from "../../utils/utils";
 import StockOrderControls from "../../components/stockOrder/StockOrderControls";
 import { useSearchParams } from "react-router-dom";
+import StockOrderDetails from "../../components/stockOrder/StockOrderDetails";
 
-const getColumns = () : ColumnDef<StockOrder>[] => [
+const getColumns = (setStockOrderId : Dispatch<SetStateAction<string | null>>) : ColumnDef<StockOrder>[] => [
     {
         header: "Stock Order ID",
-        accessorKey: 'stock_order_id'
+        accessorKey: 'stock_order_id',
+        meta: { align: 'center' },
     },
     {
         header: "Distributor",
@@ -25,7 +27,8 @@ const getColumns = () : ColumnDef<StockOrder>[] => [
                 <h1>{row.original.distributor.distributor_name}</h1>
                 <p className="text-gray">{row.original.distributor.email}</p>
             </div>
-        ) 
+        ),
+        meta: { align: 'center' },
     },
     {
         header: "Distributor ID",
@@ -50,7 +53,12 @@ const getColumns = () : ColumnDef<StockOrder>[] => [
     },
     {
         header: 'Action',
-        cell: () => <IconButton icon={<Eye size={20}/>} onClick={() => console.log()}/>,
+        cell: ({ row }) => (
+            <IconButton 
+                icon={<Eye size={20}/>} 
+                onClick={() => setStockOrderId(row.original._id)}
+            />
+        ),
         meta: { align: 'center' },
     },
     
@@ -88,8 +96,9 @@ export default function StockOrders () {
 
     const { getStockOrders } = useStockOrder();
     const { data, isFetching } = getStockOrders(params);
+    const [stockOrderId, setStockOrderId] = useState<string | null>(null);
 
-    const columns = getColumns();
+    const columns = getColumns(setStockOrderId);
 
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -106,6 +115,10 @@ export default function StockOrders () {
             title="Stock Orders"
             description="View and manage all stock orders and their current status"
         >
+            <StockOrderDetails 
+                close={() => setStockOrderId(null)}
+                stock_order_id={stockOrderId}
+            />
             <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <StockOrderControls 
                     startDate={startDate}

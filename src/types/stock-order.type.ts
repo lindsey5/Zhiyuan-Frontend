@@ -1,7 +1,9 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
-import type { Variant } from "./variant.type";
+import type { VariantWithProduct } from "./variant.type";
+
+export type StockOrderStatus = 'pending' | 'approved'| 'processing' | 'delivered' | 'received' | 'cancelled' | 'rejected' | 'failed'
 
 export interface StockOrder {
     _id: string;
@@ -9,11 +11,11 @@ export interface StockOrder {
     distributor_id: string;
     distributor: Distributor;
     items: {
-        variant: Variant;
+        variant: VariantWithProduct;
         variant_id: string;
         quantity: number;
-    };
-    status: 'pending' | 'approved'| 'processing' | 'delivered' | 'received' | 'cancelled' | 'rejected' | 'failed';
+    }[];
+    status: StockOrderStatus;
     createdAt: string;
     updatedAt: string;
 }
