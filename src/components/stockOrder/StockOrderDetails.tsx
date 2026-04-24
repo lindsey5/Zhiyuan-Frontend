@@ -138,7 +138,7 @@ export default function StockOrderDetails ({ stock_order_id, close } : StockOrde
                         </div>
                     </div>
                     <h2 className="text-md font-semibold my-3">Items</h2>
-                    <div className="space-y-3">
+                    <div className="space-y-3 max-h-[30vh] overflow-y-auto">
                     {stockOrder?.items.map(item => (
                             <div
                                 key={item.variant._id}

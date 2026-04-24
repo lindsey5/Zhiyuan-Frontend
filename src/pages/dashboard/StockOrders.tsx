@@ -113,7 +113,7 @@ export default function StockOrders () {
     return (
         <PageContainer
             title="Stock Orders"
-            description="View and manage all stock orders and their current status"
+            description="View and manage all distributor's stock orders"
         >
             <StockOrderDetails 
                 close={() => setStockOrderId(null)}

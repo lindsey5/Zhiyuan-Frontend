@@ -98,7 +98,7 @@ export default function ReturnRequests () {
     return (
         <PageContainer
             title="Return Requests"
-            description="Manage and review all product return requests submitted by distributors."
+            description="Manage and review all return requests submitted by distributors."
         >
             <ReturnRequestModal 
                 close={() => setReturnRequest(null)}

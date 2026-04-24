@@ -185,6 +185,7 @@ export default function ItemsToDistribute({
                         className="md:px-4 lg:py-3"
                         label="Cancel"   
                         onClick={close}  
+                        disabled={createStockTransferLog.isPending}
                     />
 
                     <GoldButton

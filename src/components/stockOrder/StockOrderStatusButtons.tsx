@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 import GoldButton from "../ui/GoldButton";
 
 const STATUS_FLOW: Record<string, string[]> = {
-    pending: ["rejected", "cancelled", "approved", ],
+    pending: ["rejected", "approved"],
     approved: ["cancelled", "processing"],
     processing: ["cancelled", "delivered"],
     delivered: ["failed"],

@@ -70,7 +70,7 @@ export default function NotificationBell () {
         
         if(notification.status === 'unread') await readNotification(notification._id);
     }
-
+    console.log(notifications)
     return (
         <div id="notification-bell" className="relative">
             {notification?.stockTransferNotification ? (

@@ -47,7 +47,7 @@ export default function StockDistribution () {
         <PageContainer
             title="Distribute Stocks"
             className="relative"
-            description="Distribute stocks to Distributor"
+            description="Distribute stocks to distributor"
         >
             <div className="flex justify-end">
                 <GoldButton 
