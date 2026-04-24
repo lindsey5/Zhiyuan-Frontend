@@ -1,4 +1,4 @@
-import { BarChartBig, Bell, Repeat, Undo2 } from "lucide-react";
+import { BarChartBig, Bell, ClipboardList, Repeat, ShoppingCart, Undo2 } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useEffect, useState } from "react";
 import useNotifications from "../../hooks/useNotifications";
@@ -30,6 +30,22 @@ function getIcon (notification : UserNotification, isDark : boolean) {
     if(notification.stockTransferNotification) {
         return (
             <Repeat 
+                className="flex-shrink-0  text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
+    if(notification.stockOrderNotification) {
+        return (
+            <ShoppingCart
+                className="flex-shrink-0  text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
+    if(notification.orderNotification) {
+        return (
+            <ClipboardList
                 className="flex-shrink-0  text-inverse bg-gold rounded-full w-10 h-10 p-2" 
             />
         )
