@@ -5,15 +5,11 @@ import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { SortOption } from "../../types/type";
 import { useSponsoredItem } from "../../hooks/useSponsoredItem";
-import type { SponsoredItem } from "../../types/sponsored-item";
+import type { SponsoredItem } from "../../types/sponsored-item.type";
 import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
-import usePermissions from "../../hooks/usePermissions";
-import { PERMISSIONS } from "../../config/permission";
-import GoldButton from "../../components/ui/GoldButton";
-import { useNavigate } from "react-router-dom";
 
 const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
@@ -22,7 +18,7 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         cell: ({ row }) => (
             <div className="min-w-50 flex items-center gap-3 justify-start">
                 <img className="w-10 h-10 rounded-md object-cover" src={row.original.variant.image_url} />
-                <span className="text-xs xl:text-sm">{row.original.product.product_name}</span>
+                <span className="text-xs xl:text-sm">{row.original.variant.product.product_name}</span>
             </div>
         ),
         meta: { align: 'left' },
@@ -50,7 +46,6 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
 ];
 
 export default function SponsoredItems () {
-    const navigate = useNavigate();
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 800);
@@ -58,7 +53,6 @@ export default function SponsoredItems () {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
-    const { hasPermissions } = usePermissions();
 
     const { getSponsoredItems } = useSponsoredItem();
     
@@ -80,16 +74,8 @@ export default function SponsoredItems () {
     return (
         <PageContainer
             title="Sponsored Products"
-            description="View sponsored products"
+            description="View and manage sponsored products"
         >
-            {hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_CREATE]) && (
-                <div className="flex justify-end">
-                    <GoldButton
-                        className="text-sm"
-                        onClick={() => navigate('/dashboard/sponsored-products/add')}
-                    >Add Sponsored Products</GoldButton>
-                </div>
-            )}
             <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
                     setSearch={setSearch}

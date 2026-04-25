@@ -23,7 +23,7 @@ export const PERMISSIONS = {
     PRODUCT_DELETE: 'product:delete',
 
     // Sponsored Items
-    SPONSORED_PRODUCT_CREATE: 'sponsored-items:create',
+    SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
     SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 
     //Category management
@@ -116,12 +116,6 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         CATEGORY_DELETE: "Delete categories",
     },
 
-    "Sponsored Product Management": {
-        description: "Manage sponsored products including adding and viewing",
-        SPONSORED_PRODUCT_CREATE: 'Create sponsored products',
-        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
-    },
-
     "Distributor Management": {
         description: "Manage distributors, their accounts, stock inventory, and distribution activities.",
         DISTRIBUTOR_READ_ALL: "View all distributors",
@@ -163,6 +157,12 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         description: "Manage distributor return requests including viewing and updating request statuses.",
         DISTRIBUTOR_RETURN_REQUEST_VIEW: "View distributor return requests",
         DISTRIBUTOR_RETURN_REQUEST_UPDATE: "Update distributor return request status",
+    },
+
+    "Sponsored Product Management": {
+        description: "Manage sponsored products including status update and viewing",
+        SPONSORED_PRODUCT_UPDATE: 'Update sponsored product status',
+        SPONSORED_PRODUCT_VIEW_ALL: 'Access all sponsored products',
     },
 
     "Order Management": {

@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { CreateSponsoredItemsPayload, CreateSponsoredItemsResponse, GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item";
+import type { GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item.type";
 
 export const sponsoredItemService = {
     getSponsoredItems: (params: GetSponsoredItemsParams) =>
@@ -7,10 +7,4 @@ export const sponsoredItemService = {
             method: HttpMethod.GET,
             params
         }),
-    createSponsoredItems: (data : CreateSponsoredItemsPayload) => {
-        return apiAxios<CreateSponsoredItemsResponse>("sponsored-items", {
-            method: HttpMethod.POST,
-            data
-        })
-    },
 };

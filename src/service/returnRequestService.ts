@@ -1,6 +1,6 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import type { GetReturnRequestByIdResponse, GetReturnRequestsResponse, UpdateReturnRequestItemsResponse } from "../types/returnRequest.type";
-import type { GetSponsoredItemsParams } from "../types/sponsored-item";
+import type { GetSponsoredItemsParams } from "../types/sponsored-item.type";
 
 export const returnRequestService = {
     updateAllReturnRequestItems: (data : { status : string; distributor_id: string; return_id: string; }) => apiAxios<UpdateReturnRequestItemsResponse>(`return-requests/${data.return_id}/${data.distributor_id}`, {

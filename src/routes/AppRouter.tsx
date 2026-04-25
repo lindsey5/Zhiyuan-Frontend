@@ -259,24 +259,11 @@ const router = createBrowserRouter([
             },
             {
                 path: 'sponsored-products',
-                children: [
-                    {
-                        index: true,
-                        Component: () => (
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL]}>
-                                <SponsoredItems />
-                            </ProtectedRoute>
-                        )
-                    },
-                    {
-                        path: 'add',
-                        Component: () => (
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.SPONSORED_PRODUCT_CREATE]}>
-                                <AddSponsoredItems />
-                            </ProtectedRoute>
-                        )
-                    }
-                ]
+                Component: () => (
+                    <ProtectedRoute anyPermissions={[PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_UPDATE]}>
+                        <SponsoredItems />
+                    </ProtectedRoute>
+                )
             },
         ]
     },

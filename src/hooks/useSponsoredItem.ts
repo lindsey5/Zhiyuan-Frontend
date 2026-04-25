@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
-import type { CreateSponsoredItemsPayload, GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item"
+import { useQuery } from "@tanstack/react-query"
+import type { GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item.type"
 import { sponsoredItemService } from "../service/sponsoredItemService"
 
 export const useSponsoredItem = () => {
@@ -12,12 +12,7 @@ export const useSponsoredItem = () => {
         })
     )
 
-    const createSponsoredItems= useMutation({
-        mutationFn: (data : CreateSponsoredItemsPayload) =>  sponsoredItemService.createSponsoredItems(data),
-    })
-
     return {
         getSponsoredItems,
-        createSponsoredItems,
     }
 }

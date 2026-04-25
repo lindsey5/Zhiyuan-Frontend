@@ -1,13 +1,14 @@
+import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
-import type { Product } from "./product.type";
-import type { ApiResponse } from "./type";
-import type { Variant } from "./variant.type";
+import type { VariantWithProduct } from "./variant.type";
 
 export interface SponsoredItem {
     _id: string;
+    sponsored_id: string;
+    distributor_id: string;
+    distributor: Distributor;
     variant_id: string;
-    product: Product;
-    variant: Variant;
+    variant: VariantWithProduct;
     quantity: number;
     createdAt: string;
     status: 'pending' | 'accepted' | 'rejected';
@@ -23,16 +24,5 @@ export interface GetSponsoredItemsParams extends PaginationParams{
 
 export interface GetSponsoredItemsResponse extends PaginationResponse {
     success: true;
-    sponsoredItems: SponsoredItem[];
-}
-
-export interface CreateSponsoredItemsPayload {
-    newSponsoredItems: {
-        variant_id: string;
-        quantity: number;
-    }[];
-}
-
-export interface CreateSponsoredItemsResponse extends ApiResponse {
     sponsoredItems: SponsoredItem[];
 }
