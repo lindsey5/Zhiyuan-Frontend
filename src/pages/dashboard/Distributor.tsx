@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DistributorInfo from "../../components/distributors/DistributorInfo";
 import DistributorInventory from "../../components/distributor/DistributorInventory";
 import { useState } from "react";
