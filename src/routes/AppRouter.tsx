@@ -24,7 +24,6 @@ import DistributorReports from "../pages/dashboard/Reports";
 import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
-import AddSponsoredItems from "../pages/dashboard/AddSponsoredItems";
 import StockOrders from "../pages/dashboard/StockOrders";
 
 const router = createBrowserRouter([ 
