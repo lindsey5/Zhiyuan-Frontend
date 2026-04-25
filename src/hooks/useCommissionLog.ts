@@ -13,7 +13,7 @@ export const useCommissionLog = () => {
 
     const getCommissions = ({ distributor_id, params } : { distributor_id: string, params : GetCommissionsParams}) => (
         useQuery<GetCommissionsResponse, Error>({
-            queryKey: [`commission-log/${distributor_id}`],
+            queryKey: [`commission-log/${distributor_id}`, params],
             queryFn: () => commissionLogService.getDistributorCommissions(distributor_id, params),
             refetchOnWindowFocus: false,
         })
