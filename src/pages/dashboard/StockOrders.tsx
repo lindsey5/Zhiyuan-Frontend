@@ -83,8 +83,8 @@ export default function StockOrders () {
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
         search: debouncedSearch,
-        startDate,
-        endDate,
+        startDate: startDate ? formatDate(startDate) : "",
+        endDate: endDate ? formatDate(endDate) : "",
         status,
     }), [
         pagination,

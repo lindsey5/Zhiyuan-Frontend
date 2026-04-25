@@ -6,7 +6,7 @@ import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import type { Order } from "../../types/order.type";
 import Card from "../../components/ui/Card";
 import CustomizedTable from "../../components/ui/Table";
-import { formatToPeso } from "../../utils/utils";
+import { formatDate, formatToPeso } from "../../utils/utils";
 import Chip from "../../components/ui/Chip";
 import OrderStatusChip from "../../components/orders/OrderStatusChip";
 import IconButton from "../../components/ui/IconButton";
@@ -87,8 +87,8 @@ export default function Orders () {
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
         search: debouncedSearch,
-        startDate,
-        endDate,
+        startDate: startDate ? formatDate(startDate) : "",
+        endDate: endDate ? formatDate(endDate) : "",
         paymentMethod,
         paymentStatus,
         status,

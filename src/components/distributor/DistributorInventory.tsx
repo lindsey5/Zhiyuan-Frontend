@@ -12,6 +12,10 @@ import Chip from "../ui/Chip";
 import { distributorStockService } from "../../service/distributorStockService";
 import Button from "../ui/Button";
 import { Download } from "lucide-react";
+import { PERMISSIONS } from "../../config/permission";
+import GoldButton from "../ui/GoldButton";
+import { useNavigate } from "react-router-dom";
+import usePermissions from "../../hooks/usePermissions";
 
 const columns: ColumnDef<DistributorStock>[] = [
     {
@@ -62,6 +66,8 @@ const columns: ColumnDef<DistributorStock>[] = [
 ];
 
 export default function DistributorInventory ({ distributorId } : { distributorId: string }) {
+    const navigate = useNavigate();
+    const { hasPermissions } = usePermissions();
     const { getDistributorStocks } = useDistributorStock();
     
     const [sorting, setSorting] = useState<SortOption>({
@@ -98,6 +104,17 @@ export default function DistributorInventory ({ distributorId } : { distributorI
     }
 
     return (
+        <>
+        {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
+            <div className="flex justify-end">
+                <GoldButton
+                    className="text-sm"
+                    onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${distributorId}`)}
+                >
+                    Distribute Stocks
+                </GoldButton>
+            </div>
+        )}
         <Card className="p-0 max-h-screen flex flex-col gap-3 pt-5">
             <h1 className="px-5 font-bold text-lg">Distributor Inventory</h1>
             <div className="flex justify-end px-5">
@@ -124,5 +141,6 @@ export default function DistributorInventory ({ distributorId } : { distributorI
                 total={data?.total || 0}
             />
         </Card>
+        </>
     )
 }

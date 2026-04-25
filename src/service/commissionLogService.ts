@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { GetCommissionsPerMonthResponse } from "../types/commissionLog.type";
+import { type GetCommissionsResponse, type GetCommissionsParams, type GetCommissionsPerMonthResponse } from "../types/commissionLog.type";
 
 export const commissionLogService = {
     
@@ -8,4 +8,11 @@ export const commissionLogService = {
             method: HttpMethod.GET
         })
     ),
+
+    getDistributorCommissions: (distributor_id: string, params: GetCommissionsParams) => (
+        apiAxios<GetCommissionsResponse>(`commission-logs/${distributor_id}`,{
+            method: HttpMethod.GET,
+            params,
+        })
+    )
 };

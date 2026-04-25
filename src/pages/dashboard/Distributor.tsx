@@ -10,12 +10,11 @@ import DistributorSales from "../../components/distributor/DistributorSales";
 import DistributorStats from "../../components/distributor/distributorStats/DistributorStats";
 import { cn } from "../../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
-import GoldButton from "../../components/ui/GoldButton";
+import DistributorCommissions from "../../components/distributor/DistributorCommissions/DistributorCommissions";
 
 export default function Distributor () {
     const params = useParams();
     const id = params.id;
-    const navigate = useNavigate();
     const { hasPermissions } = usePermissions();
     const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? "Inventory" : "Sales");
     const debouncedSelected = useDebounce(selected, 800);
@@ -25,56 +24,48 @@ export default function Distributor () {
             "flex flex-col gap-3 p-2 lg:p-6",
         )}>
             <DistributorInfo id={id || ""} />
-                <Tabs
-                    items={[
-                        // Inventory tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])
-                        ? [{
-                            label: "Inventory",
-                            icon: <Package size={20} />,
-                            onClick: () => setSelected("Inventory"),
-                            }]
-                        : []),
+            <Tabs
+                className="overflow-x-auto"
+                items={[
+                    // Inventory tab (conditionally)
+                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])
+                    ? [{
+                        label: "Inventory",
+                        icon: <Package size={20} />,
+                        onClick: () => setSelected("Inventory"),
+                        }]
+                    : []),
 
-                        // Sales tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])
-                        ? [{
-                            label: "Sales",
-                            icon: <BarChartBig size={20} />,
-                            onClick: () => setSelected("Sales"),
-                            }]
-                        : []),
+                    // Sales tab (conditionally)
+                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])
+                    ? [{
+                        label: "Sales",
+                        icon: <BarChartBig size={20} />,
+                        onClick: () => setSelected("Sales"),
+                        }]
+                    : []),
 
-                        // Stats tab (conditionally)
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])
-                        ? [{
-                            label: "Stats",
-                            icon: <FileBarChart size={20} />,
-                            onClick: () => setSelected("Stats"),
-                            }]
-                        : []),
+                    // Stats tab (conditionally)
+                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])
+                    ? [{
+                        label: "Stats",
+                        icon: <FileBarChart size={20} />,
+                        onClick: () => setSelected("Stats"),
+                        }]
+                    : []),
 
-                        {
-                        label: "Commissions",
-                        icon: <HandCoins size={20} />,
-                        onClick: () => setSelected("Commissions"),
-                        }
-                    ]}
-                    defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
-                />
-            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) && (
-                <div className="flex justify-end">
-                    <GoldButton
-                        className="text-sm"
-                        onClick={() => navigate(`/dashboard/distributors/transfer-stocks?id=${id}`)}
-                    >
-                        Distribute Stocks
-                    </GoldButton>
-                </div>
-            )}
+                    {
+                    label: "Commissions",
+                    icon: <HandCoins size={20} />,
+                    onClick: () => setSelected("Commissions"),
+                    }
+                ]}
+                defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
+            />
             {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
             {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
             {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
+            {debouncedSelected === "Commissions" && <DistributorCommissions distributorId={id || ""}/>}
         </div>
     )
 }

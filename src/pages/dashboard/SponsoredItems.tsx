@@ -68,8 +68,8 @@ export default function SponsoredItems () {
         search: debouncedSearch,
         sortBy: sorting.sortBy,
         order: sorting.order,
-        startDate,
-        endDate,
+        startDate: startDate ? formatDate(startDate) : "",
+        endDate: endDate ? formatDate(endDate) : "",
     }), [pagination.pageIndex, pagination.pageSize, debouncedSearch, sorting]);
 
     const debouncedParams = useDebounce(params, 800);

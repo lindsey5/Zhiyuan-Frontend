@@ -47,6 +47,9 @@ export const PERMISSIONS = {
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
 
+    // Distributor Commissions
+    DISTRIBUTOR_COMMISSIONS_VIEW: 'distributor-commissions:view',
+
     // Stock Orders
     STOCK_ORDERS_VIEW_ALL: 'stock-orders:view:all',
     STOCK_ORDERS_UPDATE: 'stock-orders:update',
@@ -136,6 +139,11 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     "Distributor Stock": {
         description: "Monitor distributor's inventory / stocks.",
         DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
+    },
+
+    "Distributor Commission": {
+        description: "Monitor distributor commission records",
+        DISTRIBUTOR_COMMISSIONS_VIEW: "View distributor commission history."
     },
 
     "Stock Orders": {

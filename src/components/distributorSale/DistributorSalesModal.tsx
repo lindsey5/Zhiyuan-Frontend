@@ -54,7 +54,7 @@ export default function DistributorSalesModal({ close, distributorSale }: Distri
                 </div>
                 <div className="space-y-5">
                      <h1 className="font-bold text-sm md:text-md">Commissions</h1>
-                     <div className="flex justify-between items-center border border-[var(--border-ui)] px-3 py-2 rounded-lg">
+                     <div className="flex justify-between items-center border border-[var(--border-panel)] px-3 py-2 rounded-lg">
                         <div className="space-y-1">
                             <h2 className="font-semibold text-sm">Seller:</h2>
                             <p className="text-sm">{distributorSale?.seller?.distributor_name || "N/A"}</p>
@@ -64,7 +64,7 @@ export default function DistributorSalesModal({ close, distributorSale }: Distri
                         <p className="font-bold">{formatToPeso((distributorSale?.total_amount || 0) * 0.05)}</p>
                      </div>
                      {distributorSale?.parent_distributor && (
-                        <div className="flex justify-between items-center border border-[var(--border-ui)] px-3 py-2 rounded-lg">
+                        <div className="flex justify-between items-center border border-[var(--border-panel)] px-3 py-2 rounded-lg">
                             <div className="space-y-1">
                                 <h2 className="font-semibold text-sm">Parent Distributor:</h2>
                                 <p className="text-sm">{distributorSale?.parent_distributor?.distributor_name || "N/A"}</p>

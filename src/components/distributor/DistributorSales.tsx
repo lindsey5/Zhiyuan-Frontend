@@ -33,13 +33,17 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         sortBy: sorting.sortBy,
-        order: sorting.order
+        order: sorting.order,
+        startDate,
+        endDate
     }), [
         debouncedSearch,
         pagination.pageSize,
         pagination.pageIndex,
         sorting.sortBy,
-        sorting.order
+        sorting.order,
+        startDate,
+        endDate
     ]);
 
     const debouncedParams = useDebounce(params, 500);
@@ -112,7 +116,6 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     ];
 
     return (
-        <>
         <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
             <DistributorSalesModal 
                 close={() => setDistributorSale(null)}
@@ -150,6 +153,5 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 onRowClick={(row) => setDistributorSale(row)}
             />
         </Card>
-        </>
     )
 }
