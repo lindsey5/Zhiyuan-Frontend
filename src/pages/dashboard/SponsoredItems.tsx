@@ -45,7 +45,7 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         meta: { align: 'center' }
     },
     {
-        header: "Requested By",
+        header: "Distributor",
         cell: ({ row }) => (
             <div>
                 <h1>{row.original.distributor.distributor_name}</h1>
