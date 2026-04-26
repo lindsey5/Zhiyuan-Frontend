@@ -14,15 +14,20 @@ import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 
 const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
+        header: "Sponsored ID",
+        accessorKey: 'sponsored_id',
+        meta: { align: 'center' }
+    },
+    {
         header: "Product",
         accessorKey: "product_name",
         cell: ({ row }) => (
-            <div className="min-w-50 flex items-center gap-3 justify-start">
+            <div className="min-w-50 flex items-center gap-3 justify-center">
                 <img className="w-10 h-10 rounded-md object-cover" src={row.original.variant.image_url} />
                 <span className="text-xs xl:text-sm">{row.original.variant.product.product_name}</span>
             </div>
         ),
-        meta: { align: 'left' },
+        meta: { align: 'center' },
     },
     {
         header: "Variant",
