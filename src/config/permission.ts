@@ -22,10 +22,6 @@ export const PERMISSIONS = {
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
 
-    // Sponsored Items
-    SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
-    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
-
     //Category management
     CATEGORY_READ_ALL: 'category:read:all',
     CATEGORY_CREATE: 'category:create',
@@ -56,12 +52,16 @@ export const PERMISSIONS = {
 
     // Stock Distribution History
     STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: 'tranfer-logs:view:all',
-    STOCK_DISTRIBUTION_CREATE: 'distributor-stock:transfer',
+    STOCK_DISTRIBUTION_CREATE: 'transfer-logs:create',
     STOCK_DISTRIBUTION_UPDATE: 'transfer-logs:update',
 
     // Distributor Return Requests
     DISTRIBUTOR_RETURN_REQUEST_VIEW: 'distributor-return:view',
     DISTRIBUTOR_RETURN_REQUEST_UPDATE: 'distributor-return:update',
+
+    // Sponsored Items
+    SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
+    SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
 
     // Order management
     ORDER_READ_ALL: 'order:read:all',
@@ -132,7 +132,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
 
     "Distributor Stock": {
         description: "Monitor distributor's inventory / stocks.",
-        DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributors",
+        DISTRIBUTOR_STOCK_VIEW: "View inventory of individual distributor",
     },
 
     "Distributor Commission": {
