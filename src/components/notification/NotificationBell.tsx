@@ -1,4 +1,4 @@
-import { BarChartBig, Bell, ClipboardList, Repeat, ShoppingCart, Undo2 } from "lucide-react";
+import { BarChartBig, Bell, ClipboardList, Repeat, ShoppingCart, Star, Undo2 } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useEffect, useState } from "react";
 import useNotifications from "../../hooks/useNotifications";
@@ -51,6 +51,14 @@ function getIcon (notification : UserNotification, isDark : boolean) {
         )
     }
 
+    if(notification.sponsoredItemNotification) {
+        return (
+            <Star
+                className="flex-shrink-0  text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
     return (
         <Bell 
             fill={isDark ? "#313131" : "#fff" } 
@@ -80,13 +88,15 @@ export default function NotificationBell () {
             window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`
         }else if(notification.stockOrderNotification){
              window.location.href = `/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`
+        }else if(notification.sponsoredItemNotification){
+            window.location.href = `/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`
         }
         
         else setNotification(notification);
         
         if(notification.status === 'unread') await readNotification(notification._id);
     }
-    console.log(notifications)
+
     return (
         <div id="notification-bell" className="relative">
             {notification?.stockTransferNotification ? (

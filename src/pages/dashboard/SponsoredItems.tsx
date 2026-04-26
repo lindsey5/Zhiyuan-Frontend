@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
@@ -11,6 +11,7 @@ import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
 import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import { useSearchParams } from "react-router-dom";
 
 const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
@@ -81,8 +82,11 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
 ];
 
 export default function SponsoredItems () {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const sponsored_id = searchParams.get("sponsored_id");
+
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(sponsored_id || "");
     const debouncedSearch = useDebounce(search, 800);
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const [startDate, setStartDate] = useState('');
@@ -105,6 +109,16 @@ export default function SponsoredItems () {
 
     const columns = getColumns();
     
+    useEffect(() => {
+        const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+
+        const isReload = navEntry?.type === "reload";
+
+        if (isReload && sponsored_id) {
+            setSearchParams({}, { replace: true });
+        }
+    }, [sponsored_id]);
+
     return (
         <PageContainer
             title="Sponsored Products"
@@ -112,6 +126,7 @@ export default function SponsoredItems () {
         >
             <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
+                    search={search}
                     setSearch={setSearch}
                     setSorting={setSorting}
                     sorting={sorting}

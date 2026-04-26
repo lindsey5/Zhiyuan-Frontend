@@ -15,6 +15,7 @@ const options: Record<string, SortOption> = {
 };
 
 interface SponsoredItemControlsProps {
+    search: string;
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setSorting: React.Dispatch<React.SetStateAction<SortOption>>;
     startDate: string;
@@ -27,6 +28,7 @@ interface SponsoredItemControlsProps {
 }
 
 export default function SponsoredItemControls ({
+    search,
     setSearch,
     setSorting,
     startDate,
@@ -49,6 +51,7 @@ export default function SponsoredItemControls ({
             <TextField 
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
+                value={search}
                 placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by sponsored id, product, variant or distributor..."}
                 onChange={(e) => {
                     setPagination(prev => ({...prev, pageIndex: 0}))
