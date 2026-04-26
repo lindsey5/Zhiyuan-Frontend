@@ -36,6 +36,7 @@ export default function StockOrderStatusButtons({
             {status === 'cancelled' || status === 'rejected' || status === 'failed' ? (
                 <Button
                     key={status}
+                    className="bg-red-600 text-white border-none"
                     onClick={() => onChangeStatus(status)}
                     label={` Mark as ${status}`}
                 />

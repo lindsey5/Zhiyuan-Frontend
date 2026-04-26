@@ -4,13 +4,14 @@ import Button from "../ui/Button";
 import GoldButton from "../ui/GoldButton";
 
 const STATUS_FLOW: Record<string, string[]> = {
-    pending: ["cancelled",],
-    approved: ["processing", "cancelled"],
-    processing: ["delivered", "cancelled"],
-    delivered: ["failed"],
-    received: [],
-    rejected: [],
+    pending: ["cancelled", "processing"],
+    processing: ["cancelled", "delivered"],
+    delivered: ["refunded", "failed", "completed"],
+    completed: ["refunded"],
     cancelled: [],
+    refunded: [],
+    expired: [],
+    failed: [],
 };
 
 type Props = {
@@ -18,39 +19,41 @@ type Props = {
     onChangeStatus: (status: string) => void;
 };
 
-export default function StockTransferStatusButtons({
-    currentStatus,
-    onChangeStatus,
+export default function OrderStatusButtons({
+  currentStatus,
+  onChangeStatus,
 }: Props) {
     const { hasPermissions } = usePermissions();
     const actions = STATUS_FLOW[currentStatus] || [];
 
     if (actions.length === 0) return null;
 
-    if(!hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE])) return null
+    if (!hasPermissions([PERMISSIONS.ORDER_UPDATE])) return null;
 
     return (
-        <div className="flex justify-end flex-wrap gap-2 mt-5">
-        {actions.map((status) => (
-            <>
-            {status === 'cancelled' || status === 'rejected' || status === 'failed' ? (
+        <div className="flex justify-end flex-wrap gap-2">
+        {actions.map((status) => {
+            const isDanger = ["cancelled", "failed", "expired", "refunded"].includes(
+                status
+            );
+
+            return isDanger ? (
                 <Button
-                    className="bg-red-600 text-white border-none"
                     key={status}
+                    className="bg-red-600 text-white border-none"
                     onClick={() => onChangeStatus(status)}
-                    label={` Mark as ${status}`}
+                    label={`Mark as ${status}`}
                 />
             ) : (
-                <GoldButton  
+                <GoldButton
                     key={status}
                     onClick={() => onChangeStatus(status)}
                     className="text-sm"
                 >
                     Mark as {status}
                 </GoldButton>
-            )}
-            </>
-        ))}
+            );
+        })}
         </div>
     );
 }

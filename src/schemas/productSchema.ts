@@ -9,11 +9,11 @@ const createVariantSchema = z.object({
         .max(100, "Variant name must not exceed 100 characters"),
 
     price: z.number()
-        .positive("Variant price must be positive"),
+        .positive("Variant price must not be blank, negative or 0"),
 
     stock: z.number()
         .int("Stock must be a whole number")
-        .positive("Stock must be positive"),
+        .positive("Stock  is required"),
 
     sku: z.string()
         .min(3, "SKU must be at least 3 characters")

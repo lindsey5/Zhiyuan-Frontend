@@ -50,6 +50,22 @@ const DeliveryStatusChip = ({ status }: { status: string }) => {
                 </Chip>
             );
 
+        case "expired":
+            return (
+                <Chip className="flex items-center gap-2 capitalize">
+                    <span className="w-2 h-2 rounded-full bg-gray-500"></span>
+                    Expired
+                </Chip>
+            );
+
+        case "refunded":
+            return (
+                <Chip className="flex items-center gap-2 capitalize">
+                    <span className="w-2 h-2 rounded-full bg-gray-500"></span>
+                    Refunded
+                </Chip>
+            );
+
         case "rejected":
             return (
                 <Chip className="flex items-center gap-2 capitalize">
@@ -57,6 +73,8 @@ const DeliveryStatusChip = ({ status }: { status: string }) => {
                     Rejected
                 </Chip>
             );
+
+        
 
         case "failed":
             return (

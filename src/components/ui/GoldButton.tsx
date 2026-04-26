@@ -27,7 +27,7 @@ export default function GoldButton({
                 `flex items-center justify-center gap-2
                 cursor-pointer
                 px-5 py-2 rounded-md 
-                bg-gold font-semibold
+                bg-gold
                 hover:opacity-90 transition
                 disabled:opacity-50 disabled:cursor-not-allowed
                 text-inverse`,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import PageContainer from "../../components/ui/PageContainer";
 import { useOrder } from "../../hooks/useOrder";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -8,13 +8,14 @@ import Card from "../../components/ui/Card";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
 import Chip from "../../components/ui/Chip";
-import OrderStatusChip from "../../components/orders/OrderStatusChip";
 import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
 import OrderControls from "../../components/orders/OrderControls";
 import { useSearchParams } from "react-router-dom";
+import OrderModal from "../../components/orders/OrderModal";
+import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 
-const getColumns = () : ColumnDef<Order>[] => [
+const getColumns = (setOrder : Dispatch<SetStateAction<string | null>>) : ColumnDef<Order>[] => [
     {
         header: "Order ID",
         accessorKey: 'order_id',
@@ -48,7 +49,7 @@ const getColumns = () : ColumnDef<Order>[] => [
         accessorKey: 'status',
         cell: ({ row }) => (
             <div className="flex justify-center">
-                <OrderStatusChip status={row.original.status}/>
+                <DeliveryStatusChip status={row.original.status}/>
             </div>
         ),
         meta: { align: 'center' },
@@ -61,7 +62,7 @@ const getColumns = () : ColumnDef<Order>[] => [
     },
     {
         header: 'Action',
-        cell: () => <IconButton icon={<Eye size={20}/>} onClick={() => console.log()}/>,
+        cell: ({ row }) => <IconButton icon={<Eye size={20}/>} onClick={() => setOrder(row.original._id)}/>,
         meta: { align: 'center' },
     },
     
@@ -84,6 +85,8 @@ export default function Orders () {
     const [paymentStatus, setPaymentStatus] = useState("");
     const [deliveryType, setDeliveryType] = useState("");
     const [status, setStatus] = useState("");
+
+    const [order, setOrder] = useState<string | null>(null);
 
     const params = useMemo(() => ({
         page: pagination.pageIndex + 1,
@@ -109,7 +112,7 @@ export default function Orders () {
     const { getOrders } = useOrder();
     const { data, isFetching } = getOrders(params);
 
-    const columns = getColumns();
+    const columns = getColumns(setOrder);
 
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -126,6 +129,10 @@ export default function Orders () {
             title="Orders"
             description="View and manage walk-in orders, track order status, and review transaction details."
         >
+            <OrderModal 
+                close={() => setOrder(null)}
+                order_id={order}
+            />
             <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <OrderControls 
                     startDate={startDate}
