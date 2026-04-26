@@ -17,11 +17,13 @@ import { useSearchParams } from "react-router-dom";
 const getColumns = () : ColumnDef<Order>[] => [
     {
         header: "Order ID",
-        accessorKey: 'order_id'
+        accessorKey: 'order_id',
+        meta: { align: 'center' },
     },
     {
         header: "Customer",
         accessorKey: "customer_name",
+        meta: { align: 'center' },
     },
     {
         header: 'Delivery Type',
