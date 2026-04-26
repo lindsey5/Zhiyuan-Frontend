@@ -250,7 +250,6 @@ export default function Sidebar({
 
                 {hasAnyPermissions([
                     PERMISSIONS.STOCK_ORDERS_VIEW_ALL,
-                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                     PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                     PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
                     PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN,
