@@ -249,6 +249,7 @@ export default function Sidebar({
                 />
 
                 {hasAnyPermissions([
+                    PERMISSIONS.STOCK_ORDERS_VIEW_ALL,
                     PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                     PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                     PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
@@ -270,7 +271,7 @@ export default function Sidebar({
                             )
                         }
                         items={[
-                            ...(hasPermissions([PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
+                            ...(hasAnyPermissions([PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
                             {
                                 label: "Stock Orders",
                                 icon: <ShoppingCart size={20} />,
