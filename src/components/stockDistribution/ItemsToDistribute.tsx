@@ -10,6 +10,8 @@ import Chip from "../ui/Chip";
 import { useMemo } from "react";
 import { useSocket } from "../../hooks/useSocket";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 interface CartItem {
     variant: Variant;
@@ -32,6 +34,7 @@ export default function ItemsToDistribute({
     setVariants, 
     distributorId
 }: ItemsToDistributeProps) {
+    const { hasAnyPermissions } = usePermissions();
     useSocket({ namespace: '/distributor-notification' })
     const { createStockTransferLog } = useStockTransfer();
     
@@ -82,7 +85,16 @@ export default function ItemsToDistribute({
                 variant_id: variant.variant._id,
                 quantity: variant.quantity
             }))
-        }), 'top-center', () => window.location.href = '/dashboard/distributors/transfer-logs')
+        }), 'top-center', () => {
+            if(hasAnyPermissions([
+                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
+                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN
+            ])){
+                window.location.href = '/dashboard/distributors/transfer-logs'
+            }else{
+                window.location.reload();
+            }
+        })
     }
 
     const handleQuantity = (quantity : number, variant: CartItem) => {

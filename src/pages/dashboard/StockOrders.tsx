@@ -110,6 +110,10 @@ export default function StockOrders () {
         }
     }, [stock_order_id]);
 
+    const onRowClick = (row : StockOrder) => {
+        setStockOrderId(row._id)
+    }
+
     return (
         <PageContainer
             title="Stock Orders"
@@ -142,6 +146,7 @@ export default function StockOrders () {
                     isLoading={isFetching}
                     noDataMessage="No Stock Orders Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>

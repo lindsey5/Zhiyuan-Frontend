@@ -174,12 +174,14 @@ export default function Distributors () {
                 onClose={() => setShowModal(false)}
                 open={showModal}
             />
-            <div className="flex justify-end">
-                <GoldButton
-                    className="text-sm"
-                    onClick={() => setShowModal(true)}
-                >Create Distributor</GoldButton>
-            </div>
+            {hasPermissions([PERMISSIONS.DISTRIBUTOR_CREATE]) && (
+                <div className="flex justify-end">
+                    <GoldButton
+                        className="text-sm"
+                        onClick={() => setShowModal(true)}
+                    >Create Distributor</GoldButton>
+                </div>
+            )}
         </PageContainer>
     )
 }

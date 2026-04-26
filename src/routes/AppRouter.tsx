@@ -190,7 +190,7 @@ const router = createBrowserRouter([
                     {
                         path: "sales",
                         Component: () => (
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW]}>
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_SALES_VIEW_ALL]}>
                                 <AllDistributorSales />
                             </ProtectedRoute>
                         )

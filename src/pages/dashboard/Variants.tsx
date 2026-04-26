@@ -24,6 +24,7 @@ import { variantService } from "../../service/variantService";
 
 interface VariantColsParams {
     hasPermissions: (requiredPermissions: string[]) => boolean;
+    hasAnyPermissions: (anyPermission: string[]) => boolean;
     deleteVariant: UseMutationResult<ApiResponse, Error, { id: string }, unknown>;
     handleDelete: (id: string) => void;
     handleEdit: (variant : Variant) => void;
@@ -31,6 +32,7 @@ interface VariantColsParams {
 
 const getColumns = ({
     hasPermissions,
+    hasAnyPermissions,
     deleteVariant,
     handleDelete,
     handleEdit
@@ -77,27 +79,31 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center' },
     },
-    ...(hasPermissions([PERMISSIONS.PRODUCT_UPDATE])
+    ...(hasAnyPermissions([PERMISSIONS.PRODUCT_UPDATE, PERMISSIONS.PRODUCT_DELETE])
         ? [
             {
                 header: "Action",
                 cell: ({ row } : { row: Row<VariantWithProduct>}) => (
                     <div className="flex flex-col lg:flex-row gap-3 justify-center">
-                        <Button
-                            label="Edit"
-                            disabled={deleteVariant.isPending}
-                            className="p-1 lg:p-3 text-xs xl:text-sm"
-                            onClick={() => {
-                                handleEdit(row.original);
-                            }}
-                        />
+                        {hasPermissions([PERMISSIONS.PRODUCT_UPDATE]) && (
+                            <Button
+                                label="Edit"
+                                disabled={deleteVariant.isPending}
+                                className="p-1 lg:p-3 text-xs xl:text-sm"
+                                onClick={() => {
+                                    handleEdit(row.original);
+                                }}
+                            />
+                        )}
 
-                        <Button
-                            label="Delete"
-                            disabled={deleteVariant.isPending}
-                            className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
-                            onClick={() => handleDelete(row.original._id)}
-                        />
+                        {hasPermissions([PERMISSIONS.PRODUCT_DELETE]) && (
+                            <Button
+                                label="Delete"
+                                disabled={deleteVariant.isPending}
+                                className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
+                                onClick={() => handleDelete(row.original._id)}
+                            />
+                        )}
                     </div>
                 ),
                 meta: { align: 'center' },
@@ -107,7 +113,7 @@ const getColumns = ({
 ];
 
 export default function Variants () {
-    const { hasPermissions } = usePermissions();
+    const { hasPermissions, hasAnyPermissions } = usePermissions();
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
@@ -152,7 +158,8 @@ export default function Variants () {
         deleteVariant,
         handleDelete,
         handleEdit,
-        hasPermissions
+        hasPermissions,
+        hasAnyPermissions
     })
 
     const downloadVariants = async () => {

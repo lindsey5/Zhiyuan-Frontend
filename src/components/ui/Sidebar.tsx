@@ -188,6 +188,7 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_READ_ALL,
                 PERMISSIONS.DISTRIBUTOR_DELETE,
                 PERMISSIONS.DISTRIBUTOR_SALES_VIEW, 
+                PERMISSIONS.DISTRIBUTOR_SALES_VIEW_ALL,
                 PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
                 PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
@@ -203,51 +204,62 @@ export default function Sidebar({
                 {/* DISTRIBUTOR */}
                 <SidebarSection title="Distributor" collapsed={collapsed} />
 
-                <SidebarDropdown
-                    title="Distributor Management"
-                    icon={<Network size={24} />}
-                    collapsed={collapsed}
-                    setCollapsed={setCollapsed}
-                    navigate={navigate}
-                    open={openDropdown === "Distributor Management"}
-                    setOpen={() =>
-                        setOpenDropdown((prev) =>
-                        prev === "Distributor Management"
-                            ? null
-                            : "Distributor Management"
-                        )
-                    }
-                    items={[
-                        ...(hasAnyPermissions([
-                            PERMISSIONS.DISTRIBUTOR_CREATE,
-                            PERMISSIONS.DISTRIBUTOR_READ_ALL,
-                            PERMISSIONS.DISTRIBUTOR_DELETE,
-                            PERMISSIONS.DISTRIBUTOR_SALES_VIEW,
-                            PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
-                            PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
-                        ]) ? [
+                {hasAnyPermissions([
+                     PERMISSIONS.DISTRIBUTOR_CREATE,
+                    PERMISSIONS.DISTRIBUTOR_READ_ALL,
+                    PERMISSIONS.DISTRIBUTOR_DELETE,
+                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW,
+                    PERMISSIONS.DISTRIBUTOR_SALES_VIEW_ALL,
+                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                    PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
+                    PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW
+                ]) && (
+                    <SidebarDropdown
+                        title="Distributor Management"
+                        icon={<Network size={24} />}
+                        collapsed={collapsed}
+                        setCollapsed={setCollapsed}
+                        navigate={navigate}
+                        open={openDropdown === "Distributor Management"}
+                        setOpen={() =>
+                            setOpenDropdown((prev) =>
+                            prev === "Distributor Management"
+                                ? null
+                                : "Distributor Management"
+                            )
+                        }
+                        items={[
+                            ...(hasAnyPermissions([
+                                PERMISSIONS.DISTRIBUTOR_CREATE,
+                                PERMISSIONS.DISTRIBUTOR_READ_ALL,
+                                PERMISSIONS.DISTRIBUTOR_DELETE,
+                                PERMISSIONS.DISTRIBUTOR_SALES_VIEW,
+                                PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                                PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
+                            ]) ? [
+                                {
+                                    label: "View Distributors",
+                                    icon: <Eye size={20} />,
+                                    path: "/dashboard/distributors",
+                                },
+                            ] : []),
+
+                            ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW_ALL]) ? [                        
                             {
-                                label: "View Distributors",
-                                icon: <Eye size={20} />,
-                                path: "/dashboard/distributors",
-                            },
-                        ] : []),
+                                label: "Distributor Sales",
+                                icon: <BarChartBig size={20} />,
+                                path: "/dashboard/distributors/sales",
+                            }] : []),
 
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW]) ? [                        
-                        {
-                            label: "Distributor Sales",
-                            icon: <BarChartBig size={20} />,
-                            path: "/dashboard/distributors/sales",
-                        }] : []),
-
-                        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]) ? [                        
-                        {
-                            label: "Reports",
-                            icon: <FileBarChart size={20} />,
-                            path: "/dashboard/distributors/reports",
-                        },] : []),
-                    ]}
-                />
+                            ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]) ? [                        
+                            {
+                                label: "Reports",
+                                icon: <FileBarChart size={20} />,
+                                path: "/dashboard/distributors/reports",
+                            },] : []),
+                        ]}
+                    />
+                )}
 
                 {hasAnyPermissions([
                     PERMISSIONS.STOCK_ORDERS_VIEW_ALL,

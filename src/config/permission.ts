@@ -33,13 +33,14 @@ export const PERMISSIONS = {
     DISTRIBUTOR_CREATE: 'distrubutor:create',
     DISTRIBUTOR_DELETE: 'distributor:delete',
 
-    // Distributor Sales
-    DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
-
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
     DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
     
+    // Distributor Sales
+    DISTRIBUTOR_SALES_VIEW_ALL: 'distributor-sales:view:all',
+    DISTRIBUTOR_SALES_VIEW: 'distributor-sales:view',
+
     // Distributor Stock Management
     DISTRIBUTOR_STOCK_VIEW: 'distributor-stock:view',
 
@@ -126,9 +127,14 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
 
     "Distributor Analytics": {
         description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
-        DISTRIBUTOR_SALES_VIEW: "View distributor sales history with details of items sold",
         DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
-        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors"
+        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors",
+    },
+
+    "Distributor Sales" : {
+        description: "Monitor distributor sales history",
+        DISTRIBUTOR_SALES_VIEW_ALL: "View all distributor sales history",
+        DISTRIBUTOR_SALES_VIEW: "View distributor sales history of individual distributor",
     },
 
     "Distributor Stock": {

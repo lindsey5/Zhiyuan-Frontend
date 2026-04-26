@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import DistributorInfo from "../../components/distributors/DistributorInfo";
 import DistributorInventory from "../../components/distributor/DistributorInventory";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Tabs from "../../components/ui/Tabs";
 import { BarChartBig, FileBarChart, HandCoins, Package } from "lucide-react";
 import usePermissions from "../../hooks/usePermissions";
@@ -12,60 +12,78 @@ import { cn } from "../../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
 import DistributorCommissions from "../../components/distributor/DistributorCommissions/DistributorCommissions";
 
-export default function Distributor () {
+export default function Distributor() {
     const params = useParams();
     const id = params.id;
     const { hasPermissions } = usePermissions();
-    const [selected, setSelected] = useState(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? "Inventory" : "Sales");
+
+    const defaultSelected = useMemo(() => {
+        if (hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])) return "Inventory";
+        if (hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])) return "Sales";
+        if (hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])) return "Stats";
+        if (hasPermissions([PERMISSIONS.DISTRIBUTOR_COMMISSIONS_VIEW])) return "Commissions";
+        return "";
+    }, [hasPermissions]);
+
+    const [selected, setSelected] = useState(defaultSelected);
     const debouncedSelected = useDebounce(selected, 800);
 
+    const tabs = [
+        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])
+        ? [{
+            label: "Inventory",
+            icon: <Package size={20} />,
+            onClick: () => setSelected("Inventory"),
+            }]
+        : []),
+
+        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])
+        ? [{
+            label: "Sales",
+            icon: <BarChartBig size={20} />,
+            onClick: () => setSelected("Sales"),
+            }]
+        : []),
+
+        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])
+        ? [{
+            label: "Stats",
+            icon: <FileBarChart size={20} />,
+            onClick: () => setSelected("Stats"),
+            }]
+        : []),
+
+        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_COMMISSIONS_VIEW])
+        ? [{
+            label: "Commissions",
+            icon: <HandCoins size={20} />,
+            onClick: () => setSelected("Commissions"),
+            }]
+        : []),
+    ];
+
     return (
-        <div className={cn(
-            "flex flex-col gap-3 p-2 lg:p-6",
-        )}>
-            <DistributorInfo id={id || ""} />
-            <Tabs
-                className="overflow-x-auto"
-                items={[
-                    // Inventory tab (conditionally)
-                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW])
-                    ? [{
-                        label: "Inventory",
-                        icon: <Package size={20} />,
-                        onClick: () => setSelected("Inventory"),
-                        }]
-                    : []),
+        <div className={cn("flex flex-col gap-3 p-2 lg:p-6")}>
+        <DistributorInfo id={id || ""} />
 
-                    // Sales tab (conditionally)
-                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_SALES_VIEW])
-                    ? [{
-                        label: "Sales",
-                        icon: <BarChartBig size={20} />,
-                        onClick: () => setSelected("Sales"),
-                        }]
-                    : []),
+        <Tabs
+            className="overflow-x-auto"
+            items={tabs}
+            defaultActive={tabs.findIndex(tab => tab.label === defaultSelected)}
+        />
 
-                    // Stats tab (conditionally)
-                    ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_STATS_VIEW])
-                    ? [{
-                        label: "Stats",
-                        icon: <FileBarChart size={20} />,
-                        onClick: () => setSelected("Stats"),
-                        }]
-                    : []),
-
-                    {
-                    label: "Commissions",
-                    icon: <HandCoins size={20} />,
-                    onClick: () => setSelected("Commissions"),
-                    }
-                ]}
-                defaultActive={hasPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW]) ? 0 : 1}
-            />
-            {debouncedSelected === "Inventory" && <DistributorInventory distributorId={id || ""}/>}
-            {debouncedSelected === "Sales" && <DistributorSales distributorId={id || ""} />}
-            {debouncedSelected === 'Stats' && <DistributorStats distributorId={id || ""} />}
-            {debouncedSelected === "Commissions" && <DistributorCommissions distributorId={id || ""}/>}
+        {debouncedSelected === "Inventory" && (
+            <DistributorInventory distributorId={id || ""} />
+        )}
+        {debouncedSelected === "Sales" && (
+            <DistributorSales distributorId={id || ""} />
+        )}
+        {debouncedSelected === "Stats" && (
+            <DistributorStats distributorId={id || ""} />
+        )}
+        {debouncedSelected === "Commissions" && (
+            <DistributorCommissions distributorId={id || ""} />
+        )}
         </div>
-    )
+    );
 }
