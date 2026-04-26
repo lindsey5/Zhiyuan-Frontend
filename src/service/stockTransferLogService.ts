@@ -10,6 +10,13 @@ export const stockTransferLogService = {
         })
     },
 
+    getMyStockTransferLogs: ({ params } : { params : GetStockTransferLogsParams }) => {
+        return apiAxios<GetStockTransferLogsResponse>("stock-transfer-logs/me", {
+            method: HttpMethod.GET,
+            params,
+        })
+    },
+
     getStockTransferLogById: (id: string) => {
         return apiAxios<StockTransferLogResponse>(`stock-transfer-logs/${id}`, {
             method: HttpMethod.GET,

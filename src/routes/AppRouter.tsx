@@ -214,7 +214,7 @@ const router = createBrowserRouter([
                     {
                         path: 'stock-orders',
                         Component: () => (
-                            <ProtectedRoute anyPermissions={[PERMISSIONS.STOCK_ORDERS_UPDATE, PERMISSIONS.STOCK_ORDERS_VIEW_ALL]}>
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.STOCK_ORDERS_VIEW_ALL]}>
                                 <StockOrders />
                             </ProtectedRoute>
                         )
@@ -223,7 +223,7 @@ const router = createBrowserRouter([
                         path: 'transfer-logs',
                         Component: () => (
                             <ProtectedRoute
-                                anyPermissions={[PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_UPDATE]}
+                                anyPermissions={[PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN]}
                             >
                                 <DistributionHistory />
                             </ProtectedRoute>
@@ -233,7 +233,7 @@ const router = createBrowserRouter([
                         path: 'return-requests',
                         Component: () => (
                             <ProtectedRoute
-                                anyPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]}
+                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW]}
                             >
                                 <ReturnRequests />
                             </ProtectedRoute>

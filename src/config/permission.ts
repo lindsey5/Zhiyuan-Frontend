@@ -52,6 +52,7 @@ export const PERMISSIONS = {
 
     // Stock Distribution History
     STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: 'tranfer-logs:view:all',
+    STOCK_DISTRIBUTION_HISTORY_VIEW_OWN: 'tranfer-logs:view:own',
     STOCK_DISTRIBUTION_CREATE: 'transfer-logs:create',
     STOCK_DISTRIBUTION_UPDATE: 'transfer-logs:update',
 
@@ -150,7 +151,8 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         description: "Manage and monitor stock distribution records, including tracking status updates and viewing history.",
         STOCK_DISTRIBUTION_UPDATE: "Update stock distribution status",
         STOCK_DISTRIBUTION_CREATE: 'Distribute stock to distributors',
-        STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: "View stock distribution history",
+        STOCK_DISTRIBUTION_HISTORY_VIEW_ALL: "View all stock distribution history",
+        STOCK_DISTRIBUTION_HISTORY_VIEW_OWN: 'View own stock distribution history',
     },
 
     "Distributor Return Requests": {

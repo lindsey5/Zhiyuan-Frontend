@@ -12,6 +12,14 @@ export const useStockTransfer = () => {
         })
     )
 
+    const getMyStockTransferLogs = (params : GetStockTransferLogsParams) => (
+        useQuery<GetStockTransferLogsResponse, Error>({
+            queryKey: ['stock-transfer-logs/me', params],
+            queryFn: () => stockTransferLogService.getMyStockTransferLogs({ params }),
+            refetchOnWindowFocus: false,
+        })
+    )
+
     const getStockTransferLogById = (id: string) => (
         useQuery<StockTransferLogResponse, Error>({
             queryKey: [`stock-transfer-logs/${id}`],
@@ -30,6 +38,7 @@ export const useStockTransfer = () => {
 
     return {
         getStockTransferLogs,
+        getMyStockTransferLogs,
         updateStockTransferLogStatus,
         createStockTransferLog,
         getStockTransferLogById

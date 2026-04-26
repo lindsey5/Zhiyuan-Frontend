@@ -1,9 +1,9 @@
-import type { ColumnDef, PaginationState } from "@tanstack/react-table";
+import type { ColumnDef, PaginationState, Row } from "@tanstack/react-table";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import type { StockTransferLog } from "../../types/stock-transfer-log.type";
 import { formatDate } from "../../utils/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import CustomizedTable from "../../components/ui/Table";
@@ -12,12 +12,15 @@ import StockTransferItems from "../../components/stockTransferLog/StockTransferI
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
 import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 interface DistributionHistoryColsParams{
     openModal: (transferLog : StockTransferLog) => void;
+    getOwn: boolean;
 }
 
-const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
+const getColumns = ({ openModal, getOwn } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
     {
         header: "Transfer No.",
         accessorKey: "transfer_no",
@@ -33,16 +36,18 @@ const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<S
         ),
         meta: { align: 'left' },
     },
-    {
-        header: "Sender",
-        cell: ({ row }) => (
-            <div>
-                <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
-                <p className="text-gray">{row.original.sender.email}</p>
-            </div>
-        ),
-        meta: { align: 'left' },
-    },
+    ...(!getOwn ? [
+        {
+            header: "Sender",
+            cell: ({ row } : { row : Row<StockTransferLog>}) => (
+                <div>
+                    <h3 className="font-bold">{`${row.original.sender.firstname} ${row.original.sender.lastname}`}</h3>
+                    <p className="text-gray">{row.original.sender.email}</p>
+                </div>
+            ),
+            meta: { align: 'left' },
+        },
+    ] : []),
     {
         header: "Status",
         accessorKey: "status",
@@ -70,6 +75,10 @@ const getColumns = ({ openModal } : DistributionHistoryColsParams) : ColumnDef<S
 ];
 
 export default function DistributionHistory () {
+    const { hasPermissions } = usePermissions();
+    const hasGetOwnPermission = hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? false : hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN]);
+    const [getOwn, setGetOwn] = useState(hasGetOwnPermission);
+
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 800);
@@ -79,16 +88,17 @@ export default function DistributionHistory () {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const params = {
+    const params = useMemo(() => ({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         search: debouncedSearch,
         startDate: startDate ? formatDate(startDate) :"",
         endDate: endDate ? formatDate(endDate) : "",
         status,
-    }
-    const { getStockTransferLogs } = useStockTransfer();
-    const { data, isFetching } = getStockTransferLogs(params);
+    }), [pagination, debouncedSearch, startDate, endDate, status]);
+
+    const { getStockTransferLogs, getMyStockTransferLogs } = useStockTransfer();
+    const { data, isFetching } = getOwn ? getMyStockTransferLogs(params) : getStockTransferLogs(params);
 
     const [stockTransferLog, setStockTransferLog] = useState<StockTransferLog | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -103,7 +113,7 @@ export default function DistributionHistory () {
         setStockTransferLog(transferLog)
     }
 
-    const columns = getColumns({ openModal });
+    const columns = getColumns({ openModal,getOwn });
 
     const onRowClick = (row : StockTransferLog) => {
         openModal(row);
@@ -129,6 +139,8 @@ export default function DistributionHistory () {
                     setPagination={setPagination}
                     status={status}
                     setStatus={setStatus}
+                    getOwn={getOwn}
+                    setGetOwn={setGetOwn}
                 />
                 <CustomizedTable 
                     isLoading={isFetching}

@@ -194,9 +194,7 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                 PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                 PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
-                PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
-                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
                 PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, 
                 PERMISSIONS.SPONSORED_PRODUCT_UPDATE
             ]) && (
@@ -254,9 +252,8 @@ export default function Sidebar({
                     PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                     PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
                     PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
-                    PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
+                    PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN,
                     PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
-                    PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
                 ]) && (
                     <SidebarDropdown
                         title="Stock Management"
@@ -273,7 +270,7 @@ export default function Sidebar({
                             )
                         }
                         items={[
-                            ...(hasAnyPermissions([PERMISSIONS.STOCK_ORDERS_UPDATE, PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
+                            ...(hasPermissions([PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
                             {
                                 label: "Stock Orders",
                                 icon: <ShoppingCart size={20} />,
@@ -287,14 +284,14 @@ export default function Sidebar({
                                 path: "/dashboard/distributors/transfer-stocks",
                             }] : []),
 
-                            ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
+                            ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN]) ? [                        
                             {
                                 label: "Distribution History",
                                 icon: <Repeat size={20} />,
                                 path: "/dashboard/distributors/transfer-logs",
                             }] : []),
 
-                            ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) ? [
+                            ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW]) ? [
                                 {
                                     label: "Return Requests",
                                     icon: <Undo2 size={20} />,

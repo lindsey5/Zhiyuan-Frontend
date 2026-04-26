@@ -4,6 +4,8 @@ import FiltersMenu from "../ui/FiltersMenu";
 import TextField from "../ui/TextField";
 import type { PaginationState } from "@tanstack/react-table";
 import Dropdown from "../ui/Dropdown";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 const stockTransferStatus = [
   { label: "All", value: "" },
@@ -26,6 +28,8 @@ interface StockTransferLogsControlsProps {
     setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
     status: string;
     setStatus:  React.Dispatch<React.SetStateAction<string>>;
+    getOwn: boolean;
+    setGetOwn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function StockTransferLogsControls({
@@ -36,9 +40,11 @@ export default function StockTransferLogsControls({
     setEndDate,
     setPagination,
     status,
-    setStatus
+    setStatus,
+    getOwn,
+    setGetOwn
 }: StockTransferLogsControlsProps) {
-
+    const { hasPermissions } = usePermissions();
     const clear = () => {
         setStartDate('');
         setEndDate('');
@@ -46,12 +52,12 @@ export default function StockTransferLogsControls({
     }
 
     return (
-        <div className="flex flex-col gap-4 px-5">
+        <div className="flex justify-between gap-4 px-5">
             <div className="flex items-center w-full gap-2">
                 <TextField 
                     className="md:max-w-100"
                     icon={<Search size={20}/>}
-                    placeholder="Search by transfer no, receiver or sender..."
+                    placeholder={getOwn ? "Search by transfer no, or receiver..." : "Search by transfer no, receiver or sender..."}
                     onChange={(e) => {
                         setPagination(prev => ({ ...prev, pageIndex: 0 }))
                         setSearch(e.target.value);
@@ -99,6 +105,17 @@ export default function StockTransferLogsControls({
                     </div>
                 </FiltersMenu>
             </div>
+            {hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) && (
+                <button 
+                    className="w-57 border border-[var(--toggle-border)] flex justify-between items-center gap-3 px-3 py-2 rounded-full bg-toggle shadow-xl transition-all"
+                    onClick={() => setGetOwn(prev => !prev)}
+                >
+                    <p className="text-gold text-sm">My Distribution</p>
+                    <div className="relative w-12 h-6 rounded-full bg-toggle-inner p-1">
+                        <div className={`w-4 h-4 rounded-full bg-toggle-thumb transition-transform duration-300 ${getOwn ? 'translate-x-6' : 'translate-x-0'}`} />
+                    </div>
+                </button>
+            )}
         </div>
     )
 }
