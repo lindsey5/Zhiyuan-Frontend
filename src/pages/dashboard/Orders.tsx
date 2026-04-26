@@ -35,7 +35,9 @@ const getColumns = (setOrder : Dispatch<SetStateAction<string | null>>) : Column
     {
         header: 'Payment Method',
         accessorKey: 'payment_method',
-        cell: info => info.getValue() || 'N/A',
+        cell: info => (
+            <p className="capitalize">{info.getValue() as string|| 'N/A'}</p>
+        ),
         meta: { align: 'center' },
     },
     {
@@ -59,6 +61,16 @@ const getColumns = (setOrder : Dispatch<SetStateAction<string | null>>) : Column
         accessorKey: 'total_amount',
         cell: info => formatToPeso(Number(info.getValue())),
         meta: { align: 'center' },
+    },
+    {
+        header: 'Order Date',
+        accessorKey: 'createdAt',
+        cell: info => (
+            <div className="min-w-30">
+                {formatDate(info.getValue() as string)}
+            </div>
+        ),
+        meta: { align: 'center'}
     },
     {
         header: 'Action',
