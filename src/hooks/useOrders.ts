@@ -58,21 +58,9 @@ export const useOrderActions = () => {
   const queryClient = useQueryClient();
 
   const markOrderPaid = useMutation({
-    mutationFn: async ({
-      orderId,
-      paymentMethod
-     }:{
-      orderId:string;
-      paymentMethod:string;
-     }) => {
-     
-      return apiAxios(
-        `/orders/${orderId}/mark-paid`,
-        {
-          method:"PATCH",
-          data:{
-            payment_method: paymentMethod
-          }
+    mutationFn: async ({ orderId, paymentMethod }:{ orderId:string;paymentMethod:string; }) => {
+     return apiAxios(`/orders/${orderId}/mark-paid`,{ method:"PATCH",
+          data:{ payment_method: paymentMethod }
         }
       );
      },
@@ -85,19 +73,12 @@ export const useOrderActions = () => {
   });
 
 
-  const updateOrderStatus = useMutation({
-    mutationFn: async ({
-      orderId,
-      status
-    }: {
+  const updateOrderStatus = useMutation({ mutationFn: async ({ orderId, status }: {
       orderId: string;
       status: Exclude<OrderAction, "paid">;
     }) => {
 
-      return apiAxios(
-        `/orders/${orderId}/status`,
-        {
-          method: "PATCH",
+      return apiAxios( `/orders/${orderId}/status`, {method: "PATCH",
           data: { status }
         }
       );
@@ -115,46 +96,39 @@ export const useOrderActions = () => {
     orderId: string,
     action: OrderAction,
     paymentMethod?: string
-  ) => {
-  
+) => {
     if (action === "paid") {
-      return promiseToast(
-        markOrderPaid.mutateAsync({
-          orderId,
-          paymentMethod: paymentMethod || "COD"
-        }),
-  
-        "top-center",
-  
-        () => {
-          queryClient.invalidateQueries({
-            queryKey: ["orders"],
-            exact: false
-          });
-        },
-  
-        "Order marked as paid"
-      );
+        return promiseToast(
+            markOrderPaid.mutateAsync({
+                orderId,
+                paymentMethod: paymentMethod || "COD"
+            }),
+            "top-center",
+            () => {
+                queryClient.invalidateQueries({
+                    queryKey: ["orders"],
+                    exact: false
+                });
+            },
+            "Order marked as paid"
+        );
     }
-  
+
     return promiseToast(
-      updateOrderStatus.mutateAsync({
-        orderId,
-        status: action
-      }),
-  
-      "top-center",
-  
-      () => {
-        queryClient.invalidateQueries({
-          queryKey: ["orders"],
-          exact: false
-        });
-      },
-  
-      `Order marked as ${action}`
+        updateOrderStatus.mutateAsync({
+            orderId,
+            status: action
+        }),
+        "top-center",
+        () => {
+            queryClient.invalidateQueries({
+                queryKey: ["orders"],
+                exact: false
+            });
+        },
+        `Order marked as ${action}`
     );
-  };
+};
 
 
   return {
