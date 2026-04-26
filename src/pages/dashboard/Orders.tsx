@@ -45,9 +45,7 @@ export default function Orders () {
         paymentMethod,
         paymentStatus,
         status,
-        deliveryType,
-        setSelectedOrder,
-        setIsModalOpen
+        deliveryType
     }), [
         pagination,
         debouncedSearch,
@@ -57,7 +55,7 @@ export default function Orders () {
         paymentStatus,
         status,
         deliveryType
-    ])
+    ]);
 
 
 const getColumns = (
@@ -125,7 +123,14 @@ const getColumns = (
     const { getOrders } = useOrder();
     const { data, isFetching } = getOrders(params);
 
-    const columns = getColumns(setSelectedOrder, setIsModalOpen);
+    const columns = useMemo(
+        () =>
+           getColumns(
+              setSelectedOrder,
+              setIsModalOpen
+           ),
+        []
+     );
 
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -174,7 +179,10 @@ const getColumns = (
                 <OrderDetailsModal
                     order={selectedOrder}
                     open={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() => {
+                        setIsModalOpen(false);
+                        setSelectedOrder(null);
+                     }}
                 />
             </Card>
         </PageContainer>
