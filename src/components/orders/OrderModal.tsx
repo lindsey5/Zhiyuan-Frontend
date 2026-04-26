@@ -12,6 +12,8 @@ import OrderStatusButtons from "./OrdeStatusButtons";
 import IconButton from "../ui/IconButton";
 import { X } from "lucide-react";
 import { promiseToast } from "../../utils/sileo";
+import usePermissions from "../../hooks/usePermissions";
+import { PERMISSIONS } from "../../config/permission";
 
 interface OrderModalProps {
     order_id: string | null;
@@ -107,6 +109,8 @@ export default function OrderModal({ close, order_id }: OrderModalProps) {
     const [order, setOrder] = useState<Order | null>(null);
     const [showPayment, setShowPayment] = useState(false);
     const { updateOrderStatus } = useOrder();
+
+    const { hasPermissions } = usePermissions();
 
     const handleClose = () => {
         close();
@@ -285,7 +289,7 @@ export default function OrderModal({ close, order_id }: OrderModalProps) {
                         {/* ACTIONS */}
                         <div className="flex items-center items-center justify-end gap-3">
 
-                            {order.status === "pending" && !order.payment_method && (
+                            {order.status === "pending" && !order.payment_method && hasPermissions([PERMISSIONS.ORDER_UPDATE]) && (
                                 <GoldButton 
                                     className="text-sm rounded-sm"
                                     onClick={() => setShowPayment(true)}
