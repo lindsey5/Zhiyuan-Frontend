@@ -133,8 +133,6 @@ export default function Sidebar({
                 PERMISSIONS.CATEGORY_DELETE, 
                 PERMISSIONS.CATEGORY_READ_ALL, 
                 PERMISSIONS.CATEGORY_UPDATE,
-                PERMISSIONS.SPONSORED_PRODUCT_CREATE,
-                PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL
             ]) && (
                 <>
                 <SidebarSection title="Product" collapsed={collapsed} />
@@ -182,15 +180,6 @@ export default function Sidebar({
                         ]: []),
                     ]}
                 />
-                {hasAnyPermissions([PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_CREATE]) && (
-                    <SidebarItem
-                        icon={<Star size={24} />}
-                        label="Sponsored Products"
-                        collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/sponsored-products")}
-                        isActive={pathname === "/dashboard/sponsored-products"}
-                    />
-                )}
                 </>
             )}
 
@@ -202,6 +191,14 @@ export default function Sidebar({
                 PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                 PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
                 PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
+                PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
+                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
+                PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
+                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
+                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
+                PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, 
+                PERMISSIONS.SPONSORED_PRODUCT_UPDATE
             ]) && (
                 <>
                 {/* DISTRIBUTOR */}
@@ -252,64 +249,72 @@ export default function Sidebar({
                         },] : []),
                     ]}
                 />
+
+                {hasAnyPermissions([
+                    PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
+                    PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
+                    PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
+                    PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
+                    PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
+                    PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
+                ]) && (
+                    <SidebarDropdown
+                        title="Stock Management"
+                        icon={<PackageCheck size={24} />}
+                        collapsed={collapsed}
+                        setCollapsed={setCollapsed}
+                        navigate={navigate}
+                        open={openDropdown === "Distributor Stocks"}
+                        setOpen={() =>
+                            setOpenDropdown((prev) =>
+                            prev === "Distributor Stocks"
+                                ? null
+                                : "Distributor Stocks"
+                            )
+                        }
+                        items={[
+                            ...(hasAnyPermissions([PERMISSIONS.STOCK_ORDERS_UPDATE, PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
+                            {
+                                label: "Stock Orders",
+                                icon: <ShoppingCart size={20} />,
+                                path: "/dashboard/distributors/stock-orders",
+                            }] : []),
+
+                            ...(hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) ? [
+                                {
+                                label: "Distribute Stocks",
+                                icon: <CornerUpRight size={20} />,
+                                path: "/dashboard/distributors/transfer-stocks",
+                            }] : []),
+
+                            ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
+                            {
+                                label: "Distribution History",
+                                icon: <Repeat size={20} />,
+                                path: "/dashboard/distributors/transfer-logs",
+                            }] : []),
+
+                            ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) ? [
+                                {
+                                    label: "Return Requests",
+                                    icon: <Undo2 size={20} />,
+                                    path: "/dashboard/distributors/return-requests",
+                                }
+                            ] : []),
+                        ]}
+                    />
+                )}
+                {hasAnyPermissions([PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) && (
+                    <SidebarItem
+                        icon={<Star size={24} />}
+                        label="Sponsored Products"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/sponsored-products")}
+                        isActive={pathname === "/dashboard/sponsored-products"}
+                    />
+                )}
                 </>
             )}
-
-            {hasAnyPermissions([
-                PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
-                PERMISSIONS.STOCK_DISTRIBUTION_CREATE,
-                PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL,
-                PERMISSIONS.STOCK_DISTRIBUTION_UPDATE,
-                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
-                PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE,
-            ]) && (
-                <SidebarDropdown
-                    title="Stock Management"
-                    icon={<PackageCheck size={24} />}
-                    collapsed={collapsed}
-                    setCollapsed={setCollapsed}
-                    navigate={navigate}
-                    open={openDropdown === "Distributor Stocks"}
-                    setOpen={() =>
-                        setOpenDropdown((prev) =>
-                        prev === "Distributor Stocks"
-                            ? null
-                            : "Distributor Stocks"
-                        )
-                    }
-                    items={[
-                        ...(hasAnyPermissions([PERMISSIONS.STOCK_ORDERS_UPDATE, PERMISSIONS.STOCK_ORDERS_VIEW_ALL]) ? [                        
-                        {
-                            label: "Stock Orders",
-                            icon: <ShoppingCart size={20} />,
-                            path: "/dashboard/distributors/stock-orders",
-                        }] : []),
-
-                        ...(hasPermissions([PERMISSIONS.STOCK_DISTRIBUTION_CREATE]) ? [
-                            {
-                            label: "Distribute Stocks",
-                            icon: <CornerUpRight size={20} />,
-                            path: "/dashboard/distributors/transfer-stocks",
-                        }] : []),
-
-                        ...(hasAnyPermissions([PERMISSIONS.STOCK_DISTRIBUTION_UPDATE, PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_ALL]) ? [                        
-                        {
-                            label: "Distribution History",
-                            icon: <Repeat size={20} />,
-                            path: "/dashboard/distributors/transfer-logs",
-                        }] : []),
-
-                        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_UPDATE]) ? [
-                            {
-                                label: "Return Requests",
-                                icon: <Undo2 size={20} />,
-                                path: "/dashboard/distributors/return-requests",
-                            }
-                        ] : []),
-                    ]}
-                />
-            )}
-
 
             {hasAnyPermissions([
                 PERMISSIONS.ROLE_CREATE, 

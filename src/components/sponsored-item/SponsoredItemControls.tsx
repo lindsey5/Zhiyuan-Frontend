@@ -49,7 +49,7 @@ export default function SponsoredItemControls ({
             <TextField 
                 className="md:max-w-100"
                 icon={<Search size={20}/>}
-                placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by product or variant"}
+                placeholder={searchPlaceHolder ? searchPlaceHolder : "Search by product, variant or distributor..."}
                 onChange={(e) => {
                     setPagination(prev => ({...prev, pageIndex: 0}))
                     setSearch(e.target.value);

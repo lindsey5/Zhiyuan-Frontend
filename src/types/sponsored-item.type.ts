@@ -11,7 +11,7 @@ export interface SponsoredItem {
     variant: VariantWithProduct;
     quantity: number;
     createdAt: string;
-    status: 'pending' | 'accepted' | 'rejected';
+    status: 'pending' | 'approved' | 'completed' | 'cancelled' | 'rejected' | 'expired',
 }
 
 export interface GetSponsoredItemsParams extends PaginationParams{

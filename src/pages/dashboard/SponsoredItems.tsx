@@ -10,6 +10,7 @@ import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
+import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 
 const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
@@ -26,8 +27,23 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
     {
         header: "Variant",
         cell: ({ row }) => (
-            <div className="min-w-60">
+            <div className="min-w-50">
                 <Chip>{row.original.variant.variant_name}</Chip>
+            </div>
+        ),
+        meta: { align: 'center' },
+    },
+    {
+        header: "SKU",
+        accessorKey: 'variant.sku',
+        meta: { align: 'center' }
+    },
+    {
+        header: "Requested By",
+        cell: ({ row }) => (
+            <div>
+                <h1>{row.original.distributor.distributor_name}</h1>
+                <p>{row.original.distributor.email}</p>
             </div>
         ),
         meta: { align: 'center' },
@@ -39,8 +55,22 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         meta: { align: 'center' },
     },
     {
-        header: "Created At",
-        cell: ({ row }) => formatDate(row.original.createdAt),
+        header: "Status",
+        accessorKey: "status",
+        cell: info => (
+            <div className="flex justify-center">
+                <DeliveryStatusChip status={info.getValue() as string}/>
+            </div>
+        ),
+        meta: { align: 'center' }
+    },
+    {
+        header: "Date",
+        cell: ({ row }) => (
+            <div className="min-w-30">
+                {formatDate(row.original.createdAt)}
+            </div>
+        ),
         meta: { align: 'center' },
     },
 ];
@@ -52,7 +82,6 @@ export default function SponsoredItems () {
     const [sorting, setSorting] = useState<SortOption>({ sortBy: "createdAt", order: "desc" });
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-
 
     const { getSponsoredItems } = useSponsoredItem();
     
