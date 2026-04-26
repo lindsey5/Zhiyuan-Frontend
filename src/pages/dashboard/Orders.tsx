@@ -124,7 +124,7 @@ export default function Orders () {
     return (
         <PageContainer
             title="Orders"
-            description="View and manage customer orders, track order status, and review transaction details."
+            description="View and manage walk-in orders, track order status, and review transaction details."
         >
             <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
                 <OrderControls 
