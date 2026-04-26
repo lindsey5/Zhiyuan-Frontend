@@ -92,44 +92,47 @@ export const useOrderActions = () => {
     }
   });
 
+  const wrappedMarkOrderPaid = async (orderId: string, paymentMethod: string) => {
+    await markOrderPaid.mutateAsync({ orderId, paymentMethod });
+    return { message: "Order marked as paid" }; 
+  };
+
+  const wrappedUpdateOrderStatus = async (orderId: string, status: "processing" | "delivered" | "completed" | "cancelled" | "refunded") => {
+    await updateOrderStatus.mutateAsync({ orderId, status });
+    return { message: `Order marked as ${status}` }; 
+  };
+
   const runOrderAction = async (
-    orderId: string,
+    orderId: string, 
     action: OrderAction,
     paymentMethod?: string
-) => {
+  ) => {
     if (action === "paid") {
-        return promiseToast(
-            markOrderPaid.mutateAsync({
-                orderId,
-                paymentMethod: paymentMethod || "COD"
-            }),
-            "top-center",
-            () => {
-                queryClient.invalidateQueries({
-                    queryKey: ["orders"],
-                    exact: false
-                });
-            },
-            "Order marked as paid"
-        );
-    }
-
-    return promiseToast(
-        updateOrderStatus.mutateAsync({
-            orderId,
-            status: action
-        }),
+      return promiseToast(
+        wrappedMarkOrderPaid(orderId, paymentMethod || "COD"),
         "top-center",
         () => {
-            queryClient.invalidateQueries({
-                queryKey: ["orders"],
-                exact: false
-            });
+          queryClient.invalidateQueries({
+            queryKey: ["orders"],
+            exact: false,
+          });
         },
-        `Order marked as ${action}`
+        "Order marked as paid"
+      );
+    }
+  
+    return promiseToast(
+      wrappedUpdateOrderStatus(orderId, action),
+      "top-center",
+      () => {
+        queryClient.invalidateQueries({
+          queryKey: ["orders"],
+          exact: false,
+        });
+      },
+      `Order marked as ${action}`
     );
-};
-
+  };
 
   return {
     markOrderPaid,
