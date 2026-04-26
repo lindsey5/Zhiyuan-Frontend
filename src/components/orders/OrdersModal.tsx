@@ -66,15 +66,30 @@ export default function OrderDetailsModal({
         switch (order.status) {
 
             case "pending":
+
+                if(order.delivery_type==="pickup"){
+                    return [
+                        {
+                            label:"Mark as Completed",
+                            action:"completed",
+                            variant:"gold"
+                        },
+                        {
+                            label:"Cancel Order",
+                            action:"cancelled"
+                        }
+                    ];
+                }
+
                 return [
                     {
-                        label: "Mark as Processing",
-                        action: "processing",
-                        variant: "gold"
+                         label:"Mark as Processing",
+                         action:"processing",
+                        variant:"gold"
                     },
                     {
-                        label: "Cancel Order",
-                        action: "cancelled"
+                        label:"Cancel Order",
+                        action:"cancelled"
                     }
                 ];
 
@@ -118,8 +133,9 @@ export default function OrderDetailsModal({
 
     const handleAction = async (action: ActionType) => {
         await runOrderAction(
-            order.order_id,
-            action
+            order._id,
+            action,
+            order.payment_method
             );
     
         onClose();
