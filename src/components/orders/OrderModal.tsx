@@ -150,7 +150,7 @@ export default function OrderModal({ close, order_id }: OrderModalProps) {
             back={() => setShowPayment(false)}
         />
         <Modal open={order_id !== null && !showPayment} onClose={handleClose}>
-            <Card className="max-w-2xl w-full p-6 space-y-6">
+            <Card className="max-w-2xl max-h-[80vh] overflow-y-auto w-full p-6 space-y-6">
         
                 {/* LOADING STATE */}
                 {isFetching || !order ? (
