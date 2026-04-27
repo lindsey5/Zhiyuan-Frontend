@@ -4,13 +4,23 @@ export interface Order {
     _id: string;
     order_id: string;
     customer_name: string;
-    status: "pending" | "processing" | "delivered" |"completed" | "cancelled" | "refunded";
+    status: "pending" | "processing" | "delivered" |"completed" | "cancelled" | "refunded" | "expired" | "failed" ;
     total_amount: number;
     delivery_type: "pickup" | "delivery";
     payment_method: "COD" | "GCash" | "Card" | "Paymaya";
     payment_status: "paid" | "unpaid";
     order_items: OrderItem[]
     createdAt: string;
+    address?: {
+        street: string;
+        barangay: string;
+        city: string;
+      };
+      variant?: {
+        product ?: {
+            name: string;
+        }
+      }
 }
 
 export interface OrderItem {

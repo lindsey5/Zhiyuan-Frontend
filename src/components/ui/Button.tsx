@@ -6,7 +6,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: string
 }
 
-export default function Button({ icon, label, className, onClick, ...props }: ButtonProps) {
+export default function Button({ icon, label, className, onClick, children, ...props }: ButtonProps) {
     return (
         <button
             {...props}
@@ -20,7 +20,10 @@ export default function Button({ icon, label, className, onClick, ...props }: Bu
             }}
         >
             {icon}
-            {label && <span>{label}</span>}
+
+            {(label || children) && (
+                <span>{label || children}</span>
+            )}
         </button>
-    )
+    );
 }`  `

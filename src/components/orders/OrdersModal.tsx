@@ -21,7 +21,9 @@ type ActionType =
     | "delivered"
     | "completed"
     | "cancelled"
-    | "refunded";
+    | "refunded"
+    | "expired"
+    | "failed";
 
 type ActionButton = {
     label: string;
@@ -125,6 +127,8 @@ export default function OrderDetailsModal({
 
             case "cancelled":
             case "refunded":
+            case "expired":
+            case "failed":
             default:
                 return [];
         }
@@ -205,6 +209,20 @@ export default function OrderDetailsModal({
 
                     </div>
 
+                    {order.delivery_type === "delivery" &&
+                        order.address && (
+                        <div>
+                            <p className="text-gray-400">
+                                Delivery Address
+                            </p>
+
+                            <p className="font-medium">
+                                {order.address?.street},{" "}
+                                {order.address?.barangay},{" "}
+                                {order.address?.city}
+                            </p>
+                        </div>
+    )}
                     <div>
                         <p className="text-gray-400 mb-1">
                             Delivery Status
@@ -214,6 +232,37 @@ export default function OrderDetailsModal({
                             status={order.status}
                         />
                     </div>
+
+                    {order.order_items?.length > 0 && (
+                        <div>
+                            <p className="text-gray-400 mb-2">
+                                Order Items
+                            </p>
+
+                            <div className="border rounded-md p-3 space-y-3">
+                                {order.order_items.map((item) => (
+                                    <div
+                                        key={item._id}
+                                        className="flex justify-between items-center"
+                                    >
+                                        <div>
+                                            <p className="font-medium">
+                                            {item.variant?.product?.name}
+                                            </p>
+
+                                            <p className="text-xs text-gray-500">
+                                                Qty: {item.quantity}
+                                            </p>
+                                        </div>
+
+                                        <p className="font-medium">
+                                            {formatToPeso(item.amount)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     <div>
                         <p className="text-gray-400">

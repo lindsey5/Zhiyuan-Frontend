@@ -15,7 +15,10 @@ export interface OrderQueryParams {
     | "delivered"
     | "completed"
     | "cancelled"
-    | "refunded";
+    | "refunded"
+    | "expired"
+    | "failed"
+    ;
 
   payment_status?: "paid" | "unpaid";
 
@@ -51,7 +54,10 @@ type OrderAction =
   | "delivered"
   | "completed"
   | "cancelled"
-  | "refunded";
+  | "refunded"
+  | "expired"
+  | "failed"
+  ;
 
 
 export const useOrderActions = () => {
@@ -88,7 +94,7 @@ export const useOrderActions = () => {
       await queryClient.invalidateQueries({
         queryKey: ["orders"],
         exact: false
-      });
+      }); 
     }
   });
 
@@ -97,7 +103,7 @@ export const useOrderActions = () => {
     return { message: "Order marked as paid" }; 
   };
 
-  const wrappedUpdateOrderStatus = async (orderId: string, status: "processing" | "delivered" | "completed" | "cancelled" | "refunded") => {
+  const wrappedUpdateOrderStatus = async (orderId: string, status: "processing" | "delivered" | "completed" | "cancelled" | "refunded" | "expired" | "failed") => {
     await updateOrderStatus.mutateAsync({ orderId, status });
     return { message: `Order marked as ${status}` }; 
   };
