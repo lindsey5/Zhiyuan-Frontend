@@ -84,7 +84,7 @@ export const useOrderActions = () => {
       status: Exclude<OrderAction, "paid">;
     }) => {
 
-      return apiAxios( `/orders/${orderId}/status`, {method: "PATCH",
+      return apiAxios( `/orders/status/${orderId}`, {method: "PATCH",
           data: { status }
         }
       );
