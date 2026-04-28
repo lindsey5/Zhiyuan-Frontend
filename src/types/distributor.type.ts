@@ -47,3 +47,8 @@ export interface GetDistributorsResponse extends PaginationResponse {
 export interface GetDistributorResponse extends ApiResponse {
     distributor: Distributor
 }
+
+export interface GetTotalDistributorsResponse {
+    success: boolean;
+    totalDistributors: number;
+}

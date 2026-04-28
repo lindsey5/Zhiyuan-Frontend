@@ -78,3 +78,8 @@ export interface ChangePasswordPayload {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface GetTotalUsersResponse {
+  success: boolean;
+  totalUsers: number;
+}

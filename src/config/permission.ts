@@ -18,6 +18,7 @@ export const PERMISSIONS = {
 
     // Product management
     PRODUCT_READ_ALL: 'product:read:all',
+    PRODUCT_LOW_STOCK_VIEW: 'product:low-stock:view',
     PRODUCT_CREATE: 'product:create',
     PRODUCT_UPDATE: 'product:update',
     PRODUCT_DELETE: 'product:delete',
@@ -105,6 +106,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     "Product Management": {
         description: "Manage products and variants including updates and inventory setup.",
         PRODUCT_READ_ALL: "View all products including variants",
+        PRODUCT_LOW_STOCK_VIEW: 'View and manage low stock products',
         PRODUCT_CREATE: "Create products including variants",
         PRODUCT_UPDATE: "Update products including variants",
         PRODUCT_DELETE: "Delete products including variants",

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { productService } from "../service/productService"
-import type { GetProductResponse, GetProductsParams, GetProductsResponse, UpdateProductPayload } from "../types/product.type"
+import type { GetProductResponse, GetProductsParams, GetProductsResponse, GetTotalLowStockProducts, GetTotalProductsResponse, UpdateProductPayload } from "../types/product.type"
+import type { GetVariantsParams, GetVariantsResponse } from "../types/variant.type"
 
 export const useProduct = () => {
 
@@ -16,6 +17,30 @@ export const useProduct = () => {
         useQuery<GetProductResponse, Error>({
             queryKey: ['product', id],
             queryFn: () => productService.getProductById(id),
+            refetchOnWindowFocus: false,
+        })
+    )
+    
+    const getTotalProducts = () => (
+        useQuery<GetTotalProductsResponse, Error>({
+            queryKey: ['products/total'],
+            queryFn: () => productService.getTotalProducts(),
+            refetchOnWindowFocus: false,
+        })
+    )
+
+    const getLowStockProducts = (params : GetVariantsParams) => (
+        useQuery<GetVariantsResponse, Error>({
+            queryKey: ['products/low-stocks', params],
+            queryFn: () => productService.getLowStockProducts(params),
+            refetchOnWindowFocus: false,
+        })
+    )
+
+    const getTotalLowStockProducts = () => (
+        useQuery<GetTotalLowStockProducts, Error>({
+            queryKey: ['products/low-stocks/total'],
+            queryFn: () => productService.getTotalLowStockProducts(),
             refetchOnWindowFocus: false,
         })
     )
@@ -40,6 +65,9 @@ export const useProduct = () => {
         createProduct,
         updateProduct,
         getProductById,
+        getTotalProducts,
+        getLowStockProducts,
+        getTotalLowStockProducts,
         deleteProduct
     }
 

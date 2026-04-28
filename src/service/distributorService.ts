@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { CreateDistributorDTO, CreateDistributorResponse, GetDistributorResponse, GetDistributorsParams, GetDistributorsResponse } from "../types/distributor.type";
+import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type CreateDistributorResponse, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse } from "../types/distributor.type";
 import type { ApiResponse } from "../types/type";
 
 export const distributorService = {
@@ -19,6 +19,12 @@ export const distributorService = {
     getDistributorById: (id: string): Promise<GetDistributorResponse> => (
         apiAxios<GetDistributorResponse>(`/distributors/${id}`,{
             method: HttpMethod.GET,
+        })
+    ),
+
+    getTotalDistributors: () => (
+        apiAxios<GetTotalDistributorsResponse>('distributors/total', {
+            method: HttpMethod.GET
         })
     ),
 

@@ -24,6 +24,7 @@ import {
   Undo2,
   PackageCheck,
   ShoppingCart,
+  AlertTriangle,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -129,6 +130,7 @@ export default function Sidebar({
                 PERMISSIONS.PRODUCT_DELETE, 
                 PERMISSIONS.PRODUCT_UPDATE, 
                 PERMISSIONS.PRODUCT_READ_ALL, 
+                PERMISSIONS.PRODUCT_LOW_STOCK_VIEW,
                 PERMISSIONS.CATEGORY_CREATE, 
                 PERMISSIONS.CATEGORY_DELETE, 
                 PERMISSIONS.CATEGORY_READ_ALL, 
@@ -157,6 +159,13 @@ export default function Sidebar({
                                 path: "/dashboard/products",
                             }
                         ]: []),
+                        ...(hasPermissions([PERMISSIONS.PRODUCT_LOW_STOCK_VIEW]) ? [
+                            {
+                                label: "Low Stock Products",
+                                icon: <AlertTriangle size={20} />,
+                                path: "/dashboard/products/low-stocks",
+                            }
+                        ] : []),
                         ...(hasPermissions([PERMISSIONS.PRODUCT_CREATE]) ? [
                             {
                                 label: "Add Product",

@@ -1,20 +1,27 @@
+import { cn } from "../../utils/utils";
 import Card from "./Card";
 
 interface MetricCardProps {
     title: string;
     content: string;
+    onClick?: () => void;
 }
 
-export default function MetricCard({ title, content }: MetricCardProps) {
+export default function MetricCard({ title, content,onClick }: MetricCardProps) {
     return (
-        <Card className="p-3 md:p-5">
-            <div className="flex flex-col gap-2">
-                <span className="text-gold text-sm md:text-md font-bold">{title}</span>
-                <h1 className="ftext-primary text-sm sm:text-lg lg:text-2xl">
-                    {content}
-                </h1>
-            </div>
-        </Card>
+        <div onClick={onClick} className={cn(onClick && 'cursor-pointer')}>
+            <Card className={cn(
+                "p-3 md:p-5",
+                onClick && 'hover:bg-panel-hover'
+            )}>
+                <div className="flex flex-col gap-2">
+                    <span className="text-gold text-sm md:text-md font-bold">{title}</span>
+                    <h1 className="ftext-primary text-sm sm:text-lg lg:text-2xl">
+                        {content}
+                    </h1>
+                </div>
+            </Card>
+        </div>
     );
 }
 

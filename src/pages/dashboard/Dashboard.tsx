@@ -1,6 +1,7 @@
-import DashboardChart from "../../components/ui/Chart"
 import Metrics from "../../components/dashboard/Metrics"
 import PageContainer from "../../components/ui/PageContainer"
+import DashboardDistributorMonthlySales from "../../components/dashboard/DistributorsMonthlySales";
+import DashboardDistributorItemsSoldPerMonth from "../../components/dashboard/DistributorItemSoldPerMonth";
 
 export default function Dashboard() {
 
@@ -11,15 +12,8 @@ export default function Dashboard() {
         >
             <Metrics />
 
-            <DashboardChart
-                formatToPeso
-                title="Monthly Sales"
-                labels={[
-                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                ]}
-                values={[30, 50, 40, 70, 60, 90, 80, 75, 65, 85, 95, 100]}
-            />
+            <DashboardDistributorMonthlySales />
+            <DashboardDistributorItemsSoldPerMonth />
         </PageContainer>
     );
 }

@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios"
-import type { ChangePasswordPayload, CreateUserPayload, CreateUserResponse, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload, UpdateUserResponse } from "../types/user.type"
+import type { ChangePasswordPayload, CreateUserPayload, CreateUserResponse, GetTotalUsersResponse, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload, UpdateUserResponse } from "../types/user.type"
 
 export const userService = {
     updateOwnAccount: (data: UpdateUserOwnPayload) => {
@@ -18,6 +18,12 @@ export const userService = {
 
     getUsersCount: () => {
         return apiAxios<GetUsersCountResponse>("users/count", {
+            method: HttpMethod.GET,
+        })
+    },
+
+    getTotalUsers: () => {
+        return apiAxios<GetTotalUsersResponse>("users/total", {
             method: HttpMethod.GET,
         })
     },

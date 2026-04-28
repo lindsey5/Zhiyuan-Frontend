@@ -13,6 +13,8 @@ const options: Record<string, SortOption> = {
     'Oldest': { sortBy: 'createdAt', order: 'asc' },
     'A-Z': { sortBy: 'variant_name', order: 'asc' },
     'Z-A': { sortBy: 'variant_name', order: 'desc' },
+    'Stock - (LOW - HIGH)' :{ sortBy: 'stock', order: 'asc' },
+    'Stock - (HIGH - LOW)' :{ sortBy: 'stock', order: 'desc' },
 };
 
 interface VariantsTableControlsProps {

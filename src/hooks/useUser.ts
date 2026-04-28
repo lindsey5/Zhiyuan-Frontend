@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { userService } from "../service/userService"
 import { useAuthStore } from "../lib/store/authStore"
-import type { ChangePasswordPayload, CreateUserPayload, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload } from "../types/user.type";
+import type { ChangePasswordPayload, CreateUserPayload, GetTotalUsersResponse, GetUsersCountResponse, GetUsersParams, GetUsersResponse, UpdateUserOwnPayload, UpdateUserPayload } from "../types/user.type";
 
 export const useUser = () => {
     const { setUser } = useAuthStore();
@@ -51,6 +51,14 @@ export const useUser = () => {
         })
     )
 
+    const getTotalUsers = () => (
+        useQuery<GetTotalUsersResponse, Error>({
+            queryKey: ['users/total'],
+            queryFn: () => userService.getTotalUsers(),
+            refetchOnWindowFocus: false,
+        })
+    )
+
     return {
         createUser,
         updateUser,
@@ -58,6 +66,7 @@ export const useUser = () => {
         changePasswordMutate,
         deleteUser,
         getUsers,
-        getUsersCount
+        getUsersCount,
+        getTotalUsers
     }
 }

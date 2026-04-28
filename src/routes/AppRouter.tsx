@@ -25,6 +25,7 @@ import SponsoredItems from "../pages/dashboard/SponsoredItems";
 import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
 import StockOrders from "../pages/dashboard/StockOrders";
+import LowStockProducts from "../pages/dashboard/LowStockProducts";
 
 const router = createBrowserRouter([ 
     {
@@ -53,17 +54,30 @@ const router = createBrowserRouter([
             },
             {
                 path: 'products',
-                Component: () => (
-                    <ProtectedRoute
-                        anyPermissions={[
-                            PERMISSIONS.PRODUCT_DELETE,
-                            PERMISSIONS.PRODUCT_UPDATE,
-                            PERMISSIONS.PRODUCT_READ_ALL
-                        ]}
-                    >
-                        <Products />
-                    </ProtectedRoute>
-                )
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute
+                                anyPermissions={[
+                                    PERMISSIONS.PRODUCT_DELETE,
+                                    PERMISSIONS.PRODUCT_UPDATE,
+                                    PERMISSIONS.PRODUCT_READ_ALL
+                                ]}
+                            >
+                                <Products />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'low-stocks',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.PRODUCT_LOW_STOCK_VIEW]}>
+                                <LowStockProducts />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]
             },
             {
                 path: 'variants',

@@ -60,3 +60,13 @@ export interface UpdateProductPayload {
 export interface UpdateProductResponse extends ApiResponse {
     product: Product;
 }
+
+export interface GetTotalProductsResponse {
+    success: boolean;
+    totalProducts: number;
+}
+
+export interface GetTotalLowStockProducts {
+    success: boolean;
+    totalLowStockProducts: number;
+}
