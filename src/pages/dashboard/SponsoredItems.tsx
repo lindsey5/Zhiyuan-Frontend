@@ -122,6 +122,8 @@ export default function SponsoredItems () {
     const { data, isFetching } = getSponsoredItems(debouncedParams);
 
     const columns = getColumns(setSponsoredId);
+
+    const onRowClick = (row : SponsoredItem) => setSponsoredId(row._id);
     
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -164,6 +166,7 @@ export default function SponsoredItems () {
                     isLoading={isFetching}
                     noDataMessage="No Items Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>
