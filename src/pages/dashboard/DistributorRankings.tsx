@@ -33,7 +33,7 @@ const columns : ColumnDef<TopDistributor>[] = [
         meta: { align: 'center '}
     },
     {
-        header: "Total Quantity Sold",
+        header: "Items Sold",
         accessorKey: "totalQuantity",
         meta: { align: 'center '}
     },
@@ -72,7 +72,7 @@ export default function DistributorRankings () {
     return (
         <PageContainer
             title="Distributor Rankings"
-            description="View and analyze top-performing distributors based on total sales and quantity sold"
+            description="View and analyze top-performing distributors based on total sales and items sold"
         >
             <Card className="p-0 flex flex-col max-h-screen pt-5 gap-5">
                 <DistributorRankingControls 
