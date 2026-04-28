@@ -9,7 +9,7 @@ export default function MostSellingProducts() {
 
     return (
         <Card className="lg:min-w-[35%] space-y-3 max-h-[300px] md:max-h-[500px] overflow-y-auto">
-            <h1 className="font-bold text-gold">Most Selling Products</h1>
+            <h1 className="font-bold text-gold">Walk-in Most Selling Products</h1>
 
             {/* Skeleton Loading */}
             {isFetching && (
