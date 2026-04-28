@@ -99,7 +99,7 @@ export default function DistributorCommissions ({ distributorId } : { distributo
                 setPagination={setPagination}
                 totalPages={data?.totalPages || 0}
                 showPagination
-                noDataMessage="No Sales Found"
+                noDataMessage="No Commissions Found"
                 total={data?.total || 0}
             />
         </Card>
