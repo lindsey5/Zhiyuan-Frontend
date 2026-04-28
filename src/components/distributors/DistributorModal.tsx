@@ -9,6 +9,7 @@ import { distributorSchema, type DistributorFormData } from "../../schemas/distr
 import { useDistributor } from "../../hooks/useDistributor"
 import GoldButton from "../ui/GoldButton"
 import Modal from "../ui/Modal"
+import ParentDistributorAutoComplete from "./ParentDistributorAutoComplete"
 
 type DistributorModalProps = {
     open: boolean
@@ -17,7 +18,7 @@ type DistributorModalProps = {
 
 export default function DistributorModal({ open, onClose }: DistributorModalProps) {
     const { createDistributor } = useDistributor();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<DistributorFormData>({
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<DistributorFormData>({
         resolver: zodResolver(distributorSchema),
     });
 
@@ -65,12 +66,10 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         disabled={createDistributor.isPending}
                     />
 
-                    <TextField
-                        label="Parent Distributor (Optional)"
-                        placeholder="Enter parent distributor ID"
-                        registration={register("parent_distributor_id")}
-                        error={errors.parent_distributor_id?.message}
+                    <ParentDistributorAutoComplete 
                         disabled={createDistributor.isPending}
+                        error={errors.parent_distributor_id?.message || ""}
+                        setValue={setValue}
                     />
 
                     <div className="flex justify-end gap-3 pt-3">
