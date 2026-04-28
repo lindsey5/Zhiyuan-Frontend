@@ -67,7 +67,6 @@ export const useDistributorSale = () => {
             refetchOnWindowFocus: false,
         })
     )
-
     
     const getAllDistributorItemsSoldPerMonth = (year: number = 2024) => (
         useQuery<GetDistributorItemsSoldPerMonthResponse, Error>({

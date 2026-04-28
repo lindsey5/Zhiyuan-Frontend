@@ -70,3 +70,14 @@ export interface UpdateOrderStatusPayload {
 export interface UpdateOrderStatusResponse extends ApiResponse {
     order: Order;
 }
+
+export interface GetOrderMonthlySalesResponse {
+    success: boolean;
+    monthlySales: { month: string, totalSales: number }[];
+    year: number;
+}
+
+export interface GetOrderSalesByPeriodResponse {
+    success: boolean;
+    sales: number;
+}

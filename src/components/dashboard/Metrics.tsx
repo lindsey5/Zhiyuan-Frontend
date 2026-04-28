@@ -7,7 +7,6 @@ export default function Metrics () {
             <LowStockProducts />
             <TotalUsers />
             <TotalDistributors />
-            
         </div>
     )
 }

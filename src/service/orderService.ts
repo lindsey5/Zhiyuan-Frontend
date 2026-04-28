@@ -1,5 +1,6 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { OrderMarkAsPaidResponse, GetOrderResponse, GetOrdersParams, GetOrdersResponse, OrderMarkAsPaidPayload, UpdateOrderStatusPayload, UpdateOrderStatusResponse } from "../types/order.type";
+import type { Period } from "../types/distributorSale.type";
+import type { OrderMarkAsPaidResponse, GetOrderResponse, GetOrdersParams, GetOrdersResponse, OrderMarkAsPaidPayload, UpdateOrderStatusPayload, UpdateOrderStatusResponse, GetOrderMonthlySalesResponse, GetOrderSalesByPeriodResponse } from "../types/order.type";
 
 export const orderService = {
     getOrders: (params : GetOrdersParams) => 
@@ -23,5 +24,17 @@ export const orderService = {
         apiAxios<UpdateOrderStatusResponse>(`orders/status/${id}`,{
             method: HttpMethod.PATCH,
             data
+        }),
+    
+    getOrderMonthlySales: (year: number) => (
+            apiAxios<GetOrderMonthlySalesResponse>(`orders/sales/monthly?year=${year}`, {
+                method: HttpMethod.GET
+            })
+        ),
+
+    getOrderSalesByPeriod: (period: Period) => (
+        apiAxios<GetOrderSalesByPeriodResponse>(`orders/sales/${period}`, {
+            method: HttpMethod.GET
         })
+    ),
 };

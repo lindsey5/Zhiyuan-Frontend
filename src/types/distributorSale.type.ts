@@ -41,13 +41,13 @@ export interface GetDistributorItemsSoldResponse {
 }
 
 export interface GetDistributorMonthlySalesResponse {
-    success: true;
+    success: boolean;
     monthlySales: { month: string, totalSales: number }[];
     year: number;
 }
 
 export interface GetDistributorItemsSoldPerMonthResponse {
-    success: true;
+    success: boolean;
     itemsSoldPerMonth: { month: string, totalQuantity: number }[];
     year: number;
 }

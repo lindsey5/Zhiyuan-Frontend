@@ -69,6 +69,7 @@ export const PERMISSIONS = {
     // Order management
     ORDER_READ_ALL: 'order:read:all',
     ORDER_UPDATE: 'order:update',
+    ORDER_SALES_VIEW: "order:sales:view"
 }
 
 type PermissionGroup = {
@@ -176,9 +177,10 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     },
 
     "Order Management": {
-        description: "Manage customer walk-in orders including viewing and updating order status.",
+        description: "Manage walk-in orders by viewing order details, tracking status, and monitoring sales performance.",
         ORDER_READ_ALL: "View all walk-in orders",
         ORDER_UPDATE: "Update walk-in order status",
+        ORDER_SALES_VIEW: "View sales analytics and monthly walk-in order reports"
     },
 };
 

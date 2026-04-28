@@ -26,6 +26,7 @@ import ReturnRequests from "../pages/dashboard/ReturnRequests";
 import Orders from "../pages/dashboard/Orders";
 import StockOrders from "../pages/dashboard/StockOrders";
 import LowStockProducts from "../pages/dashboard/LowStockProducts";
+import OrderSales from "../pages/dashboard/OrderSales";
 
 const router = createBrowserRouter([ 
     {
@@ -175,11 +176,24 @@ const router = createBrowserRouter([
             },
             {
                 path: 'orders',
-                Component: () => (
-                    <ProtectedRoute anyPermissions={[PERMISSIONS.ORDER_READ_ALL, PERMISSIONS.ORDER_UPDATE]}>
-                        <Orders />
-                    </ProtectedRoute>
-                )
+                children: [
+                    {
+                        index: true,
+                        Component: () => (
+                            <ProtectedRoute anyPermissions={[PERMISSIONS.ORDER_READ_ALL, PERMISSIONS.ORDER_UPDATE]}>
+                                <Orders />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'sales',
+                        Component: () => (
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.ORDER_SALES_VIEW]}>
+                                <OrderSales />
+                            </ProtectedRoute>
+                        )
+                    }
+                ]
             },
             {
                 path: 'distributors',

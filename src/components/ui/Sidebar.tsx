@@ -382,7 +382,8 @@ export default function Sidebar({
 
             {hasAnyPermissions([
                 PERMISSIONS.ORDER_READ_ALL, 
-                PERMISSIONS.ORDER_UPDATE
+                PERMISSIONS.ORDER_UPDATE,
+                PERMISSIONS.ORDER_SALES_VIEW,
             ]) && (
                 <>
                 {/* Walk-in Orders*/}
@@ -398,13 +399,15 @@ export default function Sidebar({
                     />
                 )}
 
-                <SidebarItem
-                    icon={<BarChartBig size={24} />}
-                    label="Sales"
-                    collapsed={collapsed}
-                    onClick={() => navigate("/dashboard/orders/sales")}
-                    isActive={pathname === "/dashboard/orders/sales"}
-                />
+                {hasPermissions([PERMISSIONS.ORDER_SALES_VIEW]) && (
+                    <SidebarItem
+                        icon={<BarChartBig size={24} />}
+                        label="Sales"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/orders/sales")}
+                        isActive={pathname === "/dashboard/orders/sales"}
+                    />
+                )}
                 </>
             )}
 
