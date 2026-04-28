@@ -46,6 +46,7 @@ export default function StockOrderControls({
     const clear = () => {
         setStartDate('');
         setEndDate('');
+        setStatus('');
     }
 
     return (
