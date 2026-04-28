@@ -24,7 +24,7 @@ export default function DashboardDistributorMonthlySales () {
             <Chart 
                 formatToPeso
                 labels={data?.monthlySales.map(sale => sale.month) || []}
-                title="Distributor Monthly Sales"
+                title="Distributors Monthly Sales"
                 values={data?.monthlySales.map(sale => sale.totalSales) || []}
             />
         </div>

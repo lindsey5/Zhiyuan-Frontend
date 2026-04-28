@@ -1,19 +1,22 @@
 import { useProduct } from "../../hooks/useProduct";
-import { formatToPeso } from "../../utils/utils";
+import { cn, formatToPeso } from "../../utils/utils";
 import Card from "../ui/Card";
 import Chip from "../ui/Chip";
 
-export default function MostSellingProducts() {
+export default function MostSellingProducts({ className } : { className?: string}) {
     const { getMostSellingProducts } = useProduct();
     const { data, isFetching } = getMostSellingProducts();
 
     return (
-        <Card className="flex-1 flex flex-col space-y-3 max-h-[300px] md:max-h-[500px]">
-            <h1 className="font-bold text-gold">Walk-in Most Selling Products</h1>
+        <Card className={cn(
+            "flex-1 flex flex-col space-y-3 max-h-[300px] md:max-h-[500px]",
+            className
+        )}>
+            <h1 className="font-bold text-gold">Walk-in Orders Most Selling Products</h1>
 
             {/* Skeleton Loading */}
             {isFetching && (
-                <div className="space-y-4 mt-4">
+                <div className="space-y-4 mt-4 overflow-y-auto min-h-0 flex-grow">
                     {Array.from({ length: 5 }).map((_, index) => (
                         <div key={index} className="flex gap-4 items-start animate-pulse">
                             <div className="w-20 h-20 rounded-lg bg-loading border border-[var(--border-panel)]" />

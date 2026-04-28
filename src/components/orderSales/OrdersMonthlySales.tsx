@@ -14,7 +14,7 @@ export default function OrdersMonthlySales () {
     if(isFetching) return <ChartSkeleton />
 
     return (
-        <div className="relative">
+        <div className="relative flex-1">
             <Dropdown
                 className="absolute right-5 top-5"
                 options={yearOptions}
@@ -24,7 +24,7 @@ export default function OrdersMonthlySales () {
             <Chart 
                 formatToPeso
                 labels={data?.monthlySales.map(sale => sale.month) || []}
-                title="Walk-in Order Monthly Sales"
+                title="Walk-in Orders Monthly Sales"
                 values={data?.monthlySales.map(sale => sale.totalSales) || []}
             />
         </div>

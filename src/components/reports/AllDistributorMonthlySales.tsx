@@ -14,7 +14,7 @@ export default function AllDistributorMonthlySales () {
     if(isFetching) return <ChartSkeleton />
 
     return (
-        <div className="relative">
+        <div className="relative flex-1">
             <Dropdown
                 className="absolute right-5 top-5"
                 options={yearOptions}
