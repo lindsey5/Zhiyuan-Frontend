@@ -132,8 +132,8 @@ export default function SponsoredItemDetails({ close, sponsoredId,}: SponsoredIt
 
                     <div className="text-xs">
                         Requested on:{" "}
-                        <span className="font-medium text-white">
-                        {formatDate(sponsoredItem?.createdAt)}
+                        <span className="font-medium">
+                        {formatDate(sponsoredItem?.createdAt || "")}
                         </span>
                     </div>
                 </div>

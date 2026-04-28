@@ -25,6 +25,10 @@ function StockOrderDetailsSkeleton() {
                 <div className="h-5 w-5 bg-loading rounded" />
             </div>
 
+            <div className="space-y-2 border-b pb-3 border-[var(--border-panel)]">
+                <div className="h-4 w-40 bg-loading rounded" />
+            </div>
+
             {/* Requested By */}
             <div className="space-y-2 border-b pb-3 border-[var(--border-panel)]">
                 <div className="h-3 w-24 bg-loading rounded" />
@@ -111,6 +115,9 @@ export default function StockOrderDetails ({ stock_order_id, close } : StockOrde
                         >
                             <X />
                         </button>
+                    </div>
+                    <div className="pb-3 border-b border-[var(--border-panel)] mb-3 ">
+                        <h3 className="text-sm font-semibold">{stockOrder.stock_order_id}</h3>
                     </div>
                     <div className="flex flex-col gap-2 text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
                         

@@ -27,6 +27,10 @@ const StockTransferItemsSkeleton = () => {
                 <div className="h-6 w-6 rounded bg-loading"></div>
             </div>
 
+            <div className="space-y-2 pb-3 px-2 border-b border-[var(--border-panel)]">
+                <div className="h-4 w-48 rounded bg-loading"></div>
+            </div>
+
             {/* Receiver/Sender Skeleton */}
             <div className="space-y-2 pb-3 px-2 border-b border-[var(--border-panel)]">
                 <div className="h-4 w-24 rounded bg-loading"></div>
@@ -107,6 +111,9 @@ export default function StockTransferItems ({ open, close, transfer_id } : Stock
                         >
                             <X />
                         </button>
+                    </div>
+                    <div className="text-sm pb-3 px-2 border-b border-[var(--border-panel)] mb-3">
+                        <h3 className="font-semibold">{stockTransferLog?.transfer_no}</h3>
                     </div>
                     <div className="flex flex-col items-start text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
                         <p>Receiver:</p>
