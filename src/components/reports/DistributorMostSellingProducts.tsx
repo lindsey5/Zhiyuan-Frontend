@@ -1,15 +1,15 @@
-import { useProduct } from "../../hooks/useProduct";
+import { useDistributorSale } from "../../hooks/useDistributorSale";
 import { formatToPeso } from "../../utils/utils";
 import Card from "../ui/Card";
 import Chip from "../ui/Chip";
 
-export default function MostSellingProducts() {
-    const { getMostSellingProducts } = useProduct();
-    const { data, isFetching } = getMostSellingProducts();
+export default function DistributorMostSellingProducts() {
+    const { getDistributorMostSellingProducts } = useDistributorSale();
+    const { data, isFetching } = getDistributorMostSellingProducts();
 
     return (
         <Card className="flex-1 flex flex-col space-y-3 max-h-[300px] md:max-h-[500px]">
-            <h1 className="font-bold text-gold">Walk-in Most Selling Products</h1>
+            <h1 className="font-bold text-gold">Distributor Most Selling Products</h1>
 
             {/* Skeleton Loading */}
             {isFetching && (
@@ -31,9 +31,8 @@ export default function MostSellingProducts() {
                     ))}
                 </div>
             )}
-
-            {/* Data */}
             <div className="overflow-y-auto min-h-0 flex-grow">
+            {/* Data */}
             {!isFetching &&
                 data?.mostSellingProducts.map((product) => (
                     <div

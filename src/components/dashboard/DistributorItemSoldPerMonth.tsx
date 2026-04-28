@@ -15,7 +15,7 @@ export default function DashboardDistributorItemsSoldPerMonth() {
     if(isFetching) return <ChartSkeleton />
 
     return (
-        <div className="relative lg:flex-1">
+        <div className="relative">
             <Dropdown
                 className="absolute right-5 top-5"
                 options={yearOptions}

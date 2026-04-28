@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import type { GetDistributorItemsSoldPerMonthResponse, GetDistributorItemsSoldResponse, GetDistributorMonthlySalesResponse, GetDistributorSalesByPeriodResponse, GetDistributorSalesParams, GetDistributorSalesResponse, Period } from "../types/distributorSale.type"
 import { distributorSaleService } from "../service/distributorSaleService"
+import type { GetMostSellingProductsResponse } from "../types/product.type"
 
 export const useDistributorSale = () => {
 
@@ -84,6 +85,14 @@ export const useDistributorSale = () => {
         })
     )
 
+    const getDistributorMostSellingProducts = () => (
+        useQuery<GetMostSellingProductsResponse, Error>({
+            queryKey: ['distributor-sales/most-selling'],
+            queryFn: () => distributorSaleService.getDistributorMostSellingProducts(),
+            refetchOnWindowFocus: false,
+        })
+    )
+
     return {
         getAllDistributorSales,
         getDistributorSales,
@@ -95,5 +104,6 @@ export const useDistributorSale = () => {
         getAllDistributorItemsSoldPerMonth,
         getAllDistributorMonthlySales,
         getAllDistributorSalesByPeriod,
+        getDistributorMostSellingProducts
     }
 }

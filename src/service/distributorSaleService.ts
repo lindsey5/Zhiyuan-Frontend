@@ -1,6 +1,7 @@
 
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
 import { type GetDistributorMonthlySalesResponse, type GetDistributorItemsSoldResponse, type GetDistributorSalesByPeriodResponse, type GetDistributorSalesParams, type GetDistributorSalesResponse, type Period, type GetDistributorItemsSoldPerMonthResponse, type DownloadDistributorSalesParams } from "../types/distributorSale.type";
+import type { GetMostSellingProductsResponse } from "../types/product.type";
 import { errorToast } from "../utils/sileo";
 import { downloadFile } from "../utils/utils";
 
@@ -65,6 +66,12 @@ export const distributorSaleService = {
             method: HttpMethod.GET
         })
     ),
+
+    getDistributorMostSellingProducts: () => {
+        return apiAxios<GetMostSellingProductsResponse>(`distributor-sales/most-selling`, {
+          method: HttpMethod.GET,
+        })
+      },
 
     downloadDistributorSales: async (id: string, params: DownloadDistributorSalesParams) => {
         try{

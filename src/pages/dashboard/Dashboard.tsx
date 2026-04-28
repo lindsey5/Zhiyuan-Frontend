@@ -4,6 +4,7 @@ import DashboardDistributorMonthlySales from "../../components/dashboard/Distrib
 import DashboardDistributorItemsSoldPerMonth from "../../components/dashboard/DistributorItemSoldPerMonth";
 import OrdersMonthlySales from "../../components/orderSales/OrdersMonthlySales";
 import MostSellingProducts from "../../components/orderSales/MostSellingProducts";
+import DistributorMostSellingProducts from "../../components/reports/DistributorMostSellingProducts";
 
 export default function Dashboard() {
 
@@ -13,14 +14,13 @@ export default function Dashboard() {
             description="Overview of your system metrics and activities."
         >
             <Metrics />
+            <OrdersMonthlySales />
             <div className="w-full flex flex-col lg:flex-row gap-5">
-                <OrdersMonthlySales />
                 <MostSellingProducts />
+                <DistributorMostSellingProducts />
             </div>
-            <div className="w-full flex flex-col lg:flex-row gap-5">
-                <DashboardDistributorMonthlySales />
-                <DashboardDistributorItemsSoldPerMonth />
-            </div>
+            <DashboardDistributorMonthlySales />
+            <DashboardDistributorItemsSoldPerMonth />
         </PageContainer>
     );
 }
