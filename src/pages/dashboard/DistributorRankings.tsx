@@ -15,6 +15,7 @@ const columns : ColumnDef<TopDistributor>[] = [
     {
         header: 'Rank',
         accessorKey: 'rank',
+        meta: { align: 'center '}
     },
     {
         header: "ID",
@@ -27,9 +28,8 @@ const columns : ColumnDef<TopDistributor>[] = [
         meta: { align: 'center '}
     },
     {
-        header: "Wallet Balance",
-        accessorKey: "distributor.wallet_balance",
-        cell: info => formatToPeso(info.getValue() as number),
+        header: "Email",
+        accessorKey: "distributor.email",
         meta: { align: 'center '}
     },
     {
