@@ -121,7 +121,7 @@ export default function Sidebar({
                 icon={<LayoutDashboard size={24} />}
                 label="Dashboard"
                 collapsed={collapsed}
-                onClick={() => navigate("/dashboard")}
+                link="/dashboard"
                 isActive={pathname === "/dashboard"}
             />
 
@@ -330,7 +330,7 @@ export default function Sidebar({
                         icon={<Star size={24} />}
                         label="Sponsored Products"
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/sponsored-products")}
+                        link="/dashboard/sponsored-products"
                         isActive={pathname === "/dashboard/sponsored-products"}
                     />
                 )}
@@ -340,7 +340,7 @@ export default function Sidebar({
                         icon={<Trophy size={24} />}
                         label="Distributor Rankings"
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/distributors/rankings")}
+                        link="/dashboard/distributors/rankings"
                         isActive={pathname === "/dashboard/distributors/rankings"}
                     />
                 )}
@@ -370,7 +370,7 @@ export default function Sidebar({
                         icon={<Shield size={24} />}
                         label="Role Management"
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/roles")}
+                        link="/dashboard/roles"
                         isActive={pathname === "/dashboard/roles"}
                     />
                 )}
@@ -385,7 +385,7 @@ export default function Sidebar({
                         label="User Management"
                         icon={<User size={24} />}
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/users")}
+                        link="/dashboard/users"
                         isActive={pathname === "/dashboard/users"}
                     />
                 )}
@@ -406,7 +406,7 @@ export default function Sidebar({
                         icon={<ClipboardList size={24} />}
                         label="Orders"
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/orders")}
+                        link="/dashboard/orders"
                         isActive={pathname === "/dashboard/orders"}
                     />
                 )}
@@ -416,7 +416,7 @@ export default function Sidebar({
                         icon={<BarChartBig size={24} />}
                         label="Sales"
                         collapsed={collapsed}
-                        onClick={() => navigate("/dashboard/orders/sales")}
+                        link="/dashboard/orders/sales"
                         isActive={pathname === "/dashboard/orders/sales"}
                     />
                 )}

@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { type NavigateFunction, useLocation } from "react-router-dom";
+import { Link, type NavigateFunction, useLocation } from "react-router-dom";
 import { cn } from "../../utils/utils";
 
 interface SidebarDropdownProps {
@@ -68,7 +68,8 @@ export default function SidebarDropdown({
                     {items.map((item, i) => {
                         const isActive = location.pathname === item.path;
                         return (
-                            <button
+                            <Link
+                                to={item.path}
                                 key={i}
                                 onClick={() => navigate(item.path)}
                                 className={cn(
@@ -80,7 +81,7 @@ export default function SidebarDropdown({
                             >
                                 {item.icon}
                                 {!collapsed && <span className="text-xs md:text-sm">{item.label}</span>}
-                            </button>
+                            </Link>
                         );
                     })}
                 </div>
