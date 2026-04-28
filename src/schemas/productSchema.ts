@@ -12,8 +12,7 @@ const createVariantSchema = z.object({
         .positive("Variant price must not be blank, negative or 0"),
 
     stock: z.number()
-        .int("Stock must be a whole number")
-        .positive("Stock  is required"),
+        .int("Stock must be a whole number"),
 
     sku: z.string()
         .min(3, "SKU must be at least 3 characters")
