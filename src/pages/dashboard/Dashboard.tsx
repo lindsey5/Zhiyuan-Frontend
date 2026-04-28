@@ -8,12 +8,13 @@ export default function Dashboard() {
 
     return (
         <PageContainer 
-            title="Walk-in Order Sales"
-            description="View monthly sales performance and revenue analytics from walk-in orders."
+            title="Dashboard"
+            description="Overview of your system metrics and activities."
         >
             <Metrics />
             <OrdersMonthlySales />
-            
+            <DashboardDistributorMonthlySales />
+            <DashboardDistributorItemsSoldPerMonth />
         </PageContainer>
     );
 }
