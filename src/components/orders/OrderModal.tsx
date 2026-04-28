@@ -225,7 +225,7 @@ export default function OrderModal({ close, order_id }: OrderModalProps) {
                         <div className="pt-4 border-t border-[var(--border-panel)] space-y-3">
                             <p className="text-xs text-gray">Items</p>
 
-                            <div className="space-y-3 max-h-[30vh] overflow-y-auto pr-1">
+                            <div className="space-y-3 pr-1">
                                 {order.order_items.map((item) => (
                                     <div
                                         key={item._id}
