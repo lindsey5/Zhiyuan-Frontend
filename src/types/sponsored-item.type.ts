@@ -1,5 +1,6 @@
 import type { Distributor } from "./distributor.type";
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
+import type { ApiResponse } from "./type";
 import type { VariantWithProduct } from "./variant.type";
 
 export interface SponsoredItem {
@@ -23,6 +24,14 @@ export interface GetSponsoredItemsParams extends PaginationParams{
 }
 
 export interface GetSponsoredItemsResponse extends PaginationResponse {
-    success: true;
     sponsoredItems: SponsoredItem[];
+}
+
+export interface GetSponsoredItemResponse {
+    success: boolean;
+    sponsoredItem: SponsoredItem;
+}
+
+export interface UpdateSponsoredItemResponse extends ApiResponse {
+    sponsoredItem: SponsoredItem;
 }

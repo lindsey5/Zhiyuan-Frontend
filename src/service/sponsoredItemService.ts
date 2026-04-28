@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import type { GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item.type";
+import { type UpdateSponsoredItemResponse, type GetSponsoredItemsParams, type GetSponsoredItemsResponse, type GetSponsoredItemResponse } from "../types/sponsored-item.type";
 
 export const sponsoredItemService = {
     getSponsoredItems: (params: GetSponsoredItemsParams) =>
@@ -7,4 +7,17 @@ export const sponsoredItemService = {
             method: HttpMethod.GET,
             params
         }),
+
+    getSponsoredItemById: (id: string) =>
+        apiAxios<GetSponsoredItemResponse>(`sponsored-items/${id}`,{
+            method: HttpMethod.GET
+        }),
+
+    updateSponsoredItemStatus: (id: string, status: string) => 
+        apiAxios<UpdateSponsoredItemResponse>(`sponsored-items/${id}`,{
+            method: HttpMethod.PATCH,
+            data: {
+                status
+            }
+        })
 };

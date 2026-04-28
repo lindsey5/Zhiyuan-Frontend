@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import type { GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item.type"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import type { GetSponsoredItemResponse, GetSponsoredItemsParams, GetSponsoredItemsResponse } from "../types/sponsored-item.type"
 import { sponsoredItemService } from "../service/sponsoredItemService"
 
 export const useSponsoredItem = () => {
@@ -12,7 +12,21 @@ export const useSponsoredItem = () => {
         })
     )
 
+    const getSponsoredItemById = (id : string) => (
+        useQuery<GetSponsoredItemResponse, Error>({
+            queryKey: [`sponsored-items/${id}`],
+            queryFn: () => sponsoredItemService.getSponsoredItemById(id),
+            refetchOnWindowFocus: false,
+        })
+    )
+
+    const updateSponsoredItemStatus = useMutation({
+        mutationFn: ({ id, status } : { id: string, status: string }) => sponsoredItemService.updateSponsoredItemStatus(id, status)
+    })
+
     return {
         getSponsoredItems,
+        getSponsoredItemById,
+        updateSponsoredItemStatus
     }
 }

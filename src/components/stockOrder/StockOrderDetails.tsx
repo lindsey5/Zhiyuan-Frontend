@@ -72,7 +72,7 @@ export default function StockOrderDetails ({ stock_order_id, close } : StockOrde
     const updateStatus = async (status: string) => {
         if(!stockOrder || updateStockOrderStatus.isPending) return;
     
-        const isConfirmed = confirm(`Are you sure you want to mark this as "${status}"?`);
+        const isConfirmed = confirm(`Are you sure you want to mark this as ${status}?`);
 
         if(!isConfirmed) return;
 

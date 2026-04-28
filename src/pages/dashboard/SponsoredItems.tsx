@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
@@ -12,8 +12,11 @@ import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
 import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
 import { useSearchParams } from "react-router-dom";
+import SponsoredItemDetails from "../../components/sponsored-item/SponsoredItemDetails";
+import IconButton from "../../components/ui/IconButton";
+import { Eye } from "lucide-react";
 
-const getColumns = () : ColumnDef<SponsoredItem>[] => [
+const getColumns = (setSponsoredId : Dispatch<SetStateAction<string | null>>) : ColumnDef<SponsoredItem>[] => [
     {
         header: "Sponsored ID",
         accessorKey: 'sponsored_id',
@@ -79,11 +82,22 @@ const getColumns = () : ColumnDef<SponsoredItem>[] => [
         ),
         meta: { align: 'center' },
     },
+    {
+        header: 'Action',
+        cell: ({ row }) => 
+            <IconButton 
+                icon={<Eye size={20}/>} 
+                onClick={() => setSponsoredId(row.original._id)}
+            />,
+        meta: { align: 'center' },
+    },
 ];
 
 export default function SponsoredItems () {
     const [searchParams, setSearchParams] = useSearchParams();
     const sponsored_id = searchParams.get("sponsored_id");
+
+    const [sponsoredId, setSponsoredId] = useState<string | null>(null);
 
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [search, setSearch] = useState(sponsored_id || "");
@@ -107,7 +121,7 @@ export default function SponsoredItems () {
     const debouncedParams = useDebounce(params, 800);
     const { data, isFetching } = getSponsoredItems(debouncedParams);
 
-    const columns = getColumns();
+    const columns = getColumns(setSponsoredId);
     
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
@@ -124,6 +138,10 @@ export default function SponsoredItems () {
             title="Sponsored Products"
             description="View and manage sponsored products"
         >
+            <SponsoredItemDetails 
+                close={() => setSponsoredId(null)}
+                sponsoredId={sponsoredId}
+            />
             <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
                 <SponsoredItemControls 
                     search={search}
