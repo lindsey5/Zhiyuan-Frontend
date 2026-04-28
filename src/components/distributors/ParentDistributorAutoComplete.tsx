@@ -29,8 +29,8 @@ export default function ParentDistributorAutoComplete({
         page,
         search: debouncedSearch,
         limit: 10,
-        sortBy: "createdAt",
-        order: "desc"
+        sortBy: "distributor_name",
+        order: "asc"
     });
 
     const distributors: Distributor[] = data?.distributors || [];
