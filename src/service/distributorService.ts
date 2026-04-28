@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type CreateDistributorResponse, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse } from "../types/distributor.type";
+import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type CreateDistributorResponse, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse, type GetTopDistributorsParams, type GetTopDistributorsResponse } from "../types/distributor.type";
 import type { ApiResponse } from "../types/type";
 
 export const distributorService = {
@@ -32,5 +32,12 @@ export const distributorService = {
         apiAxios<ApiResponse>(`/distributors/${id}`, {
             method: HttpMethod.DELETE,
         })
-    )
+    ),
+
+    getTopDistributors: (params: GetTopDistributorsParams) => (
+        apiAxios<GetTopDistributorsResponse>("/distributors/top",{
+            method: HttpMethod.GET,
+            params
+        })
+    ),
 };

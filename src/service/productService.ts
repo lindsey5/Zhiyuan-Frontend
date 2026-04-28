@@ -1,5 +1,5 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type GetTotalLowStockProducts, type CreateProductResponse, type GetProductResponse, type GetProductsParams, type GetProductsResponse, type GetTotalProductsResponse, type SearchProductResponse, type UpdateProductPayload, type UpdateProductResponse } from "../types/product.type";
+import { type GetTotalLowStockProducts, type CreateProductResponse, type GetProductResponse, type GetProductsParams, type GetProductsResponse, type GetTotalProductsResponse, type SearchProductResponse, type UpdateProductPayload, type UpdateProductResponse, type GetMostSellingProductsResponse } from "../types/product.type";
 import type { ApiResponse } from "../types/type";
 import type { GetVariantsParams, GetVariantsResponse } from "../types/variant.type";
 
@@ -40,6 +40,12 @@ export const productService = {
   getTotalLowStockProducts: () => {
     return apiAxios<GetTotalLowStockProducts>('products/low-stocks/total', {
       method: HttpMethod.GET
+    })
+  },
+
+  getMostSellingProducts: () => {
+    return apiAxios<GetMostSellingProductsResponse>(`products/most-selling`, {
+      method: HttpMethod.GET,
     })
   },
 

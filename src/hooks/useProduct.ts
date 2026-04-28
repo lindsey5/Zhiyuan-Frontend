@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { productService } from "../service/productService"
-import type { GetProductResponse, GetProductsParams, GetProductsResponse, GetTotalLowStockProducts, GetTotalProductsResponse, UpdateProductPayload } from "../types/product.type"
+import type { GetMostSellingProductsResponse, GetProductResponse, GetProductsParams, GetProductsResponse, GetTotalLowStockProducts, GetTotalProductsResponse, UpdateProductPayload } from "../types/product.type"
 import type { GetVariantsParams, GetVariantsResponse } from "../types/variant.type"
 
 export const useProduct = () => {
@@ -45,6 +45,14 @@ export const useProduct = () => {
         })
     )
 
+    const getMostSellingProducts = () => (
+        useQuery<GetMostSellingProductsResponse, Error>({
+            queryKey: ['products/most-selling'],
+            queryFn: () => productService.getMostSellingProducts(),
+            refetchOnWindowFocus: false,
+        })
+    )
+
     const deleteProduct = useMutation({
         mutationFn: ({ id } : { id: string }) => productService.deleteProduct(id),
     })
@@ -68,6 +76,7 @@ export const useProduct = () => {
         getTotalProducts,
         getLowStockProducts,
         getTotalLowStockProducts,
+        getMostSellingProducts,
         deleteProduct
     }
 

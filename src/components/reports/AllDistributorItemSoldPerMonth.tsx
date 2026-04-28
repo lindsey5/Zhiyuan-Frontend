@@ -16,19 +16,19 @@ export default function AllDistributorItemsSoldPerMonth() {
 
     return (
         <div className="relative">
-        <Dropdown
-            className="absolute right-5 top-5"
-            options={yearOptions}
-            value={year}
-            onChange={setYear}
-        />
+            <Dropdown
+                className="absolute right-5 top-5"
+                options={yearOptions}
+                value={year}
+                onChange={setYear}
+            />
 
-        <Chart
-            formatToPeso={false}
-            labels={data?.itemsSoldPerMonth.map((sale) => sale.month) || []}
-            title="Items Sold Per Month"
-            values={data?.itemsSoldPerMonth.map((sale) => sale.totalQuantity) || []}
-        />
+            <Chart
+                formatToPeso={false}
+                labels={data?.itemsSoldPerMonth.map((sale) => sale.month) || []}
+                title="Items Sold Per Month"
+                values={data?.itemsSoldPerMonth.map((sale) => sale.totalQuantity) || []}
+            />
         </div>
     );
 }

@@ -25,6 +25,7 @@ import {
   PackageCheck,
   ShoppingCart,
   AlertTriangle,
+  Trophy,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -207,7 +208,8 @@ export default function Sidebar({
                 PERMISSIONS.STOCK_DISTRIBUTION_HISTORY_VIEW_OWN,
                 PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW, 
                 PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, 
-                PERMISSIONS.SPONSORED_PRODUCT_UPDATE
+                PERMISSIONS.SPONSORED_PRODUCT_UPDATE,
+                PERMISSIONS.DISTRIBUTOR_RANKINGS_VIEW,
             ]) && (
                 <>
                 {/* DISTRIBUTOR */}
@@ -330,6 +332,16 @@ export default function Sidebar({
                         collapsed={collapsed}
                         onClick={() => navigate("/dashboard/sponsored-products")}
                         isActive={pathname === "/dashboard/sponsored-products"}
+                    />
+                )}
+
+                {hasPermissions([PERMISSIONS.DISTRIBUTOR_RANKINGS_VIEW]) && (
+                    <SidebarItem
+                        icon={<Trophy size={24} />}
+                        label="Distributor Rankings"
+                        collapsed={collapsed}
+                        onClick={() => navigate("/dashboard/distributors/rankings")}
+                        isActive={pathname === "/dashboard/distributors/rankings"}
                     />
                 )}
                 </>

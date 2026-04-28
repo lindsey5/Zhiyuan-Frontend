@@ -15,20 +15,20 @@ export default function DashboardDistributorItemsSoldPerMonth() {
     if(isFetching) return <ChartSkeleton />
 
     return (
-        <div className="relative">
-        <Dropdown
-            className="absolute right-5 top-5"
-            options={yearOptions}
-            value={year}
-            onChange={setYear}
-        />
+        <div className="relative lg:flex-1">
+            <Dropdown
+                className="absolute right-5 top-5"
+                options={yearOptions}
+                value={year}
+                onChange={setYear}
+            />
 
-        <Chart
-            formatToPeso={false}
-            labels={data?.itemsSoldPerMonth.map((sale) => sale.month) || []}
-            title="Distributor Items Sold Per Month"
-            values={data?.itemsSoldPerMonth.map((sale) => sale.totalQuantity) || []}
-        />
+            <Chart
+                formatToPeso={false}
+                labels={data?.itemsSoldPerMonth.map((sale) => sale.month) || []}
+                title="Distributor Items Sold Per Month"
+                values={data?.itemsSoldPerMonth.map((sale) => sale.totalQuantity) || []}
+            />
         </div>
     );
 }

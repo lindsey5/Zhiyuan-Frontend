@@ -27,6 +27,7 @@ import Orders from "../pages/dashboard/Orders";
 import StockOrders from "../pages/dashboard/StockOrders";
 import LowStockProducts from "../pages/dashboard/LowStockProducts";
 import OrderSales from "../pages/dashboard/OrderSales";
+import DistributorRankings from "../pages/dashboard/DistributorRankings";
 
 const router = createBrowserRouter([ 
     {
@@ -264,6 +265,16 @@ const router = createBrowserRouter([
                                 requiredPermissions={[PERMISSIONS.DISTRIBUTOR_RETURN_REQUEST_VIEW]}
                             >
                                 <ReturnRequests />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'rankings',
+                        Component: () => (
+                            <ProtectedRoute
+                                requiredPermissions={[PERMISSIONS.DISTRIBUTOR_RANKINGS_VIEW]}
+                            >
+                                <DistributorRankings />
                             </ProtectedRoute>
                         )
                     },

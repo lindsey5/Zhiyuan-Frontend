@@ -52,3 +52,26 @@ export interface GetTotalDistributorsResponse {
     success: boolean;
     totalDistributors: number;
 }
+
+export interface GetTopDistributorsResponse {
+    success: boolean;
+    totalSales: number;
+    totalQuantity: number;
+    distributor: Distributor;
+}
+
+export interface TopDistributor {
+    totalSales: number;
+    totalQuantity: number;
+    distributor: Distributor;
+    rank: number;
+}
+
+export interface GetTopDistributorsParams extends PaginationParams {
+    sortBy?: string;
+    order?: 'asc' | 'desc';
+}
+
+export interface GetTopDistributorsResponse extends PaginationResponse {
+    topDistributors: TopDistributor[];
+}

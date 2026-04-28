@@ -1,6 +1,6 @@
 import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
-import type { UpdateVariantPayload, Variant } from "./variant.type";
+import type { UpdateVariantPayload, Variant, VariantWithProduct } from "./variant.type";
 
 export interface Product {
     _id: string;
@@ -69,4 +69,16 @@ export interface GetTotalProductsResponse {
 export interface GetTotalLowStockProducts {
     success: boolean;
     totalLowStockProducts: number;
+}
+
+export interface MostSellingProduct {
+    _id: string;
+    totalSold: number;
+    totalRevenue: number;
+    variant: VariantWithProduct;
+}
+
+export interface GetMostSellingProductsResponse {
+    success: boolean;
+    mostSellingProducts: MostSellingProduct[];
 }

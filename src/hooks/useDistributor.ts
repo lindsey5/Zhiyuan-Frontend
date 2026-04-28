@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse } from "../types/distributor.type";
+import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse, type GetTopDistributorsParams, type GetTopDistributorsResponse } from "../types/distributor.type";
 import { distributorService } from "../service/distributorService";
 
 export const useDistributor = () => {
@@ -36,12 +36,21 @@ export const useDistributor = () => {
         mutationFn: ({ id } : { id : string }) => distributorService.deleteDistributor(id)
     })
 
+    const getTopDistributors = (params: GetTopDistributorsParams) => (
+        useQuery<GetTopDistributorsResponse, Error>({
+            queryKey: [`distributors/top`, params],
+            queryFn: () => distributorService.getTopDistributors(params),
+            refetchOnWindowFocus: false,
+        })
+    )
+
     return {
        getDistributors,
        getDistributorById,
        getTotalDistributors,
        createDistributor,
-       deleteDistributor
+       deleteDistributor,
+       getTopDistributors
     }
 
 }

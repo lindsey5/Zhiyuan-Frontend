@@ -37,6 +37,7 @@ export const PERMISSIONS = {
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
     DISTRIBUTOR_REPORTS_VIEW: 'distributor-reports:view',
+    DISTRIBUTOR_RANKINGS_VIEW: 'distributor-rankings:view',
     
     // Distributor Sales
     DISTRIBUTOR_SALES_VIEW_ALL: 'distributor-sales:view:all',
@@ -129,9 +130,10 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
     },
 
     "Distributor Analytics": {
-        description: "Monitor distributor activity through detailed analytics, sales insights, and performance reporting.",
-        DISTRIBUTOR_STATS_VIEW: "View individual distributor metrics and performance data",
-        DISTRIBUTOR_REPORTS_VIEW: "View complete performance reports and analytics for all distributors",
+        description: "Track and analyze distributor performance through sales data, activity insights, and detailed reporting.",
+        DISTRIBUTOR_STATS_VIEW: "View individual distributor performance metrics and statistics",
+        DISTRIBUTOR_REPORTS_VIEW: "Access comprehensive reports and analytics for all distributors",
+        DISTRIBUTOR_RANKINGS_VIEW: "View distributor rankings based on sales and performance",
     },
 
     "Distributor Sales" : {
