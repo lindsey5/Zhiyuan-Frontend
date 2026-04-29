@@ -2,12 +2,12 @@ services:
   frontend:
     build:
       context: .
-      target: prod
+      target: dev
 
-    container_name: frontend_prod
+    container_name: frontend_dev
 
     ports:
-      - "3000:3000"
+      - "5173:5173"
 
     volumes:
       - .:/app
@@ -15,5 +15,3 @@ services:
 
     env_file:
       - .env
-
-    command: npm start
