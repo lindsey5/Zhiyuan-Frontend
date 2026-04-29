@@ -22,7 +22,7 @@ export default function DistributorReports () {
             </div>
             <div className="w-full flex flex-col lg:flex-row gap-5">
                 <AllDistributorMonthlySales />
-                <DistributorBestSellingProducts className="max-w-xl"/>
+                <DistributorBestSellingProducts className="min-w-xl max-w-xl"/>
             </div>
             <AllDistributorItemsSoldPerMonth />
         </PageContainer>
