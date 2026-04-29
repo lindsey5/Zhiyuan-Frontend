@@ -1,18 +1,18 @@
-import { useProduct } from "../../hooks/useProduct";
+import { useDistributorSale } from "../../hooks/useDistributorSale";
 import { cn, formatToPeso } from "../../utils/utils";
 import Card from "../ui/Card";
 import Chip from "../ui/Chip";
 
-export default function MostSellingProducts({ className } : { className?: string}) {
-    const { getMostSellingProducts } = useProduct();
-    const { data, isFetching } = getMostSellingProducts();
+export default function DistributorBestSellingProducts({ className } : { className?: string }) {
+    const { getDistributorBestSellingProducts } = useDistributorSale();
+    const { data, isFetching } = getDistributorBestSellingProducts();
 
     return (
         <Card className={cn(
             "flex-1 flex flex-col space-y-3 max-h-[300px] md:max-h-[500px]",
             className
         )}>
-            <h1 className="font-bold text-gold">Walk-in Orders Most Selling Products</h1>
+            <h1 className="font-bold text-gold">Distributors' Best-Selling Products</h1>
 
             {/* Skeleton Loading */}
             {isFetching && (
@@ -34,11 +34,10 @@ export default function MostSellingProducts({ className } : { className?: string
                     ))}
                 </div>
             )}
-
-            {/* Data */}
             <div className="overflow-y-auto min-h-0 flex-grow">
+            {/* Data */}
             {!isFetching &&
-                data?.mostSellingProducts.map((product) => (
+                data?.bestSellingProducts.map((product) => (
                     <div
                         key={product.variant._id}
                         className="flex gap-4 items-start mt-4"

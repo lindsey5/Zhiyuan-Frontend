@@ -1,7 +1,7 @@
 import PageContainer from "../../components/ui/PageContainer"
 import OrdersMonthlySales from "../../components/orderSales/OrdersMonthlySales";
 import OrderMetrics from "../../components/orderSales/OrderMetrics";
-import MostSellingProducts from "../../components/orderSales/MostSellingProducts";
+import BestSellingProducts from "../../components/orderSales/BestSellingProducts";
 
 export default function OrderSales() {
 
@@ -13,7 +13,7 @@ export default function OrderSales() {
             <OrderMetrics />
             <div className="w-full flex flex-col lg:flex-row gap-5">
                 <OrdersMonthlySales />
-                <MostSellingProducts className="max-w-xl"/>
+                <BestSellingProducts className="max-w-xl"/>
             </div>
         </PageContainer>
     );

@@ -71,14 +71,14 @@ export interface GetTotalLowStockProducts {
     totalLowStockProducts: number;
 }
 
-export interface MostSellingProduct {
+export interface BestSellingProduct {
     _id: string;
     totalSold: number;
     totalRevenue: number;
     variant: VariantWithProduct;
 }
 
-export interface GetMostSellingProductsResponse {
+export interface GetBestSellingProductsResponse {
     success: boolean;
-    mostSellingProducts: MostSellingProduct[];
+    bestSellingProducts: BestSellingProduct[];
 }

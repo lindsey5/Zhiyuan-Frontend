@@ -52,7 +52,6 @@ export interface GetDistributorItemsSoldPerMonthResponse {
     year: number;
 }
 
-
 export interface DownloadDistributorSalesParams extends PaginationParams {
     startDate?: string;
     endDate?: string;

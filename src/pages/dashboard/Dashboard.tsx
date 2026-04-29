@@ -1,10 +1,10 @@
 import Metrics from "../../components/dashboard/Metrics"
 import PageContainer from "../../components/ui/PageContainer"
-import DashboardDistributorMonthlySales from "../../components/dashboard/DistributorsMonthlySales";
+import DashboardDistributorMonthlySales from "../../components/dashboard/DistributorMonthlySales";
 import DashboardDistributorItemsSoldPerMonth from "../../components/dashboard/DistributorItemSoldPerMonth";
 import OrdersMonthlySales from "../../components/orderSales/OrdersMonthlySales";
-import MostSellingProducts from "../../components/orderSales/MostSellingProducts";
-import DistributorMostSellingProducts from "../../components/reports/DistributorMostSellingProducts";
+import BestSellingProducts from "../../components/orderSales/BestSellingProducts";
+import DistributorBestSellingProducts from "../../components/reports/DistributorBestSellingProducts";
 
 export default function Dashboard() {
 
@@ -16,8 +16,8 @@ export default function Dashboard() {
             <Metrics />
             <OrdersMonthlySales />
             <div className="w-full flex flex-col lg:flex-row gap-5">
-                <MostSellingProducts />
-                <DistributorMostSellingProducts />
+                <BestSellingProducts />
+                <DistributorBestSellingProducts />
             </div>
             <DashboardDistributorMonthlySales />
             <DashboardDistributorItemsSoldPerMonth />
