@@ -1,5 +1,5 @@
 services:
-  backend:
+  frontend:
     build:
       context: .
       target: prod
