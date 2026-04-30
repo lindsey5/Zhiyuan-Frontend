@@ -26,6 +26,7 @@ import {
   ShoppingCart,
   AlertTriangle,
   Trophy,
+  Banknote,
 } from "lucide-react";
 import { useThemeStore } from "../../lib/store/themeStore";
 import SidebarItem from "./SidebarItem";
@@ -76,7 +77,7 @@ export default function Sidebar({
             "z-20 bg-panel flex flex-col fixed left-0 top-0 bottom-0 border-r border-[var(--border-panel)] shadow-panel transition-all ease-in-out duration-300",
             collapsed
             ? "w-0 opacity-0 pointer-events-none lg:opacity-100 lg:w-20 lg:pointer-events-auto lg:flex"
-            : "w-64"
+            : "w-75"
         )}
         >
         {/* Header / Toggle */}
@@ -210,20 +211,24 @@ export default function Sidebar({
                 PERMISSIONS.SPONSORED_PRODUCT_VIEW_ALL, 
                 PERMISSIONS.SPONSORED_PRODUCT_UPDATE,
                 PERMISSIONS.DISTRIBUTOR_RANKINGS_VIEW,
+                PERMISSIONS.WITHDRAWAL_REQUEST_VIEW_ALL,
+                PERMISSIONS.WITHDRAWAL_REQUEST_UPDATE,
             ]) && (
                 <>
                 {/* DISTRIBUTOR */}
                 <SidebarSection title="Distributor" collapsed={collapsed} />
 
                 {hasAnyPermissions([
-                     PERMISSIONS.DISTRIBUTOR_CREATE,
+                    PERMISSIONS.DISTRIBUTOR_CREATE,
                     PERMISSIONS.DISTRIBUTOR_READ_ALL,
                     PERMISSIONS.DISTRIBUTOR_DELETE,
                     PERMISSIONS.DISTRIBUTOR_SALES_VIEW,
                     PERMISSIONS.DISTRIBUTOR_SALES_VIEW_ALL,
                     PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, 
                     PERMISSIONS.DISTRIBUTOR_STATS_VIEW,
-                    PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW
+                    PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW,
+                    PERMISSIONS.WITHDRAWAL_REQUEST_UPDATE,
+                    PERMISSIONS.WITHDRAWAL_REQUEST_VIEW_ALL,
                 ]) && (
                     <SidebarDropdown
                         title="Distributor Management"
@@ -261,6 +266,14 @@ export default function Sidebar({
                                 icon: <BarChartBig size={20} />,
                                 path: "/dashboard/distributors/sales",
                             }] : []),
+
+                            ...(hasAnyPermissions([PERMISSIONS.WITHDRAWAL_REQUEST_UPDATE, PERMISSIONS.WITHDRAWAL_REQUEST_VIEW_ALL]) ? [
+                            {
+                                label: "Withdrawal Requests",
+                                icon: <Banknote size={20} />,
+                                path: "/dashboard/distributors/withdrawal-requests",
+                            }  
+                            ]: []),
 
                             ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]) ? [                        
                             {

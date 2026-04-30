@@ -29,9 +29,11 @@ const statusOptions = [
     { label: "All", value: "" },
     { label: "Pending", value: "pending" },
     { label: "Processing", value: "processing" },
+    { label: "Delivered", value: "delivered" },
     { label: "Completed", value: "completed" },
     { label: "Cancelled", value: "cancelled" },
     { label: "Refunded", value: "refunded" },
+    { label: "Expired", value: "expired" },
 ]
 
 const paymentStatusOptions = [

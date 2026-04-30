@@ -21,7 +21,7 @@ export default function DashboardLayout() {
         <div 
             className={cn(
                 "mt-16 lg:mt-0 w-full min-h-screen transition-all duration-500 bg-main bg-cover bg-center relative", 
-                !collapsed ? 'lg:pl-64' : 'lg:pl-20'
+                !collapsed ? 'lg:pl-75' : 'lg:pl-20'
             )} 
             style={{ backgroundImage: `url(${isDark ? '/dark-bg.jpg' : '/light-bg.jpg'})` }}
         >

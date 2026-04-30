@@ -6,6 +6,7 @@ import type { ReturnRequest } from "./returnRequest.type";
 import type { SponsoredItem } from "./sponsored-item.type";
 import type { StockOrder } from "./stock-order.type";
 import type { StockTransferLog } from "./stock-transfer-log.type";
+import type { WithdrawalRequest } from "./withdrawalRequest.type";
 
 export interface UserNotification {
     _id: string;
@@ -18,6 +19,7 @@ export interface UserNotification {
     stockTransferNotification?: StockTransferNotification;
     stockOrderNotification?: StockOrderNotification;
     sponsoredItemNotification?: SponsoredItemNotification;
+    withdrawalNotification?: WithdrawalNotification;
     createdAt: string;
 }
 
@@ -64,6 +66,13 @@ export interface SponsoredItemNotification {
     notification_id: string;
     sponsored_id: string;
     sponsored_item: SponsoredItem;
+}
+
+export interface WithdrawalNotification {
+    _id: string;
+    notification_id: string;
+    withdrawal_id: string;
+    withdrawalRequest: WithdrawalRequest;
 }
 
 export interface GetUserNotificationsParams extends PaginationParams{}

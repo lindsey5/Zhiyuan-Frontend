@@ -1,4 +1,4 @@
-import { BarChartBig, Bell, ClipboardList, Repeat, ShoppingCart, Star, Undo2 } from "lucide-react";
+import { Banknote, BarChartBig, Bell, ClipboardList, Repeat, ShoppingCart, Star, Undo2 } from "lucide-react";
 import IconButton from "../ui/IconButton";
 import { useEffect, useState } from "react";
 import useNotifications from "../../hooks/useNotifications";
@@ -9,6 +9,7 @@ import Button from "../ui/Button";
 import type { UserNotification } from "../../types/userNotification.type";
 import NotificationModal from "./NotificationModal";
 import StockTransferItems from "../stockTransferLog/StockTransferItems";
+import { useNavigate } from "react-router-dom";
 
 function getIcon (notification : UserNotification, isDark : boolean) {
     if(notification.saleNotification){
@@ -43,6 +44,14 @@ function getIcon (notification : UserNotification, isDark : boolean) {
         )
     }
 
+    if(notification.withdrawalNotification) {
+        return (
+            <Banknote 
+                className="flex-shrink-0  text-inverse bg-gold rounded-full w-10 h-10 p-2" 
+            />
+        )
+    }
+
     if(notification.orderNotification) {
         return (
             <ClipboardList
@@ -69,6 +78,7 @@ function getIcon (notification : UserNotification, isDark : boolean) {
 
 export default function NotificationBell () {
     const { isDark } = useThemeStore();
+    const navigate = useNavigate();
     const [notification, setNotification] = useState<UserNotification | null>(null);
     const { unread, notifications, setPage, page, totalPages, isFetching, readNotification, readAllNotifications } = useNotifications();
     const [showDropdown, setShowDropdown] = useState(false);
@@ -85,11 +95,11 @@ export default function NotificationBell () {
         if(!readNotification) return;
 
         if(notification.orderNotification) {
-            window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`
+            navigate(`/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`);
         }else if(notification.stockOrderNotification){
-             window.location.href = `/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`
+            navigate(`/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`);
         }else if(notification.sponsoredItemNotification){
-            window.location.href = `/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`
+            navigate(`/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`);
         }
         
         else setNotification(notification);
@@ -99,19 +109,11 @@ export default function NotificationBell () {
 
     return (
         <div id="notification-bell" className="relative">
-            {notification?.stockTransferNotification ? (
-                <StockTransferItems 
-                    close={() => setNotification(null)}
-                    open={notification && notification.stockTransferNotification !== undefined}
-                    transfer_id={notification.stockTransferNotification.stock_transfer_id}
-                />
-            ) : (
-                <NotificationModal 
-                    close={() => setNotification(null)}
-                    open={notification !== null}
-                    notification={notification}
-                />
-            )}
+            <NotificationModal 
+                close={() => setNotification(null)}
+                open={notification !== null}
+                notification={notification}
+            />
             <IconButton
                 icon={(
                     <Bell 

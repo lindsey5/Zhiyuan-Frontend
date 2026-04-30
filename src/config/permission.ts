@@ -63,6 +63,10 @@ export const PERMISSIONS = {
     DISTRIBUTOR_RETURN_REQUEST_VIEW: 'distributor-return:view',
     DISTRIBUTOR_RETURN_REQUEST_UPDATE: 'distributor-return:update',
 
+    // Withdrawal Requets
+     WITHDRAWAL_REQUEST_VIEW_ALL: 'withdrawal-requests:view:all',
+    WITHDRAWAL_REQUEST_UPDATE: 'withdrawal-requests:view:update',
+
     // Sponsored Items
     SPONSORED_PRODUCT_UPDATE: 'sponsored-items:update',
     SPONSORED_PRODUCT_VIEW_ALL: 'sponsored-items:view:all',
@@ -170,6 +174,12 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         description: "Manage distributor return requests including viewing and updating request statuses.",
         DISTRIBUTOR_RETURN_REQUEST_VIEW: "View distributor return requests",
         DISTRIBUTOR_RETURN_REQUEST_UPDATE: "Update distributor return request status",
+    },
+
+    "Withdrawal Requests": {
+        description: 'Manage withdrawal requests including status update and viewing',
+        WITHDRAWAL_REQUEST_VIEW_ALL: 'View all withdrawal requests',
+        WITHDRAWAL_REQUEST_UPDATE: 'Update withdrawal request status',
     },
 
     "Sponsored Product Management": {

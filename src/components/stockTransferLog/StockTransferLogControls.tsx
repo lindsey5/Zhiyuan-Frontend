@@ -6,6 +6,7 @@ import type { PaginationState } from "@tanstack/react-table";
 import Dropdown from "../ui/Dropdown";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
+import { cn } from "../../utils/utils";
 
 const stockTransferStatus = [
   { label: "All", value: "" },
@@ -111,7 +112,10 @@ export default function StockTransferLogsControls({
                     onClick={() => setGetOwn(prev => !prev)}
                 >
                     <p className="text-gold text-sm">My Distribution</p>
-                    <div className="relative w-12 h-6 rounded-full bg-toggle-inner p-1">
+                    <div className={cn(
+                        "relative w-12 h-6 rounded-full bg-toggle-inner p-1",
+                        getOwn && 'bg-gold'
+                    )}>
                         <div className={`w-4 h-4 rounded-full bg-toggle-thumb transition-transform duration-300 ${getOwn ? 'translate-x-6' : 'translate-x-0'}`} />
                     </div>
                 </button>

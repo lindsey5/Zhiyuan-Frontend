@@ -28,6 +28,7 @@ import StockOrders from "../pages/dashboard/StockOrders";
 import LowStockProducts from "../pages/dashboard/LowStockProducts";
 import OrderSales from "../pages/dashboard/OrderSales";
 import DistributorRankings from "../pages/dashboard/DistributorRankings";
+import WithdrawalRequests from "../pages/dashboard/WithdrawalRequests";
 
 const router = createBrowserRouter([ 
     {
@@ -237,6 +238,14 @@ const router = createBrowserRouter([
                         Component: () => (
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.DISTRIBUTOR_REPORTS_VIEW]}>
                                 <DistributorReports />
+                            </ProtectedRoute>
+                        )
+                    },
+                    {
+                        path: 'withdrawal-requests',
+                        Component: () => (
+                            <ProtectedRoute anyPermissions={[PERMISSIONS.WITHDRAWAL_REQUEST_UPDATE, PERMISSIONS.WITHDRAWAL_REQUEST_VIEW_ALL]}>
+                                <WithdrawalRequests />
                             </ProtectedRoute>
                         )
                     },

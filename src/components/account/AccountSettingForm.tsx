@@ -60,7 +60,7 @@ export default function AccountSettingsForm () {
                         <Button 
                             label="Change Password"
                             onClick={() => setShowSecurity(true)}
-                            className="text-gold text-sm xl:text-md border-none"
+                            className="text-gold text-sm xl:text-md"
                             icon={<Lock size={20} />}
                         />
                     )}
@@ -68,7 +68,7 @@ export default function AccountSettingsForm () {
                         <Button 
                             label="Edit"
                             onClick={() => setEditMode(true)}
-                            className="text-gold text-sm xl:text-md border-none"
+                            className="text-gold text-sm xl:text-md"
                             icon={<Edit size={20} />}
                         />
                     )}

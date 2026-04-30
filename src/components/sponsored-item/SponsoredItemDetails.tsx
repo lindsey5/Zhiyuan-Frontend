@@ -202,42 +202,42 @@ export default function SponsoredItemDetails({ close, sponsoredId,}: SponsoredIt
 
                 {/* Buttons */}
                 <div className="flex gap-3 items-center justify-end mt-5">
-                <Button
-                    label="Close"
-                    disabled={updateSponsoredItemStatus.isPending}
-                    onClick={close}
-                />
+                    <Button
+                        label="Close"
+                        disabled={updateSponsoredItemStatus.isPending}
+                        onClick={close}
+                    />
 
-                {hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) && (
-                    <>
-                    {sponsoredItem?.status === "pending" && (
+                    {hasPermissions([PERMISSIONS.SPONSORED_PRODUCT_UPDATE]) && (
                         <>
-                        <Button
-                            className="bg-red-600 text-white border-none"
-                            onClick={() => handleUpdate("rejected")}
-                            label="Reject"
-                            disabled={updateSponsoredItemStatus.isPending}
-                        />
-                        <GoldButton
-                            onClick={() => handleUpdate("approved")}
-                            className="text-sm"
-                            disabled={updateSponsoredItemStatus.isPending}
-                        >
-                            Approve
-                        </GoldButton>
+                        {sponsoredItem?.status === "pending" && (
+                            <>
+                            <Button
+                                className="bg-red-600 text-white border-none"
+                                onClick={() => handleUpdate("rejected")}
+                                label="Reject"
+                                disabled={updateSponsoredItemStatus.isPending}
+                            />
+                            <GoldButton
+                                onClick={() => handleUpdate("approved")}
+                                className="text-sm"
+                                disabled={updateSponsoredItemStatus.isPending}
+                            >
+                                Approve
+                            </GoldButton>
+                            </>
+                        )}
+
+                        {sponsoredItem?.status === "approved" && (
+                            <Button
+                                className="bg-red-600 text-white border-none"
+                                onClick={() => handleUpdate("cancelled")}
+                                disabled={updateSponsoredItemStatus.isPending}
+                                label="Cancel"
+                            />
+                        )}
                         </>
                     )}
-
-                    {sponsoredItem?.status === "approved" && (
-                        <Button
-                            className="bg-red-600 text-white border-none"
-                            onClick={() => handleUpdate("cancelled")}
-                            disabled={updateSponsoredItemStatus.isPending}
-                            label="Cancel"
-                        />
-                    )}
-                    </>
-                )}
                 </div>
             </>
             )}
