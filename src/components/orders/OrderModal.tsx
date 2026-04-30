@@ -1,7 +1,7 @@
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { formatDate, formatToPeso } from "../../utils/utils";
-import DeliveryStatusChip from "../ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 import Chip from "../ui/Chip";
 import GoldButton from "../ui/GoldButton";
 import { useOrder } from "../../hooks/useOrder";

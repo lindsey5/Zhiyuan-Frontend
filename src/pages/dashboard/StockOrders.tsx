@@ -8,7 +8,7 @@ import IconButton from "../../components/ui/IconButton";
 import { Eye } from "lucide-react";
 import type { StockOrder } from "../../types/stock-order.type";
 import CustomizedTable from "../../components/ui/Table";
-import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../../components/shared/DeliveryStatusChip";
 import { formatDate } from "../../utils/utils";
 import StockOrderControls from "../../components/stockOrder/StockOrderControls";
 import { useSearchParams } from "react-router-dom";

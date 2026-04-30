@@ -1,6 +1,6 @@
 import { useDistributorSale } from "../../hooks/useDistributorSale";
 import { formatToPeso } from "../../utils/utils";
-import MetricCard, { MetricCardSkeleton } from "../ui/MetricCard";
+import MetricCard, { MetricCardSkeleton } from "../shared/MetricCard";
 
 export const AllDistributorSalesToday = () => {
     const { getAllDistributorSalesByPeriod } = useDistributorSale();

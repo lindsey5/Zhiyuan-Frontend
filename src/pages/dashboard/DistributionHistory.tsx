@@ -11,7 +11,7 @@ import StockTransferLogsControls from "../../components/stockTransferLog/StockTr
 import StockTransferItems from "../../components/stockTransferLog/StockTransferItems";
 import { Eye } from "lucide-react";
 import IconButton from "../../components/ui/IconButton";
-import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../../components/shared/DeliveryStatusChip";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 

@@ -10,7 +10,7 @@ import { formatDate } from "../../utils/utils";
 import CustomizedTable from "../../components/ui/Table";
 import Chip from "../../components/ui/Chip";
 import SponsoredItemControls from "../../components/sponsored-item/SponsoredItemControls";
-import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../../components/shared/DeliveryStatusChip";
 import { useSearchParams } from "react-router-dom";
 import SponsoredItemDetails from "../../components/sponsored-item/SponsoredItemDetails";
 import IconButton from "../../components/ui/IconButton";

@@ -1,6 +1,6 @@
 import { useOrder } from "../../hooks/useOrder";
 import { formatToPeso } from "../../utils/utils";
-import MetricCard, { MetricCardSkeleton } from "../ui/MetricCard";
+import MetricCard, { MetricCardSkeleton } from "../shared/MetricCard";
 
 export const OrderSalesToday = () => {
     const { getOrderSalesByPeriod } = useOrder();

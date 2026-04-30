@@ -5,7 +5,7 @@ import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { useEffect, useState } from "react";
 import type { StockOrder, StockOrderStatus } from "../../types/stock-order.type";
-import DeliveryStatusChip from "../ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 import { formatDate } from "../../utils/utils";
 import Chip from "../ui/Chip";
 import StockOrderStatusButtons from "./StockOrderStatusButtons";

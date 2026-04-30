@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import type { Product } from "../../types/product.type";
 import { type Variant } from "../../types/variant.type";
-import Card from "./Card";
-import Modal from "./Modal";
+import Card from "../ui/Card";
+import Modal from "../ui/Modal";
 import { cn, formatToPeso } from "../../utils/utils";
-import TextField from "./TextField";
-import GoldButton from "./GoldButton";
+import TextField from "../ui/TextField";
+import GoldButton from "../ui/GoldButton";
 import { X } from "lucide-react";
 
 interface ItemSelectorModalProps {

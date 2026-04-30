@@ -1,7 +1,7 @@
 import { useDistributorSale } from "../../../hooks/useDistributorSale";
 import { useDistributorStock } from "../../../hooks/useDistributorStock"
 import { formatToPeso } from "../../../utils/utils";
-import MetricCard, { MetricCardSkeleton } from "../../ui/MetricCard";
+import MetricCard, { MetricCardSkeleton } from "../../shared/MetricCard";
 
 export const DistributorTotalStocks = ({ id } : { id: string}) => {
     const { getDistributorTotalStocks } = useDistributorStock();

@@ -13,7 +13,7 @@ import { Eye } from "lucide-react";
 import OrderControls from "../../components/orders/OrderControls";
 import { useSearchParams } from "react-router-dom";
 import OrderModal from "../../components/orders/OrderModal";
-import DeliveryStatusChip from "../../components/ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../../components/shared/DeliveryStatusChip";
 
 const getColumns = (setOrder : Dispatch<SetStateAction<string | null>>) : ColumnDef<Order>[] => [
     {

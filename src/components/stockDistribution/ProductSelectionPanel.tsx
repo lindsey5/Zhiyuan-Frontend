@@ -10,7 +10,7 @@ import type { Product } from "../../types/product.type";
 import { useProduct } from "../../hooks/useProduct";
 import ProductsTableControls from "../products/ProductsTableControls";
 import GoldButton from "../ui/GoldButton";
-import ItemSelectorModal from "../ui/ItemSelectorModal";
+import ItemSelectorModal from "../shared/ItemSelectorModal";
 
 interface ProductSelectionPanelProps {
     addVariant: (variant: Variant, quantity: number, product_name: string) => void;

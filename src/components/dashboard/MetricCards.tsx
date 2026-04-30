@@ -1,7 +1,7 @@
 import { useDistributor } from "../../hooks/useDistributor"
 import { useProduct } from "../../hooks/useProduct";
 import { useUser } from "../../hooks/useUser";
-import MetricCard, { MetricCardSkeleton } from "../ui/MetricCard";
+import MetricCard, { MetricCardSkeleton } from "../shared/MetricCard";
 
 export const TotalProducts = () => {
     const { getTotalProducts } = useProduct();

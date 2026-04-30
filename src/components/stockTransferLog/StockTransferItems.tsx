@@ -10,7 +10,7 @@ import { promiseToast } from "../../utils/sileo";
 import { useSocket } from "../../hooks/useSocket";
 import { useAuthStore } from "../../lib/store/authStore";
 import { useEffect, useState } from "react";
-import DeliveryStatusChip from "../ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 
 interface StockTransferItemsProps {
     open: boolean;

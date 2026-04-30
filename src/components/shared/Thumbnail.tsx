@@ -1,6 +1,6 @@
 import { Upload, Image } from "lucide-react";
-import Card from "./Card";
-import Button from "./Button";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
 
 interface ThumbnailProps {
     thumbnailSrc: string;

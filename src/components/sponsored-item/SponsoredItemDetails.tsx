@@ -3,7 +3,7 @@ import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { useSponsoredItem } from "../../hooks/useSponsoredItem";
 import { formatDate } from "../../utils/utils";
-import DeliveryStatusChip from "../ui/DeliveryStatusChip";
+import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 import Chip from "../ui/Chip";
 import { promiseToast } from "../../utils/sileo";
 import { useEffect, useState } from "react";

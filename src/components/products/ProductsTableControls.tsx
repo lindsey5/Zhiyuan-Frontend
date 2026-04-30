@@ -1,7 +1,7 @@
 import type React from "react";
 import type { SortOption } from "../../types/type";
 import Dropdown from "../ui/Dropdown";
-import CategoryDropdown from "../ui/CategoryDropdown";
+import CategoryDropdown from "../shared/CategoryDropdown";
 import FiltersMenu from "../ui/FiltersMenu";
 import { getKeyByValue } from "../../utils/utils";
 import TextField from "../ui/TextField";
