@@ -126,8 +126,7 @@ export default function Role ({ title, description } : { title : string, descrip
                             permissions={perms}
                         />
                     ))}
-                </Card>
-                <div className="flex justify-end gap-5">
+                    <div className="flex justify-end gap-5">
                     {id && hasDeletePermission && (
                         <Button 
                             type="button"
@@ -142,6 +141,7 @@ export default function Role ({ title, description } : { title : string, descrip
                         </GoldButton>
                     )}
                 </div>
+                </Card>
             </form>}
         </PageContainer>
     )
