@@ -9,6 +9,7 @@ import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 import Button from "../ui/Button";
 import GoldButton from "../ui/GoldButton";
 import { promiseToast } from "../../utils/sileo";
+import PrintReceiptButton from "./PrintReceiptButton";
 
 interface WithdrawalRequestDetailsProps {
     withdrawal_id: string | null;
@@ -105,7 +106,7 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
                                     <p className="text-xs">Status:</p>
                                     <DeliveryStatusChip status={withdrawalRequest?.status || ""} />
                                 </div>
-                                <Button label="Print Receipt" className="text-xs"/>
+                                <PrintReceiptButton withdrawalRequest={withdrawalRequest}/>
                             </div>
                             <div className="text-xs">
                                 Requested on:{" "}
