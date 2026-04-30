@@ -8,7 +8,6 @@ import { cn, timeAgo } from "../../utils/utils";
 import Button from "../ui/Button";
 import type { UserNotification } from "../../types/userNotification.type";
 import NotificationModal from "./NotificationModal";
-import StockTransferItems from "../stockTransferLog/StockTransferItems";
 import { useNavigate } from "react-router-dom";
 
 function getIcon (notification : UserNotification, isDark : boolean) {
