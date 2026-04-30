@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../ui/Button";
 import GoldButton from "../ui/GoldButton";
 import { formatToPeso } from "../../utils/utils";
-import { useMemo, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useMemo, type Dispatch, type SetStateAction } from "react";
 import { useOrder } from "../../hooks/useOrder";
 import { promiseToast } from "../../utils/sileo";
 
@@ -36,6 +36,7 @@ export default function PaymentModal({ open, close, back, order, setOrder }: Pay
         formState: { errors },
         setValue,
         watch,
+        reset,
     } = useForm<PaymentFormData>({
         resolver: zodResolver(paymentSchema),
         defaultValues: {
@@ -51,6 +52,13 @@ export default function PaymentModal({ open, close, back, order, setOrder }: Pay
         if (!payment) return 0;
         return payment - (order?.total_amount || 0);
     }, [payment, order?.total_amount]);
+
+    useEffect(() => {
+        return reset({
+            payment: 0,
+            payment_method: "",
+        })
+    }, [])
 
     const onSubmit: SubmitHandler<PaymentFormData> = async (data) => {
         const isConfirmed = confirm('Confirm payment?');
@@ -92,23 +100,32 @@ export default function PaymentModal({ open, close, back, order, setOrder }: Pay
                             options={paymentMethods}
                             label="Payment Method"
                             value={method}
-                            onChange={(value) => setValue("payment_method", value)}
+                            onChange={(value) => {
+                                setValue("payment_method", value);
+                                if(value !== 'cash') {
+                                    setValue("payment", order?.total_amount || 0)
+                                }else {
+                                    setValue("payment", 0)
+                                }
+                            }}
                             error={errors.payment_method?.message}
                         />
 
-                        <TextField
-                            label="Customer Payment"
-                            placeholder="Enter customer payment"
-                            onChange={(e) => {
-                                setValue("payment", Number(e.target.value));
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
-                                e.preventDefault();
-                                }
-                            }}
-                            error={errors.payment?.message}
-                        />
+                        {method === 'cash' && (
+                            <TextField
+                                label="Customer Payment"
+                                placeholder="Enter customer payment"
+                                onChange={(e) => {
+                                    setValue("payment", Number(e.target.value));
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
+                                    e.preventDefault();
+                                    }
+                                }}
+                                error={errors.payment?.message}
+                            />
+                        )}
                     </div>
 
                     {/* Summary Box */}
