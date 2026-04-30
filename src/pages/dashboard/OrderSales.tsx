@@ -1,7 +1,7 @@
 import PageContainer from "../../components/ui/PageContainer"
 import OrdersMonthlySales from "../../components/orderSales/OrdersMonthlySales";
 import OrderMetrics from "../../components/orderSales/OrderMetrics";
-import BestSellingProducts from "../../components/orderSales/BestSellingProducts";
+import BestSellingProducts from "../../components/shared/BestSellingProducts";
 
 export default function OrderSales() {
 

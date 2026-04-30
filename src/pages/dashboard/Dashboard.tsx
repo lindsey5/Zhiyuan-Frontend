@@ -3,8 +3,8 @@ import PageContainer from "../../components/ui/PageContainer"
 import DashboardDistributorMonthlySales from "../../components/dashboard/DistributorMonthlySales";
 import DashboardDistributorItemsSoldPerMonth from "../../components/dashboard/DistributorItemSoldPerMonth";
 import OrdersMonthlySales from "../../components/orderSales/OrdersMonthlySales";
-import BestSellingProducts from "../../components/orderSales/BestSellingProducts";
-import DistributorBestSellingProducts from "../../components/reports/DistributorBestSellingProducts";
+import BestSellingProducts from "../../components/shared/BestSellingProducts";
+import DistributorBestSellingProducts from "../../components/shared/DistributorBestSellingProducts";
 
 export default function Dashboard() {
 

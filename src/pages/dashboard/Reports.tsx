@@ -1,6 +1,6 @@
 import AllDistributorItemsSoldPerMonth from "../../components/reports/AllDistributorItemSoldPerMonth";
 import AllDistributorMonthlySales from "../../components/reports/AllDistributorMonthlySales";
-import DistributorBestSellingProducts from "../../components/reports/DistributorBestSellingProducts";
+import DistributorBestSellingProducts from "../../components/shared/DistributorBestSellingProducts";
 import { AllDistributorItemsSoldThisMonth, AllDistributorItemsSoldThisWeek, AllDistributorItemsSoldThisYear, AllDistributorItemsSoldToday, AllDistributorSalesThisMonth, AllDistributorSalesThisWeek, AllDistributorSalesThisYear, AllDistributorSalesToday } from "../../components/reports/ReportStatCards";
 import PageContainer from "../../components/ui/PageContainer";
 
