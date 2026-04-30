@@ -3,7 +3,7 @@ import type { PaginationParams, PaginationResponse } from "./pagination.type";
 import type { ApiResponse } from "./type";
 
 export interface WithdrawalRequestMethod {
-    type: "cash" | "bank" | "gcash" | "maya";
+    type: "cash" | "card" | "gcash" | "maya";
     account_name?: string;
     account_number?: string;
     bank_name?: string;

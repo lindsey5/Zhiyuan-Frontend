@@ -189,6 +189,7 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
                             <Button
                                 label="Close"
                                 onClick={close}
+                                disabled={updateWithdrawalRequestStatus.isPending}
                             />
 
                             {withdrawalRequest?.status === "pending" && (
@@ -197,10 +198,12 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
                                         className="bg-red-600 text-white border-none"
                                         onClick={() => handleUpdate("rejected")}
                                         label="Reject"
+                                        disabled={updateWithdrawalRequestStatus.isPending}
                                     />
                                     <GoldButton
                                         onClick={() => handleUpdate("approved")}
                                         className="text-sm"
+                                        disabled={updateWithdrawalRequestStatus.isPending}
                                     >
                                         Approve
                                     </GoldButton>
@@ -213,10 +216,12 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
                                         className="bg-red-600 text-white border-none"
                                         onClick={() => handleUpdate("cancelled")}
                                         label="Cancel"
+                                        disabled={updateWithdrawalRequestStatus.isPending}
                                     />
                                     <GoldButton
                                         onClick={() => handleUpdate("completed")}
                                         className="text-sm"
+                                        disabled={updateWithdrawalRequestStatus.isPending}
                                     >
                                         Mark as Completed
                                     </GoldButton>
