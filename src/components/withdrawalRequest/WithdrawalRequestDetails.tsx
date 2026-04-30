@@ -113,6 +113,14 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
                                     {formatDate(withdrawalRequest?.createdAt || "")}
                                 </span>
                             </div>
+                            {withdrawalRequest?.status && (
+                                <div className="text-xs">
+                                    Completed At:{" "}
+                                    <span className="font-medium">
+                                        {formatDate(withdrawalRequest?.updatedAt || "")}
+                                    </span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="mb-5">
