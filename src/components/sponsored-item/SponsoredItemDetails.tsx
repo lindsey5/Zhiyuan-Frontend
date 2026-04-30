@@ -20,7 +20,7 @@ interface SponsoredItemProps {
 
 export default function SponsoredItemDetails({ close, sponsoredId,}: SponsoredItemProps) {
     const { getSponsoredItemById, updateSponsoredItemStatus } = useSponsoredItem();
-    const { data, isFetching } = getSponsoredItemById(sponsoredId || "undefined");
+    const { data, isFetching } = getSponsoredItemById(sponsoredId || "");
     const [sponsoredItem, setSponsoredItem] = useState<SponsoredItem>();
     const { hasPermissions } = usePermissions();
 
