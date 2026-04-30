@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import type { GetWithdrawalRequestResponse, GetWithdrawalRequestsParams, GetWithdrawalRequestsResponse } from "../types/withdrawalRequest.type"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import type { GetWithdrawalRequestResponse, GetWithdrawalRequestsParams, GetWithdrawalRequestsResponse, UpdateWithdrawalRequestPayload } from "../types/withdrawalRequest.type"
 import { withdrawalRequestService } from "../service/withdrawalRequestService"
 
 export const useWithdrawalRequest = () => {
@@ -20,8 +20,13 @@ export const useWithdrawalRequest = () => {
         })
     )
 
+    const updateWithdrawalRequestStatus = useMutation({
+        mutationFn: (payload: UpdateWithdrawalRequestPayload) =>  withdrawalRequestService.updateWithdrawalRequestStatus(payload),
+    })
+
     return {
         getWithdrawalRequestById,
-        getWithdrawalRequests
+        getWithdrawalRequests,
+        updateWithdrawalRequestStatus
     }
 }

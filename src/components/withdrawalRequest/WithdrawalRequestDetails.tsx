@@ -8,6 +8,7 @@ import { formatDate, formatToPeso } from "../../utils/utils";
 import DeliveryStatusChip from "../shared/DeliveryStatusChip";
 import Button from "../ui/Button";
 import GoldButton from "../ui/GoldButton";
+import { promiseToast } from "../../utils/sileo";
 
 interface WithdrawalRequestDetailsProps {
     withdrawal_id: string | null;
@@ -55,12 +56,24 @@ function WithdrawalRequestDetailsSkeleton () {
 }
 
 export default function WithdrawalRequestDetails({ withdrawal_id, close } : WithdrawalRequestDetailsProps) {
-    const { getWithdrawalRequestById } = useWithdrawalRequest();
+    const { getWithdrawalRequestById, updateWithdrawalRequestStatus } = useWithdrawalRequest();
     const { data, isFetching } = getWithdrawalRequestById(withdrawal_id || "");
     const [withdrawalRequest, setWithdrawalRequest] = useState<WithdrawalRequest | null>(null);
 
-    const handleUpdate = (status: string) => {
+    const handleUpdate = async (status: string) => {
+        if(!withdrawalRequest) return;
+        const isConfirmed = confirm(`Are you sure you want to update the status to ${status}?`);
 
+        if(!isConfirmed) return;
+
+        const response = await promiseToast(updateWithdrawalRequestStatus.mutateAsync({
+            status, 
+            id: withdrawalRequest._id
+        }), 'top-center', () => {});
+
+        if(response.success){
+            setWithdrawalRequest(response.withdrawalRequest);
+        }
     }
 
     useEffect(() => {
@@ -72,7 +85,7 @@ export default function WithdrawalRequestDetails({ withdrawal_id, close } : With
             open={withdrawal_id !== null}
             onClose={close}
         >
-            <Card>
+            <Card className="max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-md md:text-lg font-bold">Withdrawal Request Details</h2>
                     <button

@@ -141,7 +141,6 @@ export default function StockOrders () {
                     status={status}
                     setStatus={setStatus}
                     setPagination={setPagination}
-
                 />
                 <CustomizedTable 
                     data={data?.stockOrders || []}

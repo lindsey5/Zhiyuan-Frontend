@@ -4,7 +4,7 @@ import { useWithdrawalRequest } from "../../hooks/useWithdrawalRequest";
 import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import { useDebounce } from "../../hooks/useDebounce";
-import { formatDate } from "../../utils/utils";
+import { formatDate, formatToPeso } from "../../utils/utils";
 import type { WithdrawalRequest } from "../../types/withdrawalRequest.type";
 import DeliveryStatusChip from "../../components/shared/DeliveryStatusChip";
 import IconButton from "../../components/ui/IconButton";
@@ -12,6 +12,7 @@ import { Eye } from "lucide-react";
 import CustomizedTable from "../../components/ui/Table";
 import WithdrawalRequestDetails from "../../components/withdrawalRequest/WithdrawalRequestDetails";
 import { useSearchParams } from "react-router-dom";
+import WithdrawalRequestControls from "../../components/withdrawalRequest/WithdrawalRequestControls";
 
 const getColumns = (setWithdrawalId : Dispatch<SetStateAction<string | null>>) : ColumnDef<WithdrawalRequest>[] => [
     {
@@ -40,7 +41,19 @@ const getColumns = (setWithdrawalId : Dispatch<SetStateAction<string | null>>) :
         meta: { align: 'center' },
     },
     {
-        header: 'Date',
+        header: 'Withdrawal Method',
+        accessorKey: 'withdrawal_method.type',
+        cell: info => <span className="capitalize">{info.getValue() as string}</span>,
+        meta: { align: 'center' },
+    },
+    {
+        header: 'Amount',
+        accessorKey: 'amount',
+        cell: info => formatToPeso(Number(info.getValue())),
+        meta: { align: 'center' },
+    },
+    {
+        header: 'Date Requested',
         accessorKey: 'createdAt',
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center' },
@@ -93,6 +106,8 @@ export default function WithdrawalRequests () {
 
     const columns = getColumns(setWithdrawalId);
 
+    const onRowClick = (row : WithdrawalRequest) => setWithdrawalId(row._id)
+
     useEffect(() => {
         const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
 
@@ -113,6 +128,17 @@ export default function WithdrawalRequests () {
                 close={() => setWithdrawalId(null)}
             />
             <Card className="p-0 flex flex-col max-h-screen space-y-5 pt-5">
+                <WithdrawalRequestControls 
+                    startDate={startDate}
+                    endDate={endDate}
+                    search={search}
+                    setSearch={setSearch}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    status={status}
+                    setStatus={setStatus}
+                    setPagination={setPagination}
+                />
                 <CustomizedTable 
                     data={data?.withdrawalRequests || []}
                     columns={columns}
@@ -121,8 +147,9 @@ export default function WithdrawalRequests () {
                     totalPages={data?.totalPages || 0}
                     showPagination
                     isLoading={isFetching}
-                    noDataMessage="No Stock Orders Found"
+                    noDataMessage="No Withdrawal Requests Found"
                     total={data?.total || 0}
+                    onRowClick={onRowClick}
                 />
             </Card>
         </PageContainer>
