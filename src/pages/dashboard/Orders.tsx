@@ -173,6 +173,7 @@ export default function Orders () {
                     isLoading={isFetching}
                     noDataMessage="No Orders Found"
                     total={data?.total || 0}
+                    onRowClick={(row) => setOrder(row._id)}
                 />
             </Card>
         </PageContainer>
