@@ -6,7 +6,7 @@ import Chip from "../ui/Chip";
 export default function BestSellingProducts({ className } : { className?: string}) {
     const { getBestSellingProducts } = useProduct();
     const { data, isFetching } = getBestSellingProducts();
-    console.log(data)
+
     return (
         <Card className={cn(
             "flex-1 flex flex-col space-y-3 max-h-[300px] md:max-h-[500px]",
