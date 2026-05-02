@@ -22,9 +22,9 @@ interface DistributionHistoryColsParams{
 
 const getColumns = ({ openModal, getOwn } : DistributionHistoryColsParams) : ColumnDef<StockTransferLog>[] => [
     {
-        header: "Transfer No.",
+        header: "Distribution ID",
         accessorKey: "transfer_no",
-        meta: { align: 'left' },
+        meta: { align: 'center' },
     },
     {
         header: "Receiver",
@@ -34,7 +34,7 @@ const getColumns = ({ openModal, getOwn } : DistributionHistoryColsParams) : Col
                 <p className="text-gray">{row.original.receiver.email}</p>
             </div>
         ),
-        meta: { align: 'left' },
+        meta: { align: 'center' },
     },
     ...(!getOwn ? [
         {
@@ -45,7 +45,7 @@ const getColumns = ({ openModal, getOwn } : DistributionHistoryColsParams) : Col
                     <p className="text-gray">{row.original.sender.email}</p>
                 </div>
             ),
-            meta: { align: 'left' },
+            meta: { align: 'center' },
         },
     ] : []),
     {
