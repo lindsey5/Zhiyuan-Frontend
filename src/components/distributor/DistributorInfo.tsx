@@ -41,7 +41,7 @@ export default function DistributorInfo ({ id } : { id : string }) {
                     </p>
 
                     <p className="text-gray">
-                        <span className="font-medium">Downline Commission:</span>{" "}
+                        <span className="font-medium">Commission from Downline Distributor:</span>{" "}
                         {distributorData?.distributor.child_commission_rate}%
                     </p>
                 </div>

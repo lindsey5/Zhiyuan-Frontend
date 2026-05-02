@@ -24,13 +24,8 @@ const getColumns = (setSponsoredId : Dispatch<SetStateAction<string | null>>) : 
     },
     {
         header: "Product",
-        accessorKey: "product_name",
-        cell: ({ row }) => (
-            <div className="min-w-50 flex items-center gap-3 justify-center">
-                <img className="w-10 h-10 rounded-md object-cover" src={row.original.variant.image_url} />
-                <span className="text-xs">{row.original.variant.product.product_name}</span>
-            </div>
-        ),
+        accessorKey: "variant.product.product_name",
+        cell: info => <div className="min-w-60">{info.getValue() as string}</div>,
         meta: { align: 'center' },
     },
     {

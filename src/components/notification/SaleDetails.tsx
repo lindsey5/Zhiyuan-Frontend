@@ -11,11 +11,11 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
     }, [saleNotification])
 
     const sellerCommissions = useMemo(() => {
-        return totalSales * 0.05
+        return saleNotification.sales.reduce((total, sale) => total + sale.commission, 0)
     }, [totalSales])
 
     const parentDistributorCommissions = useMemo(() => {
-        return totalSales * 0.02
+        return saleNotification.sales.reduce((total, sale) => total + sale.parent_commission, 0)
     }, [totalSales])
 
     return (
@@ -35,7 +35,7 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
                 <p className="text-xs md:text-sm text-gray">{saleNotification.sold_by.email}</p>
                 <p className="text-xs md:text-sm font-bold">ID: {saleNotification.sold_by.distributor_id}</p>
             </div>
-            <div className="space-y-3 max-h-[40vh] overflow-y-auto">
+            <div className="space-y-3">
                 <p className="font-bold text-sm md:text-base">Sold Items:</p>
                 {saleNotification.sales.map(sale => (
                     <div
@@ -71,8 +71,9 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
                     <p className="text-sm">{saleNotification.sold_by.distributor_name || "N/A"}</p>
                     <p className="text-xs text-muted">{saleNotification.sold_by.email || ""}</p>
                     <p className="text-xs font-bold">ID: {saleNotification.sold_by.distributor_id}</p>
+                    <p className="text-xs">Commission Rate: {saleNotification?.sales?.[0].commission_rate} %</p>
                 </div>
-                <p className="font-bold">{formatToPeso(sellerCommissions)}</p>
+                <p className="font-bold">{formatToPeso(sellerCommissions || 0)}</p>
                 </div>
                 {saleNotification.sold_by.parent_distributor && (
                 <div className="flex justify-between items-center border border-[var(--border-ui)] px-3 py-2 rounded-lg">
@@ -81,8 +82,9 @@ export default function SaleDetails ({ saleNotification, close } : { saleNotific
                         <p className="text-sm">{saleNotification.sold_by.parent_distributor?.distributor_name || "N/A"}</p>
                         <p className="text-xs text-muted">{saleNotification.sold_by.parent_distributor?.email || ""}</p>
                         <p className="text-xs font-bold">ID: {saleNotification.sold_by.parent_distributor?.distributor_id}</p>
+                        <p className="text-xs">Commission Rate: {saleNotification?.sales?.[0].parent_commission_rate} %</p>
                     </div>
-                    <p className="font-bold">{formatToPeso(parentDistributorCommissions)}</p>
+                    <p className="font-bold">{formatToPeso(parentDistributorCommissions || 0)}</p>
                 </div>
                 )}
             </div>

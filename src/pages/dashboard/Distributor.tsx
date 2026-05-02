@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import DistributorInfo from "../../components/distributors/DistributorInfo";
+import DistributorInfo from "../../components/distributor/DistributorInfo";
 import DistributorInventory from "../../components/distributor/DistributorInventory";
 import { useMemo, useState } from "react";
 import Tabs from "../../components/ui/Tabs";
