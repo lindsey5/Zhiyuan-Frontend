@@ -13,7 +13,7 @@ export const distributorSchema = z.object({
         .string()
         .optional(),
     commission_rate: z.number().positive('Commission Rate is required'),
-    child_commission_rate: z.number().positive('Commission from child distributor is required')
+    child_commission_rate: z.number().positive('Commission from downline distributor is required')
 })
 
 export type DistributorFormData = z.infer<typeof distributorSchema>;

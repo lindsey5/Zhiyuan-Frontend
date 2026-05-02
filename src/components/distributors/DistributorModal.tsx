@@ -95,8 +95,8 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
 
                     <TextField 
                         error={errors.child_commission_rate?.message}
-                        label="Commission from Child Distributor (%)"
-                        placeholder="Enter Commission from child distributor"
+                        label="Commission from Downline Distributor (%)"
+                        placeholder="Enter commission from downline distributor"
                         type="number"
                         onKeyDown={(e) => {
                             if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
