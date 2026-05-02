@@ -131,7 +131,7 @@ export default function DistributorModal({ open, onClose, distributor }: Distrib
 
                     <TextField
                         error={errors.child_commission_rate?.message}
-                        label="Commission from Downline (%)"
+                        label="Commission from Downline Distributor(%)"
                         type="number"
                         registration={register("child_commission_rate", {
                             setValueAs: (value) => Number(value),
