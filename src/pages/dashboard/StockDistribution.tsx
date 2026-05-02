@@ -100,8 +100,6 @@ export default function StockDistribution() {
                 setVariants={setVariants}
                 variants={variants}
                 distributorId={distributorId}
-                handleQuantity={handleQuantity}
-                remove={remove}
             />
         </PageContainer>
     );

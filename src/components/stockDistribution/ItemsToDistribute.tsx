@@ -12,7 +12,6 @@ import { useSocket } from "../../hooks/useSocket";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
-import QuantityControls from "./QuantityControls";
 
 export interface CartItem {
     variant: Variant;
@@ -26,17 +25,13 @@ interface ItemsToDistributeProps {
     open: boolean;
     close: () => void;
     setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
-    handleQuantity: (quantity: number, item: CartItem) => void;
-    remove: (id: string) => void;
 }
 
 export default function ItemsToDistribute({ 
     variants, 
     open, 
     close, 
-    remove,
     distributorId,
-    handleQuantity
 }: ItemsToDistributeProps) {
     const { hasAnyPermissions } = usePermissions();
     useSocket({ namespace: '/distributor-notification' })
@@ -103,13 +98,10 @@ export default function ItemsToDistribute({
                             <div className="flex-1">
                                 <p className="text-sm font-bold mb-2">{item.product_name}</p>
                                 <Chip>{item.variant.variant_name}</Chip>
-                                <p className="text-sm text-gray mt-2">
-                                    Available Stock: {item.variant.stock}
-                                </p>
-                                <p className="text-sm text-gray">
-                                    {formatToPeso(item.variant.price)}
-                                </p>
                             </div>
+                            <p className="text-sm">
+                                Quantity: {item.quantity}
+                            </p>
                         </div>
                     ))
                 )}
