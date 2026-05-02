@@ -2,7 +2,7 @@ import type { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-f
 import TextField from "../ui/TextField";
 import type { CreateProductFormData } from "../../schemas/productSchema";
 import { useState } from "react";
-import { fileToBase64 } from "../../utils/utils";
+import { fileToBase64, generateSKU } from "../../utils/utils";
 import { Upload, Image } from "lucide-react";
 import Button from "../ui/Button";
 
@@ -65,12 +65,21 @@ export default function AddProductVariant ({ errors, register, index, setValue, 
                     placeholder="Enter variant name"
                     registration={register(`variants.${index}.variant_name`)}
                 />
-                <TextField 
-                    error={errors.variants ? errors.variants[index]?.sku?.message : ""}
-                    label="SKU"
-                    placeholder="Enter SKU"
-                    registration={register(`variants.${index}.sku`)}
-                />
+                <div>
+                    <TextField 
+                        error={errors.variants ? errors.variants[index]?.sku?.message : ""}
+                        label="SKU"
+                        placeholder="Enter SKU"
+                        registration={register(`variants.${index}.sku`)}
+                    />
+                    <div className="flex justify-end mt-1">
+                        <button 
+                            type="button"
+                            className="text-sm text-gold hover:opacity-80 cursor-pointer"
+                            onClick={() => setValue(`variants.${index}.sku`, generateSKU())}
+                        >Generate SKU</button>
+                    </div>
+                </div>
                 <TextField 
                     error={errors.variants ? errors.variants[index]?.price?.message : ""}
                     label="Price"

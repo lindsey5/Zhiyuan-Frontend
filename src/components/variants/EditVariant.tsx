@@ -7,7 +7,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { editVariantSchema, type EditVariantFormData } from "../../schemas/variantSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { fileToBase64 } from "../../utils/utils";
+import { fileToBase64, generateSKU } from "../../utils/utils";
 import TextField from "../ui/TextField";
 import { useVariant } from "../../hooks/useVariant";
 import { checkIfVariantFieldExist } from "../../utils/validation";
@@ -131,12 +131,21 @@ export default function EditVariant ({ variant, open, close } : EditVariantProps
                             placeholder="Enter variant name"
                             registration={register('variant_name')}
                         />
-                        <TextField 
-                            error={errors.sku ? errors.sku.message : ""}
-                            label="SKU"
-                            placeholder="Enter SKU"
-                            registration={register('sku')}
-                        />
+                        <div>
+                            <TextField 
+                                error={errors.sku?.message}
+                                label="SKU"
+                                placeholder="Enter SKU"
+                                registration={register('sku')}
+                            />
+                            <div className="flex justify-end mt-1">
+                                <button 
+                                    type="button"
+                                    className="text-sm text-gold hover:opacity-80 cursor-pointer"
+                                    onClick={() => setValue('sku', generateSKU())}
+                                >Generate SKU</button>
+                            </div>
+                        </div>
                         <TextField 
                             error={errors.price ? errors?.price.message : ""}
                             label="Price"

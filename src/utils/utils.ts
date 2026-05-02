@@ -129,3 +129,9 @@ export function timeAgo(date: Date | string): string {
     if (diffDays === 1) return "1 day ago";
     return `${diffDays} days ago`;
 }
+
+export const generateSKU = () => {
+    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+    return `SKU-${random}`;
+};
