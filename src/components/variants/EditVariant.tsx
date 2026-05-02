@@ -59,7 +59,7 @@ export default function EditVariant ({ variant, open, close } : EditVariantProps
     }
 
     const onSubmit: SubmitHandler<EditVariantFormData> = async (data) => {
-        const isConfirm = confirm("Are you sure you want to update this product?");
+        const isConfirm = confirm("Are you sure you want to update this variant?");
 
         if (!isConfirm) return;
 
