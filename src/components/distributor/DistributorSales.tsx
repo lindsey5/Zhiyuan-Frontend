@@ -6,7 +6,7 @@ import { useDistributorSale } from "../../hooks/useDistributorSale";
 import Card from "../ui/Card";
 import CustomizedTable from "../ui/Table";
 import DistributorSalesControls from "../distributorSale/DistributorSalesControls";
-import { formatDate, formatToPeso } from "../../utils/utils";
+import { formatDate, formatInputDate, formatToPeso } from "../../utils/utils";
 import type { DistributorSale } from "../../types/distributorSale.type";
 import Button from "../ui/Button";
 import { Download, Eye } from "lucide-react";
@@ -23,8 +23,15 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 500);
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState(() => {
+        const date = new Date();
+        date.setDate(date.getDate() - 7);
+        return formatInputDate(date);
+    });
+
+    const [endDate, setEndDate] = useState(() => {
+        return formatInputDate(new Date());
+    });
     const [distributorSale, setDistributorSale] = useState<DistributorSale | null>(null);
     const { getDistributorSales } = useDistributorSale();
 

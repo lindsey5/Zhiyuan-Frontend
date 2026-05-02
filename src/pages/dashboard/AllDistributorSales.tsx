@@ -7,7 +7,7 @@ import CustomizedTable from "../../components/ui/Table";
 import { useDistributorSale } from "../../hooks/useDistributorSale";
 import type { SortOption } from "../../types/type";
 import type { DistributorSale } from "../../types/distributorSale.type";
-import { formatDate, formatToPeso } from "../../utils/utils";
+import { formatDate, formatInputDate, formatToPeso } from "../../utils/utils";
 import DistributorSalesControls from "../../components/distributorSale/DistributorSalesControls";
 import { distributorSaleService } from "../../service/distributorSaleService";
 import Button from "../../components/ui/Button";
@@ -24,8 +24,15 @@ export default function AllDistributorSales () {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 800);
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState(() => {
+        const date = new Date();
+        date.setDate(date.getDate() - 7);
+        return formatInputDate(date);
+    });
+
+    const [endDate, setEndDate] = useState(() => {
+        return formatInputDate(new Date());
+    });
     const [distributorSale, setDistributorSale] = useState<DistributorSale | null>(null);
 
     const params = useMemo(() => ({

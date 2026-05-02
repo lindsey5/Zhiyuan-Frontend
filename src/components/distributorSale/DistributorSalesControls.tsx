@@ -3,7 +3,7 @@ import FiltersMenu from "../ui/FiltersMenu";
 import DateInput from "../ui/DateInput";
 import Dropdown from "../ui/Dropdown";
 import type { SortOption } from "../../types/type";
-import { getKeyByValue } from "../../utils/utils";
+import { formatInputDate, getKeyByValue } from "../../utils/utils";
 import TextField from "../ui/TextField";
 import type { PaginationState } from "@tanstack/react-table";
 
@@ -41,9 +41,14 @@ export default function DistributorSalesControls ({
  } : DistributorSalesControlsProps) {
 
     const clear = () => {
+        
         setSorting({ order: 'desc', sortBy: 'createdAt' });
-        setStartDate('');
-        setEndDate('');
+        setStartDate(() => {
+            const date = new Date();
+            date.setDate(date.getDate() - 7);
+            return formatInputDate(date);
+        });
+        setEndDate(formatInputDate(new Date()));
     }
 
     return (
