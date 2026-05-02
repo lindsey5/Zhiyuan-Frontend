@@ -50,6 +50,12 @@ const getColumns = ({
         meta: { align: 'center '}
     },
     {
+        header: "Commission from Child Distributor",
+        accessorKey: 'child_commission_rate',
+        cell: info => <span className="min-w-20">{`${info.getValue()}%`}</span>,
+        meta: { align: 'center '}
+    },
+    {
         header: "Parent Distributor",
         accessorKey: 'parent_distributor',
         cell: info => info.getValue() ? (info.getValue() as Distributor)?.distributor_name : "N/A",
