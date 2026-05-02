@@ -58,7 +58,7 @@ export default function StockTransferLogsControls({
                 <TextField 
                     className="md:max-w-100"
                     icon={<Search size={20}/>}
-                    placeholder={getOwn ? "Search by distribution id, or receiver..." : "Search by transfer no, receiver or sender..."}
+                    placeholder={getOwn ? "Search by distribution id, or receiver..." : "Search by distribution id, receiver or sender..."}
                     onChange={(e) => {
                         setPagination(prev => ({ ...prev, pageIndex: 0 }))
                         setSearch(e.target.value);
