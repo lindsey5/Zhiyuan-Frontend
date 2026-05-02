@@ -8,10 +8,11 @@ import type { CartItem } from "./ItemsToDistribute";
 import Button from "../ui/Button";
 import { Package, X } from "lucide-react";
 import { cn } from "../../utils/utils";
+import type { Distributor } from "../../types/distributor.type";
 
 interface DistributionSummaryProps {
     variants: { variant: Variant; quantity: number; product_name: string }[];
-    distributorId: string | null;
+    distributor: Distributor | null;
     setShowModal: Dispatch<SetStateAction<boolean>>;
     handleQuantity: (quantity: number, item: CartItem) => void;
     remove: (id: string) => void;
@@ -20,7 +21,7 @@ interface DistributionSummaryProps {
 export default function DistributionSummary({
     setShowModal,
     variants,
-    distributorId,
+    distributor,
     handleQuantity,
     remove
 }: DistributionSummaryProps) {
@@ -114,11 +115,11 @@ export default function DistributionSummary({
                 {/* FOOTER */}
                 <div className="border-t border-[var(--border-panel)] p-4">
                     <p className="text-xs text-red-500">
-                        {variants.length > 0 && !distributorId && "Select Distributor"}
+                        {variants.length > 0 && !distributor && "Select Distributor"}
                     </p>
 
                     <GoldButton
-                        disabled={variants.length === 0 || !distributorId}
+                        disabled={variants.length === 0 || !distributor}
                         onClick={() => {
                             setOpenSheet(false);
                             setShowModal(true);
@@ -179,11 +180,11 @@ export default function DistributionSummary({
                     </div>
 
                     <p className="text-xs text-red-500">
-                        {variants.length > 0 && !distributorId && "Select Distributor"}
+                        {variants.length > 0 && !distributor && "Select Distributor"}
                     </p>
 
                     <GoldButton
-                        disabled={variants.length === 0 || !distributorId}
+                        disabled={variants.length === 0 || !distributor}
                         onClick={() => setShowModal(true)}
                         className="mt-4 w-full py-2 text-sm"
                     >

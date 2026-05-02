@@ -4,15 +4,12 @@ import ProductSelectionPanel from "../../components/stockDistribution/ProductSel
 import type { Variant } from "../../types/variant.type";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import TransferItems, { type CartItem } from "../../components/stockDistribution/ItemsToDistribute";
-import { useSearchParams } from "react-router-dom";
+import ItemsToDistribute, { type CartItem } from "../../components/stockDistribution/ItemsToDistribute";
 import DistributionSummary from "../../components/stockDistribution/DistributionSummary";
+import type { Distributor } from "../../types/distributor.type";
 
 export default function StockDistribution() {
-    const [searchParams] = useSearchParams();
-    const id = searchParams.get("id");
-
-    const [distributorId, setDistributorId] = useState<string | null>(id);
+    const [distributor, setDistributor] = useState<Distributor | null>(null);
     const [variants, setVariants] = useState<
         { variant: Variant; quantity: number; product_name: string }[]
     >([]);
@@ -77,15 +74,15 @@ export default function StockDistribution() {
                 {/* LEFT SIDE */}
                 <div className="min-w-0 flex-1 flex flex-col gap-5 min-h-0">
                     <DistributorSelector
-                        setDistributor={setDistributorId}
-                        defaultDistributor={id}
+                        setDistributor={setDistributor}
+                        distributor={distributor}
                     />
 
                     <ProductSelectionPanel addVariant={addVariant} />
                 </div>
 
                 <DistributionSummary 
-                    distributorId={distributorId}
+                    distributor={distributor}
                     handleQuantity={handleQuantity}
                     setShowModal={setShowModal}
                     variants={variants}
@@ -94,12 +91,13 @@ export default function StockDistribution() {
             </div>
 
             {/* MODAL */}
-            <TransferItems
+            <ItemsToDistribute
                 close={() => setShowModal(false)}
                 open={showModal}
                 setVariants={setVariants}
                 variants={variants}
-                distributorId={distributorId}
+                distributor={distributor}
+
             />
         </PageContainer>
     );

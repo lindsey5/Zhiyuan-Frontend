@@ -8,14 +8,16 @@ import { useDistributor } from "../../hooks/useDistributor";
 import GoldButton from "../ui/GoldButton";
 import { User } from "lucide-react";
 import DistributorsControls from "../distributors/DistributorsControls";
+import { useSearchParams } from "react-router-dom";
 
 interface DistributorSelectorProps {
-    setDistributor: React.Dispatch<SetStateAction<string | null>>;
-    defaultDistributor: string | null;
+    setDistributor: React.Dispatch<SetStateAction<Distributor | null>>;
+    distributor: Distributor | null;
 }
 
-export default function DistributorSelector({ setDistributor, defaultDistributor } : DistributorSelectorProps) {
-    const [selectedDistributor, setSelectedDistributor] = useState<Distributor | null>(null);
+export default function DistributorSelector({ setDistributor, distributor } : DistributorSelectorProps) {
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
     const [sortBy, setSortBy] = useState('createdAt');
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [search, setSearch] = useState("");
@@ -32,7 +34,7 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
         page: pagination.pageIndex + 1,
         sortBy,
         order,
-        id: defaultDistributor || undefined
+        id: id || undefined
     });
 
     const columns: ColumnDef<Distributor>[] = [
@@ -70,7 +72,7 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
                 <div className="flex md:justify-center">
                     <GoldButton 
                         className="p-2"
-                        onClick={() => { setSelectedDistributor(row.original); setDistributor(row.original._id)}}>
+                        onClick={() => { setDistributor(row.original); setDistributor(row.original)}}>
                     Select
                     </GoldButton>
                 </div>
@@ -80,18 +82,17 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
     ];
 
     const onRowClick = (row : Distributor) => {
-        setSelectedDistributor(row); 
-        setDistributor(row._id);
+        setDistributor(row); 
     }
 
     useEffect(() => {
-        if(defaultDistributor) setSelectedDistributor(data?.distributors[0] || null);
-    }, [data])
+        if(id) setDistributor(data?.distributors[0] || null);
+    }, [data, id])
 
     return (
         <Card className="p-0 flex flex-col">
             {/* If selected distributor exists show info */}
-            {selectedDistributor ? (
+            {distributor ? (
                 <div className="p-3 xl:p-6 space-y-3 xl:space-y-5 mt-3">
                 <h1 className="text-md xl:text-lg font-bold">Selected Distributor</h1>
 
@@ -102,18 +103,17 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
 
                     <div className="flex flex-col break-all">
                         <span className="font-bold text-sm xl:text-md">
-                            {selectedDistributor.distributor_name}
+                            {distributor.distributor_name}
                         </span>
-                        <span className="text-xs xl:text-md text-muted">{selectedDistributor.email}</span>
+                        <span className="text-xs xl:text-md text-muted">{distributor.email}</span>
                         <span className="text-xs xl:text-md text-muted">
-                            Commission Rate: {selectedDistributor.commission_rate}%
+                            Commission Rate: {distributor.commission_rate}%
                         </span>
                     </div>
                 </div>
 
-                {!defaultDistributor && <GoldButton 
+                {!id && <GoldButton 
                     onClick={() => {
-                        setSelectedDistributor(null)
                         setDistributor(null)
                     }}
                     className="text-xs xl:text-sm"

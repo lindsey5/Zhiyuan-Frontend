@@ -11,6 +11,7 @@ import { useSocket } from "../../hooks/useSocket";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
+import type { Distributor } from "../../types/distributor.type";
 
 export interface CartItem {
     variant: Variant;
@@ -20,7 +21,7 @@ export interface CartItem {
 
 interface ItemsToDistributeProps {
     variants: CartItem[];
-    distributorId: string | null;
+    distributor: Distributor | null;
     open: boolean;
     close: () => void;
     setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
@@ -30,20 +31,20 @@ export default function ItemsToDistribute({
     variants, 
     open, 
     close, 
-    distributorId,
+    distributor,
 }: ItemsToDistributeProps) {
     const { hasAnyPermissions } = usePermissions();
     useSocket({ namespace: '/distributor-notification' })
     const { createStockTransferLog } = useStockTransfer();
 
     const transfer = () => {
-        if(!distributorId){
+        if(!distributor){
             errorToast("Error", "Please select a distributor first.");
             return;
         }
 
         promiseToast(createStockTransferLog.mutateAsync({
-            id: distributorId || "",
+            id: distributor._id || "",
             data: variants.map(variant => ({
                 variant_id: variant.variant._id,
                 quantity: variant.quantity
@@ -77,7 +78,12 @@ export default function ItemsToDistribute({
                         <X />
                     </button>
                 </div>
-
+                <div className="flex flex-col items-start text-sm pb-3 px-2 border-b border-[var(--border-panel)]">
+                    <p>Distributor:</p>
+                    <p>{distributor?.distributor_name}</p>
+                    <p>{distributor?.email}</p>
+                    <p className="font-semibold">{distributor?.distributor_id}</p>
+                </div>
                 {/* Body */}
                 <div className="max-h-[70vh] overflow-y-auto space-y-3 py-3">
                 {variants.length === 0 ? (
