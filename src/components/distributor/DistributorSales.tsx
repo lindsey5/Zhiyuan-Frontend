@@ -152,6 +152,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
                 total={data?.total || 0}
                 onRowClick={(row) => setDistributorSale(row)}
             />
+            <p className="pl-5 pb-5 font-bold">Total Sales: {formatToPeso(data?.totalSales || 0)}</p>
         </Card>
     )
 }
