@@ -8,6 +8,7 @@ export interface Distributor {
     parent_distributor?: Distributor;
     distributor_name: string;
     commission_rate: number;
+    child_commission_rate: number;
     wallet_balance: number;
     email: string;
     status: "active" | "deleted";
