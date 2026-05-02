@@ -29,12 +29,13 @@ export default function DistributionSummary({
     return (
         <>
             {/* ================= MOBILE FLOATING BUTTON ================= */}
-            <Button
-                onClick={() => setOpenSheet(true)}
-                icon={<Package size={18} />}
+            <GoldButton
                 className="lg:hidden fixed bottom-4 right-4 z-30 rounded-full px-4 py-3 shadow-lg flex items-center gap-2"
-                label={`Items (${variants.length})`}
-            />
+                onClick={() => setOpenSheet(true)}
+            >
+                <Package size={18} />
+                Items ({variants.length})
+            </GoldButton>
 
             {/* ================= MOBILE BACKDROP ================= */}
             {openSheet && (
