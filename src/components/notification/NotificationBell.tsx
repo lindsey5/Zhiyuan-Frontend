@@ -8,7 +8,6 @@ import { cn, timeAgo } from "../../utils/utils";
 import Button from "../ui/Button";
 import type { UserNotification } from "../../types/userNotification.type";
 import NotificationModal from "./NotificationModal";
-import { useNavigate } from "react-router-dom";
 
 function getIcon (notification : UserNotification, isDark : boolean) {
     if(notification.saleNotification){
@@ -77,7 +76,6 @@ function getIcon (notification : UserNotification, isDark : boolean) {
 
 export default function NotificationBell () {
     const { isDark } = useThemeStore();
-    const navigate = useNavigate();
     const [notification, setNotification] = useState<UserNotification | null>(null);
     const { unread, notifications, setPage, page, totalPages, isFetching, readNotification, readAllNotifications } = useNotifications();
     const [showDropdown, setShowDropdown] = useState(false);
@@ -90,21 +88,21 @@ export default function NotificationBell () {
 
     }, [])
 
-    const handleReadNotification = async(notification : UserNotification) => {
-        if(!readNotification) return;
+    const handleReadNotification = async (notification: UserNotification) => {
+        if (!readNotification) return;
 
-        if(notification.orderNotification) {
-            navigate(`/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`);
-        }else if(notification.stockOrderNotification){
-            navigate(`/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`);
-        }else if(notification.sponsoredItemNotification){
-            navigate(`/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`);
+        if (notification.orderNotification) {
+            window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`;
+        } else if (notification.stockOrderNotification) {
+            window.location.href = `/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`;
+        } else if (notification.sponsoredItemNotification) {
+            window.location.href = `/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`;
+        } else {
+            setNotification(notification);
         }
-        
-        else setNotification(notification);
-        
-        if(notification.status === 'unread') await readNotification(notification._id);
-    }
+
+        if (notification.status === 'unread') await readNotification(notification._id);
+    };
 
     return (
         <div id="notification-bell" className="relative">
