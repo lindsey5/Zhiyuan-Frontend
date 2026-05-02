@@ -11,7 +11,9 @@ export const distributorSchema = z.object({
         .max(100, "Email must not exceed 100 characters"),
     parent_distributor_id: z
         .string()
-        .optional()
-});
+        .optional(),
+    commission_rate: z.number().positive('Commission Rate is required'),
+    child_commission_rate: z.number().positive('Commission from child distributor is required')
+})
 
 export type DistributorFormData = z.infer<typeof distributorSchema>;

@@ -20,6 +20,10 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
     const { createDistributor } = useDistributor();
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<DistributorFormData>({
         resolver: zodResolver(distributorSchema),
+        defaultValues: {
+            child_commission_rate: 2,
+            commission_rate: 5,
+        }
     });
 
     const close = () => {
@@ -27,6 +31,8 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
         reset({ 
             distributor_name: undefined,
             email: undefined,
+            child_commission_rate: 2,
+            commission_rate: 5,
         });
     }
 
@@ -60,7 +66,7 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                     />
                     <TextField
                         label="Email"
-                        placeholder="Enter distributor Email"
+                        placeholder="Enter Distributor Email"
                         registration={register("email")}
                         error={errors.email?.message}
                         disabled={createDistributor.isPending}
@@ -70,6 +76,36 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         disabled={createDistributor.isPending}
                         error={errors.parent_distributor_id?.message || ""}
                         setValue={setValue}
+                    />
+
+                    <TextField 
+                        error={errors.commission_rate?.message}
+                        label="Commission Rate (%)"
+                        placeholder="Enter Commission Rate"
+                        type="number"
+                        onKeyDown={(e) => {
+                            if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
+                                e.preventDefault();
+                            }
+                        }}
+                        registration={register('commission_rate',{
+                            setValueAs: value => Number(value)
+                        })}
+                    />
+
+                    <TextField 
+                        error={errors.child_commission_rate?.message}
+                        label="Commission from Child Distributor (%)"
+                        placeholder="Enter Commission from child distributor"
+                        type="number"
+                        onKeyDown={(e) => {
+                            if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
+                                e.preventDefault();
+                            }
+                        }}
+                        registration={register('child_commission_rate',{
+                            setValueAs: value => Number(value)
+                        })}
                     />
 
                     <div className="flex justify-end gap-3 pt-3">

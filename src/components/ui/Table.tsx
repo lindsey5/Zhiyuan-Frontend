@@ -71,7 +71,7 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ columns, rows = 10
     return (
         <div className="min-h-0 flex-grow flex flex-col animate-pulse">
             <div className="overflow-auto flex-grow">
-                <table className="w-full text-sm border-collapse">
+                <table className="w-full border-collapse">
                     {/* Table Head */}
                     <thead>
                         <tr>
@@ -219,7 +219,7 @@ const CustomizedTable = <T,>({
             : 
                 <>
                 <div className="overflow-auto flex-grow relative">
-                    <table className="w-full text-xs xl:text-sm">
+                    <table className="w-full text-xs">
                         <TableColumns table={table} />
                         <TableRows table={table} onRowClick={onRowClick}/>
                     </table>

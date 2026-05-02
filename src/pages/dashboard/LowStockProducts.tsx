@@ -33,7 +33,7 @@ const getColumns = ({
             <div className="min-w-60 flex items-center gap-3 justify-start">
                 <img className="w-10 h-10 rounded-md object-cover" src={row.original.image_url} />
                 <div className="space-y-2 flex flex-col items-start">
-                    <p className="text-xs xl:text-sm">{row.original.product.product_name}</p>
+                    <p className="text-xs">{row.original.product.product_name}</p>
                     <p className="text-center text-xs bg-gold px-3 py-1 text-inverse rounded-pull rounded-full">{row.original.variant_name}</p>
                 </div>
             </div>
@@ -49,7 +49,7 @@ const getColumns = ({
         header: "Category",
         accessorKey: "product.category",
         
-        cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
+        cell: info => <span className="text-xs">{info.getValue() as string}</span>,
         meta: { align: 'center' },
     },
     {
@@ -78,7 +78,7 @@ const getColumns = ({
                     <div className="flex flex-col lg:flex-row gap-3 justify-center">
                         <Button
                             label="Edit"
-                            className="p-1 lg:p-3 text-xs xl:text-sm"
+                            className="p-1 lg:p-3 text-xs"
                             onClick={() => {
                                 handleEdit(row.original);
                             }}

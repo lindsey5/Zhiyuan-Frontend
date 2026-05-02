@@ -41,7 +41,7 @@ const getColumns = ({
         cell: ({ row }) => (
             <div className="min-w-50 flex items-center gap-3 justify-start">
                 <img className="w-10 h-10 rounded-md object-cover" src={row.original.thumbnail_url} />
-                <span className="text-xs xl:text-sm">{row.original.product_name}</span>
+                <span className="text-xs">{row.original.product_name}</span>
             </div>
         ),
         meta: { align: 'left' },
@@ -49,7 +49,7 @@ const getColumns = ({
     {
         header: "Category",
         accessorKey: "category",
-        cell: info => <span className="text-xs xl:text-sm">{info.getValue() as string}</span>,
+        cell: info => <span className="text-xs">{info.getValue() as string}</span>,
         meta: { align: 'center' },
     },
     {
@@ -61,7 +61,7 @@ const getColumns = ({
         header: "Stock",
         cell: ({ row }) => {
             const total = row.original.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
-            return <span className="text-xs xl:text-sm">{total}</span>;
+            return <span className="text-xs">{total}</span>;
         },
         meta: { align: 'center' },
     },
@@ -79,7 +79,7 @@ const getColumns = ({
                         {hasPermissions([PERMISSIONS.PRODUCT_UPDATE]) && (
                             <Button
                                 label="Edit"
-                                className="p-1 lg:p-3 text-xs xl:text-sm"
+                                className="p-1 lg:p-3 text-xs"
                                 disabled={deleteProduct.isPending}
                                 onClick={() => navigate(`/dashboard/edit-product/${row.original._id}`)}
                             />
@@ -88,7 +88,7 @@ const getColumns = ({
                         {hasPermissions([PERMISSIONS.PRODUCT_DELETE]) && (
                             <Button
                                 label="Delete"
-                                className="bg-red-600 text-white p-1 lg:p-3 text-xs xl:text-sm"
+                                className="bg-red-600 text-white p-1 lg:p-3 text-xs"
                                 disabled={deleteProduct.isPending}
                                 onClick={() => deleteExistingProduct(row.original._id)}
                             />

@@ -46,7 +46,7 @@ const getColumns = ({
                         {hasPermissions([PERMISSIONS.CATEGORY_UPDATE]) && (
                             <Button
                                 label="Edit"
-                                className="p-2 md:p-3 text-xs xl:text-sm"
+                                className="p-2 md:p-3 text-xs"
                                 onClick={() => {
                                     setCategory(row.original);
                                     setShowModal(true);
@@ -57,7 +57,7 @@ const getColumns = ({
                         {hasPermissions([PERMISSIONS.CATEGORY_DELETE]) && (
                             <Button
                                 label="Delete"
-                                className="bg-red-600 text-white p-2 md:p-3 text-xs xl:text-sm"
+                                className="bg-red-600 text-white p-2 md:p-3 text-xs"
                                 onClick={() => deleteExistingCategory(row.original._id)}
                             />
                         )}

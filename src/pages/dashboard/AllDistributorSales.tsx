@@ -63,7 +63,7 @@ export default function AllDistributorSales () {
         {
             header: "Product",
             cell: ({ row }) => (
-                <div className="min-w-40 flex gap-3 items-center">
+                <div className="min-w-60 flex gap-3 items-center">
                     <img 
                         className="w-8 h-8 lg:w-10 lg:h-10 rounded-md object-cover" 
                         src={row.original.variant.image_url} 
