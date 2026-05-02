@@ -66,6 +66,8 @@ export default function DistributorCommissions ({ distributorId } : { distributo
         }
     ]
 
+    const onRowClick = (row: CommissionLog) => setCommission(row)
+
     return (
         <Card className="flex flex-col max-h-screen space-y-5 p-0 pt-5">
             <CommissionLogModal 
@@ -101,6 +103,7 @@ export default function DistributorCommissions ({ distributorId } : { distributo
                 showPagination
                 noDataMessage="No Commissions Found"
                 total={data?.total || 0}
+                onRowClick={onRowClick}
             />
         </Card>
     )

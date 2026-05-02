@@ -7,6 +7,7 @@ export interface CommissionLog {
     sales: DistributorSale[];
     receiver_id: string;
     commission_rate: number;
+    parent_commision_rate: number;
     commission_amount: number;
     createdAt: string;
 }

@@ -55,13 +55,13 @@ export default function CommissionLogModal ({ open, close, commissionLog } : Com
                         </p>
 
                         <p className="text-xs md:text-sm">
-                            <span className="font-semibold">{commissionLog?.receiver_id === commissionLog?.sales[0].seller_id ? "5%" : "2%"} of Total Sales:</span>{" "}
-                            {formatToPeso(totalSales)} x {commissionLog?.receiver_id === commissionLog?.sales[0].seller_id ? "0.05" : "0.02"}
+                            <span className="font-semibold">{commissionLog?.commission_rate}% of Total Sales:</span>{" "}
+                            {formatToPeso(totalSales)} x {((commissionLog?.commission_rate || 0 ) * 0.01)}
                         </p>
 
                         <p className="text-sm md:text-base font-bold">
                             <span>Commission:</span>{" "}
-                            {formatToPeso(totalSales * (commissionLog?.receiver_id === commissionLog?.sales[0].seller_id ? 0.05 : 0.02))}
+                            {formatToPeso(totalSales * ((commissionLog?.commission_rate || 0 ) * 0.01))}
                         </p>
                         <Button
                             label="Close"
