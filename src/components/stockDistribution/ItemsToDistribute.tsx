@@ -110,18 +110,6 @@ export default function ItemsToDistribute({
                                     {formatToPeso(item.variant.price)}
                                 </p>
                             </div>
-
-                            <div className="flex flex-col items-center gap-2">
-                                <QuantityControls 
-                                    handleQuantity={handleQuantity}
-                                    item={item}
-                                />
-                                <Button
-                                    label="Remove"
-                                    className="text-xs py-1"
-                                    onClick={() => remove(item.variant._id)}
-                                />
-                            </div>
                         </div>
                     ))
                 )}
