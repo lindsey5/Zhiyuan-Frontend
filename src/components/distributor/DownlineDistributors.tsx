@@ -4,7 +4,7 @@ import type { Distributor } from "../../types/distributor.type";
 import Card from "../ui/Card";
 import CustomizedTable from "../ui/Table";
 import { useNavigate } from "react-router-dom";
-import { formatDate, formatToPeso } from "../../utils/utils";
+import { formatToPeso } from "../../utils/utils";
 
 const getColumns = () : ColumnDef<Distributor>[] => [
     {
