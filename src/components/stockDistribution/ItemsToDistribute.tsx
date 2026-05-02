@@ -2,7 +2,6 @@ import { X } from "lucide-react";
 import type { Variant } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
-import { formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
 import { errorToast, promiseToast } from "../../utils/sileo";
