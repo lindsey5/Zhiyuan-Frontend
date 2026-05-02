@@ -1,5 +1,15 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type CreateDistributorResponse, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse, type GetTopDistributorsParams, type GetTopDistributorsResponse, type Distributor, type GetDownlineDistributorsResponse } from "../types/distributor.type";
+import { 
+    type GetTotalDistributorsResponse, 
+    type CreateDistributorDTO, 
+    type CreateDistributorResponse, 
+    type GetDistributorResponse, 
+    type GetDistributorsParams, 
+    type GetDistributorsResponse, 
+    type GetTopDistributorsParams, 
+    type GetTopDistributorsResponse, 
+    type GetDownlineDistributorsResponse 
+} from "../types/distributor.type";
 import type { ApiResponse } from "../types/type";
 
 export const distributorService = {
