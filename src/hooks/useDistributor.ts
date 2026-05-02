@@ -1,5 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { type GetTotalDistributorsResponse, type CreateDistributorDTO, type GetDistributorResponse, type GetDistributorsParams, type GetDistributorsResponse, type GetTopDistributorsParams, type GetTopDistributorsResponse } from "../types/distributor.type";
+import type { 
+    GetTotalDistributorsResponse, 
+    CreateDistributorDTO, 
+    GetDistributorResponse, 
+    GetDistributorsParams, 
+    GetDistributorsResponse, 
+    GetTopDistributorsParams, 
+    GetTopDistributorsResponse, 
+    GetDownlineDistributorsResponse 
+} from "../types/distributor.type";
 import { distributorService } from "../service/distributorService";
 
 export const useDistributor = () => {
@@ -16,6 +25,14 @@ export const useDistributor = () => {
         useQuery<GetDistributorResponse, Error>({
             queryKey: [`distributors/${id}`],
             queryFn: () => distributorService.getDistributorById(id),
+            refetchOnWindowFocus: false,
+        })
+    )
+
+    const getDownlineDistributors = (id: string) => (
+        useQuery<GetDownlineDistributorsResponse, Error>({
+            queryKey: [`distributors/downline/${id}`],
+            queryFn: () => distributorService.getDownlineDistributors(id),
             refetchOnWindowFocus: false,
         })
     )
@@ -47,10 +64,11 @@ export const useDistributor = () => {
     return {
        getDistributors,
        getDistributorById,
+        getDownlineDistributors,
        getTotalDistributors,
        createDistributor,
        deleteDistributor,
-       getTopDistributors
+       getTopDistributors,
     }
 
 }

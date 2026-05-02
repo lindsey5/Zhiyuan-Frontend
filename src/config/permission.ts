@@ -33,6 +33,7 @@ export const PERMISSIONS = {
     DISTRIBUTOR_READ_ALL: 'distributor:read:all',
     DISTRIBUTOR_CREATE: 'distrubutor:create',
     DISTRIBUTOR_DELETE: 'distributor:delete',
+    DISTRIBUTOR_DOWNLINE_VIEW: 'distributor:downline:view',
 
     /* Distributor Analytics */
     DISTRIBUTOR_STATS_VIEW: 'distributor-stats:view',
@@ -131,6 +132,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         DISTRIBUTOR_READ_ALL: "View all distributors",
         DISTRIBUTOR_CREATE: "Create new distributor accounts",
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
+        DISTRIBUTOR_DOWNLINE_VIEW: "View the list of downline distributors under a distributor"
     },
 
     "Distributor Analytics": {

@@ -3,7 +3,7 @@ import DistributorInfo from "../../components/distributors/DistributorInfo";
 import DistributorInventory from "../../components/distributor/DistributorInventory";
 import { useMemo, useState } from "react";
 import Tabs from "../../components/ui/Tabs";
-import { BarChartBig, FileBarChart, HandCoins, Package } from "lucide-react";
+import { BarChartBig, FileBarChart, HandCoins, Network, Package } from "lucide-react";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
 import DistributorSales from "../../components/distributor/DistributorSales";
@@ -11,6 +11,7 @@ import DistributorStats from "../../components/distributor/distributorStats/Dist
 import { cn } from "../../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
 import DistributorCommissions from "../../components/distributor/DistributorCommissions/DistributorCommissions";
+import DownlineDistributors from "../../components/distributor/DownlineDistributors";
 
 export default function Distributor() {
     const params = useParams();
@@ -60,6 +61,14 @@ export default function Distributor() {
             onClick: () => setSelected("Commissions"),
             }]
         : []),
+
+        ...(hasPermissions([PERMISSIONS.DISTRIBUTOR_DOWNLINE_VIEW])
+        ? [{
+            label: "Downline Distributors",
+            icon: <Network size={20} />,
+            onClick: () => setSelected("Downline Distributors"),
+            }]
+        : []),
     ];
 
     return (
@@ -83,6 +92,9 @@ export default function Distributor() {
         )}
         {debouncedSelected === "Commissions" && (
             <DistributorCommissions distributorId={id || ""} />
+        )}
+        {debouncedSelected === 'Downline Distributors' && (
+            <DownlineDistributors distributorId={id || ""} />
         )}
         </div>
     );

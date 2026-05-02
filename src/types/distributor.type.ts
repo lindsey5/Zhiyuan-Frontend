@@ -76,3 +76,7 @@ export interface GetTopDistributorsParams extends PaginationParams {
 export interface GetTopDistributorsResponse extends PaginationResponse {
     topDistributors: TopDistributor[];
 }
+
+export interface GetDownlineDistributorsResponse extends ApiResponse {
+    downlineDistributors: Distributor[];
+}
