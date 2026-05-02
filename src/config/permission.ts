@@ -31,7 +31,8 @@ export const PERMISSIONS = {
 
     // Distributor Management
     DISTRIBUTOR_READ_ALL: 'distributor:read:all',
-    DISTRIBUTOR_CREATE: 'distrubutor:create',
+    DISTRIBUTOR_CREATE: 'distributor:create',
+    DISTRIBUTOR_UPDATE: 'distributor:update',
     DISTRIBUTOR_DELETE: 'distributor:delete',
     DISTRIBUTOR_DOWNLINE_VIEW: 'distributor:downline:view',
 
@@ -131,6 +132,7 @@ export const PERMISSION_DESCRIPTIONS : Record<string, PermissionGroup> = {
         description: "Manage distributors, their accounts, stock inventory, and distribution activities.",
         DISTRIBUTOR_READ_ALL: "View all distributors",
         DISTRIBUTOR_CREATE: "Create new distributor accounts",
+        DISTRIBUTOR_UPDATE: "Update distributor info",
         DISTRIBUTOR_DELETE: "Delete distributor accounts",
         DISTRIBUTOR_DOWNLINE_VIEW: "View the list of downline distributors under a distributor"
     },

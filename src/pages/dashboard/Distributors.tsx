@@ -3,13 +3,13 @@ import Card from "../../components/ui/Card";
 import PageContainer from "../../components/ui/PageContainer";
 import CustomizedTable from "../../components/ui/Table";
 import { formatDate, formatToPeso } from "../../utils/utils";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
 import GoldButton from "../../components/ui/GoldButton";
 import DistributorModal from "../../components/distributors/DistributorModal";
-import { Eye, Trash } from "lucide-react";
+import { Edit, Eye, Trash } from "lucide-react";
 import { promiseToast } from "../../utils/sileo";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
@@ -21,13 +21,17 @@ import type { CreateColumnsParams } from "../../types/type";
 interface DistributorColsParams extends CreateColumnsParams {
     handleDelete: (id: string) => void;
     navigate: NavigateFunction;
+    setDistributor: Dispatch<SetStateAction<Distributor | null>>;
+    setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const getColumns = ({ 
     hasAnyPermissions, 
     hasPermissions, 
     handleDelete, 
-    navigate 
+    navigate,
+    setDistributor,
+    setShowModal
 } : DistributorColsParams) : ColumnDef<Distributor>[] => [
     {
         header: "ID",
@@ -78,7 +82,7 @@ const getColumns = ({
         cell: info => formatDate(info.getValue() as string),
         meta: { align: 'center '}
     },
-        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_DELETE])
+        ...(hasAnyPermissions([PERMISSIONS.DISTRIBUTOR_UPDATE, PERMISSIONS.DISTRIBUTOR_STOCK_VIEW, PERMISSIONS.DISTRIBUTOR_SALES_VIEW, PERMISSIONS.DISTRIBUTOR_DELETE])
         ? [
         {
             header: 'Actions',
@@ -88,6 +92,15 @@ const getColumns = ({
                         <IconButton 
                             onClick={() => navigate(`${row.original._id}`)}
                             icon={<Eye className="text-gold" size={20} />}
+                        />
+                    )}
+                    {hasPermissions([PERMISSIONS.DISTRIBUTOR_UPDATE]) && (
+                        <IconButton 
+                            onClick={() => {
+                                setDistributor(row.original);
+                                setShowModal(true);
+                            }}
+                            icon={<Edit className="text-gold" size={20} />}
                         />
                     )}
                     {hasPermissions([PERMISSIONS.DISTRIBUTOR_DELETE]) && (
@@ -107,6 +120,7 @@ const getColumns = ({
 export default function Distributors () {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const [distributor, setDistributor] = useState<Distributor | null>(null);
 
     const { hasAnyPermissions, hasPermissions } = usePermissions();
 
@@ -141,6 +155,8 @@ export default function Distributors () {
         hasPermissions,
         handleDelete,
         navigate,
+        setDistributor,
+        setShowModal
     })
 
     const onRowClick = (row : Distributor) => {
@@ -177,8 +193,12 @@ export default function Distributors () {
                 />
             </Card>
             <DistributorModal 
-                onClose={() => setShowModal(false)}
+                onClose={() => {
+                    setShowModal(false);
+                    setDistributor(null);
+                }}
                 open={showModal}
+                distributor={distributor}
             />
             {hasPermissions([PERMISSIONS.DISTRIBUTOR_CREATE]) && (
                 <div className="flex justify-end">

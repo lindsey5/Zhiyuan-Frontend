@@ -34,7 +34,6 @@ export default function DistributorSelector({ setDistributor, distributor } : Di
         page: pagination.pageIndex + 1,
         sortBy,
         order,
-        id: id || undefined
     });
 
     const columns: ColumnDef<Distributor>[] = [

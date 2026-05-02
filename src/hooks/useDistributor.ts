@@ -7,7 +7,8 @@ import type {
     GetDistributorsResponse, 
     GetTopDistributorsParams, 
     GetTopDistributorsResponse, 
-    GetDownlineDistributorsResponse 
+    GetDownlineDistributorsResponse, 
+    UpdateDistributorPayload
 } from "../types/distributor.type";
 import { distributorService } from "../service/distributorService";
 
@@ -49,6 +50,10 @@ export const useDistributor = () => {
         mutationFn: ({ data } : { data : CreateDistributorDTO}) =>  distributorService.createDistributor(data),
     })
 
+    const updateDistributor = useMutation({
+        mutationFn: ({ data, id } : { data : UpdateDistributorPayload, id : string}) =>  distributorService.updateDistributor(id, data),
+    })
+
     const deleteDistributor = useMutation({
         mutationFn: ({ id } : { id : string }) => distributorService.deleteDistributor(id)
     })
@@ -69,6 +74,7 @@ export const useDistributor = () => {
        createDistributor,
        deleteDistributor,
        getTopDistributors,
+       updateDistributor
     }
 
 }

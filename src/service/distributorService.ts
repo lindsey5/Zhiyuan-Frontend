@@ -1,14 +1,16 @@
 import { apiAxios, HttpMethod } from "../lib/api/apiAxios";
-import { 
-    type GetTotalDistributorsResponse, 
-    type CreateDistributorDTO, 
-    type CreateDistributorResponse, 
-    type GetDistributorResponse, 
-    type GetDistributorsParams, 
-    type GetDistributorsResponse, 
-    type GetTopDistributorsParams, 
-    type GetTopDistributorsResponse, 
-    type GetDownlineDistributorsResponse 
+import type { 
+    GetTotalDistributorsResponse, 
+    CreateDistributorDTO, 
+    CreateDistributorResponse, 
+    GetDistributorResponse, 
+    GetDistributorsParams, 
+    GetDistributorsResponse, 
+    GetTopDistributorsParams, 
+    GetTopDistributorsResponse, 
+    GetDownlineDistributorsResponse, 
+    UpdateDistributorPayload,
+    UpdateDistributorResponse
 } from "../types/distributor.type";
 import type { ApiResponse } from "../types/type";
 
@@ -41,6 +43,13 @@ export const distributorService = {
     getTotalDistributors: () => (
         apiAxios<GetTotalDistributorsResponse>('distributors/total', {
             method: HttpMethod.GET
+        })
+    ),
+
+    updateDistributor: (id: string, data: UpdateDistributorPayload) => (
+        apiAxios<UpdateDistributorResponse>(`/distributors/${id}`, {
+            method: HttpMethod.PUT,
+            data
         })
     ),
 

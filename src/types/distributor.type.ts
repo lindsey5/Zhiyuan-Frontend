@@ -19,19 +19,13 @@ export interface Distributor {
 export interface CreateDistributorDTO {
     distributor_name: string;
     email: string;
-    distributor_id?: string;
+    parent_distributor_id?: string;
+    commission_rate: number;
+    child_commission_rate: number;
 }
 
 export interface CreateDistributorResponse extends ApiResponse {
-    _id: string;
-    parent_distributor_id?: string;
-    distributor_name: string;
-    commission_rate: number;
-    wallet_balance: number;
-    email: string;
-    status: "active" | "deleted";
-    total_stocks?: number;
-    createdAt: Date;
+    distributor: Distributor;
 }
 
 export interface GetDistributorsParams extends PaginationParams {
@@ -79,4 +73,14 @@ export interface GetTopDistributorsResponse extends PaginationResponse {
 
 export interface GetDownlineDistributorsResponse extends ApiResponse {
     downlineDistributors: Distributor[];
+}
+
+export interface UpdateDistributorPayload {
+    parent_distributor_id?: string;
+    commission_rate: number;
+    child_commission_rate: number;
+}
+
+export interface UpdateDistributorResponse extends ApiResponse {
+    distributor: Distributor;
 }

@@ -1,58 +1,98 @@
 import Card from "../ui/Card"
-import { useForm, type SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import TextField from "../ui/TextField"
 import Button from "../ui/Button"
 import { X } from "lucide-react"
 import { promiseToast } from "../../utils/sileo"
-import { distributorSchema, type DistributorFormData } from "../../schemas/distributorSchema"
+import { createDistributorSchema, updateDistributorSchema } from "../../schemas/distributorSchema"
 import { useDistributor } from "../../hooks/useDistributor"
 import GoldButton from "../ui/GoldButton"
 import Modal from "../ui/Modal"
 import ParentDistributorAutoComplete from "./ParentDistributorAutoComplete"
+import type { Distributor } from "../../types/distributor.type"
+import { useEffect } from "react"
 
 type DistributorModalProps = {
     open: boolean
     onClose: () => void
+    distributor: Distributor | null
 }
 
-export default function DistributorModal({ open, onClose }: DistributorModalProps) {
-    const { createDistributor } = useDistributor();
-    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<DistributorFormData>({
-        resolver: zodResolver(distributorSchema),
+type DistributorForm = {
+    distributor_name?: string;
+    email?: string;
+    commission_rate: number;
+    child_commission_rate: number;
+    parent_distributor_id?: string;
+};
+
+export default function DistributorModal({ open, onClose, distributor }: DistributorModalProps) {
+    const { createDistributor, updateDistributor } = useDistributor();
+
+    const form = useForm<DistributorForm>({
+        resolver: zodResolver(distributor ? updateDistributorSchema : createDistributorSchema),
         defaultValues: {
+            distributor_name: "",
+            email: "",
             child_commission_rate: 2,
             commission_rate: 5,
-        }
+            parent_distributor_id: undefined,
+        },
     });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        setValue,
+    } = form;
 
     const close = () => {
         onClose();
-        reset({ 
-            distributor_name: undefined,
-            email: undefined,
+        reset({
+            distributor_name: "",
+            email: "",
             child_commission_rate: 2,
             commission_rate: 5,
+            parent_distributor_id: undefined,
         });
-    }
+    };
 
-    const onSubmit : SubmitHandler<DistributorFormData> = async (data) => {
-        promiseToast(createDistributor.mutateAsync({ data})) 
-    }
+    const onSubmit = async (data: any) => {
+        promiseToast(
+            distributor
+                ? updateDistributor.mutateAsync({ data, id: distributor._id })
+                : createDistributor.mutateAsync({ data })
+        );
+    };
+
+    useEffect(() => {
+        if (distributor) {
+            reset({
+                distributor_name: distributor.distributor_name,
+                email: distributor.email,
+                commission_rate: distributor.commission_rate,
+                child_commission_rate: distributor.child_commission_rate,
+                parent_distributor_id: distributor.parent_distributor_id,
+            });
+        }
+    }, [distributor, reset]);
 
     return (
-        <Modal
-            onClose={close}
-            open={open}
-        >
+        <Modal onClose={close} open={open}>
             <Card className="w-full max-w-md">
                 <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-lg font-semibold font-sans">Add Distributor</h2>
-                    <Button 
+                    <h2 className="text-lg font-semibold font-sans">
+                        {distributor ? "Update" : "Create"} Distributor
+                    </h2>
+
+                    <Button
                         className="border-none p-0"
-                        icon={<X size={20}/>}
+                        icon={<X size={20} />}
                         onClick={close}
-                        disabled={createDistributor.isPending}
+                        disabled={createDistributor.isPending || updateDistributor.isPending}
                     />
                 </div>
 
@@ -62,49 +102,39 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         placeholder="Enter Distributor Name"
                         registration={register("distributor_name")}
                         error={errors.distributor_name?.message}
-                        disabled={createDistributor.isPending}
+                        disabled={!!distributor}
                     />
+
                     <TextField
                         label="Email"
                         placeholder="Enter Distributor Email"
                         registration={register("email")}
                         error={errors.email?.message}
-                        disabled={createDistributor.isPending}
+                        disabled={!!distributor}
                     />
 
-                    <ParentDistributorAutoComplete 
-                        disabled={createDistributor.isPending}
+                    <ParentDistributorAutoComplete
+                        disabled={createDistributor.isPending || updateDistributor.isPending}
                         error={errors.parent_distributor_id?.message || ""}
                         setValue={setValue}
+                        distributor={distributor}
                     />
 
-                    <TextField 
+                    <TextField
                         error={errors.commission_rate?.message}
                         label="Commission Rate (%)"
-                        placeholder="Enter Commission Rate"
                         type="number"
-                        onKeyDown={(e) => {
-                            if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
-                                e.preventDefault();
-                            }
-                        }}
-                        registration={register('commission_rate',{
-                            setValueAs: value => Number(value)
+                        registration={register("commission_rate", {
+                            setValueAs: (value) => Number(value),
                         })}
                     />
 
-                    <TextField 
+                    <TextField
                         error={errors.child_commission_rate?.message}
-                        label="Commission from Downline Distributor (%)"
-                        placeholder="Enter commission from downline distributor"
+                        label="Commission from Downline (%)"
                         type="number"
-                        onKeyDown={(e) => {
-                            if (e.key === "." || e.key === "," || e.key === "e" || e.key === "-") {
-                                e.preventDefault();
-                            }
-                        }}
-                        registration={register('child_commission_rate',{
-                            setValueAs: value => Number(value)
+                        registration={register("child_commission_rate", {
+                            setValueAs: (value) => Number(value),
                         })}
                     />
 
@@ -112,11 +142,13 @@ export default function DistributorModal({ open, onClose }: DistributorModalProp
                         <GoldButton
                             type="submit"
                             className="text-sm"
-                            disabled={createDistributor.isPending}
-                        >Create</GoldButton>
+                            disabled={createDistributor.isPending || updateDistributor.isPending}
+                        >
+                            {distributor ? "Update" : "Create"}
+                        </GoldButton>
                     </div>
                 </form>
             </Card>
         </Modal>
-    )
+    );
 }

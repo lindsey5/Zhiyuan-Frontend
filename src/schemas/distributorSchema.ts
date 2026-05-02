@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const distributorSchema = z.object({
+export const createDistributorSchema = z.object({
     distributor_name: z
         .string()
         .min(1, "Name is required")
@@ -16,4 +16,14 @@ export const distributorSchema = z.object({
     child_commission_rate: z.number().positive('Commission from downline distributor is required')
 })
 
-export type DistributorFormData = z.infer<typeof distributorSchema>;
+export type CreateDistributorFormData = z.infer<typeof createDistributorSchema>;
+
+export const updateDistributorSchema = z.object({
+    parent_distributor_id: z
+        .string()
+        .optional(),
+    commission_rate: z.number().positive('Commission Rate is required'),
+    child_commission_rate: z.number().positive('Commission from downline distributor is required')
+})
+
+export type UpdateDistributorFormData = z.infer<typeof updateDistributorSchema>;

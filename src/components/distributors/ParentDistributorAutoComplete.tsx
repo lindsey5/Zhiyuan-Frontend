@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { UseFormSetValue } from "react-hook-form";
 import TextField from "../ui/TextField";
-import type { DistributorFormData } from "../../schemas/distributorSchema";
 import { useDistributor } from "../../hooks/useDistributor";
 import type { Distributor } from "../../types/distributor.type";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -9,13 +8,15 @@ import { useDebounce } from "../../hooks/useDebounce";
 interface ParentDistributorAutoCompleteProps {
     disabled: boolean;
     error: string;
-    setValue: UseFormSetValue<DistributorFormData>;
+    setValue: UseFormSetValue<any>;
+    distributor: Distributor | null;
 }
 
 export default function ParentDistributorAutoComplete({
     error,
     disabled,
-    setValue
+    setValue,
+    distributor
 }: ParentDistributorAutoCompleteProps) {
     const [page] = useState(1);
     const [query, setQuery] = useState("");
@@ -30,7 +31,8 @@ export default function ParentDistributorAutoComplete({
         search: debouncedSearch,
         limit: 10,
         sortBy: "distributor_name",
-        order: "asc"
+        order: "asc",
+        id: distributor?._id
     });
 
     const distributors: Distributor[] = data?.distributors || [];
@@ -40,6 +42,13 @@ export default function ParentDistributorAutoComplete({
         setValue("parent_distributor_id", distributor.distributor_id);
         setShowDropdown(false);
     };
+
+    useEffect(() => {
+        if(distributor) {
+            setQuery(distributor.distributor_name);
+            setValue("parent_distributor_id", distributor.distributor_id);
+        }
+    }, [distributor])
 
     return (
         <div className="relative">
