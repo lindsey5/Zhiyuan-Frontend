@@ -1,22 +1,20 @@
 import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 import Card from "../ui/Card";
 import { type Variant } from "../../types/variant.type";
-import { formatDate } from "../../utils/utils";
-import { useMemo, useState, type SetStateAction } from "react";
+import { useMemo, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import CustomizedTable from "../ui/Table";
 import type { SortOption } from "../../types/type";
 import type { Product } from "../../types/product.type";
 import { useProduct } from "../../hooks/useProduct";
 import ProductsTableControls from "../products/ProductsTableControls";
-import GoldButton from "../ui/GoldButton";
 import ItemSelectorModal from "../shared/ItemSelectorModal";
 
 interface ProductSelectionPanelProps {
     addVariant: (variant: Variant, quantity: number, product_name: string) => void;
 }
 
-const getColumns = (setSelectedProduct : React.Dispatch<SetStateAction<Product | null>>) : ColumnDef<Product>[] => [
+const getColumns = () : ColumnDef<Product>[] => [
     {
         header: "Product",
         accessorKey: "product_name",
@@ -47,20 +45,6 @@ const getColumns = (setSelectedProduct : React.Dispatch<SetStateAction<Product |
         },
         meta: { align: 'center' },
     },
-    {
-        header: "Created At",
-        cell: ({ row }) => formatDate(row.original.createdAt),
-        meta: { align: 'center' },
-    },
-    {
-        header: "Action",
-        cell: ({ row }) => (
-            <GoldButton
-                onClick={() => setSelectedProduct(row.original)}
-            >Select</GoldButton>
-        ),
-        meta: { align: 'center' },
-    }
 ];
 
 export default function ProductSelectionPanel ({ addVariant } : ProductSelectionPanelProps) {
@@ -83,7 +67,7 @@ export default function ProductSelectionPanel ({ addVariant } : ProductSelection
     const { getProducts } = useProduct();
     const { data, isFetching } = getProducts(params);
 
-    const columns = getColumns(setSelectedProduct);
+    const columns = getColumns();
 
     const onRowClick = (row : Product) => {
         setSelectedProduct(row)

@@ -104,7 +104,7 @@ export default function ItemSelectorModal ({ selectedProduct, addVariant, close 
                         const value = e.target.value.replace(/\D/g, "");
                         setQuantity(value ? Number(value) : 0);
                     }}
-                    error={errorMessage}
+                    error={!selectedVariant ? "Select item" :errorMessage}
                 />
                 <div className="flex justify-end mt-5">
                     <GoldButton 

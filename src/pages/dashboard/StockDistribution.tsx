@@ -2,78 +2,107 @@ import { useState } from "react";
 import PageContainer from "../../components/ui/PageContainer";
 import ProductSelectionPanel from "../../components/stockDistribution/ProductSelectionPanel";
 import type { Variant } from "../../types/variant.type";
-import GoldButton from "../../components/ui/GoldButton";
 import DistributorSelector from "../../components/stockDistribution/DistributorSelector";
 import { errorToast, successToast } from "../../utils/sileo";
-import TransferItems from "../../components/stockDistribution/ItemsToDistribute";
+import TransferItems, { type CartItem } from "../../components/stockDistribution/ItemsToDistribute";
 import { useSearchParams } from "react-router-dom";
+import DistributionSummary from "../../components/stockDistribution/DistributionSummary";
 
-export default function StockDistribution () {
+export default function StockDistribution() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
+
     const [distributorId, setDistributorId] = useState<string | null>(id);
-    const [variants, setVariants] = useState<{ variant: Variant, quantity: number, product_name: string }[]>([]);
+    const [variants, setVariants] = useState<
+        { variant: Variant; quantity: number; product_name: string }[]
+    >([]);
     const [showModal, setShowModal] = useState(false);
 
     const addVariant = (newVariant: Variant, quantity: number, product_name: string) => {
         const existing = variants.find(v => v.variant._id === newVariant._id);
 
         if (existing) {
-            // Check if adding exceeds stock
-            if ((existing.quantity + quantity) > existing.variant.stock) {
+            if (existing.quantity + quantity > existing.variant.stock) {
                 errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
-            // Update existing variant quantity
-            setVariants(prev => 
-                prev.map(v => v.variant._id === newVariant._id ? { ...v, quantity: v.quantity + quantity } : v)
+            setVariants(prev =>
+                prev.map(v =>
+                    v.variant._id === newVariant._id
+                        ? { ...v, quantity: v.quantity + quantity }
+                        : v
+                )
             );
         } else {
-            // Check if quantity exceeds stock for new variant
             if (quantity > newVariant.stock) {
                 errorToast("Error", "Quantity exceeds available stock");
                 return;
             }
 
-            // Add new variant
             setVariants(prev => [...prev, { variant: newVariant, quantity, product_name }]);
         }
 
-        successToast("Success", `${product_name}-${newVariant.variant_name} successfully added`);
+        successToast("Success", `${product_name} - ${newVariant.variant_name} added`);
     };
+
+    const handleQuantity = (quantity : number, variant: CartItem) => {
+
+        if(quantity <= variant.variant.stock){
+            setVariants(prev => 
+                prev.map(item => 
+                    item.variant._id === variant.variant._id ? ({...item, quantity: item.quantity + quantity }) :item
+                )
+            )
+        }
+    }
+
+    const remove = (id: string) => {
+        const isConfirmed = confirm("Are you sure you want to remove this item?");
+
+        if(!isConfirmed) return;
+
+        setVariants(prev => prev.filter(item => item.variant._id !== id))
+    }
 
     return (
         <PageContainer
             title="Distribute Stocks"
-            className="relative"
             description="Distribute stocks to distributor"
+            className="min-h-0 flex flex-col"
         >
-            <div className="flex justify-end">
-                <GoldButton 
-                    className="text-sm relative" 
-                    onClick={() => setShowModal(true)}
-                >
-                    Items to Distribute
-                    {variants.length > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                        {variants.length}
-                    </span>}
-                </GoldButton>
-            </div>
-            <div className="flex flex-col gap-5">
-                <DistributorSelector 
-                    setDistributor={setDistributorId}
-                    defaultDistributor={id}
+            {/* MAIN WORKFLOW LAYOUT */}
+            <div className="flex flex-col lg:flex-row gap-5 flex-1 min-h-0">
+
+                {/* LEFT SIDE */}
+                <div className="min-w-0 flex-1 flex flex-col gap-5 min-h-0">
+                    <DistributorSelector
+                        setDistributor={setDistributorId}
+                        defaultDistributor={id}
+                    />
+
+                    <ProductSelectionPanel addVariant={addVariant} />
+                </div>
+
+                <DistributionSummary 
+                    distributorId={distributorId}
+                    handleQuantity={handleQuantity}
+                    setShowModal={setShowModal}
+                    variants={variants}
+                    remove={remove}
                 />
-                <ProductSelectionPanel addVariant={addVariant} />
             </div>
+
+            {/* MODAL */}
             <TransferItems
                 close={() => setShowModal(false)}
                 open={showModal}
                 setVariants={setVariants}
                 variants={variants}
                 distributorId={distributorId}
+                handleQuantity={handleQuantity}
+                remove={remove}
             />
         </PageContainer>
-    )
+    );
 }

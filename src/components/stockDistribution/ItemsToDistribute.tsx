@@ -1,8 +1,8 @@
-import { Minus, Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { Variant } from "../../types/variant.type";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
-import { cn, formatToPeso } from "../../utils/utils";
+import { formatToPeso } from "../../utils/utils";
 import GoldButton from "../ui/GoldButton";
 import Button from "../ui/Button";
 import { errorToast, promiseToast } from "../../utils/sileo";
@@ -12,8 +12,9 @@ import { useSocket } from "../../hooks/useSocket";
 import { useStockTransfer } from "../../hooks/useStockTransfer";
 import usePermissions from "../../hooks/usePermissions";
 import { PERMISSIONS } from "../../config/permission";
+import QuantityControls from "./QuantityControls";
 
-interface CartItem {
+export interface CartItem {
     variant: Variant;
     quantity: number;
     product_name: string;
@@ -25,59 +26,27 @@ interface ItemsToDistributeProps {
     open: boolean;
     close: () => void;
     setVariants: React.Dispatch<React.SetStateAction<CartItem[]>>;
+    handleQuantity: (quantity: number, item: CartItem) => void;
+    remove: (id: string) => void;
 }
 
 export default function ItemsToDistribute({ 
     variants, 
     open, 
     close, 
-    setVariants, 
-    distributorId
+    remove,
+    distributorId,
+    handleQuantity
 }: ItemsToDistributeProps) {
     const { hasAnyPermissions } = usePermissions();
     useSocket({ namespace: '/distributor-notification' })
     const { createStockTransferLog } = useStockTransfer();
-    
-    const addQty = (id: string) => {
-        setVariants(prev =>
-        prev.map(item =>
-            item.variant._id === id
-            ? item.quantity + 1 > item.variant.stock
-                ? item
-                : { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-        );
-    };
-
-    const minusQty = (id: string) => {
-        setVariants(prev =>
-        prev
-            .map(item =>
-            item.variant._id === id
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            )
-        );
-    };
-
-    const remove = (id: string) => {
-        const isConfirmed = confirm("Are you sure you want to remove this item?");
-
-        if(!isConfirmed) return;
-
-        setVariants(prev => prev.filter(item => item.variant._id !== id))
-    }
 
     const transfer = () => {
         if(!distributorId){
             errorToast("Error", "Please select a distributor first.");
             return;
         }
-
-        const isConfirmed = confirm("Are you sure you want to distribute these items to the distributor's stock?");
-
-        if(!isConfirmed) return;
 
         promiseToast(createStockTransferLog.mutateAsync({
             id: distributorId || "",
@@ -95,17 +64,6 @@ export default function ItemsToDistribute({
                 window.location.reload();
             }
         })
-    }
-
-    const handleQuantity = (quantity : number, variant: CartItem) => {
-
-        if(quantity <= variant.variant.stock){
-            setVariants(prev => 
-                prev.map(item => 
-                    item.variant._id === variant.variant._id ? ({...item, quantity }) :item
-                )
-            )
-        }
     }
 
     const isValidItems = useMemo(() => {
@@ -154,33 +112,10 @@ export default function ItemsToDistribute({
                             </div>
 
                             <div className="flex flex-col items-center gap-2">
-                                {/* Quantity Controls */}
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => minusQty(item.variant._id)}
-                                        className="rounded cursor-pointer font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-                                        disabled={item.quantity === 1}
-                                    >
-                                        <Minus size={16} />
-                                    </button>
-
-                                    <input 
-                                        className={cn(
-                                            "w-15 text-center border border-[var(--border-panel)] rounded-md outline-none",
-                                            !item.quantity && "border-red-500 border-2" 
-                                        )}
-                                        value={item.quantity ? item.quantity : ""}
-                                        onChange={(e) => handleQuantity(Number(e.target.value), item)}
-                                    />
-
-                                    <button
-                                        onClick={() => addQty(item.variant._id)}
-                                        disabled={item.quantity >= item.variant.stock}
-                                        className="cursor-pointer rounded font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        <Plus size={16} />
-                                    </button>
-                                </div>
+                                <QuantityControls 
+                                    handleQuantity={handleQuantity}
+                                    item={item}
+                                />
                                 <Button
                                     label="Remove"
                                     className="text-xs py-1"

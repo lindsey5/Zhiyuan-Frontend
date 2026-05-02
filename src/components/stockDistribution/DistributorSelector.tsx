@@ -51,12 +51,6 @@ export default function DistributorSelector({ setDistributor, defaultDistributor
             meta: { align: "center" },
         },
         {
-            header: "Commission Rate",
-            accessorKey: "commission_rate",
-            cell: (info) => `${info.getValue()}%`,
-            meta: { align: "center" },
-        },
-        {
             header: "Recruit by",
             accessorKey: "parent_distributor",
             cell: (info) =>

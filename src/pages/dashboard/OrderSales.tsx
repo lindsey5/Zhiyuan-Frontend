@@ -13,7 +13,7 @@ export default function OrderSales() {
             <OrderMetrics />
             <div className="w-full flex flex-col lg:flex-row gap-5">
                 <OrdersMonthlySales />
-                <BestSellingProducts className="min-w-xl lg:max-w-xl"/>
+                <BestSellingProducts className="lg:max-w-xl"/>
             </div>
         </PageContainer>
     );
