@@ -25,7 +25,7 @@ export default function DistributorSales ({ distributorId } : { distributorId: s
     const [pagination, setPagination] = useState<PaginationState>({ pageSize: 50, pageIndex: 0 });
     const [startDate, setStartDate] = useState(() => {
         const date = new Date();
-        date.setDate(date.getDate() - 7);
+        date.setDate(date.getDate() - 30);
         return formatInputDate(date);
     });
 
