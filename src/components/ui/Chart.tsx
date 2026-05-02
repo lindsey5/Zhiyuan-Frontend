@@ -79,7 +79,7 @@ export default function Chart({ title, labels, values, formatToPeso }: ChartProp
         },
         fill: true,
         borderWidth: 2,
-        tension: 0.4,
+        tension: 0.2,
         pointRadius: 0,         
         pointHoverRadius: 4,   
         pointHoverBackgroundColor: gold,
