@@ -24,6 +24,7 @@ export const productService = {
 
   createProduct: (data : FormData) => {
     return apiAxios<CreateProductResponse>("products", {
+      
       method: HttpMethod.POST,
       data
     })
