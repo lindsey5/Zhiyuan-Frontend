@@ -11,7 +11,6 @@ import { cn } from "../../utils/utils";
 const stockTransferStatus = [
   { label: "All", value: "" },
   { label: "Pending", value: "pending" },
-  { label: "Approved", value: "approved" },
   { label: "Processing", value: "processing" },
   { label: "Delivered", value: "delivered" },
   { label: "Received", value: "received" },

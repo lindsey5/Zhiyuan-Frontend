@@ -4,7 +4,7 @@ import type { ApiResponse } from "./type";
 import type { User } from "./user.type";
 import type { VariantWithProduct } from "./variant.type";
 
-export type StockTransferStatus = 'pending'| 'approved'| 'processing' | 'delivered' | 'received' |  'cancelled' | 'rejected';
+export type StockTransferStatus = 'pending'| 'processing' | 'delivered' | 'received' |  'cancelled' | 'rejected';
 
 export interface StockTransferLog {
     _id: string;
