@@ -46,21 +46,15 @@ const useNotifications  = () => {
     }, [socket, orderSocket, data])
 
     const handleReadNotification = async (id: string) => {
-        const response = await readNotification.mutateAsync({ id });
-
-        if(response.success){
-            setNotifications(prev => prev.map(notification => notification._id === id ? { ...notification, status: "read"} : notification))
-            setUnread(prev => prev - 1);
-        }
+        setNotifications(prev => prev.map(notification => notification._id === id ? { ...notification, status: "read"} : notification))
+        setUnread(prev => prev - 1);
+        await readNotification.mutateAsync({ id });
     }
 
     const handleReadAllNotifications = async () => {
-        const response = await readAllNotifications.mutateAsync();
-
-        if(response.success){
-            setNotifications(prev => prev.map(notification => ({ ...notification, status: 'read' })));
-            setUnread(0);
-        }
+        setNotifications(prev => prev.map(notification => ({ ...notification, status: 'read' })));
+        setUnread(0);
+        await readAllNotifications.mutateAsync();
     }
 
     return { 

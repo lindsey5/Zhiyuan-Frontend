@@ -5,6 +5,7 @@ import ReturnDetails from "../return-request/ReturnDetails";
 import SaleDetails from "./SaleDetails";
 import WithdrawalRequestDetails from "../withdrawalRequest/WithdrawalRequestDetails";
 import StockTransferItems from "../stockTransferLog/StockTransferItems";
+import OrderModal from "../orders/OrderModal";
 
 interface NotificationModalProps {
     open: boolean;
@@ -19,6 +20,15 @@ export default function NotificationModal ({ open, close, notification } : Notif
             <WithdrawalRequestDetails 
                 withdrawal_id={notification.withdrawalNotification.withdrawal_id} 
                 close={close}
+            />
+        )
+    }
+
+    if(notification?.orderNotification) {
+        return (
+            <OrderModal 
+                close={close}
+                order_id={notification.orderNotification.order_id}
             />
         )
     }

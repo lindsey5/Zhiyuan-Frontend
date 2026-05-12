@@ -91,9 +91,7 @@ export default function NotificationBell () {
     const handleReadNotification = async (notification: UserNotification) => {
         if (!readNotification) return;
 
-        if (notification.orderNotification) {
-            window.location.href = `/dashboard/orders?order_id=${notification.orderNotification.order.order_id}`;
-        } else if (notification.stockOrderNotification) {
+        if (notification.stockOrderNotification) {
             window.location.href = `/dashboard/distributors/stock-orders?stock_order_id=${notification.stockOrderNotification.stockOrder.stock_order_id}`;
         } else if (notification.sponsoredItemNotification) {
             window.location.href = `/dashboard/sponsored-products?sponsored_id=${notification.sponsoredItemNotification.sponsored_item.sponsored_id}`;
